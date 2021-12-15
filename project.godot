@@ -15,7 +15,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Game"
+run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Console="*res://addons/quentincaffeino-console/src/Console.tscn"
+Print="*res://addons/logger/logger.gd"
+FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"
 
 [display]
 
@@ -24,9 +31,14 @@ window/size/height=900
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/fps_counter/plugin.cfg", "res://addons/logger/plugin.cfg", "res://addons/quentincaffeino-console/plugin.cfg" )
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"

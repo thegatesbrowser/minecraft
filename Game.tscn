@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="Game" type="CanvasLayer"]
+
+[node name="Label" type="Label" parent="."]
+margin_right = 160.0
+margin_bottom = 90.0
+rect_scale = Vector2( 10, 10 )
+text = "This is a game template!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

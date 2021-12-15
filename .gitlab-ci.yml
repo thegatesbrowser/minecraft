@@ -1,0 +1,193 @@
+include: VersionInfo.yml
+
+stages:
+  - build
+  - pack
+  - deploy
+
+variables:
+  REVISION_NUMBER: ${RELEASE_NUMBER}_${CI_COMMIT_SHORT_SHA}
+  EXPORT_NAME_RELEASE: ${GAME_NAME}_${RELEASE_NUMBER}
+  EXPORT_NAME_INTERNAL: ${GAME_NAME}_${RELEASE_NUMBER}_${CI_COMMIT_SHORT_SHA}
+  GIT_SUBMODULE_STRATEGY: recursive
+
+# ================================================================================================================
+#                                                   Job Dependencies
+# ================================================================================================================
+# =+=+=+=+=+=+=+= BUILD COMMON =+=+=+=+=+=+=+=
+.build-internal: &build-internal
+  image: barichello/godot-ci:$GODOT_VERSION
+  script:
+    - mkdir -v -p build/$BUILD_FOLDER
+    - cd $GAME_FOLDER/
+    - godot -v $BUILD_FLAGS --export "$BUILD_TARGET" ../build/$BUILD_FOLDER/$EXPORT_NAME_INTERNAL$BUILD_FILE_EXTENSION
+    - cp -R Mods/ ../build/$BUILD_FOLDER/Mods/
+  artifacts:
+    name: $EXPORT_NAME_INTERNAL
+    paths:
+      - build/
+    expire_in: 6 hour # We have a consolidated copy created in the final stage, just keep this while the pipeline might be running.
+
+.build-release: &build-release
+  image: barichello/godot-ci:$GODOT_VERSION
+  script:
+    - mkdir -v -p build/$BUILD_FOLDER
+    - godot -v $BUILD_FLAGS --export "$BUILD_TARGET" build/$BUILD_FOLDER/$EXPORT_NAME_RELEASE$BUILD_FILE_EXTENSION
+  artifacts:
+    name: $EXPORT_NAME_RELEASE
+    paths:
+      - build/
+    expire_in: 6 hour # We have a consolidated copy created in the final stage, just keep this while the pipeline might be running.
+
+.build-web-release: &build-web-release
+  image: barichello/godot-ci:$GODOT_VERSION
+  script:
+    - mkdir -v -p build/$BUILD_FOLDER
+    - godot -v $BUILD_FLAGS --export "$BUILD_TARGET" build/$BUILD_FOLDER/index.html
+  artifacts:
+    name: $EXPORT_NAME_RELEASE
+    paths:
+      - build/
+    expire_in: 6 hour # We have a consolidated copy created in the final stage, just keep this while the pipeline might be running.
+
+# =+=+=+=+=+=+=+= BUILD SETTINGS =+=+=+=+=+=+=+=
+.linux_release: &linux_release
+  variables:
+    BUILD_FILE_EXTENSION: .x86_64
+    BUILD_TARGET: "Linux/X11"
+    BUILD_FOLDER: "linux-release"
+    BUILD_FLAGS: ""
+
+.linux_debug: &linux_debug
+  variables:
+    BUILD_FILE_EXTENSION: .x86_64
+    BUILD_TARGET: "Linux/X11"
+    BUILD_FOLDER: "linux-debug"
+    BUILD_FLAGS: "-d"
+
+.windows_release: &windows_release
+  variables:
+    BUILD_FILE_EXTENSION: .exe
+    BUILD_TARGET: "Windows Desktop"
+    BUILD_FOLDER: "windows-release"
+    BUILD_FLAGS: ""
+
+.windows_debug: &windows_debug
+  variables:
+    BUILD_FILE_EXTENSION: .exe
+    BUILD_TARGET: "Windows Desktop"
+    BUILD_FOLDER: "windows-debug"
+    BUILD_FLAGS: "-d"
+
+.mac_release: &mac_release
+  variables:
+    BUILD_FILE_EXTENSION: .zip
+    BUILD_TARGET: "Mac OSX"
+    BUILD_FOLDER: "mac-release"
+    BUILD_FLAGS: ""
+
+.mac_debug: &mac_debug
+  variables:
+    BUILD_FILE_EXTENSION: .zip
+    BUILD_TARGET: "Mac OSX"
+    BUILD_FOLDER: "mac-debug"
+    BUILD_FLAGS: "-d"
+
+.web_release: &web_release
+  variables:
+    BUILD_FILE_EXTENSION: index.html
+    BUILD_TARGET: "HTML5"
+    BUILD_FOLDER: "web-release"
+    BUILD_FLAGS: ""
+
+.web_debug: &web_debug
+  variables:
+    BUILD_FILE_EXTENSION: index.html
+    BUILD_TARGET: "HTML5"
+    BUILD_FOLDER: "web-debug"
+    BUILD_FLAGS: "-d"
+
+# =+=+=+=+=+=+=+= DEPLOY COMMON =+=+=+=+=+=+=+=
+.itch_deploy: &itch_deploy
+  image: barichello/godot-ci:$GODOT_VERSION
+  stage: deploy
+  script:
+    - butler push ./build/linux-release $GROUP_NAME/$GAME_NAME:linux
+    - butler push ./build/windows-release $GROUP_NAME/$GAME_NAME:windows
+    - butler push ./build/mac-release $GROUP_NAME/$GAME_NAME:mac
+    - butler push ./build/web-release $GROUP_NAME/$GAME_NAME:web
+
+# =+=+=+=+=+=+=+= DEPLOY SETTINGS =+=+=+=+=+=+=+=
+.needs_release: &needs_release
+  needs:
+    - build_release:linux-release
+    - build_release:windows-release
+    - build_release:mac-release
+    - build_release:web-release
+
+# ================================================================================================================
+#                                                           Jobs
+# ================================================================================================================
+# =+=+=+=+=+=+=+= BUILD JOBS - RELEASE =+=+=+=+=+=+=+=
+build_release:linux-release:
+  stage: build
+  <<: *linux_release
+  <<: *build-release
+
+build_release:windows-release:
+  stage: build
+  <<: *windows_release
+  <<: *build-release
+
+build_release:mac-release:
+  stage: build
+  <<: *mac_release
+  <<: *build-release
+
+build_release:web-release:
+  stage: build
+  <<: *web_release
+  <<: *build-web-release
+
+# =+=+=+=+=+=+=+= BUILD JOBS - DEBUG =+=+=+=+=+=+=+=
+build_internal:windows-debug:
+  stage: build
+  <<: *windows_debug
+  <<: *build-internal
+  except:
+    - main
+
+build_internal:linux-debug:
+  stage: build
+  <<: *linux_debug
+  <<: *build-internal
+  except:
+    - main
+
+build_internal:web-debug:
+  stage: build
+  <<: *web_debug
+  <<: *build-web-release
+  except:
+    - main
+
+# =+=+=+=+=+=+=+= PACK JOBS =+=+=+=+=+=+=+=
+# Contain all of the builds in a single artifact so we don't have to download all the things!
+consolidateArtifacts:
+  image: alpine:latest
+  stage: pack
+  script: "ls ./build"
+  artifacts:
+    name: $GAME_NAME_$REVISION_NUMBER
+    expose_as: "Build Output"
+    paths:
+      - ./build/
+    expire_in: 1 day # This is huge, we probably want to save it to a repo somewhere so we don't run out of space.
+
+# =+=+=+=+=+=+=+= DEPLOY JOBS =+=+=+=+=+=+=+=
+itchio-deploy:
+  <<: *needs_release
+  <<: *itch_deploy
+  only:
+    - main
+  when: manual
