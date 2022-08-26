@@ -4,5 +4,10 @@
 
 [node name="Global" type="Node"]
 script = ExtResource( 1 )
-unload_radius = 7
+print_level = 0
+capture_mouse_on_start = false
+load_radius = 25
+unload_radius = 30
+max_game_memory_gb = 32
+chunk_loading_threads = 15
 controller_invert_look = true

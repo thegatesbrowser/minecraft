@@ -22,7 +22,14 @@ func generate():
 			blocks[i][j].resize(int(Globals.chunk_size.z))
 			for k in range(0, Globals.chunk_size.z):
 				blocks[i][j][k] = WorldGen.get_block_type(i + pos.x, j + pos.y, k + pos.z)
-	update()
+
+
+func place_block(_local_pos: Vector3, _type, _update = true):
+	Print.error("Attempted to call place_block on chunk base class!")
+
+
+func break_block(_local_pos: Vector3, _update = true):
+	Print.error("Attempted to call break_block on chunk base class!")
 
 
 func update():

@@ -24,8 +24,22 @@ var mesh_instance: MeshInstance = null
 
 var material = preload("res://Assets/texturemat.tres")
 
+
 func _ready():
 	material.albedo_texture.set_flags(2)
+
+
+func place_block(local_pos: Vector3, type, regen = true):
+	blocks[local_pos.x][local_pos.y][local_pos.z] = type
+	if regen:
+		update()
+
+
+func break_block(local_pos: Vector3, regen = true):
+	blocks[local_pos.x][local_pos.y][local_pos.z] = WorldGen.AIR
+	if regen:
+		update()
+
 
 func update():
 	# Unload chunk.

@@ -6,25 +6,13 @@ onready var block = $BlockOutline
 onready var head = $Head
 
 var velocity := Vector3.ZERO
-var paused := false
 
 signal place_block(pos)
 signal break_block(pos)
 
 
-func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-
-func _input(event):
-	if Input.is_action_just_pressed("Start"):
-		paused = !paused
-		if paused:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	if paused:
+func _input(event):	
+	if Globals.paused:
 		return
 	
 	if event is InputEventMouseMotion:

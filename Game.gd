@@ -19,12 +19,34 @@ func _ready():
 	# Load only the chunks immediately surrounding the player, then add more while the player is in the game.
 	var load_radius = Globals.load_radius
 	Globals.load_radius = 1
-	chunks.load_chunks(_player_pos_to_chunk_pos(player.translation), chunk_scene, false)
-	Globals.load_radius = load_radius
-	chunks.load_chunks(player_chunk_pos, chunk_scene)
+	chunks.load_chunks(player_chunk_pos, chunk_scene, false)
+	
+	# Load the rest of the chunks all at once.
+	if Globals.single_threaded_mode:
+		Globals.load_radius = load_radius
+		chunks.load_chunks(player_chunk_pos, chunk_scene)
+	else:
+		# Load the rest of the chunks asynchronously in a ring from the player outwards.
+		while (Globals.load_radius < load_radius):
+			Globals.load_radius += 1
+			chunks.load_chunks(player_chunk_pos, chunk_scene)
+
+	# Change the mouse mode only when we're done loading.
+	if Globals.capture_mouse_on_start:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _process(_delta):
+	if Input.is_action_just_pressed("Start"):
+		Globals.paused = !Globals.paused
+		if Globals.paused:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	if Input.is_action_just_pressed("Console"):
+		Console.toggle_console()
+	
 	var player_pos = _player_pos_to_chunk_pos(player.translation)
 	if player_pos != player_chunk_pos:
 		player_chunk_pos = player_pos
@@ -36,7 +58,7 @@ func _process(_delta):
 
 
 func _player_pos_to_chunk_pos(position: Vector3) -> Vector2:
-	var pos_round = (position / Globals.chunk_size).round()
+	var pos_round = (position / Globals.chunk_size).floor()
 	return Vector2(pos_round.x, pos_round.z)
 
 

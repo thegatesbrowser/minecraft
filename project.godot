@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Chunk",
 "language": "GDScript",
 "path": "res://Chunking/Chunk.gd"
+}, {
+"base": "Node",
+"class": "ChunkStatistics",
+"language": "GDScript",
+"path": "res://Chunking/Chunk_Statistics.gd"
 } ]
 _global_script_class_icons={
-"Chunk": ""
+"Chunk": "",
+"ChunkStatistics": ""
 }
 
 [application]
@@ -121,6 +127,11 @@ Look_Left={
 Look_Right={
 "deadzone": 0.5,
 "events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":1.0,"script":null)
+ ]
+}
+Console={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":10,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 
