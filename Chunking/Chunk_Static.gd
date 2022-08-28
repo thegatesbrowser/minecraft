@@ -33,18 +33,20 @@ func place_block(local_pos: Vector3, type, regen = true):
 	blocks[local_pos.x][local_pos.y][local_pos.z] = type
 	if regen:
 		update()
+		finalize()
 
 
 func break_block(local_pos: Vector3, regen = true):
 	blocks[local_pos.x][local_pos.y][local_pos.z] = WorldGen.AIR
 	if regen:
 		update()
+		finalize()
 
 
 func update():
 	# Unload chunk.
 	if mesh_instance != null:
-		mesh_instance.call_deferred("queue_free")
+		mesh_instance.queue_free()
 		mesh_instance = null
 	
 	# Generate new chunk.
@@ -63,7 +65,10 @@ func update():
 	mesh_instance.set_mesh(mesh)
 	
 	mesh_instance.create_trimesh_collision()
-	call_deferred("add_child", mesh_instance)
+
+
+func finalize():
+	add_child(mesh_instance)
 
 
 func check_transparent(pos: Vector3) -> bool:

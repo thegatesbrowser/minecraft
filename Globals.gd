@@ -7,6 +7,7 @@ export var single_threaded_mode := false
 export var capture_mouse_on_start := true
 
 # Chunk Generation Settings.
+export var world_seed := 0
 export var chunk_size := Vector3(16, 256, 16)
 export(int, 1, 50) var load_radius := 5 setget set_load_radius
 export(int, 2, 100) var unload_radius := 6 setget set_unload_radius
@@ -28,10 +29,15 @@ export var controller_sensitivity := Vector2(5, 2)
 export var max_look_vertical := 75
 export var controller_invert_look := false
 export var mouse_invert_look := false
+export var test_mode := true
 
 
 func _ready():
 	Print.level = print_level
+	randomize()
+	if world_seed == 0:
+		world_seed = randi()
+	WorldGen.set_seed(world_seed)
 
 
 func set_load_radius(value):

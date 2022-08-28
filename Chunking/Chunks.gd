@@ -1,32 +1,17 @@
 extends Spatial
 
-signal chunk_loaded(id)
-
-var exiting := false
 var chunks := {}
-var chunk_stats := {}
 var active_chunks := []
 var stale_chunks := []
-var ungenerated_chunks := []
-
-var chunk_threads := []
-var chunk_semaphores := []
-var chunk_mutex := Mutex.new()
-
-
-func _ready():
-	if !Globals.single_threaded_mode:
-		for i in Globals.chunk_loading_threads:
-			var t := Thread.new()
-			var err = t.start(self, "_generate_chunks_thread", [i])
-			if err:
-				Print.error("Chunk thread failed to start with error code %" % err)
-			chunk_threads.append(t)
-			chunk_semaphores.append(Semaphore.new())
+var chunks_to_generate := []
+var active_threads := 0
 
 
 func update_chunks(player_pos: Vector2, chunk_scene):
 	unload_chunks(player_pos)
+		# Only works in debug mode :-( I guess I'll have to actually optimize this thing...
+	if OS.get_static_memory_usage() > 1073741824 * Globals.max_game_memory_gb:
+		_free_stale_chunks()
 	load_chunks(player_pos, chunk_scene)
 
 
@@ -42,15 +27,14 @@ func unload_chunks(player_pos: Vector2):
 		stale_chunks.append(chunk)
 
 
-func load_chunks(player_pos: Vector2, chunk_scene, use_threading := true):
-	chunk_mutex.lock()
+func load_chunks(player_pos: Vector2, chunk_scene, atomic_load := false):
+	var num_new := 0
 	for i in range(-Globals.load_radius, Globals.load_radius):
 		for j in range(-Globals.load_radius, Globals.load_radius):
 			var chunk_pos = Vector2(player_pos.x + i, player_pos.y + j)
-
-			if !chunk_stats.has(chunk_pos):
-				chunk_stats[chunk_pos] = ChunkStatistics.new()
-
+			if ((player_pos - chunk_pos).length() > Globals.load_radius) and !atomic_load:
+				continue
+			
 			if chunks.has(chunk_pos):
 				var chunk = chunks[chunk_pos]
 				if stale_chunks.has(chunk):
@@ -58,50 +42,21 @@ func load_chunks(player_pos: Vector2, chunk_scene, use_threading := true):
 					active_chunks.append(chunk)
 					chunk.visible = true
 			else:
-				var chunk = chunk_scene.instance()
+				num_new += 1
+				var chunk: Chunk = chunk_scene.instance()
 				chunk.id = chunk_pos
-				chunk.set_position(chunk_pos.x, chunk_pos.y)
 				chunks[chunk_pos] = chunk
-				active_chunks.append(chunk)
-				
-				ungenerated_chunks.push_back(chunk)
-	
-	if ungenerated_chunks.size() == 0:
-		chunk_mutex.unlock()
-		return
-	
-	# Process the data now.
-	if use_threading and !Globals.single_threaded_mode:
-		Print.debug("Starting multithread chunk loading. # of Chunks: %s" % ungenerated_chunks.size())
-		for sem in chunk_semaphores:
-			sem.post()
-		chunk_mutex.unlock()
-	
+				chunk.update_position()
+				if atomic_load:
+					_generate_chunk(chunk, false)
+				else:
+					chunks_to_generate.append(chunk)
+	if atomic_load:
+		Print.debug("Finished loading %s chunks on the main thread." % num_new)
+	elif Globals.single_threaded_mode:
+		Print.debug("Queued %s chunks to load during idle time." % num_new)
 	else:
-		Print.debug("Starting main thread chunk loading. # of Chunks: %s" % ungenerated_chunks.size())
-		var ugen_chunks = ungenerated_chunks.duplicate()
-		ungenerated_chunks.clear()
-		chunk_mutex.unlock()
-		for c in ugen_chunks:
-			add_child(c)
-			c.generate()
-			yield(get_tree(),"idle_frame")
-			c.update()
-			yield(get_tree(),"idle_frame")
-		Print.debug("Finished loading %s chunks on main thread." % ugen_chunks.size())
-
-
-# Removes the oldest chunk from the chunks array.
-func free_stale_chunk():
-	if stale_chunks.size() > 0:
-		var chunk = stale_chunks[-1]
-		var _d = chunks.erase(chunk.id)
-		stale_chunks.erase(chunk)
-		chunk.queue_free()
-		Print.debug("Freed Stale Chunk.")
-	else:
-		Print.error("There are no stale chunks to free! Something is eating up memory!")
-
+		Print.debug("Queued %s chunks to load asynchronously." % num_new)
 
 func place_block(global_pos, chunk_id: Vector2, type):
 	if chunks.has(chunk_id):
@@ -116,64 +71,54 @@ func break_block(global_pos: Vector3, chunk_id: Vector2):
 	if chunks.has(chunk_id):
 		var chunk = chunks[chunk_id]
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
-		chunk.break_block(local_pos)
+		if local_pos.y > 1:
+			chunk.break_block(local_pos)
 	else:
 		Print.error("Player broke a block in a chunk that doesn't exist!")
-	
-	chunk_mutex.lock()
-	if chunk_stats.has(chunk_id):
-		pass
-	chunk_mutex.unlock()
 
 
-# Threadsafe API to generate chunk meshes.
-func _generate_chunks_thread(args: Array):
-	var thread_num: int = args[0]
-	Print.info("Thread %s is online and waiting to start." % thread_num)
-	chunk_semaphores[thread_num].wait()
-	Print.info("Thread %s is now working." % thread_num)
-	
-	while !exiting:
-		chunk_mutex.lock()
-		while ungenerated_chunks.size() > 0 and !exiting:
-			var chunk: Chunk = ungenerated_chunks.pop_front()
-			chunk_mutex.unlock()
-			
-			var time: int
-			# Generate the chunk (slow)
-			time = Time.get_ticks_usec()
-			chunk.generate()
-			var generate_time = Time.get_ticks_usec() - time
-
-			time = Time.get_ticks_usec()
-			chunk.update()
-			var update_time = Time.get_ticks_usec() - time
-						
-			if chunk_stats.has(chunk.id):
-				var stats: ChunkStatistics = chunk_stats[chunk.id]
-				stats.generate_time = generate_time
-				stats.update_time = update_time
-				stats.times_generated += 1
-			else:
-				Print.error("Chunk %s doesn't have any statistics associated!" % chunk.id)
-			
-			emit_signal("chunk_loaded", chunk.id)
-			call_deferred("add_child", chunk)
-			chunk_mutex.lock()
-		
-		chunk_mutex.unlock()
-		chunk_semaphores[thread_num].wait()
-	Print.info("Thread %s is shutting down." % thread_num)
+# Removes the oldest chunk from the chunks array.
+func _free_stale_chunks():
+	var num_to_free := Globals.load_radius * 4
+	if stale_chunks.size() < num_to_free:
+		Globals.unload_radius = int(max(2, Globals.unload_radius - 1))
+		# This is drastic, but we're trying to generate too many blocks, so we should get rid of the ones that are too far out.
+		Print.error("There are no more stale chunks to free! " + "Decreasing the chunk load and unload radius to " +\
+			"%s and %s to meet the hardware requirements." % [Globals.load_radius, Globals.unload_radius])
+	else:
+		for _i in num_to_free:
+			var chunk = stale_chunks[-1]
+			var _d = chunks.erase(chunk.id)
+			stale_chunks.erase(chunk)
+			chunk.queue_free()
+		Print.debug("Freed %s Stale Chunks." % num_to_free)
 
 
-func _exit_tree():
-	exiting = true
-	for sem in chunk_semaphores:
-		sem.post()
-	for i in chunk_threads.size():
-		Print.info("Waiting on thread %s." % i)
-		var thread: Thread = chunk_threads[i]
+func _process(_delta):
+	if active_threads < Globals.chunk_loading_threads and chunks_to_generate.size() > 0:
+		_generate_chunk(chunks_to_generate.pop_front(), !Globals.single_threaded_mode)
+		if chunks_to_generate.size() == 0:
+			Print.debug("Finished loading chunks.")
+
+
+func _generate_chunk(chunk: Chunk, use_threading := true):
+	if use_threading:
+		active_threads += 1
+		var thread := Thread.new()
+		var _d = thread.start(self, "_generate_chunk_thread", [chunk])
 		while thread.is_alive():
-			chunk_semaphores[i].post()
+			yield(get_tree(),"idle_frame")
 		thread.wait_to_finish()
-	Print.info("All threads have been collected.")
+		active_threads -= 1
+	else:
+		chunk.generate()
+		chunk.update()
+	chunk.finalize()
+	call_deferred("add_child", chunk)
+	active_chunks.append(chunk)
+
+
+func _generate_chunk_thread(args: Array):
+	var chunk = args[0]
+	chunk.generate()
+	chunk.update()

@@ -19,7 +19,7 @@ func _ready():
 	# Load only the chunks immediately surrounding the player, then add more while the player is in the game.
 	var load_radius = Globals.load_radius
 	Globals.load_radius = 1
-	chunks.load_chunks(player_chunk_pos, chunk_scene, false)
+	chunks.load_chunks(player_chunk_pos, chunk_scene, true)
 	
 	# Load the rest of the chunks all at once.
 	if Globals.single_threaded_mode:
@@ -43,6 +43,7 @@ func _process(_delta):
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			Globals.test_mode = false
 	
 	if Input.is_action_just_pressed("Console"):
 		Console.toggle_console()
@@ -51,10 +52,6 @@ func _process(_delta):
 	if player_pos != player_chunk_pos:
 		player_chunk_pos = player_pos
 		chunks.update_chunks(player_chunk_pos, chunk_scene)
-	
-	# Only works in debug mode :-( I guess I'll have to actually optimize this thing...
-	if OS.get_static_memory_usage() > 1073741824 * Globals.max_game_memory_gb:
-		chunks.free_stale_chunk()
 
 
 func _player_pos_to_chunk_pos(position: Vector3) -> Vector2:
@@ -67,4 +64,4 @@ func _on_Player_break_block(position: Vector3):
 
 
 func _on_Player_place_block(position: Vector3):
-	chunks.place_block(position, _player_pos_to_chunk_pos(position), WorldGen.STONE)
+	chunks.place_block(position, _player_pos_to_chunk_pos(position), WorldGen.WOOD1)

@@ -4,14 +4,16 @@ onready var camera = $Head/Camera
 onready var ray = $Head/RayCast
 onready var block = $BlockOutline
 onready var head = $Head
+onready var block_collider = $BlockOutline/Area
 
 var velocity := Vector3.ZERO
+var block_is_inside_character := false
 
 signal place_block(pos)
 signal break_block(pos)
 
 
-func _input(event):	
+func _input(event):
 	if Globals.paused:
 		return
 	
@@ -33,6 +35,13 @@ func rotate_head(amount_lr: float, amount_ud: float, inverted: bool):
 
 
 func _physics_process(delta):
+	if Globals.paused:
+		if Globals.test_mode:
+			rotate_head(0.1, 0, false)
+		if Input.is_action_just_pressed("Jump"):
+			Globals.test_mode = true
+		return
+	
 	var movement := Vector3.ZERO
 	movement.y = velocity.y - (Globals.gravity * delta)
 	
@@ -49,6 +58,9 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Jump"):
 		movement += Vector3.UP * Globals.jump_speed
 	
+	elif Input.is_action_pressed("Jump"):
+		movement.y += (Globals.gravity * 0.9 * delta)
+	
 	velocity = move_and_slide(movement)
 	
 	if ray.is_colliding():
@@ -62,6 +74,15 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("Mine"):
 			emit_signal("break_block", pos)
 		if Input.is_action_just_pressed("Build"):
-			emit_signal("place_block", pos + normal)
+			if !block_is_inside_character:
+				emit_signal("place_block", pos + normal)
 	else:
 		block.visible = false
+
+
+func _on_Area_body_entered(_body):
+	block_is_inside_character = true
+
+
+func _on_Area_body_exited(_body):
+	block_is_inside_character = false
