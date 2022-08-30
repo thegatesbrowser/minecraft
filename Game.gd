@@ -7,6 +7,7 @@ onready var chunk_scene_3 := preload("res://Chunking/Chunk_Static.tscn")
 
 onready var player := $Player
 onready var chunks := $Chunks
+onready var env: Environment = $WorldEnvironment.get_environment()
 
 var player_chunk_pos := Vector2.ZERO
 var chunk_scene
@@ -34,6 +35,9 @@ func _ready():
 	# Change the mouse mode only when we're done loading.
 	if Globals.capture_mouse_on_start:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	# Set the draw distance to match our settings.
+	_set_draw_distance()
 
 
 func _process(_delta):
@@ -52,6 +56,19 @@ func _process(_delta):
 	if player_pos != player_chunk_pos:
 		player_chunk_pos = player_pos
 		chunks.update_chunks(player_chunk_pos, chunk_scene)
+
+
+func _set_draw_distance():
+	var distance = (Globals.load_radius) * Globals.chunk_size.x
+	if Globals.no_fog:
+		$Player/Head/Camera.far = distance * 10
+		env.fog_enabled = false
+		env.dof_blur_far_enabled = false
+	else:
+		$Player/Head/Camera.far = distance * 1.25
+		env.fog_enabled = true
+		env.fog_depth_begin = distance - min(50, distance * 0.1)
+		env.fog_depth_end = distance
 
 
 func _player_pos_to_chunk_pos(position: Vector3) -> Vector2:

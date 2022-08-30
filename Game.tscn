@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Chunking/Chunks.gd" type="Script" id=3]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+background_color = Color( 0.501961, 0.811765, 1, 1 )
+ambient_light_color = Color( 0.360784, 0.360784, 0.360784, 1 )
+fog_color = Color( 0.501961, 0.811765, 1, 1 )
+fog_depth_begin = 100.0
+fog_depth_end = 200.0
+dof_blur_far_quality = 0
 
 [node name="Game" type="Spatial"]
 script = ExtResource( 1 )
@@ -30,6 +39,14 @@ text = "+"
 [node name="DebugOverlay" type="Control" parent="Overlay"]
 margin_right = 40.0
 margin_bottom = 40.0
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.941347, 0.0816227, -0.32742, 0.33744, -0.227701, 0.913393, 0, -0.970304, -0.241888, 0, 0, 0 )
+shadow_enabled = true
+shadow_color = Color( 0.290196, 0.290196, 0.290196, 1 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
 
 [connection signal="break_block" from="Player" to="." method="_on_Player_break_block"]
 [connection signal="place_block" from="Player" to="." method="_on_Player_place_block"]

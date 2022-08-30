@@ -5,6 +5,7 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 export(Print.Level) var print_level := Print.Level.WARNING
 export var single_threaded_mode := false
 export var capture_mouse_on_start := true
+export var no_fog := false
 
 # Chunk Generation Settings.
 export var world_seed := 0

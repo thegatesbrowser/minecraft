@@ -51,12 +51,14 @@ func load_chunks(player_pos: Vector2, chunk_scene, atomic_load := false):
 					_generate_chunk(chunk, false)
 				else:
 					chunks_to_generate.append(chunk)
-	if atomic_load:
-		Print.debug("Finished loading %s chunks on the main thread." % num_new)
-	elif Globals.single_threaded_mode:
-		Print.debug("Queued %s chunks to load during idle time." % num_new)
-	else:
-		Print.debug("Queued %s chunks to load asynchronously." % num_new)
+	if num_new > 0:
+		if atomic_load:
+			Print.debug("Finished loading %s chunks on the main thread." % num_new)
+		elif Globals.single_threaded_mode:
+			Print.debug("Queued %s chunks to load during idle time." % num_new)
+		else:
+			Print.debug("Queued %s chunks to load asynchronously." % num_new)
+
 
 func place_block(global_pos, chunk_id: Vector2, type):
 	if chunks.has(chunk_id):

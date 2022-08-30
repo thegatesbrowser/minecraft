@@ -39,10 +39,12 @@ shape = SubResource( 1 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 layers = 32
+cast_shadow = 0
 mesh = SubResource( 2 )
 
 [node name="BlockOutline" type="MeshInstance" parent="."]
 visible = false
+cast_shadow = 0
 mesh = SubResource( 4 )
 material/0 = SubResource( 5 )
 
@@ -59,13 +61,14 @@ shape = SubResource( 7 )
 [node name="Head" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.8, 0 )
 layers = 32
+cast_shadow = 0
 mesh = SubResource( 3 )
 
 [node name="Camera" type="Camera" parent="Head"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3 )
 cull_mask = 1048543
 near = 0.01
-far = 1000.0
+far = 200.0
 
 [node name="RayCast" type="RayCast" parent="Head"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.35 )

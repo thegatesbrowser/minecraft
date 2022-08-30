@@ -163,7 +163,7 @@ func get_tree_dimensions(x: int, z:int, rand: RandomNumberGenerator) -> Tree_Obj
 	tree.top_height = rand.randi_range(1, 2)
 	if biome_percent > 0.7 and rand.randf() < 0.5:
 		tree.leaf_type = LEAVES2
-		tree.trunk_type = WOOD2
+		tree.trunk_type = LOG2
 	return tree
 
 
