@@ -31,6 +31,8 @@ func _ready():
 		while (Globals.load_radius < load_radius):
 			Globals.load_radius += 1
 			chunks.load_chunks(player_chunk_pos, chunk_scene)
+	
+	Globals.load_radius = load_radius
 
 	# Change the mouse mode only when we're done loading.
 	if Globals.capture_mouse_on_start:

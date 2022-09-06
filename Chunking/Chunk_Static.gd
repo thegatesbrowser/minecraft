@@ -101,7 +101,7 @@ func create_block(pos: Vector3):
 
 func create_face(face, pos: Vector3, texture_atlas_offset):
 	# a+------+b 
-	#  |      | b-b-a
+	#  |      | b-c-a
 	#  |      | b-d-c
 	# c+------+d
 	var a = vertices[face[0]] + pos

@@ -9,6 +9,7 @@ var blocks := []
 func update_position():
 	translation = Vector3(id.x * Globals.chunk_size.x, 0, id.y * Globals.chunk_size.z)
 
+
 func place_block(_local_pos: Vector3, _type, _update = true):
 	Print.error("Attempted to call place_block on chunk base class!")
 
