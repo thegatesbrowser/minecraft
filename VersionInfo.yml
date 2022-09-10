@@ -1,10 +1,10 @@
 variables:
   GROUP_NAME: SdgGames
-  GAME_NAME: template
+  GAME_NAME: Minemark
 
   # Major.Stable.Unstable
   # Major release is a public game release or re-launch
   # Stable is used for any public update that is not a game launch
   # Unstable is incremented for every frequent (biweekly?) release
-  RELEASE_NUMBER: "1.0.0"
+  RELEASE_NUMBER: "1.1.0"
   GODOT_VERSION: "3.5"
