@@ -1,0 +1,93 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/fps_counter/Counter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Statistics/DebugOverlay.gd" type="Script" id=2]
+[ext_resource path="res://addons/fps_counter/Menu_Theme.tres" type="Theme" id=4]
+
+[node name="DebugOverlay" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+chunk_invalid_color = Color( 0, 0, 0, 0.470588 )
+chunk_started_color = Color( 0.898039, 1, 0, 0.470588 )
+chunk_generated_color = Color( 0, 1, 1, 0.470588 )
+chunk_active_color = Color( 0.498039, 1, 0, 0.470588 )
+chunk_inactive_color = Color( 0.960784, 0.960784, 0.862745, 0.470588 )
+chunk_purged_color = Color( 0.862745, 0.0784314, 0.235294, 0.470588 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 872.0
+margin_bottom = 270.0
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+margin_bottom = 270.0
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/MarginContainer"]
+margin_bottom = 270.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+margin_left = 4.0
+margin_right = 388.0
+margin_bottom = 270.0
+
+[node name="Timing_Stats" type="Label" parent="HBoxContainer/MarginContainer2"]
+margin_right = 384.0
+margin_bottom = 270.0
+size_flags_vertical = 0
+theme = ExtResource( 4 )
+text = "
+ Chunk Generation Times:
+     Min: 0.13
+     Max: 2.24
+     Avg: 1.46
+
+ Chunk Render Times:        
+     Min: 0.20
+     Max: 0.53
+     Avg: 0.38
+
+ Memory used (MB):            0 
+ Memory Per Chunk (Estimate): 0"
+
+[node name="MarginContainer3" type="MarginContainer" parent="HBoxContainer"]
+margin_left = 392.0
+margin_right = 872.0
+margin_bottom = 270.0
+
+[node name="Chunk_Counts" type="Label" parent="HBoxContainer/MarginContainer3"]
+margin_right = 480.0
+margin_bottom = 228.0
+size_flags_vertical = 0
+theme = ExtResource( 4 )
+text = "
+ Chunks Awaiting Render:             0
+ Chunks Active:                      0
+ Chunks Disabled:                    0
+
+ Total Chunks Generated:             18 
+ Total Chunks Rendered:              18
+ Total Chunks Unloaded:              0
+ Total Chunks Purged:                0
+ T. Chunks Re-Activated:             0
+"
+
+[node name="MarginContainer4" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Counter" parent="MarginContainer4" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_right = 1600.0
+
+[node name="Reset_Timer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[connection signal="timeout" from="Reset_Timer" to="." method="_on_Reset_Timer_timeout"]

@@ -9,18 +9,19 @@ radius = 0.4
 radius = 0.4
 mid_height = 0.7
 
-[sub_resource type="CubeMesh" id=4]
-size = Vector3( 1.1, 1.1, 1.1 )
-
-[sub_resource type="SpatialMaterial" id=5]
-flags_transparent = true
-albedo_color = Color( 1, 0.929412, 0.556863, 0.180392 )
-
 [sub_resource type="BoxShape" id=6]
 extents = Vector3( 0.5, 1, 1 )
 
 [sub_resource type="BoxShape" id=7]
 extents = Vector3( 1, 1, 0.5 )
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 0.01, 1.005, 0.01 )
+
+[sub_resource type="SpatialMaterial" id=9]
+flags_unshaded = true
+flags_do_not_receive_shadows = true
+albedo_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="CubeMesh" id=3]
 size = Vector3( 0.7, 0.7, 0.7 )
@@ -42,11 +43,7 @@ layers = 32
 cast_shadow = 0
 mesh = SubResource( 2 )
 
-[node name="BlockOutline" type="MeshInstance" parent="."]
-visible = false
-cast_shadow = 0
-mesh = SubResource( 4 )
-material/0 = SubResource( 5 )
+[node name="BlockOutline" type="Spatial" parent="."]
 
 [node name="Area" type="Area" parent="BlockOutline"]
 collision_layer = 0
@@ -58,8 +55,94 @@ shape = SubResource( 6 )
 [node name="CollisionShape2" type="CollisionShape" parent="BlockOutline/Area"]
 shape = SubResource( 7 )
 
+[node name="Visible_Block" type="Spatial" parent="BlockOutline"]
+
+[node name="Edge" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge2" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge3" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, 0.5, 0 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge4" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, -0.5, 0 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge5" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge6" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge7" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, 0.5, 0 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge8" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, -0.5, 0 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge9" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, 0.5 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge10" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0.5 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge11" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, -0.5 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="Edge12" type="MeshInstance" parent="BlockOutline/Visible_Block"]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, -0.5 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
 [node name="Head" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.8, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 layers = 32
 cast_shadow = 0
 mesh = SubResource( 3 )
@@ -74,6 +157,12 @@ far = 200.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.35 )
 enabled = true
 cast_to = Vector3( 0, 0, -10 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+light_color = Color( 1, 0.984314, 0.752941, 1 )
+light_energy = 0.5
+shadow_enabled = true
+omni_range = 15.0
 
 [connection signal="body_entered" from="BlockOutline/Area" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="BlockOutline/Area" to="." method="_on_Area_body_exited"]

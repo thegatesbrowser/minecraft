@@ -10,11 +10,11 @@ export var no_fog := false
 # Chunk Generation Settings.
 export var world_seed := 0
 export var chunk_size := Vector3(16, 256, 16)
-export(int, 1, 50) var load_radius := 5 setget set_load_radius
-export(int, 2, 100) var unload_radius := 6 setget set_unload_radius
+export(int, 1, 50) var load_radius := 5
+export(int, 1, 20) var extra_load_distance := 5
+export var max_stale_chunks := 2000
 
 # Configurable setting based on user's hardware.
-export var max_game_memory_gb := 1
 export var chunk_loading_threads := 7
 export var reduce_radius_on_thread_count_exceeded := true
 
@@ -32,6 +32,8 @@ export var controller_invert_look := false
 export var mouse_invert_look := false
 export var test_mode := true
 
+var current_block := 0
+
 
 func _ready():
 	Print.level = print_level
@@ -39,14 +41,4 @@ func _ready():
 	if world_seed == 0:
 		world_seed = randi()
 	WorldGen.set_seed(world_seed)
-
-
-func set_load_radius(value):
-	load_radius = value
-	if unload_radius <= load_radius:
-		unload_radius = load_radius + 1
-
-func set_unload_radius(value):
-	unload_radius = value
-	if load_radius >= unload_radius:
-		load_radius = unload_radius - 1
+	current_block = WorldGen.WOOD1

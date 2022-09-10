@@ -1,0 +1,405 @@
+[gd_scene load_steps=35 format=2]
+
+[ext_resource path="res://Player/Selection_Buttons.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Atlas/leaf.tres" type="Texture" id=2]
+[ext_resource path="res://Assets/Atlas/leaf2.tres" type="Texture" id=3]
+[ext_resource path="res://Assets/Atlas/wood.tres" type="Texture" id=4]
+[ext_resource path="res://Assets/Atlas/glass.tres" type="Texture" id=5]
+[ext_resource path="res://Assets/Atlas/wood2.tres" type="Texture" id=6]
+[ext_resource path="res://Assets/Atlas/grass.tres" type="Texture" id=7]
+[ext_resource path="res://Assets/Atlas/Frame1.tres" type="Texture" id=8]
+[ext_resource path="res://Assets/Atlas/Frame2.tres" type="Texture" id=9]
+[ext_resource path="res://Assets/Atlas/dirt.tres" type="Texture" id=10]
+[ext_resource path="res://Assets/Atlas/log.tres" type="Texture" id=11]
+[ext_resource path="res://Assets/Atlas/stone.tres" type="Texture" id=12]
+[ext_resource path="res://Assets/Atlas/log2.tres" type="Texture" id=13]
+[ext_resource path="res://Assets/Atlas/Frame3.tres" type="Texture" id=14]
+
+[sub_resource type="InputEventAction" id=3]
+action = "1"
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 3 )
+
+[sub_resource type="InputEventAction" id=4]
+action = "2"
+
+[sub_resource type="ShortCut" id=5]
+shortcut = SubResource( 4 )
+
+[sub_resource type="InputEventAction" id=6]
+action = "3"
+
+[sub_resource type="ShortCut" id=7]
+shortcut = SubResource( 6 )
+
+[sub_resource type="InputEventAction" id=8]
+action = "4"
+
+[sub_resource type="ShortCut" id=9]
+shortcut = SubResource( 8 )
+
+[sub_resource type="InputEventAction" id=10]
+action = "5"
+
+[sub_resource type="ShortCut" id=11]
+shortcut = SubResource( 10 )
+
+[sub_resource type="InputEventAction" id=12]
+action = "6"
+
+[sub_resource type="ShortCut" id=13]
+shortcut = SubResource( 12 )
+
+[sub_resource type="InputEventAction" id=14]
+action = "7"
+
+[sub_resource type="ShortCut" id=15]
+shortcut = SubResource( 14 )
+
+[sub_resource type="InputEventAction" id=16]
+action = "8"
+
+[sub_resource type="ShortCut" id=17]
+shortcut = SubResource( 16 )
+
+[sub_resource type="InputEventAction" id=18]
+action = "9"
+
+[sub_resource type="ShortCut" id=19]
+shortcut = SubResource( 18 )
+
+[sub_resource type="InputEventAction" id=20]
+action = "0"
+
+[sub_resource type="ShortCut" id=21]
+shortcut = SubResource( 20 )
+
+[node name="Selection_Buttons" type="CenterContainer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -800.0
+margin_top = -132.0
+margin_right = -267.0
+margin_bottom = -100.0
+rect_scale = Vector2( 3, 3 )
+mouse_filter = 1
+script = ExtResource( 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 88.0
+margin_right = 444.0
+margin_bottom = 32.0
+
+[node name="Grass" type="TextureButton" parent="HBoxContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 2 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Grass"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Grass/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 7 )
+
+[node name="Dirt" type="TextureButton" parent="HBoxContainer"]
+margin_left = 36.0
+margin_right = 68.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 5 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Dirt"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Dirt/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 10 )
+
+[node name="Stone" type="TextureButton" parent="HBoxContainer"]
+margin_left = 72.0
+margin_right = 104.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 7 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Stone"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Stone/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 12 )
+
+[node name="Glass" type="TextureButton" parent="HBoxContainer"]
+margin_left = 108.0
+margin_right = 140.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 9 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Glass"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Glass/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 5 )
+
+[node name="Log1" type="TextureButton" parent="HBoxContainer"]
+margin_left = 144.0
+margin_right = 176.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 11 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Log1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Log1/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 11 )
+
+[node name="Wood" type="TextureButton" parent="HBoxContainer"]
+margin_left = 180.0
+margin_right = 212.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+pressed = true
+action_mode = 0
+shortcut = SubResource( 13 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Wood"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Wood/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 4 )
+
+[node name="Log2" type="TextureButton" parent="HBoxContainer"]
+margin_left = 216.0
+margin_right = 248.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 15 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Log2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Log2/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 13 )
+
+[node name="Wood2" type="TextureButton" parent="HBoxContainer"]
+margin_left = 252.0
+margin_right = 284.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 17 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Wood2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Wood2/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 6 )
+
+[node name="Leaf1" type="TextureButton" parent="HBoxContainer"]
+margin_left = 288.0
+margin_right = 320.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 19 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Leaf1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Leaf1/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 2 )
+
+[node name="Leaf2" type="TextureButton" parent="HBoxContainer"]
+margin_left = 324.0
+margin_right = 356.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 21 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 14 )
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Leaf2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Leaf2/CenterContainer"]
+show_behind_parent = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+
+[connection signal="pressed" from="HBoxContainer/Grass" to="." method="_on_Grass_pressed"]
+[connection signal="pressed" from="HBoxContainer/Dirt" to="." method="_on_Dirt_pressed"]
+[connection signal="pressed" from="HBoxContainer/Stone" to="." method="_on_Stone_pressed"]
+[connection signal="pressed" from="HBoxContainer/Glass" to="." method="_on_Glass_pressed"]
+[connection signal="pressed" from="HBoxContainer/Log1" to="." method="_on_Log1_pressed"]
+[connection signal="pressed" from="HBoxContainer/Wood" to="." method="_on_Wood_pressed"]
+[connection signal="pressed" from="HBoxContainer/Log2" to="." method="_on_Log2_pressed"]
+[connection signal="pressed" from="HBoxContainer/Wood2" to="." method="_on_Wood2_pressed"]
+[connection signal="pressed" from="HBoxContainer/Leaf1" to="." method="_on_Leaf1_pressed"]
+[connection signal="pressed" from="HBoxContainer/Leaf2" to="." method="_on_Leaf2_pressed"]
