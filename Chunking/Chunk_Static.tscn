@@ -2,5 +2,5 @@
 
 [ext_resource path="res://Chunking/Chunk_Static.gd" type="Script" id=1]
 
-[node name="Chunk_Static" type="StaticBody"]
+[node name="Chunk_Static" type="Spatial"]
 script = ExtResource( 1 )

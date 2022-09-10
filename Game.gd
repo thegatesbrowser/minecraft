@@ -8,38 +8,23 @@ onready var chunk_scene_3 := preload("res://Chunking/Chunk_Static.tscn")
 onready var player := $Player
 onready var chunks := $Chunks
 onready var env: Environment = $WorldEnvironment.get_environment()
+onready var debug := $Overlay/DebugOverlay
 
-var player_chunk_pos := Vector2.ZERO
-var chunk_scene
+var player_pos := Vector2.ZERO
 
 
 func _ready():
-	chunk_scene = chunk_scene_0
-	player_chunk_pos = _player_pos_to_chunk_pos(player.translation)
+	chunks.chunk_scene = chunk_scene_0
 	
-	# Load only the chunks immediately surrounding the player, then add more while the player is in the game.
-	var load_radius = Globals.load_radius
-	Globals.load_radius = 1
-	chunks.load_chunks(player_chunk_pos, chunk_scene, true)
+	# Generate chunk 0 so we don't fall through the world.
+	chunks.load_chunk(_player_pos_to_chunk_pos(player.translation), 0, 0, false)
 	
-	# Load the rest of the chunks all at once.
-	if Globals.single_threaded_mode:
-		Globals.load_radius = load_radius
-		chunks.load_chunks(player_chunk_pos, chunk_scene)
-	else:
-		# Load the rest of the chunks asynchronously in a ring from the player outwards.
-		while (Globals.load_radius < load_radius):
-			Globals.load_radius += 1
-			chunks.load_chunks(player_chunk_pos, chunk_scene)
-	
-	Globals.load_radius = load_radius
-
 	# Change the mouse mode only when we're done loading.
 	if Globals.capture_mouse_on_start:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	# Set the draw distance to match our settings.
-	_set_draw_distance()
+	_set_draw_distance(Globals.load_radius)
 
 
 func _process(_delta):
@@ -54,14 +39,13 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Console"):
 		Console.toggle_console()
 	
-	var player_pos = _player_pos_to_chunk_pos(player.translation)
-	if player_pos != player_chunk_pos:
-		player_chunk_pos = player_pos
-		chunks.update_chunks(player_chunk_pos, chunk_scene)
+	player_pos = _player_pos_to_chunk_pos(player.translation)
+	chunks.update_chunks(player_pos)
+	debug.update_chunks(player_pos)
 
 
-func _set_draw_distance():
-	var distance = (Globals.load_radius) * Globals.chunk_size.x
+func _set_draw_distance(radius: int):
+	var distance = (radius) * Globals.chunk_size.x
 	if Globals.no_fog:
 		$Player/Head/Camera.far = distance * 10
 		env.fog_enabled = false
@@ -83,4 +67,4 @@ func _on_Player_break_block(position: Vector3):
 
 
 func _on_Player_place_block(position: Vector3):
-	chunks.place_block(position, _player_pos_to_chunk_pos(position), WorldGen.WOOD1)
+	chunks.place_block(position, _player_pos_to_chunk_pos(position), Globals.current_block)

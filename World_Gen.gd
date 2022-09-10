@@ -24,6 +24,7 @@ enum {
 	LOG2,
 	LEAVES2,
 	WOOD2,
+	GLASS,
 	STUMP # Not real block type, signals that we need a tree here.
 }
 
@@ -54,7 +55,7 @@ const types = {
 	LEAVES1:{
 		TOP:Vector2(6, 0), BOTTOM:Vector2(6, 0), LEFT:Vector2(6, 0),
 		RIGHT:Vector2(6, 0), FRONT:Vector2(6, 0), BACK:Vector2(6, 0),
-		SOLID:true
+		SOLID:false
 	},
 	WOOD1:{
 		TOP:Vector2(7, 0), BOTTOM:Vector2(7, 0), LEFT:Vector2(7, 0),
@@ -69,12 +70,17 @@ const types = {
 	LEAVES2:{
 		TOP:Vector2(6, 1), BOTTOM:Vector2(6, 1), LEFT:Vector2(6, 1),
 		RIGHT:Vector2(6, 1), FRONT:Vector2(6, 1), BACK:Vector2(6, 1),
-		SOLID:true
+		SOLID:false
 	},
 	WOOD2:{
 		TOP:Vector2(7, 1), BOTTOM:Vector2(7, 1), LEFT:Vector2(7, 1),
 		RIGHT:Vector2(7,1), FRONT:Vector2(7, 1), BACK:Vector2(7, 1),
 		SOLID:true
+	},
+	GLASS:{
+		TOP:Vector2(2, 1), BOTTOM:Vector2(2, 1), LEFT:Vector2(2, 1),
+		RIGHT:Vector2(2,1), FRONT:Vector2(2, 1), BACK:Vector2(2, 1),
+		SOLID:false
 	}
 }
 

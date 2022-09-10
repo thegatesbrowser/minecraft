@@ -36,6 +36,7 @@ func rotate_head(amount_lr: float, amount_ud: float, inverted: bool):
 
 func _physics_process(delta):
 	if Globals.paused:
+		block.visible = false
 		if Globals.test_mode:
 			rotate_head(0.1, 0, false)
 		if Input.is_action_just_pressed("Jump"):
