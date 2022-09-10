@@ -19,9 +19,8 @@ variables:
   image: barichello/godot-ci:$GODOT_VERSION
   script:
     - mkdir -v -p build/$BUILD_FOLDER
-    - cd $GAME_FOLDER/
-    - godot -v $BUILD_FLAGS --export "$BUILD_TARGET" ../build/$BUILD_FOLDER/$EXPORT_NAME_INTERNAL$BUILD_FILE_EXTENSION
-    - cp -R Mods/ ../build/$BUILD_FOLDER/Mods/
+    - echo godot -v $EXPORT_MODE "$BUILD_TARGET" build/$BUILD_FOLDER/$EXPORT_NAME_INTERNAL$BUILD_FILE_EXTENSION
+    - godot -v $EXPORT_MODE "$BUILD_TARGET" build/$BUILD_FOLDER/$EXPORT_NAME_INTERNAL$BUILD_FILE_EXTENSION
   artifacts:
     name: $EXPORT_NAME_INTERNAL
     paths:
@@ -32,7 +31,8 @@ variables:
   image: barichello/godot-ci:$GODOT_VERSION
   script:
     - mkdir -v -p build/$BUILD_FOLDER
-    - godot -v $BUILD_FLAGS --export "$BUILD_TARGET" build/$BUILD_FOLDER/$EXPORT_NAME_RELEASE$BUILD_FILE_EXTENSION
+    - echo godot -v $EXPORT_MODE "$BUILD_TARGET" build/$BUILD_FOLDER/$EXPORT_NAME_RELEASE$BUILD_FILE_EXTENSION
+    - godot -v $EXPORT_MODE "$BUILD_TARGET" build/$BUILD_FOLDER/$EXPORT_NAME_RELEASE$BUILD_FILE_EXTENSION
   artifacts:
     name: $EXPORT_NAME_RELEASE
     paths:
@@ -43,7 +43,8 @@ variables:
   image: barichello/godot-ci:$GODOT_VERSION
   script:
     - mkdir -v -p build/$BUILD_FOLDER
-    - godot -v $BUILD_FLAGS --export "$BUILD_TARGET" build/$BUILD_FOLDER/index.html
+    - echo godot -v $EXPORT_MODE "$BUILD_TARGET" build/$BUILD_FOLDER/index.html
+    - godot -v $EXPORT_MODE  "$BUILD_TARGET" build/$BUILD_FOLDER/index.html
   artifacts:
     name: $EXPORT_NAME_RELEASE
     paths:
@@ -56,56 +57,56 @@ variables:
     BUILD_FILE_EXTENSION: .x86_64
     BUILD_TARGET: "Linux/X11"
     BUILD_FOLDER: "linux-release"
-    BUILD_FLAGS: ""
+    EXPORT_MODE: "--export"
 
 .linux_debug: &linux_debug
   variables:
     BUILD_FILE_EXTENSION: .x86_64
     BUILD_TARGET: "Linux/X11"
     BUILD_FOLDER: "linux-debug"
-    BUILD_FLAGS: "-d"
+    EXPORT_MODE: "--export-debug"
 
 .windows_release: &windows_release
   variables:
     BUILD_FILE_EXTENSION: .exe
     BUILD_TARGET: "Windows Desktop"
     BUILD_FOLDER: "windows-release"
-    BUILD_FLAGS: ""
+    EXPORT_MODE: "--export"
 
 .windows_debug: &windows_debug
   variables:
     BUILD_FILE_EXTENSION: .exe
     BUILD_TARGET: "Windows Desktop"
     BUILD_FOLDER: "windows-debug"
-    BUILD_FLAGS: "-d"
+    EXPORT_MODE: "--export-debug"
 
 .mac_release: &mac_release
   variables:
     BUILD_FILE_EXTENSION: .zip
     BUILD_TARGET: "Mac OSX"
     BUILD_FOLDER: "mac-release"
-    BUILD_FLAGS: ""
+    EXPORT_MODE: "--export"
 
 .mac_debug: &mac_debug
   variables:
     BUILD_FILE_EXTENSION: .zip
     BUILD_TARGET: "Mac OSX"
     BUILD_FOLDER: "mac-debug"
-    BUILD_FLAGS: "-d"
+    EXPORT_MODE: "--export-debug"
 
 .web_release: &web_release
   variables:
     BUILD_FILE_EXTENSION: index.html
     BUILD_TARGET: "HTML5"
     BUILD_FOLDER: "web-release"
-    BUILD_FLAGS: ""
+    EXPORT_MODE: "--export"
 
 .web_debug: &web_debug
   variables:
     BUILD_FILE_EXTENSION: index.html
     BUILD_TARGET: "HTML5"
     BUILD_FOLDER: "web-debug"
-    BUILD_FLAGS: "-d"
+    EXPORT_MODE: "--export-debug"
 
 # =+=+=+=+=+=+=+= DEPLOY COMMON =+=+=+=+=+=+=+=
 .itch_deploy: &itch_deploy
