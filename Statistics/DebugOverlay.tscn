@@ -14,6 +14,7 @@ chunk_generated_color = Color( 0, 1, 1, 0.470588 )
 chunk_active_color = Color( 0.498039, 1, 0, 0.470588 )
 chunk_inactive_color = Color( 0.960784, 0.960784, 0.862745, 0.470588 )
 chunk_purged_color = Color( 0.862745, 0.0784314, 0.235294, 0.470588 )
+code_revision_identifier = "_Before"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 872.0
@@ -86,8 +87,20 @@ anchor_right = 0.0
 margin_left = 0.0
 margin_right = 1600.0
 
+[node name="Player_Pos" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -81.0
+margin_right = 192.0
+size_flags_vertical = 0
+theme = ExtResource( 4 )
+text = "Player Pos:
+100, 34, 12"
+align = 1
+valign = 1
+
 [node name="Reset_Timer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 5.0
 autostart = true
 
 [connection signal="timeout" from="Reset_Timer" to="." method="_on_Reset_Timer_timeout"]

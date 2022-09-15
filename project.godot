@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="BuilderMiner3DDeluxe"
-run/main_scene="res://Game.tscn"
+run/main_scene="res://Menus/Menu.tscn"
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
 config/icon="res://icon.png"
 
@@ -36,7 +36,7 @@ config/icon="res://icon.png"
 Console="*res://addons/quentincaffeino-console/src/Console.tscn"
 Print="*res://addons/logger/logger.gd"
 Globals="*res://Globals.tscn"
-WorldGen="*res://World_Gen.tscn"
+WorldGen="*res://Chunking/World_Gen.tscn"
 FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"
 
 [display]
@@ -200,4 +200,4 @@ Scroll_Down={
 
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://Assets/default_env.tres"

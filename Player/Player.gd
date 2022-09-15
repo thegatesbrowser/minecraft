@@ -14,7 +14,7 @@ signal break_block(pos)
 
 
 func _input(event):
-	if Globals.paused:
+	if Globals.paused or Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
 		return
 	
 	if event is InputEventMouseMotion:
@@ -37,14 +37,18 @@ func rotate_head(amount_lr: float, amount_ud: float, inverted: bool):
 func _physics_process(delta):
 	if Globals.paused:
 		block.visible = false
-		if Globals.test_mode:
-			rotate_head(0.1, 0, false)
-		if Input.is_action_just_pressed("Jump"):
-			Globals.test_mode = true
 		return
-	
+
 	var movement := Vector3.ZERO
 	movement.y = velocity.y - (Globals.gravity * delta)
+	if Globals.test_mode == Globals.TestMode.STATIC_LOAD:
+		rotate_head(0.1, 0, false)
+		velocity = move_and_slide(movement)
+		return
+	elif Globals.test_mode == Globals.TestMode.RUN_LOAD:
+		movement = global_transform.basis.z * Vector3.FORWARD * Globals.speed
+		velocity = move_and_slide(movement)
+		return
 	
 	var look_ud = Input.get_axis("Look_Down", "Look_Up") * Globals.controller_sensitivity.y
 	var look_lr = Input.get_axis("Look_Left", "Look_Right") * Globals.controller_sensitivity.x

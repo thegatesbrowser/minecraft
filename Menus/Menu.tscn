@@ -1,0 +1,332 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Main_Menu_Theme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/fps_counter/Menu_Theme.tres" type="Theme" id=2]
+[ext_resource path="res://Assets/MenuFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Assets/MenuLabelFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Menus/Menu.gd" type="Script" id=5]
+[ext_resource path="res://Menus/Menu_Slider.gd" type="Script" id=6]
+
+[sub_resource type="ButtonGroup" id=1]
+
+[node name="Menu" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+script = ExtResource( 5 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 111.0
+margin_top = 25.0
+margin_right = 1489.0
+margin_bottom = 875.0
+rect_min_size = Vector2( 0, 850 )
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1366.0
+margin_bottom = 1171.0
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+margin_right = 1366.0
+margin_bottom = 40.0
+theme = ExtResource( 1 )
+
+[node name="Play" type="Button" parent="ScrollContainer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 1366.0
+margin_bottom = 162.0
+theme = ExtResource( 2 )
+custom_fonts/font = ExtResource( 4 )
+text = "Play Game"
+
+[node name="Test_Static" type="Button" parent="ScrollContainer/VBoxContainer"]
+margin_top = 166.0
+margin_right = 1366.0
+margin_bottom = 284.0
+theme = ExtResource( 2 )
+custom_fonts/font = ExtResource( 4 )
+text = "Run Static Chunk Load Test"
+
+[node name="Test_Dynamic" type="Button" parent="ScrollContainer/VBoxContainer"]
+margin_top = 288.0
+margin_right = 1366.0
+margin_bottom = 406.0
+theme = ExtResource( 2 )
+custom_fonts/font = ExtResource( 4 )
+text = "Run Dynamic Chunk Load Test"
+
+[node name="Test_Manual" type="Button" parent="ScrollContainer/VBoxContainer"]
+margin_top = 410.0
+margin_right = 1366.0
+margin_bottom = 528.0
+theme = ExtResource( 2 )
+custom_fonts/font = ExtResource( 4 )
+text = "Run Manual Test"
+
+[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+margin_top = 532.0
+margin_right = 1366.0
+margin_bottom = 572.0
+theme = ExtResource( 1 )
+
+[node name="Performance_Label" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 576.0
+margin_right = 1366.0
+margin_bottom = 643.0
+theme = ExtResource( 1 )
+theme_type_variation = "Settings"
+custom_fonts/font = ExtResource( 3 )
+text = "Performance Settings:"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 647.0
+margin_right = 1366.0
+margin_bottom = 720.0
+theme = ExtResource( 1 )
+alignment = 1
+
+[node name="Potato" type="Button" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_right = 224.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "Potato"
+icon_align = 1
+
+[node name="Low" type="Button" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 228.0
+margin_right = 452.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "Low"
+icon_align = 1
+
+[node name="Medium" type="Button" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 456.0
+margin_right = 680.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "Medium"
+icon_align = 1
+
+[node name="High" type="Button" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 684.0
+margin_right = 909.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+pressed = true
+group = SubResource( 1 )
+text = "High"
+icon_align = 1
+
+[node name="Extreme" type="Button" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 913.0
+margin_right = 1137.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "F in Chat"
+icon_align = 1
+
+[node name="Custom" type="Button" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 1141.0
+margin_right = 1366.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "Custom"
+icon_align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+margin_top = 724.0
+margin_right = 1366.0
+margin_bottom = 764.0
+theme = ExtResource( 1 )
+
+[node name="Chunk_Radius" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 768.0
+margin_right = 1366.0
+margin_bottom = 835.0
+theme = ExtResource( 1 )
+script = ExtResource( 6 )
+
+[node name="Text" type="Label" parent="ScrollContainer/VBoxContainer/Chunk_Radius"]
+margin_right = 448.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 448, 0 )
+theme = ExtResource( 1 )
+text = "Chunk Load Radius:"
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Chunk_Radius"]
+margin_left = 452.0
+margin_right = 612.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 160, 0 )
+theme = ExtResource( 1 )
+text = "32"
+align = 2
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/Chunk_Radius"]
+margin_left = 616.0
+margin_right = 1366.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+max_value = 50.0
+value = 32.0
+
+[node name="Max_Unloaded_Chunks" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 839.0
+margin_right = 1366.0
+margin_bottom = 906.0
+theme = ExtResource( 1 )
+script = ExtResource( 6 )
+
+[node name="Text" type="Label" parent="ScrollContainer/VBoxContainer/Max_Unloaded_Chunks"]
+margin_right = 448.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 448, 0 )
+theme = ExtResource( 1 )
+text = "Max Stale Chunks:"
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Max_Unloaded_Chunks"]
+margin_left = 452.0
+margin_right = 612.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 160, 0 )
+theme = ExtResource( 1 )
+text = "10000"
+align = 2
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/Max_Unloaded_Chunks"]
+margin_left = 616.0
+margin_right = 1366.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+max_value = 50.0
+value = 32.0
+
+[node name="Thread_Count" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 910.0
+margin_right = 1366.0
+margin_bottom = 977.0
+theme = ExtResource( 1 )
+script = ExtResource( 6 )
+
+[node name="Text" type="Label" parent="ScrollContainer/VBoxContainer/Thread_Count"]
+margin_right = 451.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 448, 0 )
+theme = ExtResource( 1 )
+text = "Chunk Loading Threads:"
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Thread_Count"]
+margin_left = 455.0
+margin_right = 615.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 160, 0 )
+theme = ExtResource( 1 )
+text = "12"
+align = 2
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/Thread_Count"]
+margin_left = 619.0
+margin_right = 1366.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+max_value = 50.0
+value = 32.0
+
+[node name="HSeparator4" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+margin_top = 981.0
+margin_right = 1366.0
+margin_bottom = 1021.0
+theme = ExtResource( 1 )
+
+[node name="Other_Settings_Label" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 1025.0
+margin_right = 1366.0
+margin_bottom = 1092.0
+theme = ExtResource( 1 )
+theme_type_variation = "Settings"
+custom_fonts/font = ExtResource( 3 )
+text = "Other Settings:"
+align = 1
+
+[node name="Other_Settings" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 1096.0
+margin_right = 1366.0
+margin_bottom = 1171.0
+theme = ExtResource( 1 )
+
+[node name="Fog" type="CheckButton" parent="ScrollContainer/VBoxContainer/Other_Settings"]
+margin_right = 148.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+pressed = true
+text = "Fog"
+
+[node name="Invert_Mouse" type="CheckButton" parent="ScrollContainer/VBoxContainer/Other_Settings"]
+margin_left = 152.0
+margin_right = 475.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+text = "Invert Mouse"
+
+[node name="Invert_Controller" type="CheckButton" parent="ScrollContainer/VBoxContainer/Other_Settings"]
+margin_left = 479.0
+margin_right = 866.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+pressed = true
+text = "Invert Controller"
+
+[node name="Single_Threaded" type="CheckButton" parent="ScrollContainer/VBoxContainer/Other_Settings"]
+margin_left = 870.0
+margin_right = 1366.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+text = "Single-Threaded Mode"
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Test_Static" to="." method="_on_Test_Static_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Test_Dynamic" to="." method="_on_Test_Dynamic_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Test_Manual" to="." method="_on_Test_Manual_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/Potato" to="." method="_on_Settings_Preset_pressed" binds= [ 0 ]]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/Low" to="." method="_on_Settings_Preset_pressed" binds= [ 1 ]]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/Medium" to="." method="_on_Settings_Preset_pressed" binds= [ 2 ]]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/High" to="." method="_on_Settings_Preset_pressed" binds= [ 3 ]]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/Extreme" to="." method="_on_Settings_Preset_pressed" binds= [ 4 ]]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/Custom" to="." method="_on_Settings_Preset_pressed" binds= [ 5 ]]
+[connection signal="changed" from="ScrollContainer/VBoxContainer/Chunk_Radius" to="." method="_on_Chunk_Radius_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Chunk_Radius/HSlider" to="ScrollContainer/VBoxContainer/Chunk_Radius" method="_on_HSlider_value_changed"]
+[connection signal="changed" from="ScrollContainer/VBoxContainer/Max_Unloaded_Chunks" to="." method="_on_Max_Unloaded_Chunks_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Max_Unloaded_Chunks/HSlider" to="ScrollContainer/VBoxContainer/Max_Unloaded_Chunks" method="_on_HSlider_value_changed"]
+[connection signal="changed" from="ScrollContainer/VBoxContainer/Thread_Count" to="." method="_on_Thread_Count_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Thread_Count/HSlider" to="ScrollContainer/VBoxContainer/Thread_Count" method="_on_HSlider_value_changed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Other_Settings/Fog" to="." method="_on_Fog_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Other_Settings/Invert_Mouse" to="." method="_on_Invert_Mouse_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Other_Settings/Invert_Controller" to="." method="_on_Invert_Controller_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Other_Settings/Single_Threaded" to="." method="_on_SingleThreaded_toggled"]

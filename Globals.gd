@@ -10,13 +10,12 @@ export var no_fog := false
 # Chunk Generation Settings.
 export var world_seed := 0
 export var chunk_size := Vector3(16, 256, 16)
-export(int, 1, 50) var load_radius := 5
-export(int, 1, 20) var extra_load_distance := 5
+export(int, 1, 64) var load_radius := 16
 export var max_stale_chunks := 2000
+export var chunk_type := 0
 
 # Configurable setting based on user's hardware.
 export var chunk_loading_threads := 7
-export var reduce_radius_on_thread_count_exceeded := true
 
 # Physics settings.
 export var gravity := 20
@@ -30,9 +29,12 @@ export var controller_sensitivity := Vector2(5, 2)
 export var max_look_vertical := 75
 export var controller_invert_look := false
 export var mouse_invert_look := false
-export var test_mode := true
-
 var current_block := 0
+
+# Automated Testing
+enum TestMode {NONE, STATIC_LOAD, RUN_LOAD, RUN_MANUAL}
+export var test_mode := TestMode.NONE
+var settings_preset := ""
 
 
 func _ready():

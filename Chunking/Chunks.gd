@@ -6,10 +6,12 @@ signal chunk_updated(pos, gen_time)
 signal chunk_deactivated(pos)
 signal chunk_purged(pos)
 signal chunk_reactivated(pos)
+signal finished_loading
 
 var chunk_scene
 var chunks := {}
 var player_chunk_pos := Vector2.ZERO
+var loading_complete := false
 
 var active_threads := []
 var active_chunks := []
@@ -20,6 +22,9 @@ var generate_radius := 0
 
 # Load all chunks within the load radius, and unload chunks outside.
 func update_chunks(player_pos: Vector2):
+	if loading_complete and player_chunk_pos == player_pos:
+		return
+	
 	var chunks_to_remove = []
 	for chunk in active_chunks:
 		if player_pos.distance_to(chunk.id) > Globals.load_radius:
@@ -44,6 +49,7 @@ func load_chunks(player_pos: Vector2):
 	var direction = 1
 	var length = 1
 	
+	loading_complete = false
 	player_chunk_pos = player_pos
 	while length < (Globals.load_radius + 1) * 2:
 		while 2 * x * direction < length:
@@ -60,6 +66,9 @@ func load_chunks(player_pos: Vector2):
 			y = y + direction
 		direction = -1 * direction
 		length = length + 1
+	
+	loading_complete = true
+	emit_signal("finished_loading")
 
 
 func load_chunk(player_pos, x, y, use_threading := true):
@@ -163,3 +172,10 @@ func _generate_chunk_thread(args: Array):
 func _update_chunk_thread(args: Array):
 	var chunk = args[0]
 	chunk.update()
+
+
+#func _exit_tree():
+#	Print.info("Waiting for threads to finish before exiting!")
+#	for t in active_threads:
+#		t.wait_to_finish()
+#	Print.info("All threads have completed, !")
