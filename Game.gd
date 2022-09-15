@@ -1,9 +1,9 @@
 extends Spatial
 
-onready var chunk_scene_0 := preload("res://Chunking/Chunk_Static.tscn")
-onready var chunk_scene_1 := preload("res://Chunking/Chunk_Static.tscn")
-onready var chunk_scene_2 := preload("res://Chunking/Chunk_Static.tscn")
-onready var chunk_scene_3 := preload("res://Chunking/Chunk_Static.tscn")
+onready var chunk_scene_0 := preload("res://Chunking/Chunk_Simple.tscn")
+onready var chunk_scene_1 := preload("res://Chunking/Chunk_Mesh.tscn")
+onready var chunk_scene_2 := preload("res://Chunking/Chunk_Tileset.tscn")
+onready var chunk_scene_3 := preload("res://Chunking/Chunk_Ultimate.tscn")
 
 onready var player := $Player
 onready var chunks := $Chunks
@@ -14,7 +14,12 @@ var player_pos := Vector2.ZERO
 
 
 func _ready():
-	chunks.chunk_scene = chunk_scene_0
+	if Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
+		Globals.capture_mouse_on_start = false
+		Globals.paused = false
+	
+	var chunk_types = [chunk_scene_0, chunk_scene_1, chunk_scene_2, chunk_scene_3]
+	chunks.chunk_scene = chunk_types[Globals.chunk_type]
 	
 	# Generate chunk 0 so we don't fall through the world.
 	chunks.load_chunk(_player_pos_to_chunk_pos(player.translation), 0, 0, false)
@@ -34,7 +39,6 @@ func _process(_delta):
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			Globals.test_mode = false
 	
 	if Input.is_action_just_pressed("Console"):
 		Console.toggle_console()
@@ -42,6 +46,7 @@ func _process(_delta):
 	player_pos = _player_pos_to_chunk_pos(player.translation)
 	chunks.update_chunks(player_pos)
 	debug.update_chunks(player_pos)
+	debug.update_player_pos(player.translation)
 
 
 func _set_draw_distance(radius: int):

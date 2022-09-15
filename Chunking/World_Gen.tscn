@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://World_Gen.gd" type="Script" id=1]
+[ext_resource path="res://Chunking/World_Gen.gd" type="Script" id=1]
 
 [sub_resource type="OpenSimplexNoise" id=5]
 period = 240.0

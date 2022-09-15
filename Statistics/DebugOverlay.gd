@@ -2,10 +2,6 @@ extends Control
 
 enum Chunk_Statistics { INVALID, STARTED, GENERATED, ACTIVE, INACTIVE, PURGED }
 
-class General_Stats:
-	var stuff
-
-
 export var chunk_invalid_color := Color.black
 export var chunk_started_color := Color.yellow
 export var chunk_generated_color := Color.cyan
@@ -17,6 +13,8 @@ export var chunk_map_size := 400.0
 onready var grid := $HBoxContainer/MarginContainer/GridContainer
 onready var timing_stats_label = $HBoxContainer/MarginContainer2/Timing_Stats
 onready var chunk_counts_label = $HBoxContainer/MarginContainer3/Chunk_Counts
+onready var fps = $MarginContainer4/Counter
+onready var player_pos_label = $Player_Pos
 onready var chunks = $"../../Chunks"
 
 
@@ -45,14 +43,27 @@ var num_active := 0
 var num_unrendered := 0
 var num_inactive := 0
 
+var test_active := false
+var test_ending := false
+
+# Test file things.
+var test_log_file := File.new()
+const test_header = "Min Chunk Gen Time,Max Chunk Gen Time,Avg Chunk Gen Time," + \
+		"Min Chunk Render Time,Max Chunk Render Time,Avg Chunk Render Time," + \
+		"# Chunks Generated,# Chunks Updated,# Chunks Disabled,# Chunks Purged," + \
+		"Active Chunk Count,Inactive Chunk Count,Chunk Generation Radius," + \
+		"Total Memory Used,Min FPS,Max FPS,Avg FPS"
+const test_types := ["none", "Static", "Dynamic", "Manual"]
+export var code_revision_identifier := "_final"
+
 
 func _ready():
 	Console.add_command("toggle_debug_overlay", self, 'toggle_enabled')\
 			.set_description("Enables or disables the Debugging Overlay.")\
 			.register()
 	
-	grid_width = (Globals.load_radius * 2) + 1
-	screen_radius = Globals.load_radius
+	grid_width = ((Globals.load_radius + 1) * 2) + 1
+	screen_radius = Globals.load_radius + 1
 	grid.columns = grid_width
 	
 	var rect_size = ceil(chunk_map_size / (grid_width + 1))
@@ -76,6 +87,26 @@ func _ready():
 			rect.rect_min_size = Vector2(rect_size, rect_size)
 			grid.add_child(rect)
 			chunk_rects[i].append(rect)
+	
+	if Globals.test_mode != Globals.TestMode.NONE:
+		test_active = true
+		var mode = "Release"
+		if OS.has_feature("editor"):
+			mode = "Editor"
+		elif OS.has_feature("debug"):
+			mode = "Debug"
+		
+		if Print.level < Print.Level.INFO:
+			Print.level = Print.Level.INFO
+		Print.info("Test is using preset %s." % Globals.settings_preset)
+		
+		var file_name = "user://MineMark%s_%s_Test_%s_%s.csv" % \
+				[code_revision_identifier, test_types[Globals.test_mode], mode[0],
+				Time.get_datetime_string_from_system().replace("T","_").replace(":",".")]
+		var _d = test_log_file.open(file_name, File.WRITE)
+		var extra_info = ",Preset: %s,Release Mode: %s, Time interval: %s seconds" % \
+				[Globals.settings_preset, mode, $Reset_Timer.wait_time]
+		test_log_file.store_line(test_header + extra_info)
 
 
 func update_chunks(player_pos: Vector2):
@@ -138,8 +169,76 @@ func update_chunks(player_pos: Vector2):
 				"\n T. Chunks Re-Activated:  %s\n" % num_loaded_from_cache + "\n"
 
 
+func update_player_pos(player_pos: Vector3):
+	player_pos_label.text = "Player Pos:\n%3.0f,%3.0f,%3.0f" % [player_pos.x - 8, player_pos.z - 8, player_pos.y]
+
+
 func toggle_enabled():
 	visible = !visible
+
+
+func _end_test():
+	test_active = false
+	test_log_file.close()
+	get_tree().quit()
+
+
+func _to_seconds_string(usec: float):
+	var sec = usec / 1000000
+	return "%.02f" % sec
+
+
+func _reset_interval():
+	var generate_avg = generate_time_total / generate_count
+	var update_avg = update_time_total / update_count
+	
+	# Save the data for the test.
+	if Globals.test_mode != Globals.TestMode.NONE:
+		var interval_string = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [
+				_to_seconds_string(generate_time_min), _to_seconds_string(generate_time_max),
+				_to_seconds_string(generate_avg), _to_seconds_string(update_time_min),
+				_to_seconds_string(update_time_max), _to_seconds_string(update_avg),
+				num_generated, num_updated, num_unloaded, num_purged, num_active, num_inactive,
+				chunks.generate_radius, OS.get_static_memory_usage() / 1024,
+				fps.cum_lowest, fps.cum_highest, fps.cum_average]
+		
+		num_generated = 0
+		num_updated = 0
+		num_unloaded = 0
+		
+		test_log_file.store_line(interval_string)
+		
+		if Globals.test_mode == Globals.TestMode.RUN_LOAD:
+			if num_purged >= Globals.max_stale_chunks:
+				_end_test()
+		else:
+			num_purged = 0
+		
+		# End state for static test.
+		if test_ending and num_unrendered == 0:
+			_end_test()
+		
+		# Abort if we're exceeding all system resources.
+		if fps.cum_highest <= 1:
+			_end_test()
+	
+	generate_time_max = generate_avg
+	generate_time_min = generate_avg
+	generate_time_total = generate_avg
+	generate_count = 1
+
+	update_time_max = update_avg
+	update_time_min = update_avg
+	update_time_total = update_avg
+	update_count = 1
+
+
+func _on_Reset_Timer_timeout():
+	_reset_interval()
+
+
+func _on_Chunks_chunk_started(pos):
+	chunk_stats[pos] = Chunk_Statistics.STARTED
 
 
 func _on_Chunks_chunk_generated(pos, gen_time):
@@ -167,36 +266,11 @@ func _on_Chunks_chunk_updated(pos, gen_time):
 	num_active += 1
 
 
-func _to_seconds_string(usec: float):
-	var sec = usec / 1000000
-	return "%.02f" % sec
-
-
-func _reset_interval():
-	var generate_avg = generate_time_total / generate_count
-	generate_time_max = generate_avg
-	generate_time_min = generate_avg
-	generate_time_total = generate_avg
-	generate_count = 1
-
-	var update_avg = update_time_total / update_count
-	update_time_max = update_avg
-	update_time_min = update_avg
-	update_time_total = update_avg
-	update_count = 1
-
-
 func _on_Chunks_chunk_deactivated(pos):
 	chunk_stats[pos] = Chunk_Statistics.INACTIVE
 	num_unloaded += 1
 	num_active -= 1
 	num_inactive += 1
-
-
-func _on_Chunks_chunk_purged(pos):
-	chunk_stats[pos] = Chunk_Statistics.PURGED
-	num_purged += 1
-	num_inactive -= 1
 
 
 func _on_Chunks_chunk_reactivated(pos):
@@ -206,9 +280,17 @@ func _on_Chunks_chunk_reactivated(pos):
 	num_active += 1
 
 
-func _on_Reset_Timer_timeout():
-	_reset_interval()
+func _on_Chunks_chunk_purged(pos):
+	chunk_stats[pos] = Chunk_Statistics.PURGED
+	num_purged += 1
+	num_inactive -= 1
 
 
-func _on_Chunks_chunk_started(pos):
-	chunk_stats[pos] = Chunk_Statistics.STARTED
+func _on_Chunks_finished_loading():
+	if Globals.test_mode == Globals.TestMode.STATIC_LOAD:
+		test_ending = true
+
+
+func _exit_tree():
+	if test_active:
+		_end_test()

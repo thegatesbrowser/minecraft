@@ -56,7 +56,6 @@ align = 1
 valign = 1
 
 [node name="DebugOverlay" parent="Overlay" instance=ExtResource( 5 )]
-visible = false
 margin_top = 8.0
 margin_bottom = 8.0
 mouse_filter = 2
@@ -84,3 +83,4 @@ environment = SubResource( 1 )
 [connection signal="chunk_reactivated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_reactivated"]
 [connection signal="chunk_started" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_started"]
 [connection signal="chunk_updated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_updated"]
+[connection signal="finished_loading" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_finished_loading"]
