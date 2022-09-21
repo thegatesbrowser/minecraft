@@ -13,6 +13,15 @@ signal place_block(pos)
 signal break_block(pos)
 
 
+func _ready():
+	Console.add_command("player_flying", self, 'toggle_flying')\
+		.set_description("Enables the player to fly (or disables flight).")\
+		.register()
+	Console.add_command("player_clipping", self, 'toggle_clipping')\
+		.set_description("Enables the player to clip through the world (or disables clipping).")\
+		.register()
+
+
 func _input(event):
 	if Globals.paused or Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
 		return
@@ -40,7 +49,10 @@ func _physics_process(delta):
 		return
 
 	var movement := Vector3.ZERO
-	movement.y = velocity.y - (Globals.gravity * delta)
+	if Globals.flying:
+		movement = (velocity * (.75 * (1 - delta)))
+	else:
+		movement.y = velocity.y - (Globals.gravity * delta)
 	if Globals.test_mode == Globals.TestMode.STATIC_LOAD:
 		rotate_head(0.1, 0, false)
 		velocity = move_and_slide(movement)
@@ -57,14 +69,15 @@ func _physics_process(delta):
 	var move_fb = Input.get_axis("Forward", "Backward") * Globals.speed
 	var move_lr = Input.get_axis("Left", "Right") * Globals.speed
 	
-	movement += global_transform.basis.z * move_fb
-	movement += global_transform.basis.x * move_lr
+	if Globals.flying:
+		movement += head.global_transform.basis.z * move_fb
+		movement += head.global_transform.basis.x * move_lr
+	else:
+		movement += global_transform.basis.z * move_fb
+		movement += global_transform.basis.x * move_lr
 	
 	if Input.is_action_just_pressed("Jump"):
 		movement += Vector3.UP * Globals.jump_speed
-	
-	elif Input.is_action_pressed("Jump"):
-		movement.y += (Globals.gravity * 0.9 * delta)
 	
 	velocity = move_and_slide(movement)
 	
@@ -85,9 +98,24 @@ func _physics_process(delta):
 		block.visible = false
 
 
+func toggle_flying():
+	Globals.flying = !Globals.flying
+
+
+func toggle_clipping():
+	$CollisionShape.disabled = !$CollisionShape.disabled
+	if $CollisionShape.disabled:
+		Globals.flying = true
+
+
 func _on_Area_body_entered(_body):
 	block_is_inside_character = true
 
 
 func _on_Area_body_exited(_body):
 	block_is_inside_character = false
+
+
+func _exit_tree():
+	Console.remove_command("player_flying")
+	Console.remove_command("player_clipping")

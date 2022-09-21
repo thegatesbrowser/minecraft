@@ -11,7 +11,7 @@ enum {POTATO, LOW, MEDIUM, HIGH, EXTREME, CUSTOM}
 const preset_names = ["Potato", "Low", "Medium", "High", "F", "Custom"]
 
 export var chunk_radius_presets := [6, 16, 32, 48, 97]
-export var chunk_max_unload_presets := [2, 2, 2, 1, 0.5]
+export var chunk_max_unload_presets := [2, 2, 1, 0.5, 1]
 export var percent_of_threads_used := [0, 0.25, 0.5, 0.75, 1]
 export var fog_enabled = [false, true, true, true, true]
 var unloaded_chunks_modifier := 1.0
@@ -20,6 +20,9 @@ var setting_preset := false
 
 
 func _ready():
+	if Globals.skip_menu:
+		_start_game()
+		return
 	setting_preset = true
 	max_threads = OS.get_processor_count()
 	thread_count.set_limits(1, max_threads)

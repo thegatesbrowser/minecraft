@@ -173,9 +173,3 @@ func _update_chunk_thread(args: Array):
 	var chunk = args[0]
 	chunk.update()
 
-
-#func _exit_tree():
-#	Print.info("Waiting for threads to finish before exiting!")
-#	for t in active_threads:
-#		t.wait_to_finish()
-#	Print.info("All threads have completed, !")

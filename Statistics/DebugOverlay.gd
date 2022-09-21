@@ -45,14 +45,15 @@ var num_inactive := 0
 
 var test_active := false
 var test_ending := false
+var test_time := 0
 
 # Test file things.
 var test_log_file := File.new()
-const test_header = "Min Chunk Gen Time,Max Chunk Gen Time,Avg Chunk Gen Time," + \
+const test_header = "Test_Time,Min Chunk Gen Time,Max Chunk Gen Time,Avg Chunk Gen Time," + \
 		"Min Chunk Render Time,Max Chunk Render Time,Avg Chunk Render Time," + \
 		"# Chunks Generated,# Chunks Updated,# Chunks Disabled,# Chunks Purged," + \
 		"Active Chunk Count,Inactive Chunk Count,Chunk Generation Radius," + \
-		"Total Memory Used,Min FPS,Max FPS,Avg FPS"
+		"Total Memory Used (KiB),Memory Per Chunk (KiB) - Estimated,Min FPS,Max FPS,Avg FPS"
 const test_types := ["none", "Static", "Dynamic", "Manual"]
 export var code_revision_identifier := "_final"
 
@@ -170,7 +171,8 @@ func update_chunks(player_pos: Vector2):
 
 
 func update_player_pos(player_pos: Vector3):
-	player_pos_label.text = "Player Pos:\n%3.0f,%3.0f,%3.0f" % [player_pos.x - 8, player_pos.z - 8, player_pos.y]
+	player_pos = player_pos.floor()
+	player_pos_label.text = "Player Pos:\n%3.0f,%3.0f,%3.0f" % [player_pos.x - 8, -player_pos.z + 8, player_pos.y]
 
 
 func toggle_enabled():
@@ -191,15 +193,19 @@ func _to_seconds_string(usec: float):
 func _reset_interval():
 	var generate_avg = generate_time_total / generate_count
 	var update_avg = update_time_total / update_count
+	test_time += 5
 	
 	# Save the data for the test.
 	if Globals.test_mode != Globals.TestMode.NONE:
-		var interval_string = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [
+		var mem_kb = OS.get_static_memory_usage() / 1024
+		# warning-ignore:integer_division
+		var mem_per_chunk = mem_kb / (num_active + num_inactive)
+		var interval_string = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [test_time,
 				_to_seconds_string(generate_time_min), _to_seconds_string(generate_time_max),
 				_to_seconds_string(generate_avg), _to_seconds_string(update_time_min),
 				_to_seconds_string(update_time_max), _to_seconds_string(update_avg),
 				num_generated, num_updated, num_unloaded, num_purged, num_active, num_inactive,
-				chunks.generate_radius, OS.get_static_memory_usage() / 1024,
+				chunks.generate_radius, mem_kb, mem_per_chunk,
 				fps.cum_lowest, fps.cum_highest, fps.cum_average]
 		
 		num_generated = 0

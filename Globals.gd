@@ -29,12 +29,14 @@ export var controller_sensitivity := Vector2(5, 2)
 export var max_look_vertical := 75
 export var controller_invert_look := false
 export var mouse_invert_look := false
+export var flying := false
 var current_block := 0
 
 # Automated Testing
 enum TestMode {NONE, STATIC_LOAD, RUN_LOAD, RUN_MANUAL}
 export var test_mode := TestMode.NONE
 var settings_preset := ""
+export var skip_menu := false
 
 
 func _ready():

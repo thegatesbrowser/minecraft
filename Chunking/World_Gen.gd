@@ -81,6 +81,9 @@ const types = {
 		TOP:Vector2(2, 1), BOTTOM:Vector2(2, 1), LEFT:Vector2(2, 1),
 		RIGHT:Vector2(2,1), FRONT:Vector2(2, 1), BACK:Vector2(2, 1),
 		SOLID:false
+	},
+	STUMP:{
+		SOLID:false
 	}
 }
 
@@ -123,6 +126,7 @@ func _ready():
 
 func set_seed(world_seed: int):
 	var rand = RandomNumberGenerator.new()
+	Globals.world_seed = world_seed
 	rand.seed = world_seed
 	hills_noise.seed = world_seed + rand.randi()
 	tree_noise.seed = world_seed + rand.randi()
@@ -139,7 +143,12 @@ func start_new_chunk(pos: Vector2):
 	return random
 
 
-func get_block_type(x: int, y: int, z: int, rand: RandomNumberGenerator):
+func get_height(x, z):
+	var biome_percent = biome_transition.interpolate_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
+	return _get_height(x, z, biome_percent) + 1
+
+
+func get_block_type(x, y, z, rand: RandomNumberGenerator):
 	if y == 0:
 		return STONE
 	var biome_percent = biome_transition.interpolate_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
@@ -161,7 +170,7 @@ func get_block_type(x: int, y: int, z: int, rand: RandomNumberGenerator):
 	return block
 
 
-func get_tree_dimensions(x: int, z:int, rand: RandomNumberGenerator) -> Tree_Object:
+func get_tree_dimensions(x, z, rand: RandomNumberGenerator) -> Tree_Object:
 	var biome_percent = biome_transition.interpolate_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
 	var tree := Tree_Object.new()
 	tree.trunk_height = rand.randi_range(int(tree_heights.x), int(tree_heights.y))

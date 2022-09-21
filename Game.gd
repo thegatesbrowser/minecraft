@@ -23,6 +23,10 @@ func _ready():
 	
 	# Generate chunk 0 so we don't fall through the world.
 	chunks.load_chunk(_player_pos_to_chunk_pos(player.translation), 0, 0, false)
+	if Globals.test_mode == Globals.TestMode.STATIC_LOAD:
+		var pos = player.global_translation
+		pos = Vector3(pos.x, WorldGen.get_height(pos.x, pos.z) + 20, pos.z)
+		chunks.place_block(pos, _player_pos_to_chunk_pos(pos), WorldGen.GLASS)
 	
 	# Change the mouse mode only when we're done loading.
 	if Globals.capture_mouse_on_start:
