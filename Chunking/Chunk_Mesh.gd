@@ -30,17 +30,15 @@ func _ready():
 
 
 func place_block(local_pos: Vector3, type, regen = true):
-	blocks[local_pos.x][local_pos.y][local_pos.z] = type
+	blocks.set_block(local_pos, type)
 	if regen:
+		blocks.update()
 		update()
 		finalize()
 
 
 func break_block(local_pos: Vector3, regen = true):
-	blocks[local_pos.x][local_pos.y][local_pos.z] = WorldGen.AIR
-	if regen:
-		update()
-		finalize()
+	place_block(local_pos, WorldGen.AIR, regen)
 
 
 func update():
@@ -55,9 +53,8 @@ func update():
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	
 	for x in Globals.chunk_size.x:
-		for y in Globals.chunk_size.y:
-			for z in Globals.chunk_size.z:
-				create_block(Vector3(x, y, z))
+		for z in Globals.chunk_size.z:
+			create_column(x, z, blocks.types[x][z], blocks.flags[x][z])
 	
 	st.generate_normals(false)
 	st.set_material(material)
@@ -69,33 +66,31 @@ func update():
 
 func finalize():
 	add_child(mesh_instance)
+	blocks.depool()
 
 
-func check_transparent(pos: Vector3) -> bool:
-	if pos.x >= 0 and pos.x < Globals.chunk_size.x and \
-		pos.y >= 0 and pos.y < Globals.chunk_size.y and \
-		pos.z >= 0 and pos.z < Globals.chunk_size.z:
-			return not WorldGen.types[blocks[pos.x][pos.y][pos.z]][WorldGen.SOLID]
-	return true
+func create_column(x: int, z: int, types: PoolByteArray, faces: PoolByteArray):
+	var height = blocks.get_height(x, z)
+	for y in height:
+		create_block(Vector3(x, y, z), types[y], faces[y])
 
 
-func create_block(pos: Vector3):
-	var block = blocks[pos.x][pos.y][pos.z]
-	var block_info = WorldGen.types[block]
-	if block == WorldGen.AIR:
+func create_block(pos: Vector3, type: int, flags: int):
+	var block_info = WorldGen.types[type]
+	if type == WorldGen.AIR:
 		return
 	
-	if check_transparent(pos + Vector3.UP):
+	if !flags & ChunkData.TOP:
 		create_face(TOP, pos, block_info[WorldGen.TOP])
-	if check_transparent(pos + Vector3.DOWN):
+	if !flags & ChunkData.BOTTOM:
 		create_face(BOTTOM, pos, block_info[WorldGen.BOTTOM])
-	if check_transparent(pos + Vector3.FORWARD):
+	if !flags & ChunkData.FRONT:
 		create_face(FRONT, pos, block_info[WorldGen.FRONT])
-	if check_transparent(pos + Vector3.BACK):
+	if !flags & ChunkData.BACK:
 		create_face(BACK, pos, block_info[WorldGen.BACK])
-	if check_transparent(pos + Vector3.LEFT):
+	if !flags & ChunkData.LEFT:
 		create_face(LEFT, pos, block_info[WorldGen.LEFT])
-	if check_transparent(pos + Vector3.RIGHT):
+	if !flags & ChunkData.RIGHT:
 		create_face(RIGHT, pos, block_info[WorldGen.RIGHT])
 
 
