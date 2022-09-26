@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/textures.png-d83fbfa97bccb72c6849f59eaa8aeb4a.stex"
+path="res://.import/Multimesh.png-ba2e840da69b7ca0e9e12f89e1cb6870.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/textures.png"
-dest_files=[ "res://.import/textures.png-d83fbfa97bccb72c6849f59eaa8aeb4a.stex" ]
+source_file="res://Assets/Menu/Multimesh.png"
+dest_files=[ "res://.import/Multimesh.png-ba2e840da69b7ca0e9e12f89e1cb6870.stex" ]
 
 [params]
 
@@ -19,11 +19,11 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=true
-flags/filter=false
-flags/mipmaps=true
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

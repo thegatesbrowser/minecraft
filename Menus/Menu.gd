@@ -1,15 +1,19 @@
-extends CenterContainer
+extends Control
 
-
-onready var chunk_radius = $ScrollContainer/VBoxContainer/Chunk_Radius
-onready var max_unloaded_chunks = $ScrollContainer/VBoxContainer/Max_Unloaded_Chunks
-onready var thread_count = $ScrollContainer/VBoxContainer/Thread_Count
-onready var custom_button = $ScrollContainer/VBoxContainer/HBoxContainer/Custom
-onready var fog_button = $ScrollContainer/VBoxContainer/Other_Settings/Fog
-onready var single_threaded_button = $ScrollContainer/VBoxContainer/Other_Settings/Single_Threaded
+onready var chunk_radius = $SC/CC/VBC/Chunk_Radius
+onready var max_unloaded_chunks = $SC/CC/VBC/Max_Unloaded_Chunks
+onready var thread_count = $SC/CC/VBC/Thread_Count
+onready var custom_button = $SC/CC/VBC/Performance_Label_Container/Custom
+onready var fog_button = $SC/CC/VBC/CC/VB/Fog
+onready var single_threaded_button = $SC/CC/VBC/CC/VB/Single_Threaded
+onready var splash_image = $Splash_Image
+onready var scroll = $SC
 enum {POTATO, LOW, MEDIUM, HIGH, EXTREME, CUSTOM}
 const preset_names = ["Potato", "Low", "Medium", "High", "F", "Custom"]
+const splash_sayings = ["Your PC is in A Lot of Pain!!!", "I'm Sorry.",
+		"Only Needs 2 TB of RAM!", "Your Computer Regrets This!", "It's Not a Bug if it's a Benchmark™"]
 
+export(Array, Resource) var splash_images
 export var chunk_radius_presets := [6, 16, 32, 48, 97]
 export var chunk_max_unload_presets := [2, 2, 1, 0.5, 1]
 export var percent_of_threads_used := [0, 0.25, 0.5, 0.75, 1]
@@ -24,12 +28,102 @@ func _ready():
 		_start_game()
 		return
 	setting_preset = true
+	
 	max_threads = OS.get_processor_count()
 	thread_count.set_limits(1, max_threads)
-	_change_settings(HIGH)
+	
+	if _parse_cmd_args():
+		return
+	else:
+		_change_settings(HIGH)
+	
+	# Set up splash screen.
+	var saying = splash_sayings[randi() % splash_sayings.size()]
+	$"CenterContainer/Title/Splash".text = saying
+	$AnimationPlayer.play("Splash")
+
+
+func _parse_cmd_args() -> bool:
+	var args := OS.get_cmdline_args()
+	if args.size() == 0:
+		print("""
+You can use command line args to run a test automatically.
+
+The first argument needs to be "static" or "dynamic".
+	--dynamic - starts a dynamic test with the specified settings.
+	--static - starts a static test with the specified settings.
+	
+Additional Arguments are as follows:
+	
+	--chunk=X - select the chunk type to test.
+		0: None,      Just pre-generate the world.
+		1: Bad,       Try to generate each block as a mesh in the scene tree.
+		2: Server,    Use Godot's VisualServer directly*
+		3: Mesh,      Generate the triangles for the chunk yourself.
+		4: TileSet,   Use a GridMap (3D tile set) for each chunk.
+		5: MultiMesh, Draw one cube thousands of times thanks to GPU instancing magic!
+			* Chunk type lacks collision.
+	
+	--preset=X - select a performance preset to use.
+		0: Potato, 2 chunk radius, 32 stale chunks, 1 thread.
+		1: Low,    8 chunk radius, 512 stale chunks, 25% of your CPU's thread count.
+		2: Medium, 24 chunk radius, 4304 stale chunks, 50% of your CPU's thread count.
+		3: High,   48 chunk radius, 4608 stale chunks, 75% of your CPU's thread count.
+		4: F,      97 chunk radius, 37636 stale chunks, 100% of your CPU's thread count.
+		
+	--single_thread - render all chunks on the main thread instead of in the chunk generation threads.
+			""")
+		return false
+	
+	# Display help
+	if args[0].to_lower().find("d") >= 0:
+		Globals.test_mode = Globals.TestMode.RUN_LOAD
+	elif args[0].to_lower().find("s") >= 0:
+		Globals.test_mode = Globals.TestMode.STATIC_LOAD
+	else:
+		print("ERROR: Command Line parameters are invalid!")
+		get_tree().quit()
+		return false
+	
+	args.remove(0)
+	var arguments = {}
+	for argument in args:
+		if argument.find("=") > -1:
+			var key_value = argument.split("=")
+			arguments[key_value[0].lstrip("--").to_lower()] = int(key_value[1])
+		else:
+			# Options without an argument will be present in the dictionary,
+			# with the value set to an empty string.
+			arguments[argument.lstrip("--").to_lower()] = ""
+	
+	if arguments.has("chunk"):
+		_on_Chunk_Type_pressed(arguments["chunk"])
+	
+	if arguments.has("preset"):
+		_on_Settings_Preset_pressed(arguments["preset"])
+	
+	if arguments.has("single_thread"):
+		_check_for_custom_preset()
+		Globals.single_threaded_mode = true
+	
+	_start_game()
+	return true
+
+
+
+func _input_event(event):
+	if event.is_pressed() and event is InputEventMouseButton:
+		if event.button_index == BUTTON_WHEEL_UP:
+			scroll.scroll_vertical -= 5
+		elif event.button_index == BUTTON_WHEEL_DOWN:
+			scroll.scroll_vertical += 5
 
 
 func _change_settings(preset: int):
+	if preset < 0 or preset >= preset_names.size():
+		Print.error("There is no settings preset %s!" % preset)
+		return
+	
 	setting_preset = true
 	Globals.settings_preset = preset_names[preset]
 	
@@ -135,3 +229,17 @@ func _on_Invert_Mouse_toggled(button_pressed):
 func _on_Invert_Controller_toggled(button_pressed):
 	Globals.controller_invert_look = button_pressed
 	Print.debug("Controller inversion set to %s" % button_pressed)
+
+
+func _on_Chunk_Type_pressed(type):
+	if type < 0 or type >= splash_images.size():
+		Print.error("There is no settings preset %s!" % type)
+		return
+	Print.debug("Selected chunk type %s" % type)
+	splash_image.texture = splash_images[type]
+	Globals.chunk_type = type
+	Globals.flying = (type == 0)
+
+
+func _on_Skyblock_toggled(button_pressed):
+	Globals.skyblock = button_pressed

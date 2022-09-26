@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Chunking/Chunk_Server.gd" type="Script" id=1]
+
+[node name="Chunk_Server" type="Spatial"]
+script = ExtResource( 1 )

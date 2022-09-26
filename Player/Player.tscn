@@ -4,7 +4,7 @@
 
 [sub_resource type="CylinderShape" id=10]
 height = 1.9
-radius = 0.4
+radius = 0.35
 
 [sub_resource type="CapsuleMesh" id=2]
 radius = 0.4
@@ -45,7 +45,6 @@ cast_shadow = 0
 mesh = SubResource( 2 )
 
 [node name="BlockOutline" type="Spatial" parent="."]
-visible = false
 
 [node name="Area" type="Area" parent="BlockOutline"]
 collision_layer = 0
@@ -144,7 +143,7 @@ skeleton = NodePath("../..")
 material/0 = SubResource( 9 )
 
 [node name="Head" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.8, 0 )
+transform = Transform( 1, 0, 0, 0, 0.98133, 0.192333, 0, -0.192333, 0.98133, 0, 0.8, 0 )
 layers = 32
 cast_shadow = 0
 mesh = SubResource( 3 )

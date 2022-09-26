@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://Chunking/Chunk_Mesh.gd" type="Script" id=1]
-
-[node name="Chunk_Static" type="Spatial"]
-script = ExtResource( 1 )
