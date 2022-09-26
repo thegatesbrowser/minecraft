@@ -1,0 +1,42 @@
+[gd_resource type="Theme" load_steps=7 format=2]
+
+[ext_resource path="res://Assets/Menu/MainMenuFont.tres" type="DynamicFont" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.380392, 0.380392, 0.380392, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.403922, 0.403922, 0.403922, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.439216, 0.439216, 0.439216, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.403922, 0.403922, 0.403922, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.27451, 0.27451, 0.27451, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.403922, 0.403922, 0.403922, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.6, 0.6, 0.6, 0.278431 )
+
+[resource]
+default_font = ExtResource( 1 )
+Button/constants/hseparation = 10
+Button/styles/hover = SubResource( 2 )
+Button/styles/normal = SubResource( 3 )
+Button/styles/pressed = SubResource( 4 )
+HSeparator/constants/separation = 40
+HSeparator/styles/separator = SubResource( 6 )
+VScrollBar/styles/grabber = SubResource( 5 )

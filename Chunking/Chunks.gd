@@ -25,6 +25,9 @@ func update_chunks(player_pos: Vector2):
 	if loading_complete and player_chunk_pos == player_pos:
 		return
 	
+	if Globals.skyblock:
+		return
+	
 	var chunks_to_remove = []
 	for chunk in active_chunks:
 		if player_pos.distance_to(chunk.id) > Globals.load_radius:
@@ -53,14 +56,12 @@ func load_chunks(player_pos: Vector2):
 	player_chunk_pos = player_pos
 	while length < (Globals.load_radius + 1) * 2:
 		while 2 * x * direction < length:
-			if load_chunk(player_pos, x, y) and (Globals.single_threaded_mode or \
-					active_threads.size() >= Globals.chunk_loading_threads):
+			if load_chunk(player_pos, x, y) and (active_threads.size() >= Globals.chunk_loading_threads):
 				generate_radius = length / 2
 				return
 			x = x + direction
 		while 2 * y * direction < length:
-			if load_chunk(player_pos, x, y) and (Globals.single_threaded_mode or \
-					active_threads.size() >= Globals.chunk_loading_threads):
+			if load_chunk(player_pos, x, y) and (active_threads.size() >= Globals.chunk_loading_threads):
 				generate_radius = length / 2
 				return
 			y = y + direction
@@ -81,7 +82,7 @@ func load_chunk(player_pos, x, y, use_threading := true):
 			chunk.id = chunk_pos
 			chunks[chunk_pos] = chunk
 			chunk.update_position()
-			_generate_chunk(chunk, use_threading and !Globals.single_threaded_mode)
+			_generate_chunk(chunk, use_threading)
 			created_chunk = true
 		else:
 			var chunk = chunks[chunk_pos]
@@ -99,6 +100,7 @@ func place_block(global_pos, chunk_id: Vector2, type):
 		var chunk = chunks[chunk_id]
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
 		chunk.place_block(local_pos, type)
+		chunk.modified = true
 	else:
 		Print.error("Player placed a block in a chunk that doesn't exist!")
 
@@ -109,29 +111,50 @@ func break_block(global_pos: Vector3, chunk_id: Vector2):
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
 		if local_pos.y > 1:
 			chunk.break_block(local_pos)
+			chunk.modified = true
+		
+		if local_pos.x < 1:
+			yield(get_tree(),"idle_frame")
+			_regen_block(chunk_id + Vector2.LEFT)
+		elif local_pos.x > Globals.chunk_size.x - 1:
+			yield(get_tree(),"idle_frame")
+			_regen_block(chunk_id + Vector2.RIGHT)
+		if local_pos.z < 1:
+			yield(get_tree(),"idle_frame")
+			_regen_block(chunk_id + Vector2.UP)
+		elif local_pos.z > Globals.chunk_size.z - 1:
+			yield(get_tree(),"idle_frame")
+			_regen_block(chunk_id + Vector2.DOWN)
 	else:
 		Print.error("Player broke a block in a chunk that doesn't exist!")
 
 
+func _regen_block(chunk_id):
+	if chunks.has(chunk_id):
+		var chunk: Chunk = chunks[chunk_id]
+		chunk.update()
+		chunk.finalize()
+
+
 # Removes the oldest chunk from the chunks array.
 func _free_stale_chunks():
-	if stale_chunks.size() < 1:
-		Globals.load_radius = int(max(3, Globals.load_radius - 1))
-		# This is drastic, but we're trying to generate too many blocks, so we should get rid of the ones that are too far out.
-		Print.error("There are no more stale chunks to free! " + "Decreasing the chunk load radius to " +\
-			"%s to meet the hardware requirements." % [Globals.load_radius])
-	else:
+	if stale_chunks.size() > 1:
 		var chunk = stale_chunks.pop_front()
-		var _d = chunks.erase(chunk.id)
-		emit_signal("chunk_purged", chunk.id)
-		chunk.queue_free()
+		if chunk.modified:
+			stale_chunks.append(chunk)
+		else:
+			var _d = chunks.erase(chunk.id)
+			emit_signal("chunk_purged", chunk.id)
+			chunk.queue_free()
 
 
 func _generate_chunk(chunk: Chunk, use_threading := true):
+	add_child(chunk)
+	# Generate the chunk.
+	var time = Time.get_ticks_usec()
+	emit_signal("chunk_started", chunk.id)
 	if use_threading:
-		emit_signal("chunk_started", chunk.id)
 		# Generate the noise for the chunk.
-		var time = Time.get_ticks_usec()
 		var gen_thread := Thread.new()
 		active_threads.append(gen_thread)
 		var _d = gen_thread.start(self, "_generate_chunk_thread", [chunk])
@@ -139,28 +162,24 @@ func _generate_chunk(chunk: Chunk, use_threading := true):
 			yield(get_tree(),"idle_frame")
 		gen_thread.wait_to_finish()
 		active_threads.erase(gen_thread)
-		emit_signal("chunk_generated", chunk.id, Time.get_ticks_usec() - time)
-
+	else:
+		chunk.generate()
+	emit_signal("chunk_generated", chunk.id, Time.get_ticks_usec() - time)
+	
+	time = Time.get_ticks_usec()
+	if use_threading and !Globals.single_threaded_mode:
 		# Update the chunk.
-		time = Time.get_ticks_usec()
 		var up_thread := Thread.new()
-		_d = up_thread.start(self, "_update_chunk_thread", [chunk])
+		var _d = up_thread.start(self, "_update_chunk_thread", [chunk])
 		active_threads.append(up_thread)
 		while up_thread.is_alive():
 			yield(get_tree(),"idle_frame")
 		up_thread.wait_to_finish()
 		active_threads.erase(up_thread)
-		emit_signal("chunk_updated", chunk.id, Time.get_ticks_usec() - time)
 	else:
-		emit_signal("chunk_started", chunk.id)
-		var time = Time.get_ticks_usec()
-		chunk.generate()
-		emit_signal("chunk_generated", chunk.id, Time.get_ticks_usec() - time)
-		time = Time.get_ticks_usec()
 		chunk.update()
-		emit_signal("chunk_updated", chunk.id, Time.get_ticks_usec() - time)
 	chunk.finalize()
-	add_child(chunk)
+	emit_signal("chunk_updated", chunk.id, Time.get_ticks_usec() - time)
 	active_chunks.append(chunk)
 
 

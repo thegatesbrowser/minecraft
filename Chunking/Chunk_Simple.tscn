@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Chunking/Chunk_Mesh.gd" type="Script" id=1]
+[ext_resource path="res://Chunking/Chunk_Simple.gd" type="Script" id=1]
+[ext_resource path="res://Chunking/Blocks_Simple/Broken0.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Chunking/Blocks_Simple/Broken1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Chunking/Blocks_Simple/Broken2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Chunking/Blocks_Simple/Glass.tscn" type="PackedScene" id=5]
 
-[node name="Chunk_Static" type="Spatial"]
+[node name="Chunk_Simple" type="Spatial"]
 script = ExtResource( 1 )
+block_resources = [ null, ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ) ]

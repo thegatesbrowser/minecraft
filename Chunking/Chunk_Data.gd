@@ -34,19 +34,14 @@ func generate(id: Vector2, pos: Vector3):
 
 
 func update():
-	var chunk_data = WorldGen.start_new_chunk(chunk_id)
-	_generate_faces(chunk_pos, chunk_data)
+	if flags.empty():
+		_generate_faces(chunk_pos, null, true)
 
 
 func depool():
-	var i := 0
-	var j := 0
-	while i < chunk_size.x:
-		j = 0
-		while j < chunk_size.z:
+	for i in chunk_size.x:
+		for j in chunk_size.z:
 			types[i][j] = Array(types[i][j])
-			j += 1
-		i += 1
 	
 	# We have to rebuild this anyways if the types array changes.
 	flags = []
@@ -84,7 +79,7 @@ func set_block(pos: Vector3, t: int):
 	pos = pos.floor()
 	types[pos.x][pos.z][pos.y] = t
 	heights[pos.x][pos.z] = max(pos.y + 1, heights[pos.x][pos.z])
-	_generate_faces(pos, null)
+	_generate_faces(pos, null, true)
 
 
 func _generate_types(pos: Vector3, data):
@@ -107,10 +102,14 @@ func _generate_types(pos: Vector3, data):
 	for i in chunk_size.x:
 		for j in chunk_size.z:
 			# Work top to bottom in the y direction.
-			var height = WorldGen.get_height(i + pos.x, j + pos.z) + 1
-			heights[i][j] = height
-			for k in height:
-				block = WorldGen.get_block_type(i + pos.x, k + pos.y, j + pos.z, data)
+			var biome_percent = WorldGen.get_biome_percent(i + pos.x, j + pos.z)
+			# Use the internal call so we don't waste time re-calculating height or biome percent.
+			var height = WorldGen._get_height(i + pos.x, j + pos.z, biome_percent)
+			heights[i][j] = height + 1
+			var h = height + 2
+			for k in h:
+				# Use the internal call so we don't waste time re-calculating height or biome percent.
+				block = WorldGen._get_block_type(i + pos.x, k + pos.y, j + pos.z, data, biome_percent, height)
 				types[i][j][k] = block
 				if block == WorldGen.STUMP:
 					types[i][j][k] = WorldGen.AIR
@@ -122,7 +121,7 @@ func _generate_trees(pos: Vector3, data):
 		_generate_tree(v.x, v.y, stumps[v], pos, data)
 
 
-func _generate_faces(pos: Vector3, data):
+func _generate_faces(pos: Vector3, data, skip_edges := false):
 	var pool_array = PoolByteArray()
 	for y in chunk_size.y:
 		pool_array.append(0)
@@ -140,9 +139,11 @@ func _generate_faces(pos: Vector3, data):
 		for j in range(1, chunk_size.z - 1):
 			# Work top to bottom in the y direction.
 			var height = heights[i][j]
-			flags[i][j][0] |= BOTTOM
-			for k in range(1, height):
-				if WorldGen.types[types[i][j][k]][WorldGen.SOLID]:
+			flags[i][j][0] |= (ALL_SIDES ^ TOP)
+			flags[i][j][1] |= BOTTOM
+			var r = range(1, height)
+			for k in r:
+				if WorldGen.is_transparent[types[i][j][k]]:
 					flags[i - 1][j][k] |= RIGHT
 					flags[i + 1][j][k] |= LEFT
 					flags[i][j - 1][k] |= BACK
@@ -151,30 +152,41 @@ func _generate_faces(pos: Vector3, data):
 					flags[i][j][k + 1] |= BOTTOM
 	
 	# Set flags on the outer edges.
+	var edges := !Globals.skyblock and !skip_edges
+	
 	for i in chunk_size.x:
-		for k in heights[i][0]:
-			if WorldGen.types[types[i][0][k]][WorldGen.SOLID]:
+		flags[i][0][0] |= (ALL_SIDES ^ TOP)
+		var height = heights[i][0] 
+		for k in height:
+			if WorldGen.is_transparent[types[i][0][k]]:
 				_set_visible_safe(i, 0, k)
-			if WorldGen.types[WorldGen.get_block_type(pos.x + i, pos.y + k, pos.z - 1, data)][WorldGen.SOLID]:
+			if edges and WorldGen.is_transparent[WorldGen.get_block_type(pos.x + i, pos.y + k, pos.z - 1, data)]:
 				flags[i][0][k] |= FRONT
-		for k in heights[i][chunk_size.z - 1]:
-			if WorldGen.types[types[i][chunk_size.z - 1][k]][WorldGen.SOLID]:
+		
+		flags[i][chunk_size.z - 1][0] |= (ALL_SIDES ^ TOP)
+		height = heights[i][chunk_size.z - 1]
+		for k in height:
+			if WorldGen.is_transparent[types[i][chunk_size.z - 1][k]]:
 # warning-ignore:narrowing_conversion
 				_set_visible_safe(i, chunk_size.z - 1, k)
-			if WorldGen.types[WorldGen.get_block_type(pos.x + i, pos.y + k, pos.z + chunk_size.z, data)][WorldGen.SOLID]:
+			if edges and WorldGen.is_transparent[WorldGen.get_block_type(pos.x + i, pos.y + k, pos.z + chunk_size.z, data)]:
 				flags[i][chunk_size.z - 1][k] |= BACK
 	
 	for j in chunk_size.z:
-		for k in heights[0][j]:
-			if WorldGen.types[types[0][j][k]][WorldGen.SOLID]:
+		flags[0][j][0] |= (ALL_SIDES ^ TOP)
+		var height = heights[0][j]
+		for k in height:
+			if WorldGen.is_transparent[types[0][j][k]]:
 				_set_visible_safe(0, j, k)
-			if WorldGen.types[WorldGen.get_block_type(pos.x - 1, pos.y + k, pos.z + j, data)][WorldGen.SOLID]:
+			if edges and WorldGen.is_transparent[WorldGen.get_block_type(pos.x - 1, pos.y + k, pos.z + j, data)]:
 				flags[0][j][k] |= LEFT
-		for k in heights[chunk_size.x - 1][j]:
-			if WorldGen.types[types[chunk_size.x - 1][j][k]][WorldGen.SOLID]:
+		flags[chunk_size.x - 1][j][0] |= (ALL_SIDES ^ TOP)
+		height = heights[chunk_size.x - 1][j]
+		for k in height:
+			if WorldGen.is_transparent[types[chunk_size.x - 1][j][k]]:
 # warning-ignore:narrowing_conversion
 				_set_visible_safe(chunk_size.z - 1, j, k)
-			if WorldGen.types[WorldGen.get_block_type(pos.x + chunk_size.x, pos.y + k, pos.z + j, data)][WorldGen.SOLID]:
+			if edges and WorldGen.is_transparent[WorldGen.get_block_type(pos.x + chunk_size.x, pos.y + k, pos.z + j, data)]:
 				flags[chunk_size.x - 1][j][k] |= RIGHT
 
 

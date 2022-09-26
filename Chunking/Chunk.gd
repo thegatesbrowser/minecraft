@@ -4,6 +4,7 @@ class_name Chunk
 
 var id := Vector2.ZERO
 var blocks := ChunkData.new()
+var modified := false
 
 
 func update_position():

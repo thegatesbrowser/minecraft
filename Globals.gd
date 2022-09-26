@@ -13,6 +13,7 @@ export var chunk_size := Vector3(16, 256, 16)
 export(int, 1, 64) var load_radius := 16
 export var max_stale_chunks := 2000
 export var chunk_type := 0
+export var skyblock := false
 
 # Configurable setting based on user's hardware.
 export var chunk_loading_threads := 7

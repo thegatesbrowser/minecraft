@@ -1,9 +1,11 @@
 extends Spatial
 
-onready var chunk_scene_0 := preload("res://Chunking/Chunk_Simple.tscn")
-onready var chunk_scene_1 := preload("res://Chunking/Chunk_Mesh.tscn")
-onready var chunk_scene_2 := preload("res://Chunking/Chunk_Tileset.tscn")
-onready var chunk_scene_3 := preload("res://Chunking/Chunk_Ultimate.tscn")
+onready var chunk_scene_0 := preload("res://Chunking/Chunk_No_Render.tscn")
+onready var chunk_scene_1 := preload("res://Chunking/Chunk_Simple.tscn")
+onready var chunk_scene_2 := preload("res://Chunking/Chunk_Server.tscn")
+onready var chunk_scene_3 := preload("res://Chunking/Chunk_Mesh.tscn")
+onready var chunk_scene_4 := preload("res://Chunking/Chunk_Tileset.tscn")
+onready var chunk_scene_5 := preload("res://Chunking/Chunk_Multimesh.tscn")
 
 onready var player := $Player
 onready var chunks := $Chunks
@@ -17,9 +19,15 @@ func _ready():
 	if Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
 		Globals.capture_mouse_on_start = false
 		Globals.paused = false
+	elif Globals.test_mode == Globals.TestMode.NONE:
+		debug.toggle_enabled()
 	
-	var chunk_types = [chunk_scene_0, chunk_scene_1, chunk_scene_2, chunk_scene_3]
+	var chunk_types = [chunk_scene_0, chunk_scene_1, chunk_scene_2, chunk_scene_3, chunk_scene_4, chunk_scene_5]
 	chunks.chunk_scene = chunk_types[Globals.chunk_type]
+	var chunk_has_collision = [false, true, false, true, true, false]
+	
+	if chunk_has_collision[Globals.chunk_type]:
+		$Platform.queue_free()
 	
 	# Generate chunk 0 so we don't fall through the world.
 	chunks.load_chunk(_player_pos_to_chunk_pos(player.translation), 0, 0, false)

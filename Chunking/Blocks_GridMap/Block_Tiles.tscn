@@ -1,0 +1,216 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://Assets/textures_gridmap.png" type="Texture" id=1]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0.25, 0, 0 )
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 4 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+
+[sub_resource type="CubeMesh" id=53]
+material = SubResource( 8 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=13]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0.5, 0, 0 )
+
+[sub_resource type="CubeMesh" id=54]
+material = SubResource( 13 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=17]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0, 0.25, 0 )
+
+[sub_resource type="CubeMesh" id=55]
+material = SubResource( 18 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=22]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=23]
+flags_transparent = true
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0.25, 0.25, 0 )
+
+[sub_resource type="CubeMesh" id=56]
+material = SubResource( 23 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=27]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=28]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0.5, 0.25, 0 )
+
+[sub_resource type="CubeMesh" id=57]
+material = SubResource( 28 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=32]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=33]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0, 0.5, 0 )
+
+[sub_resource type="CubeMesh" id=58]
+material = SubResource( 33 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=37]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=38]
+flags_transparent = true
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0.25, 0.5, 0 )
+
+[sub_resource type="CubeMesh" id=59]
+material = SubResource( 38 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=42]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=43]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0.5, 0.5, 0 )
+
+[sub_resource type="CubeMesh" id=60]
+material = SubResource( 43 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=47]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=48]
+flags_transparent = true
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.25, 0.25, 1 )
+uv1_offset = Vector3( 0.75, 0, 0 )
+
+[sub_resource type="CubeMesh" id=61]
+material = SubResource( 48 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=52]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[node name="Tiles" type="Spatial"]
+
+[node name="Dirt" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+mesh = SubResource( 2 )
+
+[node name="Dirt" type="StaticBody" parent="Dirt"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Dirt/Dirt"]
+shape = SubResource( 3 )
+
+[node name="Grass" type="MeshInstance" parent="."]
+mesh = SubResource( 53 )
+
+[node name="Grass" type="StaticBody" parent="Grass"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Grass/Grass"]
+shape = SubResource( 12 )
+
+[node name="Stone" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+mesh = SubResource( 54 )
+
+[node name="Stone" type="StaticBody" parent="Stone"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Stone/Stone"]
+shape = SubResource( 17 )
+
+[node name="Log1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+mesh = SubResource( 55 )
+
+[node name="Log1" type="StaticBody" parent="Log1"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Log1/Log1"]
+shape = SubResource( 22 )
+
+[node name="Leaves1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2 )
+mesh = SubResource( 56 )
+
+[node name="Leaves1" type="StaticBody" parent="Leaves1"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Leaves1/Leaves1"]
+shape = SubResource( 27 )
+
+[node name="Wood1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2 )
+mesh = SubResource( 57 )
+
+[node name="Wood1" type="StaticBody" parent="Wood1"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Wood1/Wood1"]
+shape = SubResource( 32 )
+
+[node name="Log2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4 )
+mesh = SubResource( 58 )
+
+[node name="Log2" type="StaticBody" parent="Log2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Log2/Log2"]
+shape = SubResource( 37 )
+
+[node name="Leaves2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4 )
+mesh = SubResource( 59 )
+
+[node name="Leaves2" type="StaticBody" parent="Leaves2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Leaves2/Leaves2"]
+shape = SubResource( 42 )
+
+[node name="Wood2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4 )
+mesh = SubResource( 60 )
+
+[node name="Wood2" type="StaticBody" parent="Wood2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Wood2/Wood2"]
+shape = SubResource( 47 )
+
+[node name="Glass" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6 )
+mesh = SubResource( 61 )
+
+[node name="Glass" type="StaticBody" parent="Glass"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Glass/Glass"]
+shape = SubResource( 52 )

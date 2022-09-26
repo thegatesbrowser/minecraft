@@ -1,18 +1,6 @@
 extends Node
 tool
 
-const TEXTURE_ATLAS_SIZE := Vector2(8,2)
-
-enum {
-	TOP,
-	BOTTOM,
-	LEFT,
-	RIGHT,
-	FRONT,
-	BACK,
-	SOLID
-}
-
 enum {
 	AIR,
 	DIRT,
@@ -28,63 +16,19 @@ enum {
 	STUMP # Not real block type, signals that we need a tree here.
 }
 
-const types = {
-	AIR:{
-		SOLID:false
-	},
-	DIRT:{
-		TOP:Vector2(2, 0), BOTTOM:Vector2(2, 0), LEFT:Vector2(2, 0),
-		RIGHT:Vector2(2,0), FRONT:Vector2(2, 0), BACK:Vector2(2, 0),
-		SOLID:true
-	},
-	GRASS:{
-		TOP:Vector2(0, 0), BOTTOM:Vector2(2, 0), LEFT:Vector2(1, 0),
-		RIGHT:Vector2(1, 0), FRONT:Vector2(1, 0), BACK:Vector2(1, 0),
-		SOLID:true
-	},
-	STONE:{
-		TOP:Vector2(3, 0), BOTTOM:Vector2(3, 0), LEFT:Vector2(3, 0),
-		RIGHT:Vector2(3, 0), FRONT:Vector2(3, 0), BACK:Vector2(3, 0),
-		SOLID:true
-	},
-	LOG1:{
-		TOP:Vector2(5, 0), BOTTOM:Vector2(5, 0), LEFT:Vector2(4, 0),
-		RIGHT:Vector2(4, 0), FRONT:Vector2(4, 0), BACK:Vector2(4, 0),
-		SOLID:true
-	},
-	LEAVES1:{
-		TOP:Vector2(6, 0), BOTTOM:Vector2(6, 0), LEFT:Vector2(6, 0),
-		RIGHT:Vector2(6, 0), FRONT:Vector2(6, 0), BACK:Vector2(6, 0),
-		SOLID:false
-	},
-	WOOD1:{
-		TOP:Vector2(7, 0), BOTTOM:Vector2(7, 0), LEFT:Vector2(7, 0),
-		RIGHT:Vector2(7,0), FRONT:Vector2(7, 0), BACK:Vector2(7, 0),
-		SOLID:true
-	},
-	LOG2:{
-		TOP:Vector2(5, 1), BOTTOM:Vector2(5, 1), LEFT:Vector2(4, 1),
-		RIGHT:Vector2(4, 1), FRONT:Vector2(4, 1), BACK:Vector2(4, 1),
-		SOLID:true
-	},
-	LEAVES2:{
-		TOP:Vector2(6, 1), BOTTOM:Vector2(6, 1), LEFT:Vector2(6, 1),
-		RIGHT:Vector2(6, 1), FRONT:Vector2(6, 1), BACK:Vector2(6, 1),
-		SOLID:false
-	},
-	WOOD2:{
-		TOP:Vector2(7, 1), BOTTOM:Vector2(7, 1), LEFT:Vector2(7, 1),
-		RIGHT:Vector2(7,1), FRONT:Vector2(7, 1), BACK:Vector2(7, 1),
-		SOLID:true
-	},
-	GLASS:{
-		TOP:Vector2(2, 1), BOTTOM:Vector2(2, 1), LEFT:Vector2(2, 1),
-		RIGHT:Vector2(2,1), FRONT:Vector2(2, 1), BACK:Vector2(2, 1),
-		SOLID:false
-	},
-	STUMP:{
-		SOLID:false
-	}
+const is_transparent = {
+	AIR:false,
+	DIRT:true,
+	GRASS:true,
+	STONE:true,
+	LOG1:true,
+	LEAVES1:false,
+	WOOD1:true,
+	LOG2:true,
+	LEAVES2:false,
+	WOOD2:true,
+	GLASS:false,
+	STUMP:false,
 }
 
 class Tree_Object:
@@ -143,30 +87,38 @@ func start_new_chunk(pos: Vector2):
 	return random
 
 
+func get_biome_percent(x, z):
+	return biome_transition.interpolate_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
+
+
 func get_height(x, z):
-	var biome_percent = biome_transition.interpolate_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
-	return _get_height(x, z, biome_percent) + 1
+	return _get_height(x, z, get_biome_percent(x, z))
 
 
 func get_block_type(x, y, z, rand: RandomNumberGenerator):
+	var biome_percent = get_biome_percent(x, z)
+	return _get_block_type(x, y, z, rand, biome_percent, _get_height(x, z, biome_percent))
+
+
+
+func _get_block_type(x, y, z, rand: RandomNumberGenerator, biome_percent: float, height: int):
+	var block := 0
+	
 	if y == 0:
-		return STONE
-	var biome_percent = biome_transition.interpolate_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
-	var height = _get_height(x, z, biome_percent)
-	
-	var block = AIR
-	if _is_cave(x, y, z, height, biome_percent):
-		return block
-	
-	if y < height - 4:
+		block = STONE
+	elif y > height + 1 or _is_cave(x, y, z, height, biome_percent):
+		block = AIR
+	elif y < height - 4:
 		block = STONE
 	elif y < height:
 		block = DIRT
 	elif y == height:
 		block = GRASS
 	elif y == height + 1:
-		if !_is_cave(x, y - 1, z, height, biome_percent) and _is_tree(x, z, biome_percent, rand):
+		if _is_tree(x, z, biome_percent, rand) and !_is_cave(x, y - 1, z, height, biome_percent):
 			block = STUMP
+	else:
+		pass
 	return block
 
 

@@ -22,6 +22,8 @@ var grid_width := 1
 var screen_radius := 1
 var chunk_rects := []
 var chunk_stats := {}
+var row_to_render := 0
+var render_tint := 0.0
 
 var generate_time_min := INF
 var generate_time_max := 0
@@ -46,6 +48,7 @@ var num_inactive := 0
 var test_active := false
 var test_ending := false
 var test_time := 0
+var test_end_countdown := 3
 
 # Test file things.
 var test_log_file := File.new()
@@ -55,6 +58,7 @@ const test_header = "Test_Time,Min Chunk Gen Time,Max Chunk Gen Time,Avg Chunk G
 		"Active Chunk Count,Inactive Chunk Count,Chunk Generation Radius," + \
 		"Total Memory Used (KiB),Memory Per Chunk (KiB) - Estimated,Min FPS,Max FPS,Avg FPS"
 const test_types := ["none", "Static", "Dynamic", "Manual"]
+const chunk_types := ["No Render", "Simple", "Server", "Mesh", "Tile Set", "Ultimate"]
 export var code_revision_identifier := "_final"
 
 
@@ -77,7 +81,7 @@ func _ready():
 	$HBoxContainer/MarginContainer2.add_constant_override("margin_right", rect_size)
 	$HBoxContainer/MarginContainer3.add_constant_override("margin_top", rect_size)
 	$MarginContainer4.add_constant_override("margin_top", rect_size)
-	$MarginContainer4.add_constant_override("margin_right", rect_size * 2)
+	$MarginContainer4.add_constant_override("margin_right", min(rect_size * 2, 40))
 	
 	chunk_rects.resize(grid_width)
 	for i in range(grid_width):
@@ -105,36 +109,22 @@ func _ready():
 				[code_revision_identifier, test_types[Globals.test_mode], mode[0],
 				Time.get_datetime_string_from_system().replace("T","_").replace(":",".")]
 		var _d = test_log_file.open(file_name, File.WRITE)
-		var extra_info = ",Preset: %s,Release Mode: %s, Time interval: %s seconds" % \
-				[Globals.settings_preset, mode, $Reset_Timer.wait_time]
+		var extra_info = ",Preset: %s, Chunk Type: %s,Release Mode: %s, Time interval: %s seconds" % \
+				[Globals.settings_preset, chunk_types[Globals.chunk_type], mode, $Reset_Timer.wait_time]
 		test_log_file.store_line(test_header + extra_info)
 
 
 func update_chunks(player_pos: Vector2):
 	# Update the chunk graph.
-	for i in range(grid_width):
-		for j in range(grid_width):
-			var id = Vector2(j - screen_radius + player_pos.x, i - screen_radius + player_pos.y)
-			
-			if chunk_stats.has(id):
-				match chunk_stats[id]:
-					Chunk_Statistics.INVALID:
-						chunk_rects[i][j].color = chunk_invalid_color
-					Chunk_Statistics.STARTED:
-						chunk_rects[i][j].color = chunk_started_color
-					Chunk_Statistics.GENERATED:
-						chunk_rects[i][j].color = chunk_generated_color
-					Chunk_Statistics.ACTIVE:
-						chunk_rects[i][j].color = chunk_active_color
-					Chunk_Statistics.INACTIVE:
-						chunk_rects[i][j].color = chunk_inactive_color
-					Chunk_Statistics.PURGED:
-						chunk_rects[i][j].color = chunk_purged_color
-			else:
-				chunk_rects[i][j].color = chunk_invalid_color
-			
-			if i == screen_radius or j == screen_radius:
-				chunk_rects[i][j].color = chunk_rects[i][j].color.darkened(0.2)
+	if !visible:
+		return
+	
+	# Repaint one row at a time, we were affecting the framerate otherwise.
+	_repaint_row(player_pos, row_to_render)
+	row_to_render += 1
+	if row_to_render >= grid_width:
+		row_to_render = 0
+		render_tint = 0.05 - render_tint
 	
 	# Update the chunk statistics.
 	if num_updated > 0: # Avoid divide by zero errors.
@@ -177,6 +167,32 @@ func update_player_pos(player_pos: Vector3):
 
 func toggle_enabled():
 	visible = !visible
+
+
+func _repaint_row(player_pos: Vector2, i):
+	for j in range(grid_width):
+		var id = Vector2(j - screen_radius + player_pos.x, i - screen_radius + player_pos.y)
+		
+		if chunk_stats.has(id):
+			match chunk_stats[id]:
+				Chunk_Statistics.INVALID:
+					chunk_rects[i][j].color = chunk_invalid_color.lightened(render_tint)
+				Chunk_Statistics.STARTED:
+					chunk_rects[i][j].color = chunk_started_color
+				Chunk_Statistics.GENERATED:
+					chunk_rects[i][j].color = chunk_generated_color
+				Chunk_Statistics.ACTIVE:
+					chunk_rects[i][j].color = chunk_active_color
+				Chunk_Statistics.INACTIVE:
+					chunk_rects[i][j].color = chunk_inactive_color
+				Chunk_Statistics.PURGED:
+					chunk_rects[i][j].color = chunk_purged_color
+			if i == screen_radius or j == screen_radius:
+				chunk_rects[i][j].color = chunk_rects[i][j].color.darkened(0.15)
+		else:
+			chunk_rects[i][j].color = chunk_invalid_color.lightened(render_tint)
+			if i == screen_radius or j == screen_radius:
+				chunk_rects[i][j].color = chunk_rects[i][j].color.lightened(0.05)
 
 
 func _end_test():
@@ -222,10 +238,14 @@ func _reset_interval():
 		
 		# End state for static test.
 		if test_ending and num_unrendered == 0:
-			_end_test()
+			if test_end_countdown <= 0:
+				_end_test()
+			else:
+				test_end_countdown -= 1
 		
 		# Abort if we're exceeding all system resources.
-		if fps.cum_highest <= 1:
+		if fps.cum_highest < 5:
+			Print.warning("Max Framerate is less than 5 FPS! Quitting test due to poor performance!")
 			_end_test()
 	
 	generate_time_max = generate_avg

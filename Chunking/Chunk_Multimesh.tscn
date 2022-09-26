@@ -1,0 +1,86 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Chunking/Chunk_Multimesh.gd" type="Script" id=1]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Leaves2.tres" type="CubeMesh" id=2]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Wood2.tres" type="CubeMesh" id=3]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Dirt.tres" type="CubeMesh" id=4]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Glass.tres" type="CubeMesh" id=5]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Grass.tres" type="CubeMesh" id=6]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Stone.tres" type="CubeMesh" id=7]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Log2.tres" type="CubeMesh" id=8]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Log1.tres" type="CubeMesh" id=9]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Wood1.tres" type="CubeMesh" id=10]
+[ext_resource path="res://Chunking/Blocks_Multimesh/Leaves1.tres" type="CubeMesh" id=11]
+
+[sub_resource type="MultiMesh" id=1]
+transform_format = 1
+mesh = ExtResource( 4 )
+
+[sub_resource type="MultiMesh" id=2]
+transform_format = 1
+mesh = ExtResource( 6 )
+
+[sub_resource type="MultiMesh" id=3]
+transform_format = 1
+mesh = ExtResource( 7 )
+
+[sub_resource type="MultiMesh" id=4]
+transform_format = 1
+mesh = ExtResource( 9 )
+
+[sub_resource type="MultiMesh" id=5]
+transform_format = 1
+mesh = ExtResource( 11 )
+
+[sub_resource type="MultiMesh" id=6]
+transform_format = 1
+mesh = ExtResource( 10 )
+
+[sub_resource type="MultiMesh" id=7]
+transform_format = 1
+mesh = ExtResource( 8 )
+
+[sub_resource type="MultiMesh" id=8]
+transform_format = 1
+mesh = ExtResource( 2 )
+
+[sub_resource type="MultiMesh" id=9]
+transform_format = 1
+mesh = ExtResource( 3 )
+
+[sub_resource type="MultiMesh" id=10]
+transform_format = 1
+mesh = ExtResource( 5 )
+
+[node name="Chunk_Multimesh" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Dirt" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 1 )
+
+[node name="Grass" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 2 )
+
+[node name="Stone" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 3 )
+
+[node name="Log1" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 4 )
+
+[node name="Leaves1" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 5 )
+
+[node name="Wood1" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 6 )
+
+[node name="Log2" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 7 )
+
+[node name="Leaves2" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 8 )
+
+[node name="Wood2" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 9 )
+
+[node name="Glass" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 10 )
