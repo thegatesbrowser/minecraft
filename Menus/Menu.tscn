@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/Menu/Main_Menu_Theme.tres" type="Theme" id=1]
 [ext_resource path="res://Assets/Menu/Mesh.png" type="Texture" id=2]
@@ -24,9 +24,15 @@ outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 7 )
 
-[sub_resource type="ButtonGroup" id=1]
-
 [sub_resource type="ButtonGroup" id=2]
+
+[sub_resource type="DynamicFont" id=7]
+size = 20
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 7 )
+
+[sub_resource type="ButtonGroup" id=1]
 
 [sub_resource type="Animation" id=4]
 length = 0.001
@@ -100,6 +106,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 3
 script = ExtResource( 5 )
+splash_sayings = PoolStringArray( "Your PC is in A Lot of Pain!!!", "I\'m Sorry.", "Only Needs 2 TB of RAM!", "Your Computer Regrets This!", "It\'s Not a Bug if it\'s a Benchmark™", "The Godot benchmark no one asked for!", "The hero Godot deserves,\nbut not the one it needs right now.", "No one asked for this.", "Test until your eyes bleed!" )
 splash_images = [ ExtResource( 9 ), ExtResource( 3 ), ExtResource( 11 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 10 ) ]
 chunk_radius_presets = [ 2, 8, 24, 48, 97 ]
 
@@ -133,7 +140,7 @@ align = 1
 [node name="SC" type="ScrollContainer" parent="."]
 margin_top = 280.0
 margin_right = 1602.0
-margin_bottom = 864.0
+margin_bottom = 880.0
 rect_min_size = Vector2( 0, 550 )
 mouse_filter = 1
 theme = ExtResource( 1 )
@@ -141,24 +148,24 @@ scroll_horizontal_enabled = false
 
 [node name="CC" type="CenterContainer" parent="SC"]
 margin_right = 1590.0
-margin_bottom = 1082.0
+margin_bottom = 1168.0
 rect_min_size = Vector2( 1590, 0 )
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBC" type="VBoxContainer" parent="SC/CC"]
-margin_left = 407.0
-margin_right = 1183.0
-margin_bottom = 1082.0
+margin_left = 387.0
+margin_right = 1203.0
+margin_bottom = 1168.0
 
 [node name="Play_Buttons" type="CenterContainer" parent="SC/CC/VBC"]
-margin_right = 776.0
+margin_right = 816.0
 margin_bottom = 284.0
 
 [node name="VB" type="VBoxContainer" parent="SC/CC/VBC/Play_Buttons"]
-margin_left = 107.0
-margin_right = 669.0
+margin_left = 127.0
+margin_right = 689.0
 margin_bottom = 284.0
 
 [node name="Play" type="Button" parent="SC/CC/VBC/Play_Buttons/VB"]
@@ -197,105 +204,23 @@ text = "Run Manual Test"
 
 [node name="HSeparator3" type="HSeparator" parent="SC/CC/VBC"]
 margin_top = 288.0
-margin_right = 776.0
+margin_right = 816.0
 margin_bottom = 328.0
 theme = ExtResource( 1 )
 
-[node name="Performance_Label" type="Label" parent="SC/CC/VBC"]
-margin_top = 332.0
-margin_right = 776.0
-margin_bottom = 376.0
-theme = ExtResource( 1 )
-theme_type_variation = "Settings"
-text = "Performance Settings:"
-align = 1
-
-[node name="Performance_Label_Container" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 380.0
-margin_right = 776.0
-margin_bottom = 430.0
-theme = ExtResource( 1 )
-alignment = 1
-
-[node name="Potato" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
-margin_right = 134.0
-margin_bottom = 50.0
-size_flags_horizontal = 3
-theme = ExtResource( 1 )
-toggle_mode = true
-group = SubResource( 1 )
-text = "Potato"
-icon_align = 1
-
-[node name="Low" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
-margin_left = 138.0
-margin_right = 228.0
-margin_bottom = 50.0
-size_flags_horizontal = 3
-theme = ExtResource( 1 )
-toggle_mode = true
-group = SubResource( 1 )
-text = "Low"
-icon_align = 1
-
-[node name="Medium" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
-margin_left = 232.0
-margin_right = 366.0
-margin_bottom = 50.0
-size_flags_horizontal = 3
-theme = ExtResource( 1 )
-toggle_mode = true
-group = SubResource( 1 )
-text = "Medium"
-icon_align = 1
-
-[node name="High" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
-margin_left = 370.0
-margin_right = 460.0
-margin_bottom = 50.0
-size_flags_horizontal = 3
-theme = ExtResource( 1 )
-toggle_mode = true
-pressed = true
-group = SubResource( 1 )
-text = "High"
-icon_align = 1
-
-[node name="Extreme" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
-margin_left = 464.0
-margin_right = 630.0
-margin_bottom = 50.0
-size_flags_horizontal = 3
-theme = ExtResource( 1 )
-toggle_mode = true
-group = SubResource( 1 )
-text = "F in Chat"
-icon_align = 1
-
-[node name="Custom" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
-margin_left = 634.0
-margin_right = 776.0
-margin_bottom = 50.0
-size_flags_horizontal = 3
-theme = ExtResource( 1 )
-toggle_mode = true
-group = SubResource( 1 )
-text = "Custom"
-icon_align = 1
-
 [node name="Chunk_Label" type="Label" parent="SC/CC/VBC"]
-margin_top = 434.0
-margin_right = 776.0
-margin_bottom = 478.0
+margin_top = 332.0
+margin_right = 816.0
+margin_bottom = 376.0
 theme = ExtResource( 1 )
 theme_type_variation = "Settings"
 text = "Chunk Variant:"
 align = 1
 
 [node name="Chunk_Label_Container" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 482.0
-margin_right = 776.0
-margin_bottom = 532.0
+margin_top = 380.0
+margin_right = 816.0
+margin_bottom = 430.0
 theme = ExtResource( 1 )
 alignment = 1
 
@@ -318,20 +243,9 @@ group = SubResource( 2 )
 text = "Bad"
 icon_align = 1
 
-[node name="Simple" type="Button" parent="SC/CC/VBC/Chunk_Label_Container"]
-margin_left = 188.0
-margin_right = 338.0
-margin_bottom = 50.0
-size_flags_horizontal = 3
-theme = ExtResource( 1 )
-toggle_mode = true
-group = SubResource( 2 )
-text = "Server"
-icon_align = 1
-
 [node name="Mesh" type="Button" parent="SC/CC/VBC/Chunk_Label_Container"]
-margin_left = 342.0
-margin_right = 444.0
+margin_left = 188.0
+margin_right = 290.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
@@ -342,8 +256,8 @@ text = "Mesh"
 icon_align = 1
 
 [node name="TileSet" type="Button" parent="SC/CC/VBC/Chunk_Label_Container"]
-margin_left = 448.0
-margin_right = 586.0
+margin_left = 294.0
+margin_right = 432.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
@@ -352,27 +266,130 @@ group = SubResource( 2 )
 text = "TileSet"
 icon_align = 1
 
-[node name="Ultimate" type="Button" parent="SC/CC/VBC/Chunk_Label_Container"]
-margin_left = 590.0
-margin_right = 776.0
+[node name="Simple" type="Button" parent="SC/CC/VBC/Chunk_Label_Container"]
+margin_left = 436.0
+margin_right = 606.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 toggle_mode = true
 group = SubResource( 2 )
-text = "Multimesh"
+text = "Server*"
+icon_align = 1
+
+[node name="Ultimate" type="Button" parent="SC/CC/VBC/Chunk_Label_Container"]
+margin_left = 610.0
+margin_right = 816.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 2 )
+text = "Multimesh*"
+icon_align = 1
+
+[node name="Warning" type="Label" parent="SC/CC/VBC"]
+margin_top = 434.0
+margin_right = 816.0
+margin_bottom = 462.0
+theme = ExtResource( 1 )
+theme_type_variation = "Settings"
+custom_fonts/font = SubResource( 7 )
+text = "* Chunk is drawn, but does not have physics."
+align = 2
+
+[node name="Performance_Label" type="Label" parent="SC/CC/VBC"]
+margin_top = 466.0
+margin_right = 816.0
+margin_bottom = 510.0
+theme = ExtResource( 1 )
+theme_type_variation = "Settings"
+text = "Performance Settings:"
+align = 1
+
+[node name="Performance_Label_Container" type="HBoxContainer" parent="SC/CC/VBC"]
+margin_top = 514.0
+margin_right = 816.0
+margin_bottom = 564.0
+theme = ExtResource( 1 )
+alignment = 1
+
+[node name="Potato" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
+margin_right = 134.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "Potato"
+icon_align = 1
+
+[node name="Low" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
+margin_left = 138.0
+margin_right = 248.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "Low"
+icon_align = 1
+
+[node name="Medium" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
+margin_left = 252.0
+margin_right = 386.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "Medium"
+icon_align = 1
+
+[node name="High" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
+margin_left = 390.0
+margin_right = 500.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+pressed = true
+group = SubResource( 1 )
+text = "High"
+icon_align = 1
+
+[node name="Extreme" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
+margin_left = 504.0
+margin_right = 670.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "F in Chat"
+icon_align = 1
+
+[node name="Custom" type="Button" parent="SC/CC/VBC/Performance_Label_Container"]
+margin_left = 674.0
+margin_right = 816.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+toggle_mode = true
+group = SubResource( 1 )
+text = "Custom"
 icon_align = 1
 
 [node name="HSeparator5" type="HSeparator" parent="SC/CC/VBC"]
-margin_top = 536.0
-margin_right = 776.0
-margin_bottom = 576.0
+margin_top = 568.0
+margin_right = 816.0
+margin_bottom = 608.0
 theme = ExtResource( 1 )
 
 [node name="Chunk_Radius" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 580.0
-margin_right = 776.0
-margin_bottom = 624.0
+margin_top = 612.0
+margin_right = 816.0
+margin_bottom = 656.0
 theme = ExtResource( 1 )
 script = ExtResource( 6 )
 
@@ -394,7 +411,7 @@ align = 2
 
 [node name="HSlider" type="HSlider" parent="SC/CC/VBC/Chunk_Radius"]
 margin_left = 616.0
-margin_right = 776.0
+margin_right = 816.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
@@ -403,9 +420,9 @@ value = 32.0
 scrollable = false
 
 [node name="Max_Unloaded_Chunks" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 628.0
-margin_right = 776.0
-margin_bottom = 672.0
+margin_top = 660.0
+margin_right = 816.0
+margin_bottom = 704.0
 theme = ExtResource( 1 )
 script = ExtResource( 6 )
 
@@ -427,7 +444,7 @@ align = 2
 
 [node name="HSlider" type="HSlider" parent="SC/CC/VBC/Max_Unloaded_Chunks"]
 margin_left = 616.0
-margin_right = 776.0
+margin_right = 816.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
@@ -436,9 +453,9 @@ value = 32.0
 scrollable = false
 
 [node name="Thread_Count" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 676.0
-margin_right = 776.0
-margin_bottom = 720.0
+margin_top = 708.0
+margin_right = 816.0
+margin_bottom = 752.0
 theme = ExtResource( 1 )
 script = ExtResource( 6 )
 
@@ -460,7 +477,7 @@ align = 2
 
 [node name="HSlider" type="HSlider" parent="SC/CC/VBC/Thread_Count"]
 margin_left = 628.0
-margin_right = 776.0
+margin_right = 816.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
@@ -469,55 +486,55 @@ value = 32.0
 scrollable = false
 
 [node name="HSeparator4" type="HSeparator" parent="SC/CC/VBC"]
-margin_top = 724.0
-margin_right = 776.0
-margin_bottom = 764.0
+margin_top = 756.0
+margin_right = 816.0
+margin_bottom = 796.0
 theme = ExtResource( 1 )
 
 [node name="Other_Settings_Label" type="Label" parent="SC/CC/VBC"]
-margin_top = 768.0
-margin_right = 776.0
-margin_bottom = 812.0
+margin_top = 800.0
+margin_right = 816.0
+margin_bottom = 844.0
 theme = ExtResource( 1 )
 theme_type_variation = "Settings"
 text = "Other Settings:"
 align = 1
 
 [node name="CC" type="CenterContainer" parent="SC/CC/VBC"]
-margin_top = 816.0
-margin_right = 776.0
-margin_bottom = 1082.0
+margin_top = 848.0
+margin_right = 816.0
+margin_bottom = 1168.0
 
 [node name="VB" type="VBoxContainer" parent="SC/CC/VBC/CC"]
-margin_left = 128.0
-margin_right = 648.0
-margin_bottom = 266.0
+margin_left = 148.0
+margin_right = 668.0
+margin_bottom = 320.0
 alignment = 1
 
-[node name="Fog" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
+[node name="Invert_Mouse" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
 margin_right = 520.0
 margin_bottom = 50.0
-size_flags_horizontal = 3
-theme = ExtResource( 1 )
-pressed = true
-text = "Fog"
-
-[node name="Invert_Mouse" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
-margin_top = 54.0
-margin_right = 520.0
-margin_bottom = 104.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 text = "Invert Mouse"
 
 [node name="Invert_Controller" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
+margin_top = 54.0
+margin_right = 520.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+pressed = true
+text = "Invert Controller"
+
+[node name="Fog" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
 margin_top = 108.0
 margin_right = 520.0
 margin_bottom = 158.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 pressed = true
-text = "Invert Controller"
+text = "Fog"
 
 [node name="Single_Threaded" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
 margin_top = 162.0
@@ -527,10 +544,18 @@ size_flags_horizontal = 3
 theme = ExtResource( 1 )
 text = "Render on Main Thread"
 
-[node name="Single Chunk" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
+[node name="Large_Chunks" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
 margin_top = 216.0
 margin_right = 520.0
 margin_bottom = 266.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+text = "Large Chunks"
+
+[node name="Single_Chunk" type="CheckButton" parent="SC/CC/VBC/CC/VB"]
+margin_top = 270.0
+margin_right = 520.0
+margin_bottom = 320.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 text = "Single Chunk"
@@ -551,26 +576,27 @@ texture = ExtResource( 2 )
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Static" to="." method="_on_Test_Static_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Dynamic" to="." method="_on_Test_Dynamic_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Manual" to="." method="_on_Test_Manual_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/None" to="." method="_on_Chunk_Type_pressed" binds= [ 0 ]]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Bad" to="." method="_on_Chunk_Type_pressed" binds= [ 1 ]]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Mesh" to="." method="_on_Chunk_Type_pressed" binds= [ 3 ]]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/TileSet" to="." method="_on_Chunk_Type_pressed" binds= [ 4 ]]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Simple" to="." method="_on_Chunk_Type_pressed" binds= [ 2 ]]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Ultimate" to="." method="_on_Chunk_Type_pressed" binds= [ 5 ]]
 [connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Potato" to="." method="_on_Settings_Preset_pressed" binds= [ 0 ]]
 [connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Low" to="." method="_on_Settings_Preset_pressed" binds= [ 1 ]]
 [connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Medium" to="." method="_on_Settings_Preset_pressed" binds= [ 2 ]]
 [connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/High" to="." method="_on_Settings_Preset_pressed" binds= [ 3 ]]
 [connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Extreme" to="." method="_on_Settings_Preset_pressed" binds= [ 4 ]]
 [connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Custom" to="." method="_on_Settings_Preset_pressed" binds= [ 5 ]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/None" to="." method="_on_Chunk_Type_pressed" binds= [ 0 ]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Bad" to="." method="_on_Chunk_Type_pressed" binds= [ 1 ]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Simple" to="." method="_on_Chunk_Type_pressed" binds= [ 2 ]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Mesh" to="." method="_on_Chunk_Type_pressed" binds= [ 3 ]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/TileSet" to="." method="_on_Chunk_Type_pressed" binds= [ 4 ]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Ultimate" to="." method="_on_Chunk_Type_pressed" binds= [ 5 ]]
 [connection signal="changed" from="SC/CC/VBC/Chunk_Radius" to="." method="_on_Chunk_Radius_changed"]
 [connection signal="value_changed" from="SC/CC/VBC/Chunk_Radius/HSlider" to="SC/CC/VBC/Chunk_Radius" method="_on_HSlider_value_changed"]
 [connection signal="changed" from="SC/CC/VBC/Max_Unloaded_Chunks" to="." method="_on_Max_Unloaded_Chunks_changed"]
 [connection signal="value_changed" from="SC/CC/VBC/Max_Unloaded_Chunks/HSlider" to="SC/CC/VBC/Max_Unloaded_Chunks" method="_on_HSlider_value_changed"]
 [connection signal="changed" from="SC/CC/VBC/Thread_Count" to="." method="_on_Thread_Count_changed"]
 [connection signal="value_changed" from="SC/CC/VBC/Thread_Count/HSlider" to="SC/CC/VBC/Thread_Count" method="_on_HSlider_value_changed"]
-[connection signal="toggled" from="SC/CC/VBC/CC/VB/Fog" to="." method="_on_Fog_toggled"]
 [connection signal="toggled" from="SC/CC/VBC/CC/VB/Invert_Mouse" to="." method="_on_Invert_Mouse_toggled"]
 [connection signal="toggled" from="SC/CC/VBC/CC/VB/Invert_Controller" to="." method="_on_Invert_Controller_toggled"]
+[connection signal="toggled" from="SC/CC/VBC/CC/VB/Fog" to="." method="_on_Fog_toggled"]
 [connection signal="toggled" from="SC/CC/VBC/CC/VB/Single_Threaded" to="." method="_on_SingleThreaded_toggled"]
-[connection signal="toggled" from="SC/CC/VBC/CC/VB/Single Chunk" to="." method="_on_Skyblock_toggled"]
+[connection signal="toggled" from="SC/CC/VBC/CC/VB/Large_Chunks" to="." method="_on_Large_Chunks_toggled"]
+[connection signal="toggled" from="SC/CC/VBC/CC/VB/Single_Chunk" to="." method="_on_Skyblock_toggled"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=2]
 
-[ext_resource path="res://Player/Selection_Buttons.gd" type="Script" id=1]
+[ext_resource path="res://Menus/Player/Selection_Buttons.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Atlas/leaf.tres" type="Texture" id=2]
 [ext_resource path="res://Assets/Atlas/leaf2.tres" type="Texture" id=3]
 [ext_resource path="res://Assets/Atlas/wood.tres" type="Texture" id=4]

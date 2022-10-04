@@ -24,6 +24,7 @@ var chunk_rects := []
 var chunk_stats := {}
 var row_to_render := 0
 var render_tint := 0.0
+var time_since_repaint := 0.0
 
 var generate_time_min := INF
 var generate_time_max := 0
@@ -49,6 +50,7 @@ var test_active := false
 var test_ending := false
 var test_time := 0
 var test_end_countdown := 3
+var watchdog_elapsed := true
 
 # Test file things.
 var test_log_file := File.new()
@@ -56,7 +58,7 @@ const test_header = "Test_Time,Min Chunk Gen Time,Max Chunk Gen Time,Avg Chunk G
 		"Min Chunk Render Time,Max Chunk Render Time,Avg Chunk Render Time," + \
 		"# Chunks Generated,# Chunks Updated,# Chunks Disabled,# Chunks Purged," + \
 		"Active Chunk Count,Inactive Chunk Count,Chunk Generation Radius," + \
-		"Total Memory Used (KiB),Memory Per Chunk (KiB) - Estimated,Min FPS,Max FPS,Avg FPS"
+		"Total Memory Used (KiB),Memory Per Chunk (KiB) - Estimated,Min FPS,Max FPS,Avg FPS,Test Status"
 const test_types := ["none", "Static", "Dynamic", "Manual"]
 const chunk_types := ["No Render", "Simple", "Server", "Mesh", "Tile Set", "Ultimate"]
 export var code_revision_identifier := "_final"
@@ -114,17 +116,16 @@ func _ready():
 		test_log_file.store_line(test_header + extra_info)
 
 
-func update_chunks(player_pos: Vector2):
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_CRASH:
+		_end_test("Game Crashed - Could be the cows?")
+
+
+func update_chunks():
 	# Update the chunk graph.
 	if !visible:
 		return
 	
-	# Repaint one row at a time, we were affecting the framerate otherwise.
-	_repaint_row(player_pos, row_to_render)
-	row_to_render += 1
-	if row_to_render >= grid_width:
-		row_to_render = 0
-		render_tint = 0.05 - render_tint
 	
 	# Update the chunk statistics.
 	if num_updated > 0: # Avoid divide by zero errors.
@@ -160,13 +161,32 @@ func update_chunks(player_pos: Vector2):
 				"\n T. Chunks Re-Activated:  %s\n" % num_loaded_from_cache + "\n"
 
 
-func update_player_pos(player_pos: Vector3):
-	player_pos = player_pos.floor()
-	player_pos_label.text = "Player Pos:\n%3.0f,%3.0f,%3.0f" % [player_pos.x - 8, -player_pos.z + 8, player_pos.y]
+func update_player_pos(pos: Vector3):
+	pos = pos.floor()
+	player_pos_label.text = "Player Pos:\n%3.0f,%3.0f,%3.0f" % [pos.x - 8, -pos.z + 8, pos.y]
 
 
 func toggle_enabled():
 	visible = !visible
+
+
+func repaint(player_pos: Vector2, delta):
+	time_since_repaint += delta
+	
+	# Pause on the first row if we're re-painting too quickly.
+	if row_to_render == 0:
+		if time_since_repaint >= 0.5:
+			time_since_repaint = 0
+		else:
+			return
+	
+	# Repaint one row at a time, we were affecting the framerate otherwise.
+	_repaint_row(player_pos, row_to_render)
+	row_to_render += 1
+	if row_to_render >= grid_width:
+		row_to_render = 0
+		if Globals.repaint_line:
+			render_tint = 0.05 - render_tint
 
 
 func _repaint_row(player_pos: Vector2, i):
@@ -195,7 +215,8 @@ func _repaint_row(player_pos: Vector2, i):
 				chunk_rects[i][j].color = chunk_rects[i][j].color.lightened(0.05)
 
 
-func _end_test():
+func _end_test(status: String):
+	test_log_file.store_line(", , , , , , , , , , , , , , , , , , ," + status)
 	test_active = false
 	test_log_file.close()
 	get_tree().quit()
@@ -211,42 +232,48 @@ func _reset_interval():
 	var update_avg = update_time_total / update_count
 	test_time += 5
 	
+	var test_status := "Good"
+	if fps.cum_highest < 5:
+		test_status = "Low FPS"
+	
 	# Save the data for the test.
 	if Globals.test_mode != Globals.TestMode.NONE:
 		var mem_kb = OS.get_static_memory_usage() / 1024
 		# warning-ignore:integer_division
 		var mem_per_chunk = mem_kb / (num_active + num_inactive)
-		var interval_string = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [test_time,
+		var interval_string = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [test_time,
 				_to_seconds_string(generate_time_min), _to_seconds_string(generate_time_max),
 				_to_seconds_string(generate_avg), _to_seconds_string(update_time_min),
 				_to_seconds_string(update_time_max), _to_seconds_string(update_avg),
 				num_generated, num_updated, num_unloaded, num_purged, num_active, num_inactive,
 				chunks.generate_radius, mem_kb, mem_per_chunk,
-				fps.cum_lowest, fps.cum_highest, fps.cum_average]
+				fps.cum_lowest, fps.cum_highest, fps.cum_average, test_status]
 		
 		num_generated = 0
 		num_updated = 0
 		num_unloaded = 0
 		
 		test_log_file.store_line(interval_string)
+		if test_time % 60 == 0:
+			test_log_file.flush()
 		
 		if Globals.test_mode == Globals.TestMode.RUN_LOAD:
 			if num_purged >= Globals.max_stale_chunks:
-				_end_test()
+				_end_test("Dynamic Test Complete")
 		else:
 			num_purged = 0
 		
 		# End state for static test.
 		if test_ending and num_unrendered == 0:
 			if test_end_countdown <= 0:
-				_end_test()
+				_end_test("Static Test Complete")
 			else:
 				test_end_countdown -= 1
 		
 		# Abort if we're exceeding all system resources.
-		if fps.cum_highest < 5:
-			Print.warning("Max Framerate is less than 5 FPS! Quitting test due to poor performance!")
-			_end_test()
+		if fps.cum_highest < 3:
+			Print.error("Max Framerate is less than 3 FPS! Quitting test due to poor performance!")
+			_end_test("Failed - Framerate!")
 	
 	generate_time_max = generate_avg
 	generate_time_min = generate_avg
@@ -261,10 +288,15 @@ func _reset_interval():
 
 func _on_Reset_Timer_timeout():
 	_reset_interval()
+	if watchdog_elapsed:
+		Print.error("Test failed - No chunks have been generated for the past 10 seconds.")
+		_end_test("Failed - Watchdog Timeout")
+	watchdog_elapsed = true
 
 
 func _on_Chunks_chunk_started(pos):
 	chunk_stats[pos] = Chunk_Statistics.STARTED
+	watchdog_elapsed = false
 
 
 func _on_Chunks_chunk_generated(pos, gen_time):
@@ -277,6 +309,7 @@ func _on_Chunks_chunk_generated(pos, gen_time):
 	num_generated += 1
 	generate_count += 1
 	num_unrendered += 1
+	watchdog_elapsed = false
 
 
 func _on_Chunks_chunk_updated(pos, gen_time):
@@ -290,6 +323,7 @@ func _on_Chunks_chunk_updated(pos, gen_time):
 	update_count += 1
 	num_unrendered -= 1
 	num_active += 1
+	watchdog_elapsed = false
 
 
 func _on_Chunks_chunk_deactivated(pos):
@@ -297,6 +331,7 @@ func _on_Chunks_chunk_deactivated(pos):
 	num_unloaded += 1
 	num_active -= 1
 	num_inactive += 1
+	watchdog_elapsed = false
 
 
 func _on_Chunks_chunk_reactivated(pos):
@@ -304,12 +339,14 @@ func _on_Chunks_chunk_reactivated(pos):
 	num_loaded_from_cache += 1
 	num_inactive -= 1
 	num_active += 1
+	watchdog_elapsed = false
 
 
 func _on_Chunks_chunk_purged(pos):
 	chunk_stats[pos] = Chunk_Statistics.PURGED
 	num_purged += 1
 	num_inactive -= 1
+	watchdog_elapsed = false
 
 
 func _on_Chunks_finished_loading():
@@ -319,4 +356,4 @@ func _on_Chunks_finished_loading():
 
 func _exit_tree():
 	if test_active:
-		_end_test()
+		_end_test("Aborted - Unknown Reason")

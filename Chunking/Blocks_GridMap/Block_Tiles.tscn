@@ -50,7 +50,8 @@ size = Vector3( 1, 1, 1 )
 extents = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="SpatialMaterial" id=23]
-flags_transparent = true
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.98
 albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( 0.25, 0.25, 1 )
 uv1_offset = Vector3( 0.25, 0.25, 0 )
@@ -87,7 +88,8 @@ size = Vector3( 1, 1, 1 )
 extents = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="SpatialMaterial" id=38]
-flags_transparent = true
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.98
 albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( 0.25, 0.25, 1 )
 uv1_offset = Vector3( 0.25, 0.5, 0 )
@@ -112,7 +114,8 @@ size = Vector3( 1, 1, 1 )
 extents = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="SpatialMaterial" id=48]
-flags_transparent = true
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.98
 albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( 0.25, 0.25, 1 )
 uv1_offset = Vector3( 0.75, 0, 0 )

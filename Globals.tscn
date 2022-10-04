@@ -4,7 +4,7 @@
 
 [node name="Global" type="Node"]
 script = ExtResource( 1 )
-print_level = 0
+print_level = 1
 world_seed = 15
 chunk_size = Vector3( 16, 128, 16 )
 chunk_type = 3

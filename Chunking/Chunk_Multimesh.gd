@@ -20,8 +20,7 @@ func place_block(local_pos: Vector3, type, regen = true):
 
 
 func break_block(local_pos: Vector3, regen = true):
-	place_block(local_pos, regen)
-
+	place_block(local_pos, WorldGen.AIR, regen)
 
 
 func update():

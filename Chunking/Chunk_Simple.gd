@@ -41,7 +41,6 @@ func update():
 
 
 func _render():
-	rendered = true
 	block_array = []
 # warning-ignore:narrowing_conversion
 	block_array.resize(Globals.chunk_size.x)
@@ -73,6 +72,9 @@ func _destroy_block(x, y, z):
 
 
 func finalize():
-	add_child(block_objects)
+	if !rendered:
+		add_child(block_objects)
+		rendered = true
+	
 	# Finish creating the chunk on the main thread.
 	blocks.depool()

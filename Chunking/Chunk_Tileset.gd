@@ -6,6 +6,7 @@ onready var grid_mesh = preload("res://Chunking/Blocks_GridMap/Block_Tiles.tres"
 
 func place_block(local_pos: Vector3, type, _regen = true):
 	var pos = local_pos.floor()
+	blocks.set_block(pos, type)
 	grid.set_cell_item(pos.x, pos.y, pos.z, type - 1)
 
 
@@ -18,6 +19,7 @@ func update():
 	grid = GridMap.new()
 	grid.mesh_library = grid_mesh
 	grid.cell_size = Vector3.ONE
+	blocks.update()
 	
 	for x in Globals.chunk_size.x:
 		for z in Globals.chunk_size.z:

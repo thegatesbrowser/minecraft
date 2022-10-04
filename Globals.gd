@@ -3,7 +3,8 @@ extends Node
 # Debugging.
 enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 export(Print.Level) var print_level := Print.Level.WARNING
-export var single_threaded_mode := false
+export var single_threaded_generate := false
+export var single_threaded_render := false
 export var capture_mouse_on_start := true
 export var no_fog := false
 
@@ -37,6 +38,7 @@ var current_block := 0
 enum TestMode {NONE, STATIC_LOAD, RUN_LOAD, RUN_MANUAL}
 export var test_mode := TestMode.NONE
 var settings_preset := ""
+export var repaint_line := true
 export var skip_menu := false
 
 
@@ -47,3 +49,11 @@ func _ready():
 		world_seed = randi()
 	WorldGen.set_seed(world_seed)
 	current_block = WorldGen.WOOD1
+	
+	Console.add_command("timelapse_mode", self, '_disable_flicker')\
+		.set_description("Disables the chunk radar refresh line to prevent flickering in timelapses.")\
+		.register()
+
+
+func _disable_flicker():
+	repaint_line = false

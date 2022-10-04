@@ -76,7 +76,7 @@ func _physics_process(delta):
 		movement += global_transform.basis.z * move_fb
 		movement += global_transform.basis.x * move_lr
 	
-	if Input.is_action_just_pressed("Jump"):
+	if Input.is_action_just_pressed("Jump") and abs(velocity.y) < 0.1:
 		movement += Vector3.UP * Globals.jump_speed
 	
 	velocity = move_and_slide(movement)

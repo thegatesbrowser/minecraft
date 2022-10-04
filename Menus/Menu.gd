@@ -10,8 +10,7 @@ onready var splash_image = $Splash_Image
 onready var scroll = $SC
 enum {POTATO, LOW, MEDIUM, HIGH, EXTREME, CUSTOM}
 const preset_names = ["Potato", "Low", "Medium", "High", "F", "Custom"]
-const splash_sayings = ["Your PC is in A Lot of Pain!!!", "I'm Sorry.",
-		"Only Needs 2 TB of RAM!", "Your Computer Regrets This!", "It's Not a Bug if it's a Benchmark™"]
+export var splash_sayings: PoolStringArray = [""]
 
 export(Array, Resource) var splash_images
 export var chunk_radius_presets := [6, 16, 32, 48, 97]
@@ -21,6 +20,7 @@ export var fog_enabled = [false, true, true, true, true]
 var unloaded_chunks_modifier := 1.0
 var max_threads
 var setting_preset := false
+var large_chunks := false
 
 
 func _ready():
@@ -56,12 +56,12 @@ The first argument needs to be "static" or "dynamic".
 Additional Arguments are as follows:
 	
 	--chunk=X - select the chunk type to test.
-		0: None,      Just pre-generate the world.
-		1: Bad,       Try to generate each block as a mesh in the scene tree.
-		2: Server,    Use Godot's VisualServer directly*
-		3: Mesh,      Generate the triangles for the chunk yourself.
-		4: TileSet,   Use a GridMap (3D tile set) for each chunk.
-		5: MultiMesh, Draw one cube thousands of times thanks to GPU instancing magic!
+		0: None,       Just pre-generate the world.
+		1: Bad,        Try to generate each block as an object in the scene tree.
+		2: Server*,    Use Godot's VisualServer directly.
+		3: Mesh,       Generate the triangles for the chunk yourself.
+		4: TileSet,    Use a GridMap (3D tile set) for each chunk.
+		5: MultiMesh*, Draw one cube thousands of times thanks to GPU instancing magic!
 			* Chunk type lacks collision.
 	
 	--preset=X - select a performance preset to use.
@@ -70,8 +70,17 @@ Additional Arguments are as follows:
 		2: Medium, 24 chunk radius, 4304 stale chunks, 50% of your CPU's thread count.
 		3: High,   48 chunk radius, 4608 stale chunks, 75% of your CPU's thread count.
 		4: F,      97 chunk radius, 37636 stale chunks, 100% of your CPU's thread count.
-		
+	
+	--thread_count=X - select the number of threads to use.
+		It is recommended that you don't use more threads than your CPU has.
+		For example, on a 4 core processor with hyperthreading, 8 is the
+		maximum recommended thread count.
+	
+	--large_chunks - use 64x64 size chunks instead of 16x16
+	
 	--single_thread - render all chunks on the main thread instead of in the chunk generation threads.
+	
+	--no_flicker - disables the chunk generation scanlines, which can cause timelapses to flicker.
 			""")
 		return false
 	
@@ -96,19 +105,27 @@ Additional Arguments are as follows:
 			# with the value set to an empty string.
 			arguments[argument.lstrip("--").to_lower()] = ""
 	
-	if arguments.has("chunk"):
-		_on_Chunk_Type_pressed(arguments["chunk"])
-	
 	if arguments.has("preset"):
 		_on_Settings_Preset_pressed(arguments["preset"])
 	
+	if arguments.has("chunk"):
+		_on_Chunk_Type_pressed(arguments["chunk"])
+	
+	if arguments.has("thread_count"):
+		_on_Thread_Count_changed(arguments["thread_count"])
+	
+	if arguments.has("no_flicker"):
+		Globals.repaint_line = false
+	
+	if arguments.has("large_chunks"):
+		_on_Large_Chunks_toggled(true)
+	
 	if arguments.has("single_thread"):
 		_check_for_custom_preset()
-		Globals.single_threaded_mode = true
+		Globals.single_threaded_render = true
 	
 	_start_game()
 	return true
-
 
 
 func _input_event(event):
@@ -191,6 +208,11 @@ func _on_Settings_Preset_pressed(preset):
 # Change Specific Setting.
 func _on_Chunk_Radius_changed(value):
 	_check_for_custom_preset()
+	update_block_radius(value * 16)
+
+
+func update_block_radius(value):
+	value = max(1, value / Globals.chunk_size.x)
 	_recompute_max_stale_chunks(value)
 	Globals.load_radius = value
 	Print.debug("Chunk Radius changed to %d." % value)
@@ -216,7 +238,7 @@ func _on_Fog_toggled(button_pressed):
 
 func _on_SingleThreaded_toggled(button_pressed):
 	_check_for_custom_preset()
-	Globals.single_threaded_mode = button_pressed
+	Globals.single_threaded_render = button_pressed
 	Print.debug("Single threaded mode set to %s" % button_pressed)
 
 
@@ -243,3 +265,13 @@ func _on_Chunk_Type_pressed(type):
 
 func _on_Skyblock_toggled(button_pressed):
 	Globals.skyblock = button_pressed
+
+
+func _on_Large_Chunks_toggled(button_pressed):
+	var radius = Globals.load_radius * Globals.chunk_size.x
+	large_chunks = button_pressed
+	if large_chunks:
+		Globals.chunk_size = Vector3(64, Globals.chunk_size.y, 64)
+	else:
+		Globals.chunk_size = Vector3(16, Globals.chunk_size.y, 16)
+	update_block_radius(radius)

@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Menus/Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Chunking/Chunks.gd" type="Script" id=3]
-[ext_resource path="res://Player/Selection_Buttons.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Statistics/DebugOverlay.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Menus/Player/Selection_Buttons.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Menus/DebugOverlay.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFontData" id=4]
 font_path = "res://Assets/Georgia.ttf"

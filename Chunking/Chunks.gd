@@ -51,17 +51,18 @@ func load_chunks(player_pos: Vector2):
 	var y = 0
 	var direction = 1
 	var length = 1
+	var no_multi_threading = Globals.single_threaded_generate and Globals.single_threaded_render
 	
 	loading_complete = false
 	player_chunk_pos = player_pos
 	while length < (Globals.load_radius + 1) * 2:
 		while 2 * x * direction < length:
-			if load_chunk(player_pos, x, y) and (active_threads.size() >= Globals.chunk_loading_threads):
+			if load_chunk(player_pos, x, y) and (active_threads.size() >= Globals.chunk_loading_threads or no_multi_threading):
 				generate_radius = length / 2
 				return
 			x = x + direction
 		while 2 * y * direction < length:
-			if load_chunk(player_pos, x, y) and (active_threads.size() >= Globals.chunk_loading_threads):
+			if load_chunk(player_pos, x, y) and (active_threads.size() >= Globals.chunk_loading_threads or no_multi_threading):
 				generate_radius = length / 2
 				return
 			y = y + direction
@@ -153,7 +154,7 @@ func _generate_chunk(chunk: Chunk, use_threading := true):
 	# Generate the chunk.
 	var time = Time.get_ticks_usec()
 	emit_signal("chunk_started", chunk.id)
-	if use_threading:
+	if use_threading and !Globals.single_threaded_generate:
 		# Generate the noise for the chunk.
 		var gen_thread := Thread.new()
 		active_threads.append(gen_thread)
@@ -167,7 +168,7 @@ func _generate_chunk(chunk: Chunk, use_threading := true):
 	emit_signal("chunk_generated", chunk.id, Time.get_ticks_usec() - time)
 	
 	time = Time.get_ticks_usec()
-	if use_threading and !Globals.single_threaded_mode:
+	if use_threading and !Globals.single_threaded_render:
 		# Update the chunk.
 		var up_thread := Thread.new()
 		var _d = up_thread.start(self, "_update_chunk_thread", [chunk])

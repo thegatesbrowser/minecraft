@@ -41,7 +41,8 @@ func update():
 func depool():
 	for i in chunk_size.x:
 		for j in chunk_size.z:
-			types[i][j] = Array(types[i][j])
+			if types[i][j] is PoolByteArray:
+				types[i][j] = Array(types[i][j])
 	
 	# We have to rebuild this anyways if the types array changes.
 	flags = []

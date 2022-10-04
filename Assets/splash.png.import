@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Java_Edition_1.19.2.png-8eb6b810afcec6866392f3fe66ff3504.stex"
+path="res://.import/splash.png-3a3aab2e3410d4942ca79c9050695a1b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Java_Edition_1.19.2.png"
-dest_files=[ "res://.import/Java_Edition_1.19.2.png-8eb6b810afcec6866392f3fe66ff3504.stex" ]
+source_file="res://Assets/splash.png"
+dest_files=[ "res://.import/splash.png-3a3aab2e3410d4942ca79c9050695a1b.stex" ]
 
 [params]
 

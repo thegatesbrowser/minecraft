@@ -57,8 +57,12 @@ func _process(_delta):
 	
 	player_pos = _player_pos_to_chunk_pos(player.translation)
 	chunks.update_chunks(player_pos)
-	debug.update_chunks(player_pos)
+	debug.update_chunks()
 	debug.update_player_pos(player.translation)
+
+
+func _physics_process(delta):
+	debug.repaint(player_pos, delta)
 
 
 func _set_draw_distance(radius: int):
