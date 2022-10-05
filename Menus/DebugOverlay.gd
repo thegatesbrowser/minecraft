@@ -107,12 +107,15 @@ func _ready():
 			Print.level = Print.Level.INFO
 		Print.info("Test is using preset %s." % Globals.settings_preset)
 		
+		var args = ""
+		for arg in OS.get_cmdline_args():
+			args += " " + arg
 		var file_name = "user://MineMark%s_%s_Test_%s_%s.csv" % \
 				[code_revision_identifier, test_types[Globals.test_mode], mode[0],
 				Time.get_datetime_string_from_system().replace("T","_").replace(":",".")]
 		var _d = test_log_file.open(file_name, File.WRITE)
-		var extra_info = ",Preset: %s, Chunk Type: %s,Release Mode: %s, Time interval: %s seconds" % \
-				[Globals.settings_preset, chunk_types[Globals.chunk_type], mode, $Reset_Timer.wait_time]
+		var extra_info = ",Preset: %s, Chunk Type: %s,Release Mode: %s, Time interval: %s seconds, Args: %s" % \
+				[Globals.settings_preset, chunk_types[Globals.chunk_type], mode, $Reset_Timer.wait_time, args]
 		test_log_file.store_line(test_header + extra_info)
 
 
@@ -288,7 +291,7 @@ func _reset_interval():
 
 func _on_Reset_Timer_timeout():
 	_reset_interval()
-	if watchdog_elapsed:
+	if watchdog_elapsed and test_active and Globals.test_mode != Globals.TestMode.RUN_MANUAL:
 		Print.error("Test failed - No chunks have been generated for the past 10 seconds.")
 		_end_test("Failed - Watchdog Timeout")
 	watchdog_elapsed = true

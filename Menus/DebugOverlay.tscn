@@ -14,7 +14,7 @@ chunk_generated_color = Color( 0, 1, 1, 0.686275 )
 chunk_active_color = Color( 0.498039, 1, 0, 0.686275 )
 chunk_inactive_color = Color( 0.960784, 0.960784, 0.862745, 0.686275 )
 chunk_purged_color = Color( 0.862745, 0.0784314, 0.235294, 0.686275 )
-code_revision_identifier = "_Chunkgen_Final"
+code_revision_identifier = ""
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 872.0
