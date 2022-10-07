@@ -129,7 +129,6 @@ func update_chunks():
 	if !visible:
 		return
 	
-	
 	# Update the chunk statistics.
 	if num_updated > 0: # Avoid divide by zero errors.
 		var memory_print = ""
@@ -291,7 +290,11 @@ func _reset_interval():
 
 func _on_Reset_Timer_timeout():
 	_reset_interval()
+<<<<<<< HEAD
+	if watchdog_elapsed and test_active and !test_ending and Globals.test_mode != Globals.TestMode.RUN_MANUAL:
+=======
 	if watchdog_elapsed and test_active and Globals.test_mode != Globals.TestMode.RUN_MANUAL:
+>>>>>>> 97f4f66dfcc6fbfa43750cb10aa46f82193cbf92
 		Print.error("Test failed - No chunks have been generated for the past 10 seconds.")
 		_end_test("Failed - Watchdog Timeout")
 	watchdog_elapsed = true

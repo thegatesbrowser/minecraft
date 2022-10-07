@@ -47,7 +47,6 @@ func _ready():
 	randomize()
 	if world_seed == 0:
 		world_seed = randi()
-	WorldGen.set_seed(world_seed)
 	current_block = WorldGen.WOOD1
 	
 	Console.add_command("timelapse_mode", self, '_disable_flicker')\

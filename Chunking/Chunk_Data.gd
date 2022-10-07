@@ -202,6 +202,8 @@ func _generate_tree(i: int, j: int, k: int, pos: Vector3, data):
 	for y in range(WorldGen.tree_heights.x, WorldGen.tree_heights.y):
 		if types[i][j][k + y + 1] != WorldGen.AIR:
 			return
+	if k + tree.brim_height + tree.trunk_height + tree.top_height >= Globals.chunk_size.y:
+		return
 	
 	# Kill the grass.
 	types[i][j][k - 1] = WorldGen.DIRT

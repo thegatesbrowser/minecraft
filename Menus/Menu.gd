@@ -64,6 +64,9 @@ Additional Arguments are as follows:
 		5: MultiMesh*, Draw one cube thousands of times thanks to GPU instancing magic!
 			* Chunk type lacks collision.
 	
+	--world_seed=X - sets the seed for world generation.
+		Setting this to 0 or leaving unset will result in a random seed being used.
+	
 	--preset=X - select a performance preset to use.
 		0: Potato, 2 chunk radius, 32 stale chunks, 1 thread.
 		1: Low,    8 chunk radius, 512 stale chunks, 25% of your CPU's thread count.
@@ -110,6 +113,9 @@ Additional Arguments are as follows:
 	
 	if arguments.has("chunk"):
 		_on_Chunk_Type_pressed(arguments["chunk"])
+	
+	if arguments.has("world_seed"):
+		Globals.world_seed = arguments["world_seed"]
 	
 	if arguments.has("thread_count"):
 		_on_Thread_Count_changed(arguments["thread_count"])
@@ -275,3 +281,7 @@ func _on_Large_Chunks_toggled(button_pressed):
 	else:
 		Globals.chunk_size = Vector3(16, Globals.chunk_size.y, 16)
 	update_block_radius(radius)
+
+
+func _on_Seed_value_changed(value):
+	Globals.world_seed = value

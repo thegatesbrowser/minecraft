@@ -16,6 +16,8 @@ var player_pos := Vector2.ZERO
 
 
 func _ready():
+	WorldGen.set_seed(Globals.world_seed)
+	
 	if Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
 		Globals.capture_mouse_on_start = false
 		Globals.paused = false
@@ -26,8 +28,8 @@ func _ready():
 	chunks.chunk_scene = chunk_types[Globals.chunk_type]
 	var chunk_has_collision = [false, true, false, true, true, false]
 	
-	if chunk_has_collision[Globals.chunk_type]:
-		$Platform.queue_free()
+	if !chunk_has_collision[Globals.chunk_type]:
+		Globals.flying = true
 	
 	# Generate chunk 0 so we don't fall through the world.
 	chunks.load_chunk(_player_pos_to_chunk_pos(player.translation), 0, 0, false)
