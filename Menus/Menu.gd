@@ -74,6 +74,8 @@ Additional Arguments are as follows:
 		3: High,   48 chunk radius, 4608 stale chunks, 75% of your CPU's thread count.
 		4: F,      97 chunk radius, 37636 stale chunks, 100% of your CPU's thread count.
 	
+	--chunk_radius=X - override the chunk radius for the test.
+	
 	--thread_count=X - select the number of threads to use.
 		It is recommended that you don't use more threads than your CPU has.
 		For example, on a 4 core processor with hyperthreading, 8 is the
@@ -82,15 +84,22 @@ Additional Arguments are as follows:
 	--large_chunks - use 64x64 size chunks instead of 16x16
 	
 	--single_thread - render all chunks on the main thread instead of in the chunk generation threads.
+		
+	--file_name=X - override the name of the output file for the test.
+		The default file name is MineMark_*RevIdentifier*_*TestType*_*ReleaseMode*_*Date*
+		RevIdentifier is a string defined in the DebugOverlay Scene on export
+		TestType is Static_Test or Dynamic_Test
+		Release Mode is E for editor, D for debug build and R for release build
+		Date is the datetime string YYYY-MM-DD_HH.MM.SS
 	
 	--no_flicker - disables the chunk generation scanlines, which can cause timelapses to flicker.
 			""")
 		return false
 	
 	# Display help
-	if args[0].to_lower().find("d") >= 0:
+	if args[0].to_lower().find("dynamic") >= 0:
 		Globals.test_mode = Globals.TestMode.RUN_LOAD
-	elif args[0].to_lower().find("s") >= 0:
+	elif args[0].to_lower().find("static") >= 0:
 		Globals.test_mode = Globals.TestMode.STATIC_LOAD
 	else:
 		print("ERROR: Command Line parameters are invalid!")
@@ -102,7 +111,11 @@ Additional Arguments are as follows:
 	for argument in args:
 		if argument.find("=") > -1:
 			var key_value = argument.split("=")
-			arguments[key_value[0].lstrip("--").to_lower()] = int(key_value[1])
+			var key = key_value[0].lstrip("--").to_lower()
+			if key == "file_name":
+				Globals.test_file = key_value[1]
+			else:
+				arguments[key] = key_value[1].to_int()
 		else:
 			# Options without an argument will be present in the dictionary,
 			# with the value set to an empty string.
@@ -129,6 +142,9 @@ Additional Arguments are as follows:
 	if arguments.has("single_thread"):
 		_check_for_custom_preset()
 		Globals.single_threaded_render = true
+		
+	if arguments.has("chunk_radius"):
+		Globals.load_radius = arguments["chunk_radius"]
 	
 	_start_game()
 	return true

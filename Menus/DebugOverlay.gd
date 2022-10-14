@@ -60,7 +60,7 @@ const test_header = "Test_Time,Min Chunk Gen Time,Max Chunk Gen Time,Avg Chunk G
 		"Active Chunk Count,Inactive Chunk Count,Chunk Generation Radius," + \
 		"Total Memory Used (KiB),Memory Per Chunk (KiB) - Estimated,Min FPS,Max FPS,Avg FPS,Test Status"
 const test_types := ["none", "Static", "Dynamic", "Manual"]
-const chunk_types := ["No Render", "Simple", "Server", "Mesh", "Tile Set", "Ultimate"]
+const chunk_types := ["No Render", "Simple", "Server", "Mesh", "Tile Set", "Multimesh"]
 export var code_revision_identifier := "_final"
 
 
@@ -110,10 +110,11 @@ func _ready():
 		var args = ""
 		for arg in OS.get_cmdline_args():
 			args += " " + arg
-		var file_name = "user://MineMark%s_%s_Test_%s_%s.csv" % \
+		if Globals.test_file == null:
+			Globals.test_file = "MineMark%s_%s_Test_%s_%s" % \
 				[code_revision_identifier, test_types[Globals.test_mode], mode[0],
 				Time.get_datetime_string_from_system().replace("T","_").replace(":",".")]
-		var _d = test_log_file.open(file_name, File.WRITE)
+		var _d = test_log_file.open("user://" + Globals.test_file + ".csv", File.WRITE)
 		var extra_info = ",Preset: %s, Chunk Type: %s,Release Mode: %s, Time interval: %s seconds, Args: %s" % \
 				[Globals.settings_preset, chunk_types[Globals.chunk_type], mode, $Reset_Timer.wait_time, args]
 		test_log_file.store_line(test_header + extra_info)
@@ -260,7 +261,7 @@ func _reset_interval():
 			test_log_file.flush()
 		
 		if Globals.test_mode == Globals.TestMode.RUN_LOAD:
-			if num_purged >= Globals.max_stale_chunks:
+			if num_purged >= min(500, Globals.max_stale_chunks):
 				_end_test("Dynamic Test Complete")
 		else:
 			num_purged = 0
@@ -290,11 +291,7 @@ func _reset_interval():
 
 func _on_Reset_Timer_timeout():
 	_reset_interval()
-<<<<<<< HEAD
 	if watchdog_elapsed and test_active and !test_ending and Globals.test_mode != Globals.TestMode.RUN_MANUAL:
-=======
-	if watchdog_elapsed and test_active and Globals.test_mode != Globals.TestMode.RUN_MANUAL:
->>>>>>> 97f4f66dfcc6fbfa43750cb10aa46f82193cbf92
 		Print.error("Test failed - No chunks have been generated for the past 10 seconds.")
 		_end_test("Failed - Watchdog Timeout")
 	watchdog_elapsed = true

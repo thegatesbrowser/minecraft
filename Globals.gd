@@ -40,6 +40,7 @@ export var test_mode := TestMode.NONE
 var settings_preset := ""
 export var repaint_line := true
 export var skip_menu := false
+var test_file = null
 
 
 func _ready():

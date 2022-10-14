@@ -147,7 +147,7 @@ scroll_horizontal_enabled = false
 
 [node name="CC" type="CenterContainer" parent="SC"]
 margin_right = 1590.0
-margin_bottom = 1165.0
+margin_bottom = 1195.0
 rect_min_size = Vector2( 1590, 0 )
 mouse_filter = 1
 size_flags_horizontal = 3
@@ -156,7 +156,7 @@ size_flags_vertical = 3
 [node name="VBC" type="VBoxContainer" parent="SC/CC"]
 margin_left = 387.0
 margin_right = 1203.0
-margin_bottom = 1165.0
+margin_bottom = 1195.0
 
 [node name="Play_Buttons" type="CenterContainer" parent="SC/CC/VBC"]
 margin_right = 816.0
@@ -198,21 +198,21 @@ text = "Run Manual Test"
 [node name="HSeparator3" type="HSeparator" parent="SC/CC/VBC"]
 margin_top = 244.0
 margin_right = 816.0
-margin_bottom = 274.0
+margin_bottom = 284.0
 theme = ExtResource( 1 )
 
 [node name="Chunk_Label" type="Label" parent="SC/CC/VBC"]
-margin_top = 278.0
+margin_top = 288.0
 margin_right = 816.0
-margin_bottom = 322.0
+margin_bottom = 332.0
 theme = ExtResource( 1 )
 text = "Chunk Variant:"
 align = 1
 
 [node name="Chunk_Label_Container" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 326.0
+margin_top = 336.0
 margin_right = 816.0
-margin_bottom = 376.0
+margin_bottom = 386.0
 theme = ExtResource( 1 )
 alignment = 1
 
@@ -275,9 +275,9 @@ group = SubResource( 3 )
 text = "Multimesh*"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="SC/CC/VBC"]
-margin_top = 380.0
+margin_top = 390.0
 margin_right = 816.0
-margin_bottom = 424.0
+margin_bottom = 434.0
 
 [node name="SeedLabel" type="Label" parent="SC/CC/VBC/HSplitContainer"]
 margin_right = 484.0
@@ -296,33 +296,33 @@ value = 15.0
 align = 2
 
 [node name="Warning" type="Label" parent="SC/CC/VBC"]
-margin_top = 428.0
+margin_top = 438.0
 margin_right = 816.0
-margin_bottom = 456.0
+margin_bottom = 466.0
 theme = ExtResource( 1 )
 custom_fonts/font = SubResource( 4 )
 text = "* Chunk is drawn, but does not have physics."
 align = 2
 
 [node name="HSeparator5" type="HSeparator" parent="SC/CC/VBC"]
-margin_top = 460.0
+margin_top = 470.0
 margin_right = 816.0
-margin_bottom = 479.0
+margin_bottom = 489.0
 theme = ExtResource( 1 )
 custom_constants/separation = 19
 
 [node name="Performance_Label" type="Label" parent="SC/CC/VBC"]
-margin_top = 483.0
+margin_top = 493.0
 margin_right = 816.0
-margin_bottom = 527.0
+margin_bottom = 537.0
 theme = ExtResource( 1 )
 text = "Performance Settings:"
 align = 1
 
 [node name="Performance_Label_Container" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 531.0
+margin_top = 541.0
 margin_right = 816.0
-margin_bottom = 581.0
+margin_bottom = 591.0
 theme = ExtResource( 1 )
 alignment = 1
 
@@ -387,15 +387,15 @@ group = SubResource( 5 )
 text = "Custom"
 
 [node name="HSeparator6" type="HSeparator" parent="SC/CC/VBC"]
-margin_top = 585.0
+margin_top = 595.0
 margin_right = 816.0
-margin_bottom = 615.0
+margin_bottom = 635.0
 theme = ExtResource( 1 )
 
 [node name="Chunk_Radius" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 619.0
+margin_top = 639.0
 margin_right = 816.0
-margin_bottom = 663.0
+margin_bottom = 683.0
 theme = ExtResource( 1 )
 script = ExtResource( 6 )
 
@@ -426,9 +426,9 @@ value = 32.0
 scrollable = false
 
 [node name="Max_Unloaded_Chunks" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 667.0
+margin_top = 687.0
 margin_right = 816.0
-margin_bottom = 711.0
+margin_bottom = 731.0
 theme = ExtResource( 1 )
 script = ExtResource( 6 )
 
@@ -459,9 +459,9 @@ value = 32.0
 scrollable = false
 
 [node name="Thread_Count" type="HBoxContainer" parent="SC/CC/VBC"]
-margin_top = 715.0
+margin_top = 735.0
 margin_right = 816.0
-margin_bottom = 759.0
+margin_bottom = 779.0
 theme = ExtResource( 1 )
 script = ExtResource( 6 )
 
@@ -492,23 +492,23 @@ value = 32.0
 scrollable = false
 
 [node name="HSeparator4" type="HSeparator" parent="SC/CC/VBC"]
-margin_top = 763.0
+margin_top = 783.0
 margin_right = 816.0
-margin_bottom = 793.0
+margin_bottom = 823.0
 theme = ExtResource( 1 )
 
 [node name="Other_Settings_Label" type="Label" parent="SC/CC/VBC"]
-margin_top = 797.0
+margin_top = 827.0
 margin_right = 816.0
-margin_bottom = 841.0
+margin_bottom = 871.0
 theme = ExtResource( 1 )
 text = "Other Settings:"
 align = 1
 
 [node name="CC" type="CenterContainer" parent="SC/CC/VBC"]
-margin_top = 845.0
+margin_top = 875.0
 margin_right = 816.0
-margin_bottom = 1165.0
+margin_bottom = 1195.0
 
 [node name="VB" type="VBoxContainer" parent="SC/CC/VBC/CC"]
 margin_left = 148.0
