@@ -34,16 +34,11 @@ func generate(id: Vector2, pos: Vector3):
 
 
 func update():
-	if flags.empty():
+	if flags.is_empty():
 		_generate_faces(chunk_pos, null, true)
 
 
 func depool():
-	for i in chunk_size.x:
-		for j in chunk_size.z:
-			if types[i][j] is PoolByteArray:
-				types[i][j] = Array(types[i][j])
-	
 	# We have to rebuild this anyways if the types array changes.
 	flags = []
 
@@ -84,7 +79,7 @@ func set_block(pos: Vector3, t: int):
 
 
 func _generate_types(pos: Vector3, data):
-	var pool_array = PoolByteArray()
+	var pool_array = PackedByteArray()
 	for y in chunk_size.y:
 		pool_array.append(0)
 	
@@ -96,7 +91,7 @@ func _generate_types(pos: Vector3, data):
 		heights[i] = []
 		heights[i].resize(int(chunk_size.z))
 		for j in range(0, chunk_size.z):
-			types[i][j] = pool_array
+			types[i][j] = pool_array.duplicate()
 	
 	# Set all blocks within the chunk.
 	var block
@@ -105,6 +100,7 @@ func _generate_types(pos: Vector3, data):
 			# Work top to bottom in the y direction.
 			var biome_percent = WorldGen.get_biome_percent(i + pos.x, j + pos.z)
 			# Use the internal call so we don't waste time re-calculating height or biome percent.
+			@warning_ignore("narrowing_conversion")
 			var height = WorldGen._get_height(i + pos.x, j + pos.z, biome_percent)
 			heights[i][j] = height + 1
 			var h = height + 2
@@ -123,7 +119,7 @@ func _generate_trees(pos: Vector3, data):
 
 
 func _generate_faces(pos: Vector3, data, skip_edges := false):
-	var pool_array = PoolByteArray()
+	var pool_array = PackedByteArray()
 	for y in chunk_size.y:
 		pool_array.append(0)
 	
@@ -133,7 +129,7 @@ func _generate_faces(pos: Vector3, data, skip_edges := false):
 		flags[i] = []
 		flags[i].resize(int(chunk_size.z))
 		for j in range(0, chunk_size.z):
-			flags[i][j] = pool_array
+			flags[i][j] = pool_array.duplicate()
 	
 	# Set flags internally.
 	for i in range(1, chunk_size.x - 1):
@@ -152,14 +148,15 @@ func _generate_faces(pos: Vector3, data, skip_edges := false):
 					flags[i][j][k - 1] |= TOP
 					flags[i][j][k + 1] |= BOTTOM
 	
-	# Set flags on the outer edges.
-	var edges := !Globals.skyblock and !skip_edges
+	# Set flags checked the outer edges.
+	var edges :bool = !Globals.skyblock and !skip_edges
 	
 	for i in chunk_size.x:
 		flags[i][0][0] |= (ALL_SIDES ^ TOP)
 		var height = heights[i][0] 
 		for k in height:
 			if WorldGen.is_transparent[types[i][0][k]]:
+				@warning_ignore("narrowing_conversion")
 				_set_visible_safe(i, 0, k)
 			if edges and WorldGen.is_transparent[WorldGen.get_block_type(pos.x + i, pos.y + k, pos.z - 1, data)]:
 				flags[i][0][k] |= FRONT
@@ -168,7 +165,7 @@ func _generate_faces(pos: Vector3, data, skip_edges := false):
 		height = heights[i][chunk_size.z - 1]
 		for k in height:
 			if WorldGen.is_transparent[types[i][chunk_size.z - 1][k]]:
-# warning-ignore:narrowing_conversion
+				@warning_ignore("narrowing_conversion")
 				_set_visible_safe(i, chunk_size.z - 1, k)
 			if edges and WorldGen.is_transparent[WorldGen.get_block_type(pos.x + i, pos.y + k, pos.z + chunk_size.z, data)]:
 				flags[i][chunk_size.z - 1][k] |= BACK
@@ -178,6 +175,7 @@ func _generate_faces(pos: Vector3, data, skip_edges := false):
 		var height = heights[0][j]
 		for k in height:
 			if WorldGen.is_transparent[types[0][j][k]]:
+				@warning_ignore("narrowing_conversion")
 				_set_visible_safe(0, j, k)
 			if edges and WorldGen.is_transparent[WorldGen.get_block_type(pos.x - 1, pos.y + k, pos.z + j, data)]:
 				flags[0][j][k] |= LEFT
@@ -185,7 +183,7 @@ func _generate_faces(pos: Vector3, data, skip_edges := false):
 		height = heights[chunk_size.x - 1][j]
 		for k in height:
 			if WorldGen.is_transparent[types[chunk_size.x - 1][j][k]]:
-# warning-ignore:narrowing_conversion
+				@warning_ignore("narrowing_conversion")
 				_set_visible_safe(chunk_size.z - 1, j, k)
 			if edges and WorldGen.is_transparent[WorldGen.get_block_type(pos.x + chunk_size.x, pos.y + k, pos.z + j, data)]:
 				flags[chunk_size.x - 1][j][k] |= RIGHT
@@ -193,17 +191,17 @@ func _generate_faces(pos: Vector3, data, skip_edges := false):
 
 func _generate_tree(i: int, j: int, k: int, pos: Vector3, data):
 	# Check if we have room for a tree here.
-	var tree := WorldGen.get_tree_dimensions(i + pos.x, j + pos.z, data)
+	var tree = WorldGen.get_tree_dimensions(i + pos.x, j + pos.z, data)
 	
 	# Abort!
 	if i < tree.brim_width or i + tree.brim_width >= chunk_size.x or \
 			j < tree.brim_width or j + tree.brim_width >= chunk_size.z:
 		return
+	if k + tree.brim_height + WorldGen.tree_heights.y + tree.top_height >= Globals.chunk_size.y:
+		return
 	for y in range(WorldGen.tree_heights.x, WorldGen.tree_heights.y):
 		if types[i][j][k + y + 1] != WorldGen.AIR:
 			return
-	if k + tree.brim_height + tree.trunk_height + tree.top_height >= Globals.chunk_size.y:
-		return
 	
 	# Kill the grass.
 	types[i][j][k - 1] = WorldGen.DIRT
@@ -212,8 +210,8 @@ func _generate_tree(i: int, j: int, k: int, pos: Vector3, data):
 	for y in range(tree.trunk_height + tree.brim_height):
 		types[i][j][k + y] = tree.trunk_type
 	
-	var offset := tree.trunk_height
-	var height := k + tree.trunk_height + tree.brim_height
+	var offset :int= tree.trunk_height
+	var height :int= k + tree.trunk_height + tree.brim_height
 	for x in range(-tree.brim_width, tree.brim_width + 1):
 		for z in range(-tree.brim_width, tree.brim_width + 1):
 			for y in range(tree.brim_height):

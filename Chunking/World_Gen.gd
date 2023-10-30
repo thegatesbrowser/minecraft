@@ -1,5 +1,5 @@
+@tool
 extends Node
-tool
 
 enum {
 	AIR,
@@ -41,21 +41,21 @@ class Tree_Object:
 	var leaf_type := LEAVES1
 
 
-export var biome_noise: OpenSimplexNoise
-export(Curve) var biome_transition: Curve
-export var min_height_percent := 0.25
-export var plains_noise: OpenSimplexNoise
-export var max_plans_height_percent := 0.5
-export var hills_noise: OpenSimplexNoise
-export var max_hills_height_percent := 0.5
-export var tree_noise: OpenSimplexNoise
-export(float, 0.01, 1) var base_tree_rate_hills := 0.5
-export(float, 0.01, 1) var base_tree_rate_plains := 0.2
-export var cave_noise_hills: OpenSimplexNoise
-export(Curve) var cave_chance_hills: Curve
-export var cave_noise_plains: OpenSimplexNoise
-export(Curve) var cave_chance_plains: Curve
-export var tree_heights := Vector2(2, 6)
+@export var biome_noise: FastNoiseLite
+@export var biome_transition: Curve
+@export var min_height_percent := 0.25
+@export var plains_noise: FastNoiseLite
+@export var max_plans_height_percent := 0.5
+@export var hills_noise: FastNoiseLite
+@export var max_hills_height_percent := 0.5
+@export var tree_noise: FastNoiseLite
+@export var base_tree_rate_hills := 0.5 # (float, 0.01, 1)
+@export var base_tree_rate_plains := 0.2 # (float, 0.01, 1)
+@export var cave_noise_hills: FastNoiseLite
+@export var cave_chance_hills: Curve
+@export var cave_noise_plains: FastNoiseLite
+@export var cave_chance_plains: Curve
+@export var tree_heights := Vector2(2, 6)
 
 var min_height
 var max_plains_height
@@ -88,7 +88,7 @@ func start_new_chunk(pos: Vector2):
 
 
 func get_biome_percent(x, z):
-	return biome_transition.interpolate_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
+	return biome_transition.sample_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
 
 
 func get_height(x, z):
@@ -98,7 +98,6 @@ func get_height(x, z):
 func get_block_type(x, y, z, rand: RandomNumberGenerator):
 	var biome_percent = get_biome_percent(x, z)
 	return _get_block_type(x, y, z, rand, biome_percent, _get_height(x, z, biome_percent))
-
 
 
 func _get_block_type(x, y, z, rand: RandomNumberGenerator, biome_percent: float, height: int):
@@ -123,7 +122,7 @@ func _get_block_type(x, y, z, rand: RandomNumberGenerator, biome_percent: float,
 
 
 func get_tree_dimensions(x, z, rand: RandomNumberGenerator) -> Tree_Object:
-	var biome_percent = biome_transition.interpolate_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
+	var biome_percent = biome_transition.sample_baked((biome_noise.get_noise_2d(x, z) + 1) * 0.5)
 	var tree := Tree_Object.new()
 	tree.trunk_height = rand.randi_range(int(tree_heights.x), int(tree_heights.y))
 	tree.brim_height = rand.randi_range(1, 3)
@@ -135,8 +134,8 @@ func get_tree_dimensions(x, z, rand: RandomNumberGenerator) -> Tree_Object:
 
 
 func _get_height(x: int, z: int, biome_percent: float) -> int:
-	var height_hills = lerp(hills_noise.get_noise_2d(x, z) + 1, 0, biome_percent) * max_hills_height
-	var height_plains = lerp(0, plains_noise.get_noise_2d(x, z) + 1 ,biome_percent) * max_plains_height
+	var height_hills = lerp(hills_noise.get_noise_2d(x, z) + 1.0, 0.0, biome_percent) * max_hills_height
+	var height_plains = lerp(0.0, plains_noise.get_noise_2d(x, z) + 1.0 ,biome_percent) * max_plains_height
 	return int(height_hills + height_plains + min_height)
 
 
@@ -145,8 +144,8 @@ func _is_cave(x: int, y: int, z: int, ground: int, biome_percent: float):
 		return
 	var depth: float = ground - y
 	var percent_of_depth = depth / ground
-	var plains_chance = cave_chance_plains.interpolate_baked(percent_of_depth)
-	var hills_chance = cave_chance_hills.interpolate_baked(percent_of_depth)
+	var plains_chance = cave_chance_plains.sample_baked(percent_of_depth)
+	var hills_chance = cave_chance_hills.sample_baked(percent_of_depth)
 	var total_chance = lerp(hills_chance, plains_chance, biome_percent)
 	var noise_val = (lerp(cave_noise_hills.get_noise_3d(x, y, z), cave_noise_plains.get_noise_3d(x, y, z), biome_percent) + 1) * 0.5
 	return noise_val < total_chance

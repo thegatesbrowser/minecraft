@@ -1,14 +1,9 @@
 extends Chunk
 
 var rendered := false
-onready var multimeshes = [$Dirt, $Grass, $Stone, $Log1, $Leaves1, $Wood1, $Log2, $Leaves2, $Wood2, $Glass]
-onready var block_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+@onready var multimeshes = [$Dirt, $Grass, $Stone, $Log1, $Leaves1, $Wood1, $Log2, $Leaves2, $Wood2, $Glass]
+@onready var block_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 var multimesh_arrays = []
-
-
-func _ready():
-	for i in multimeshes.size():
-		multimeshes[i].multimesh = multimeshes[i].multimesh.duplicate()
 
 
 func place_block(local_pos: Vector3, type, regen = true):
@@ -30,6 +25,7 @@ func update():
 	
 	for x in Globals.chunk_size.x:
 		for z in Globals.chunk_size.z:
+			@warning_ignore("narrowing_conversion")
 			var height = blocks.get_height(x, z)
 			for y in height:
 				if blocks.types[x][z][y] != WorldGen.AIR and (blocks.flags[x][z][y] & ChunkData.ALL_SIDES != ChunkData.ALL_SIDES):
@@ -43,10 +39,10 @@ func update():
 
 
 func _create_block(x, y, z, type):
-	var t = Transform(Basis(), Vector3(x, y, z))
+	var t = Transform3D(Basis(), Vector3(x, y, z))
 	multimesh_arrays[type - 1].append(t)
 
 
 func finalize():
-	# Finish creating the chunk on the main thread.
+	# Finish creating the chunk checked the main thread.
 	blocks.depool()

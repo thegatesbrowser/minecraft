@@ -30,62 +30,73 @@ const FRONT = [3, 2, 1, 0]
 
 const TEXTURE_ATLAS_SIZE := Vector2(8,2)
 
+enum {
+	AIR,
+	DIRT,
+	GRASS,
+	STONE,
+	LOG1,
+	LEAVES1,
+	WOOD1,
+	LOG2,
+	LEAVES2,
+	WOOD2,
+	GLASS,
+	STUMP # Not real block type, signals that we need a tree here.
+}
+
 const offsets = {
-	WorldGen.AIR:{
+	AIR:{
 	},
-	WorldGen.DIRT:{
+	DIRT:{
 		Faces.TOP:Vector2(2, 0), Faces.BOTTOM:Vector2(2, 0), Faces.LEFT:Vector2(2, 0),
 		Faces.RIGHT:Vector2(2,0), Faces.FRONT:Vector2(2, 0), Faces.BACK:Vector2(2, 0),
 	},
-	WorldGen.GRASS:{
+	GRASS:{
 		Faces.TOP:Vector2(0, 0), Faces.BOTTOM:Vector2(2, 0), Faces.LEFT:Vector2(1, 0),
 		Faces.RIGHT:Vector2(1, 0), Faces.FRONT:Vector2(1, 0), Faces.BACK:Vector2(1, 0),
 	},
-	WorldGen.STONE:{
+	STONE:{
 		Faces.TOP:Vector2(3, 0), Faces.BOTTOM:Vector2(3, 0), Faces.LEFT:Vector2(3, 0),
 		Faces.RIGHT:Vector2(3, 0), Faces.FRONT:Vector2(3, 0), Faces.BACK:Vector2(3, 0),
 	},
-	WorldGen.LOG1:{
+	LOG1:{
 		Faces.TOP:Vector2(5, 0), Faces.BOTTOM:Vector2(5, 0), Faces.LEFT:Vector2(4, 0),
 		Faces.RIGHT:Vector2(4, 0), Faces.FRONT:Vector2(4, 0), Faces.BACK:Vector2(4, 0),
 	},
-	WorldGen.LEAVES1:{
+	LEAVES1:{
 		Faces.TOP:Vector2(6, 0), Faces.BOTTOM:Vector2(6, 0), Faces.LEFT:Vector2(6, 0),
 		Faces.RIGHT:Vector2(6, 0), Faces.FRONT:Vector2(6, 0), Faces.BACK:Vector2(6, 0),
 	},
-	WorldGen.WOOD1:{
+	WOOD1:{
 		Faces.TOP:Vector2(7, 0), Faces.BOTTOM:Vector2(7, 0), Faces.LEFT:Vector2(7, 0),
 		Faces.RIGHT:Vector2(7,0), Faces.FRONT:Vector2(7, 0), Faces.BACK:Vector2(7, 0),
 	},
-	WorldGen.LOG2:{
+	LOG2:{
 		Faces.TOP:Vector2(5, 1), Faces.BOTTOM:Vector2(5, 1), Faces.LEFT:Vector2(4, 1),
 		Faces.RIGHT:Vector2(4, 1), Faces.FRONT:Vector2(4, 1), Faces.BACK:Vector2(4, 1),
 	},
-	WorldGen.LEAVES2:{
+	LEAVES2:{
 		Faces.TOP:Vector2(6, 1), Faces.BOTTOM:Vector2(6, 1), Faces.LEFT:Vector2(6, 1),
 		Faces.RIGHT:Vector2(6, 1), Faces.FRONT:Vector2(6, 1), Faces.BACK:Vector2(6, 1),
 	},
-	WorldGen.WOOD2:{
+	WOOD2:{
 		Faces.TOP:Vector2(7, 1), Faces.BOTTOM:Vector2(7, 1), Faces.LEFT:Vector2(7, 1),
 		Faces.RIGHT:Vector2(7,1), Faces.FRONT:Vector2(7, 1), Faces.BACK:Vector2(7, 1),
 	},
-	WorldGen.GLASS:{
+	GLASS:{
 		Faces.TOP:Vector2(2, 1), Faces.BOTTOM:Vector2(2, 1), Faces.LEFT:Vector2(2, 1),
 		Faces.RIGHT:Vector2(2,1), Faces.FRONT:Vector2(2, 1), Faces.BACK:Vector2(2, 1),
 	},
-	WorldGen.STUMP:{
+	STUMP:{
 	}
 }
 
 var st = SurfaceTool.new()
-var mesh: Mesh = null
-var mesh_instance: MeshInstance = null
+var mesh: ArrayMesh = null
+var mesh_instance: MeshInstance3D = null
 
 var material = preload("res://Assets/Materials/texturemat_mesh.tres")
-
-
-func _ready():
-	material.albedo_texture.set_flags(2)
 
 
 func place_block(local_pos: Vector3, type, regen = true):
@@ -109,12 +120,13 @@ func update():
 		mesh_instance = null
 	
 	# Generate new chunk.
-	mesh = Mesh.new()
-	mesh_instance = MeshInstance.new()
+	mesh = ArrayMesh.new()
+	mesh_instance = MeshInstance3D.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	
 	for x in Globals.chunk_size.x:
 		for z in Globals.chunk_size.z:
+			@warning_ignore("narrowing_conversion")
 			create_column(x, z, blocks.types[x][z], blocks.flags[x][z])
 	
 	st.generate_normals(false)
@@ -122,7 +134,7 @@ func update():
 	st.commit(mesh)
 	mesh_instance.set_mesh(mesh)
 	
-	mesh_instance.create_trimesh_collision()
+	mesh_instance.call_deferred("create_trimesh_collision")
 
 
 func finalize():
@@ -130,7 +142,7 @@ func finalize():
 	blocks.depool()
 
 
-func create_column(x: int, z: int, types: PoolByteArray, faces: PoolByteArray):
+func create_column(x: int, z: int, types: PackedByteArray, faces: PackedByteArray):
 	var height = blocks.get_height(x, z)
 	for y in height:
 		create_block(Vector3(x, y, z), types[y], faces[y])

@@ -6,5 +6,5 @@ variables:
   # Major release is a public game release or re-launch
   # Stable is used for any public update that is not a game launch
   # Unstable is incremented for every frequent (biweekly?) release
-  RELEASE_NUMBER: "1.1.0"
-  GODOT_VERSION: "3.5"
+  RELEASE_NUMBER: "1.2.0"
+  GODOT_VERSION: "4.1.2"

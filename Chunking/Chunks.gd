@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 signal chunk_started(pos)
 signal chunk_generated(pos, gen_time)
@@ -58,11 +58,13 @@ func load_chunks(player_pos: Vector2):
 	while length < (Globals.load_radius + 1) * 2:
 		while 2 * x * direction < length:
 			if load_chunk(player_pos, x, y) and (active_threads.size() >= Globals.chunk_loading_threads or no_multi_threading):
+				@warning_ignore("integer_division")
 				generate_radius = length / 2
 				return
 			x = x + direction
 		while 2 * y * direction < length:
 			if load_chunk(player_pos, x, y) and (active_threads.size() >= Globals.chunk_loading_threads or no_multi_threading):
+				@warning_ignore("integer_division")
 				generate_radius = length / 2
 				return
 			y = y + direction
@@ -79,7 +81,7 @@ func load_chunk(player_pos, x, y, use_threading := true):
 	
 	if (player_pos - chunk_pos).length() <= Globals.load_radius:
 		if not chunks.has(chunk_pos):
-			var chunk: Chunk = chunk_scene.instance()
+			var chunk: Chunk = chunk_scene.instantiate()
 			chunk.id = chunk_pos
 			chunks[chunk_pos] = chunk
 			chunk.update_position()
@@ -115,16 +117,16 @@ func break_block(global_pos: Vector3, chunk_id: Vector2):
 			chunk.modified = true
 		
 		if local_pos.x < 1:
-			yield(get_tree(),"idle_frame")
+			await get_tree().process_frame
 			_regen_block(chunk_id + Vector2.LEFT)
 		elif local_pos.x > Globals.chunk_size.x - 1:
-			yield(get_tree(),"idle_frame")
+			await get_tree().process_frame
 			_regen_block(chunk_id + Vector2.RIGHT)
 		if local_pos.z < 1:
-			yield(get_tree(),"idle_frame")
+			await get_tree().process_frame
 			_regen_block(chunk_id + Vector2.UP)
 		elif local_pos.z > Globals.chunk_size.z - 1:
-			yield(get_tree(),"idle_frame")
+			await get_tree().process_frame
 			_regen_block(chunk_id + Vector2.DOWN)
 	else:
 		Print.error("Player broke a block in a chunk that doesn't exist!")
@@ -158,9 +160,9 @@ func _generate_chunk(chunk: Chunk, use_threading := true):
 		# Generate the noise for the chunk.
 		var gen_thread := Thread.new()
 		active_threads.append(gen_thread)
-		var _d = gen_thread.start(self, "_generate_chunk_thread", [chunk])
+		var _d = gen_thread.start(Callable(self,"_generate_chunk_thread").bind([chunk]))
 		while gen_thread.is_alive():
-			yield(get_tree(),"idle_frame")
+			await get_tree().process_frame
 		gen_thread.wait_to_finish()
 		active_threads.erase(gen_thread)
 	else:
@@ -171,10 +173,10 @@ func _generate_chunk(chunk: Chunk, use_threading := true):
 	if use_threading and !Globals.single_threaded_render:
 		# Update the chunk.
 		var up_thread := Thread.new()
-		var _d = up_thread.start(self, "_update_chunk_thread", [chunk])
+		var _d = up_thread.start(Callable(self,"_update_chunk_thread").bind([chunk]))
 		active_threads.append(up_thread)
 		while up_thread.is_alive():
-			yield(get_tree(),"idle_frame")
+			await get_tree().process_frame
 		up_thread.wait_to_finish()
 		active_threads.erase(up_thread)
 	else:
