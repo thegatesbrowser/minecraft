@@ -23,22 +23,22 @@ var shape
 
 
 func _ready():
-	scenario = get_world().scenario
+	scenario = get_world_3d().scenario
 	for mat in block_mats:
 		if mat == null:
 			block_ids.append(null)
 		else:
 			block_ids.append(mat.get_rid())
 	
-	var xform = Transform(Basis(), translation)
-	collide = PhysicsServer.body_create(PhysicsServer.BODY_MODE_STATIC)
+	var xform = Transform3D(Basis(), position)
+	collide = PhysicsServer3D.body_create()
 	
-	PhysicsServer.body_set_space(collide, get_world().space)
-	PhysicsServer.body_set_state(collide, PhysicsServer.BODY_STATE_TRANSFORM, xform)
-	PhysicsServer.body_set_collision_layer(collide, 0)
+	PhysicsServer3D.body_set_space(collide, get_world_3d().space)
+	PhysicsServer3D.body_set_state(collide, PhysicsServer3D.BODY_STATE_TRANSFORM, xform)
+	PhysicsServer3D.body_set_collision_layer(collide, 0)
 	
-	shape = PhysicsServer.shape_create(PhysicsServer.SHAPE_BOX)
-	PhysicsServer.shape_set_data(shape, (Vector3.ONE / 2))
+	shape = PhysicsServer3D.box_shape_create()
+	PhysicsServer3D.shape_set_data(shape, (Vector3.ONE / 2))
 
 
 func place_block(local_pos: Vector3, type, regen = true):
@@ -67,9 +67,10 @@ func update():
 	if !rendered:
 		_render()
 	else:
-		PhysicsServer.body_clear_shapes(collide)
+		PhysicsServer3D.body_clear_shapes(collide)
 		for x in Globals.chunk_size.x:
 			for z in Globals.chunk_size.z:
+				@warning_ignore("narrowing_conversion")
 				var height = blocks.get_height(x, z)
 				for y in height:
 					if blocks.types[x][z][y] == WorldGen.AIR:
@@ -84,6 +85,7 @@ func _render():
 	rendered = true
 	block_array = []
 # warning-ignore:narrowing_conversion
+	@warning_ignore("narrowing_conversion")
 	block_array.resize(Globals.chunk_size.x)
 	for x in Globals.chunk_size.x:
 		block_array[x] = []
@@ -91,6 +93,7 @@ func _render():
 		for z in Globals.chunk_size.z:
 			block_array[x][z] = []
 			block_array[x][z].resize(Globals.chunk_size.y)
+			@warning_ignore("narrowing_conversion")
 			var height = blocks.get_height(x, z)
 			for y in height:
 				if blocks.types[x][z][y] != WorldGen.AIR and (blocks.flags[x][z][y] & ChunkData.ALL_SIDES != ChunkData.ALL_SIDES):
@@ -99,20 +102,20 @@ func _render():
 
 
 func _create_block(x, y, z, type):
-	var xform = Transform(Basis(), translation + Vector3(x, y, z) + Vector3(0.5, 0.5, 0.5))
-	var visual = VisualServer.instance_create2(block_ids[type], scenario)
-	VisualServer.instance_set_transform(visual, xform)
+	var xform = Transform3D(Basis(), position + Vector3(x, y, z) + Vector3(0.5, 0.5, 0.5))
+	var visual = RenderingServer.instance_create2(block_ids[type], scenario)
+	RenderingServer.instance_set_transform(visual, xform)
 	block_array[x][z][y] = visual
 
 
 func _add_collider(x, y, z):
-	PhysicsServer.body_add_shape(collide, shape, Transform(Basis(), Vector3(x, y, z)))
+	PhysicsServer3D.body_add_shape(collide, shape, Transform3D(Basis(), Vector3(x, y, z)))
 
 
 func _destroy_block(x, y, z):
 	if block_array[x][z][y] != null:
-		VisualServer.free_rid(block_array[x][z][y][0])
-		PhysicsServer.free_rid(block_array[x][z][y][1])
+		RenderingServer.free_rid(block_array[x][z][y][0])
+		PhysicsServer3D.free_rid(block_array[x][z][y][1])
 		block_array[x][z][y] = null
 
 

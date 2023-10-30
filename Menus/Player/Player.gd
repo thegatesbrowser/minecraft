@@ -1,12 +1,11 @@
-extends KinematicBody
+extends CharacterBody3D
 
-onready var camera = $Head/Camera
-onready var ray = $Head/RayCast
-onready var block = $BlockOutline
-onready var head = $Head
-onready var block_collider = $BlockOutline/Area
+@onready var camera = $Head/Camera3D
+@onready var ray = $Head/RayCast3D
+@onready var block = $BlockOutline
+@onready var head = $Head
+@onready var block_collider = $BlockOutline/Area3D
 
-var velocity := Vector3.ZERO
 var block_is_inside_character := false
 
 signal place_block(pos)
@@ -33,14 +32,15 @@ func _input(event):
 func rotate_head(amount_lr: float, amount_ud: float, inverted: bool):
 	if inverted:
 		amount_ud = -amount_ud
+	amount_ud = deg_to_rad(amount_ud)
 	
 	# Look left and right.
-	rotate_y(deg2rad(-amount_lr))
+	rotate_y(deg_to_rad(-amount_lr))
 	
-	var head_rotation = head.rotation_degrees.x
-	if head_rotation + amount_ud <= Globals.max_look_vertical and \
-			head_rotation + amount_ud >= -Globals.max_look_vertical:
-		head.rotate_x(deg2rad(amount_ud))
+	var head_rotation = head.rotation.x
+	if head_rotation + amount_ud <= deg_to_rad(Globals.max_look_vertical) and \
+			head_rotation + amount_ud >= deg_to_rad(-Globals.max_look_vertical):
+		head.rotate_x(amount_ud)
 
 
 func _physics_process(delta):
@@ -55,11 +55,13 @@ func _physics_process(delta):
 		movement.y = velocity.y - (Globals.gravity * delta)
 	if Globals.test_mode == Globals.TestMode.STATIC_LOAD:
 		rotate_head(0.1, 0, false)
-		velocity = move_and_slide(movement)
+		set_velocity(movement)
+		move_and_slide()
 		return
 	elif Globals.test_mode == Globals.TestMode.RUN_LOAD:
 		movement = global_transform.basis.z * Vector3.FORWARD * Globals.speed
-		velocity = move_and_slide(movement)
+		set_velocity(movement)
+		move_and_slide()
 		return
 	
 	var look_ud = Input.get_axis("Look_Down", "Look_Up") * Globals.controller_sensitivity.y
@@ -79,13 +81,14 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Jump") and abs(velocity.y) < 0.1:
 		movement += Vector3.UP * Globals.jump_speed
 	
-	velocity = move_and_slide(movement)
+	set_velocity(movement)
+	move_and_slide()
 	
 	if ray.is_colliding():
 		var normal = ray.get_collision_normal()
 		var pos = ray.get_collision_point() - normal * 0.5
 		
-		block.global_translation = pos.floor() + (Vector3.ONE / 2)
+		block.global_position = pos.floor() + (Vector3.ONE / 2)
 		block.global_rotation = Vector3.ZERO
 		block.visible = true
 		
@@ -103,8 +106,8 @@ func toggle_flying():
 
 
 func toggle_clipping():
-	$CollisionShape.disabled = !$CollisionShape.disabled
-	if $CollisionShape.disabled:
+	$CollisionShape3D.disabled = !$CollisionShape3D.disabled
+	if $CollisionShape3D.disabled:
 		Globals.flying = true
 
 
@@ -119,3 +122,4 @@ func _on_Area_body_exited(_body):
 func _exit_tree():
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
+

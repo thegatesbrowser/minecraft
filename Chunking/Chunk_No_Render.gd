@@ -20,5 +20,5 @@ func update():
 
 
 func finalize():
-	# Finish creating the chunk on the main thread.
+	# Finish creating the chunk checked the main thread.
 	blocks.depool()

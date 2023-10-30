@@ -1,6 +1,6 @@
 extends Chunk
 
-export(Array, Resource) var block_resources := []
+@export var block_resources := [] # (Array, Resource)
 
 var block_array := []
 var block_objects: Node = null
@@ -31,6 +31,7 @@ func update():
 		blocks.update()
 		for x in Globals.chunk_size.x:
 			for z in Globals.chunk_size.z:
+				@warning_ignore("narrowing_conversion")
 				var height = blocks.get_height(x, z)
 				for y in height:
 					if blocks.types[x][z][y] == WorldGen.AIR:
@@ -42,7 +43,7 @@ func update():
 
 func _render():
 	block_array = []
-# warning-ignore:narrowing_conversion
+	@warning_ignore("narrowing_conversion")
 	block_array.resize(Globals.chunk_size.x)
 	block_objects = Node.new()
 	for x in Globals.chunk_size.x:
@@ -51,6 +52,7 @@ func _render():
 		for z in Globals.chunk_size.z:
 			block_array[x][z] = []
 			block_array[x][z].resize(Globals.chunk_size.y)
+			@warning_ignore("narrowing_conversion")
 			var height = blocks.get_height(x, z)
 			for y in height:
 				if blocks.types[x][z][y] != WorldGen.AIR and (blocks.flags[x][z][y] & ChunkData.ALL_SIDES != ChunkData.ALL_SIDES):
@@ -58,8 +60,8 @@ func _render():
 
 
 func _create_block(x, y, z, type):
-	var block = block_resources[type].instance()
-	block.translation = translation + Vector3(x + 0.5, y + 0.5, z + 0.5)
+	var block = block_resources[type].instantiate()
+	block.position = position + Vector3(x + 0.5, y + 0.5, z + 0.5)
 	block_objects.add_child(block)
 	block_array[x][z][y] = block
 
@@ -76,5 +78,5 @@ func finalize():
 		add_child(block_objects)
 		rendered = true
 	
-	# Finish creating the chunk on the main thread.
+	# Finish creating the chunk checked the main thread.
 	blocks.depool()

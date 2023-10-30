@@ -2,8 +2,8 @@ extends HBoxContainer
 
 signal changed(val)
 
-onready var label = $Label
-onready var slider = $HSlider
+@onready var label = $Label
+@onready var slider = $HSlider
 
 
 func set_value(val):

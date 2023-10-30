@@ -1,15 +1,15 @@
 extends CenterContainer
 
-onready var grass = $HBoxContainer/Grass
-onready var dirt = $HBoxContainer/Dirt
-onready var stone = $HBoxContainer/Stone
-onready var glass = $HBoxContainer/Glass
-onready var log1 = $HBoxContainer/Log1
-onready var log2 = $HBoxContainer/Log2
-onready var wood1 = $HBoxContainer/Wood
-onready var wood2 = $HBoxContainer/Wood2
-onready var leaf1 = $HBoxContainer/Leaf1
-onready var leaf2 = $HBoxContainer/Leaf2
+@onready var grass = $HBoxContainer/Grass
+@onready var dirt = $HBoxContainer/Dirt
+@onready var stone = $HBoxContainer/Stone
+@onready var glass = $HBoxContainer/Glass
+@onready var log1 = $HBoxContainer/Log1
+@onready var log2 = $HBoxContainer/Log2
+@onready var wood1 = $HBoxContainer/Wood
+@onready var wood2 = $HBoxContainer/Wood2
+@onready var leaf1 = $HBoxContainer/Leaf1
+@onready var leaf2 = $HBoxContainer/Leaf2
 
 enum {GRASS, DIRT, STONE, GLASS, LOG1, WOOD1, LOG2, WOOD2, LEAF1, LEAF2}
 
@@ -29,6 +29,7 @@ func _input(_event):
 		if current_key == GRASS:
 			current_key = LEAF2
 		else:
+			@warning_ignore("int_as_enum_without_cast")
 			current_key -= 1
 		_unpress_all()
 		_press_key(current_key)
@@ -37,26 +38,27 @@ func _input(_event):
 		if current_key == LEAF2:
 			current_key = GRASS
 		else:
+			@warning_ignore("int_as_enum_without_cast")
 			current_key += 1
 		_unpress_all()
 		_press_key(current_key)
 
 
 func _unpress_all():
-	grass.pressed = false
-	dirt.pressed = false
-	stone.pressed = false
-	glass.pressed = false
-	log1.pressed = false
-	log2.pressed = false
-	wood1.pressed = false
-	wood2.pressed = false
-	leaf1.pressed = false
-	leaf2.pressed = false
+	grass.button_pressed = false
+	dirt.button_pressed = false
+	stone.button_pressed = false
+	glass.button_pressed = false
+	log1.button_pressed = false
+	log2.button_pressed = false
+	wood1.button_pressed = false
+	wood2.button_pressed = false
+	leaf1.button_pressed = false
+	leaf2.button_pressed = false
 
 
 func _press_key(i):
-	buttons[i].pressed = true
+	buttons[i].button_pressed = true
 	Globals.current_block = keys[i]
 	current_key = i
 

@@ -1,11 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://o7k7g88movko"]
 
-[ext_resource path="res://Chunking/Chunk_Simple.gd" type="Script" id=1]
-[ext_resource path="res://Chunking/Blocks_Simple/Broken0.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Chunking/Blocks_Simple/Broken1.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Chunking/Blocks_Simple/Broken2.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Chunking/Blocks_Simple/Glass.tscn" type="PackedScene" id=5]
+[ext_resource type="Script" path="res://Chunking/Chunk_Simple.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dya2c6ldgbe0b" path="res://Chunking/Blocks_Simple/Broken0.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://42u01dl0a4ja" path="res://Chunking/Blocks_Simple/Broken1.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://6cxou5xwffjf" path="res://Chunking/Blocks_Simple/Broken2.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://dw3u313sdieyb" path="res://Chunking/Blocks_Simple/Glass.tscn" id="5"]
 
-[node name="Chunk_Simple" type="Spatial"]
-script = ExtResource( 1 )
-block_resources = [ null, ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ) ]
+[node name="Chunk_Simple" type="Node3D"]
+script = ExtResource("1")
+block_resources = [null, ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("3"), ExtResource("3"), ExtResource("4"), ExtResource("3"), ExtResource("5")]

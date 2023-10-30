@@ -1,11 +1,11 @@
-[gd_resource type="CubeMesh" load_steps=3 format=2]
+[gd_resource type="BoxMesh" load_steps=3 format=3 uid="uid://bflmugy6n5a2w"]
 
-[ext_resource path="res://Assets/textures_multimesh.png" type="Texture" id=1]
+[ext_resource type="Texture2D" uid="uid://b3ofi2bnb5dkc" path="res://Assets/textures_multimesh.png" id="1"]
 
-[sub_resource type="SpatialMaterial" id=4]
-albedo_texture = ExtResource( 1 )
-uv1_scale = Vector3( 0.25, 0.25, 1 )
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4f7rf"]
+albedo_texture = ExtResource("1")
+uv1_scale = Vector3(0.25, 0.25, 1)
+texture_filter = 0
 
 [resource]
-material = SubResource( 4 )
-size = Vector3( 1, 1, 1 )
+material = SubResource("StandardMaterial3D_4f7rf")
