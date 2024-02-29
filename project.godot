@@ -36,9 +36,9 @@ file_logging/max_log_files=500
 window/size/viewport_width=1600
 window/size/viewport_height=900
 window/stretch/mode="viewport"
-window/size/width=1600
-window/size/height=900
 window/canvas_textures/default_texture_filter=1
+window/size/width=1152
+window/size/height=648
 
 [editor_plugins]
 

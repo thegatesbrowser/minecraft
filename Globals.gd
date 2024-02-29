@@ -2,7 +2,7 @@ extends Node
 
 # Debugging.
 enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
-@export var print_level := Log.LogLevel.WARNING
+@export var print_level := Logger.LogLevel.WARNING
 @export var single_threaded_generate := false
 @export var single_threaded_render := false
 @export var capture_mouse_on_start := true
@@ -44,7 +44,7 @@ var test_file = null
 
 
 func _ready():
-	Print.get_logger(0).print_level = print_level
+	Print.create_logger(0, print_level, Print.VERBOSE)
 	randomize()
 	if world_seed == 0:
 		world_seed = randi()

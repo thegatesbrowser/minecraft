@@ -105,8 +105,8 @@ func _ready():
 		elif OS.has_feature("debug"):
 			mode = "Debug"
 		
-		if Print.get_logger(PrintScope.GLOBAL).print_level < Print.INFO:
-			Print.get_logger(PrintScope.GLOBAL).print_level = Log.LogLevel.INFO
+		if Print.get_logger("Global").print_level < Print.INFO:
+			Print.get_logger("Global").print_level = Logger.LogLevel.INFO
 		Print.from(0, "Test is using preset %s." % Globals.settings_preset, Print.INFO)
 		
 		var args = ""
