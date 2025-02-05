@@ -20,12 +20,12 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var chunk_loading_threads := 7
 
 # Physics settings.
-@export var gravity := 20
+@export var gravity := 9.8
 
 # Player Settings.
 @export var paused := false
-@export var speed := 10
-@export var jump_speed := 10
+@export var speed := 7
+@export var jump_speed := 6
 @export var mouse_sensitivity := Vector2(0.3, 0.3)
 @export var controller_sensitivity := Vector2(5, 2)
 @export var max_look_vertical := 75
