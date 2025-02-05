@@ -126,7 +126,7 @@ mesh = SubResource("8")
 skeleton = NodePath("../..")
 
 [node name="Head" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.98133, 0.192333, 0, -0.192333, 0.98133, 0, 0.8, 0)
+transform = Transform3D(1, 0, 0, 0, 0.978148, 0.207912, 0, -0.207912, 0.978148, 0, 0.8, 0)
 layers = 32
 cast_shadow = 0
 mesh = SubResource("3")
@@ -137,8 +137,8 @@ cull_mask = 1048543
 near = 0.01
 far = 200.0
 
-[node name="RayCast3D" type="RayCast3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.35)
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.05)
 target_position = Vector3(0, -10, 0)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]

@@ -1,15 +1,29 @@
 extends CharacterBody3D
 
+
+var speed
+@export var WALK_SPEED = 5.0
+@export var SPRINT_SPEED = 8.0
+@export var JUMP_VELOCITY = 4.8
+const SENSITIVITY = 0.004
+
+#bob variables
+const BOB_FREQ = 2.4
+const BOB_AMP = 0.08
+var t_bob = 0.0
+
+#fov variables
+const BASE_FOV = 75.0
+const FOV_CHANGE = 1.5
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = 9.8
+
 @onready var camera = $Head/Camera3D
-@onready var ray = $Head/RayCast3D
+@onready var ray = $Head/Camera3D/RayCast3D
 @onready var block = $BlockOutline
 @onready var head = $Head
 @onready var block_collider = $BlockOutline/Area3D
-
-var block_is_inside_character := false
-
-signal place_block(pos)
-signal break_block(pos)
 
 
 func _ready():
@@ -19,71 +33,61 @@ func _ready():
 	Console.add_command("player_clipping", self, 'toggle_clipping')\
 		.set_description("Enables the player to clip through the world (or disables clipping).")\
 		.register()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
-func _input(event):
+func _unhandled_input(event):
 	if Globals.paused or Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
 		return
-	
+		
 	if event is InputEventMouseMotion:
-		rotate_head(event.relative.x * Globals.mouse_sensitivity.x, -event.relative.y * Globals.mouse_sensitivity.y, Globals.mouse_invert_look)
-
-
-func rotate_head(amount_lr: float, amount_ud: float, inverted: bool):
-	if inverted:
-		amount_ud = -amount_ud
-	amount_ud = deg_to_rad(amount_ud)
-	
-	# Look left and right.
-	rotate_y(deg_to_rad(-amount_lr))
-	
-	var head_rotation = head.rotation.x
-	if head_rotation + amount_ud <= deg_to_rad(Globals.max_look_vertical) and \
-			head_rotation + amount_ud >= deg_to_rad(-Globals.max_look_vertical):
-		head.rotate_x(amount_ud)
+		head.rotate_y(-event.relative.x * SENSITIVITY)
+		camera.rotate_x(-event.relative.y * SENSITIVITY)
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 
 
 func _physics_process(delta):
 	if Globals.paused:
 		block.visible = false
 		return
+	# Add the gravity.
+	if not is_on_floor():
+		velocity.y -= gravity * delta
 
-	var movement := Vector3.ZERO
-	if Globals.flying:
-		movement = (velocity * (.75 * (1 - delta)))
+	# Handle Jump.
+	if Input.is_action_just_pressed("Jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+	
+	# Handle Sprint.
+	if Input.is_action_pressed("Sprint"):
+		speed = SPRINT_SPEED
 	else:
-		movement.y = velocity.y - (Globals.gravity * delta)
-	if Globals.test_mode == Globals.TestMode.STATIC_LOAD:
-		rotate_head(0.1, 0, false)
-		set_velocity(movement)
-		move_and_slide()
-		return
-	elif Globals.test_mode == Globals.TestMode.RUN_LOAD:
-		movement = global_transform.basis.z * Vector3.FORWARD * Globals.speed
-		set_velocity(movement)
-		move_and_slide()
-		return
-	
-	var look_ud = Input.get_axis("Look_Down", "Look_Up") * Globals.controller_sensitivity.y
-	var look_lr = Input.get_axis("Look_Left", "Look_Right") * Globals.controller_sensitivity.x
-	rotate_head(look_lr, look_ud, Globals.controller_invert_look)
-	
-	var move_fb = Input.get_axis("Forward", "Backward") * Globals.speed
-	var move_lr = Input.get_axis("Left", "Right") * Globals.speed
-	
-	if Globals.flying:
-		movement += head.global_transform.basis.z * move_fb
-		movement += head.global_transform.basis.x * move_lr
+		speed = WALK_SPEED
+
+	# Get the input direction and handle the movement/deceleration.
+	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
+	var direction = (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if is_on_floor():
+		if direction:
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
+		else:
+			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
+			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
 	else:
-		movement += global_transform.basis.z * move_fb
-		movement += global_transform.basis.x * move_lr
+		velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
+		velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
 	
-	if Input.is_action_just_pressed("Jump") and abs(velocity.y) < 0.1:
-		movement += Vector3.UP * Globals.jump_speed
+	# Head bob
+	t_bob += delta * velocity.length() * float(is_on_floor())
+	camera.transform.origin = _headbob(t_bob)
 	
-	set_velocity(movement)
-	move_and_slide()
+	# FOV
+	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
+	var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
+	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
 	
+	# BUILDING / BREAKING
 	if ray.is_colliding():
 		var normal = ray.get_collision_normal()
 		var pos = ray.get_collision_point() - normal * 0.5
@@ -100,6 +104,77 @@ func _physics_process(delta):
 	else:
 		block.visible = false
 
+	
+	move_and_slide()
+
+
+func _headbob(time) -> Vector3:
+	var pos = Vector3.ZERO
+	pos.y = sin(time * BOB_FREQ) * BOB_AMP
+	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
+	return pos
+	
+
+var block_is_inside_character := false
+
+signal place_block(pos)
+signal break_block(pos)
+
+func rotate_head(amount_lr: float, amount_ud: float, inverted: bool):
+	if inverted:
+		amount_ud = -amount_ud
+	amount_ud = deg_to_rad(amount_ud)
+	
+	# Look left and right.
+	rotate_y(deg_to_rad(-amount_lr))
+	
+	var head_rotation = head.rotation.x
+	if head_rotation + amount_ud <= deg_to_rad(Globals.max_look_vertical) and \
+			head_rotation + amount_ud >= deg_to_rad(-Globals.max_look_vertical):
+		head.rotate_x(amount_ud)
+
+##
+##func _physics_process(delta):
+##
+	##var movement := Vector3.ZERO
+	##if Globals.flying:
+		##movement = (velocity * (.75 * (1 - delta)))
+	##else:
+		##movement.y = velocity.y - (Globals.gravity * delta)
+		#
+	#if Globals.test_mode == Globals.TestMode.STATIC_LOAD:
+		#rotate_head(0.1, 0, false)
+		#set_velocity(movement)
+		#move_and_slide()
+		#return
+		#
+	#elif Globals.test_mode == Globals.TestMode.RUN_LOAD:
+		#movement = global_transform.basis.z * Vector3.FORWARD * Globals.speed
+		#set_velocity(movement)
+		#move_and_slide()
+		#return
+	#
+	#var look_ud = Input.get_axis("Look_Down", "Look_Up") * Globals.controller_sensitivity.y
+	#var look_lr = Input.get_axis("Look_Left", "Look_Right") * Globals.controller_sensitivity.x
+	#rotate_head(look_lr, look_ud, Globals.controller_invert_look)
+	#
+	#var move_fb = Input.get_axis("Forward", "Backward") * Globals.speed
+	#var move_lr = Input.get_axis("Left", "Right") * Globals.speed
+	#
+	#if Globals.flying:
+		#movement += head.global_transform.basis.z * move_fb
+		#movement += head.global_transform.basis.x * move_lr
+	#else:
+		#movement += global_transform.basis.z * move_fb
+		#movement += global_transform.basis.x * move_lr
+	#
+	#if Input.is_action_just_pressed("Jump") and abs(velocity.y) < 0.1:
+		#movement += Vector3.UP * Globals.jump_speed
+	#
+	#set_velocity(movement)
+	#move_and_slide()
+	#
+	
 
 func toggle_flying():
 	Globals.flying = !Globals.flying
@@ -122,4 +197,3 @@ func _on_Area_body_exited(_body):
 func _exit_tree():
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
-
