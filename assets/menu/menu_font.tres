@@ -1,0 +1,9 @@
+[gd_resource type="FontFile" load_steps=2 format=2]
+
+[ext_resource type="FontFile" uid="uid://bo7183h54itxx" path="res://assets/georgia.ttf" id="1"]
+
+[resource]
+size = 41
+extra_spacing_top = 10
+extra_spacing_bottom = 10
+font_data = ExtResource( 1 )

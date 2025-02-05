@@ -1,0 +1,12 @@
+[gd_resource type="BoxMesh" load_steps=3 format=3 uid="uid://wq3akop0irmc"]
+
+[ext_resource type="Texture2D" uid="uid://b3ofi2bnb5dkc" path="res://assets/textures_multimesh.png" id="1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6kbp"]
+albedo_texture = ExtResource("1")
+uv1_scale = Vector3(0.25, 0.25, 1)
+uv1_offset = Vector3(0, 0.25, 0)
+texture_filter = 0
+
+[resource]
+material = SubResource("StandardMaterial3D_k6kbp")

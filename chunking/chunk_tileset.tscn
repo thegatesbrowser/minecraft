@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://syqus7soj3tc"]
+
+[ext_resource type="Script" path="res://chunking/chunk_tileset.gd" id="1"]
+[ext_resource type="MeshLibrary" uid="uid://dfd8k74uu1hl0" path="res://chunking/blocks_gridmap/block_tiles.tres" id="2"]
+
+[node name="Chunk_Tileset" type="Node3D"]
+script = ExtResource("1")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("2")
+cell_size = Vector3(1, 1, 1)

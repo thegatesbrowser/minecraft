@@ -1,0 +1,11 @@
+[gd_scene load_steps=6 format=3 uid="uid://o7k7g88movko"]
+
+[ext_resource type="Script" path="res://chunking/chunk_simple.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dya2c6ldgbe0b" path="res://chunking/blocks_simple/broken0.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://42u01dl0a4ja" path="res://chunking/blocks_simple/broken1.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://6cxou5xwffjf" path="res://chunking/blocks_simple/broken2.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://dw3u313sdieyb" path="res://chunking/blocks_simple/glass.tscn" id="5"]
+
+[node name="Chunk_Simple" type="Node3D"]
+script = ExtResource("1")
+block_resources = [null, ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("3"), ExtResource("3"), ExtResource("4"), ExtResource("3"), ExtResource("5")]

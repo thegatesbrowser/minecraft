@@ -1,0 +1,96 @@
+[gd_scene load_steps=22 format=3 uid="uid://utprowxv7b47"]
+
+[ext_resource type="Script" path="res://chunking/chunk_multimesh.gd" id="1"]
+[ext_resource type="BoxMesh" uid="uid://c2mqhk1vec8cx" path="res://chunking/blocks_multimesh/leaves2.tres" id="2"]
+[ext_resource type="BoxMesh" uid="uid://bbn5dvsgbd6te" path="res://chunking/blocks_multimesh/wood2.tres" id="3"]
+[ext_resource type="BoxMesh" uid="uid://c12ekvu5mf8al" path="res://chunking/blocks_multimesh/dirt.tres" id="4"]
+[ext_resource type="BoxMesh" uid="uid://cy0nta3xqovfm" path="res://chunking/blocks_multimesh/glass.tres" id="5"]
+[ext_resource type="BoxMesh" uid="uid://bflmugy6n5a2w" path="res://chunking/blocks_multimesh/grass.tres" id="6"]
+[ext_resource type="BoxMesh" uid="uid://dxjnc86rah3nf" path="res://chunking/blocks_multimesh/stone.tres" id="7"]
+[ext_resource type="BoxMesh" uid="uid://drm6awsuw0yt8" path="res://chunking/blocks_multimesh/log2.tres" id="8"]
+[ext_resource type="BoxMesh" uid="uid://wq3akop0irmc" path="res://chunking/blocks_multimesh/log1.tres" id="9"]
+[ext_resource type="BoxMesh" uid="uid://cmdqh1e0yg8ky" path="res://chunking/blocks_multimesh/wood1.tres" id="10"]
+[ext_resource type="BoxMesh" uid="uid://hlgb3bh04ejy" path="res://chunking/blocks_multimesh/leaves1.tres" id="11"]
+
+[sub_resource type="MultiMesh" id="1"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("4")
+
+[sub_resource type="MultiMesh" id="2"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("6")
+
+[sub_resource type="MultiMesh" id="3"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("7")
+
+[sub_resource type="MultiMesh" id="4"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("9")
+
+[sub_resource type="MultiMesh" id="5"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("11")
+
+[sub_resource type="MultiMesh" id="6"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("10")
+
+[sub_resource type="MultiMesh" id="7"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("8")
+
+[sub_resource type="MultiMesh" id="8"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("2")
+
+[sub_resource type="MultiMesh" id="9"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("3")
+
+[sub_resource type="MultiMesh" id="10"]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource("5")
+
+[node name="Chunk_Multimesh" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Dirt" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("1")
+
+[node name="Grass" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("2")
+
+[node name="Stone" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("3")
+
+[node name="Log1" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("4")
+
+[node name="Leaves1" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("5")
+
+[node name="Wood1" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("6")
+
+[node name="Log2" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("7")
+
+[node name="Leaves2" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("8")
+
+[node name="Wood2" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("9")
+
+[node name="Glass" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("10")
