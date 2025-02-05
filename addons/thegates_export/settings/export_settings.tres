@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_4i6s3")
 title = "Minecraft"
-description = "A game for my 20 games in 30 days project. Can deploy to Itch.io automatically, or will be deployed from the parent project.[p][/p]By SDG Games"
+description = "Our open-source minecraft clone (WIP) [p][/p] Originally by SDG Games"
 image = ""
 export_folder = "/media/common/Projects/thegates-folder/ServerFiles/exports/minecraft"
