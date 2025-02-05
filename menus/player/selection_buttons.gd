@@ -25,23 +25,24 @@ func _ready():
 
 
 func _input(_event):
-	if Input.is_action_just_pressed("Scroll_Up"):
-		if current_key == GRASS:
-			current_key = LEAF2
-		else:
-			@warning_ignore("int_as_enum_without_cast")
-			current_key -= 1
-		_unpress_all()
-		_press_key(current_key)
+	if Input.is_action_just_released("Scroll_Up"):
+		current_key -= 1
 	
-	elif Input.is_action_just_pressed("Scroll_Down"):
-		if current_key == LEAF2:
-			current_key = GRASS
-		else:
-			@warning_ignore("int_as_enum_without_cast")
-			current_key += 1
-		_unpress_all()
-		_press_key(current_key)
+	elif Input.is_action_just_released("Scroll_Down"):
+		current_key += 1
+		
+	else:
+		for i in range(9):
+			if Input.is_action_just_pressed(str(i + 1)):
+				current_key = i
+		if Input.is_action_just_pressed("0"):
+			current_key = 9
+	
+	
+	
+	current_key %= 10
+	_unpress_all()
+	_press_key(current_key)
 
 
 func _unpress_all():
