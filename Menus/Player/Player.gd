@@ -4,7 +4,7 @@ extends CharacterBody3D
 var speed
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
-@export var JUMP_VELOCITY = 4.8
+@export var JUMP_VELOCITY = 7.0
 const SENSITIVITY = 0.004
 
 #bob variables
@@ -13,11 +13,10 @@ const BOB_AMP = 0.08
 var t_bob = 0.0
 
 #fov variables
-const BASE_FOV = 75.0
+const BASE_FOV = 90.0
 const FOV_CHANGE = 1.5
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = 9.8
+var gravity = 16.5
 
 @onready var camera = $Head/Camera3D
 @onready var ray = $Head/Camera3D/RayCast3D
@@ -44,7 +43,7 @@ func _unhandled_input(event):
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-
+		
 
 func _physics_process(delta):
 	if Globals.paused:
@@ -57,7 +56,7 @@ func _physics_process(delta):
 			velocity.y -= gravity * delta
 
 		# Handle Jump.
-		if Input.is_action_just_pressed("Jump") and is_on_floor():
+		if Input.is_action_pressed("Jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
 	# Handle Sprint.
 	if Input.is_action_pressed("Sprint"):

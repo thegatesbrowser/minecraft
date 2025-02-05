@@ -126,7 +126,7 @@ mesh = SubResource("8")
 skeleton = NodePath("../..")
 
 [node name="Head" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.978148, 0.207912, 0, -0.207912, 0.978148, 0, 0.8, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 layers = 32
 cast_shadow = 0
 mesh = SubResource("3")
@@ -134,6 +134,7 @@ mesh = SubResource("3")
 [node name="Camera3D" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
 cull_mask = 1048543
+fov = 90.0
 near = 0.01
 far = 200.0
 
