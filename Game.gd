@@ -14,6 +14,7 @@ extends Node3D
 
 var player_pos := Vector2.ZERO
 
+var is_fullscreen = false
 
 func _ready():
 	WorldGen.set_seed(Globals.world_seed)
@@ -59,6 +60,14 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("Console"):
 		Console.toggle_console()
+	
+	# Maybe should be in a different script, only available in the actual simulation
+	if Input.is_action_just_pressed("Fullscreen Toggle"):
+		is_fullscreen = !is_fullscreen
+		if is_fullscreen:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
 	
 	player_pos = _player_pos_to_chunk_pos(player.position)
 	chunks.update_chunks(player_pos)
