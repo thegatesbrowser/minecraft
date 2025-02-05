@@ -35,7 +35,7 @@ func _ready():
 	if _parse_cmd_args():
 		return
 	else:
-		_change_settings(HIGH)
+		_change_settings(LOW)
 	
 	# Set up splash screen.
 	var saying = splash_sayings[randi() % splash_sayings.size()]

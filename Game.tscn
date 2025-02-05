@@ -55,27 +55,14 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Label" type="Label" parent="Overlay/CenterContainer"]
-offset_left = 795.0
-offset_top = 437.0
-offset_right = 805.0
-offset_bottom = 463.0
+layout_mode = 2
 text = "+"
 
 [node name="DebugOverlay" parent="Overlay" instance=ExtResource("5")]
-offset_top = 8.0
-offset_bottom = 8.0
 mouse_filter = 2
 chunk_map_size = 500.0
 
 [node name="Selection_Buttons" parent="Overlay" instance=ExtResource("4")]
-anchors_preset = 12
-anchor_left = 0.0
-anchor_right = 1.0
-offset_left = 0.0
-offset_top = -130.0
-offset_right = -1065.0
-offset_bottom = -98.0
-size_flags_horizontal = 4
 
 [connection signal="break_block" from="Player" to="." method="_on_Player_break_block"]
 [connection signal="place_block" from="Player" to="." method="_on_Player_place_block"]

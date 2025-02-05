@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bcyn2himieq3h"
-path="res://.godot/imported/MC_Menu.ttf-aa56ad1800e96572b5ccb7c2b5ead581.fontdata"
+uid="uid://bieguuna7y5ev"
+path="res://.godot/imported/Inter-Regular.otf-019fa4f32d26505f90eb501eb5437a9d.fontdata"
 
 [deps]
 
-source_file="res://Assets/Menu/MC_Menu.ttf"
-dest_files=["res://.godot/imported/MC_Menu.ttf-aa56ad1800e96572b5ccb7c2b5ead581.fontdata"]
+source_file="res://addons/thegates_export/fonts/Inter-Regular.otf"
+dest_files=["res://.godot/imported/Inter-Regular.otf-019fa4f32d26505f90eb501eb5437a9d.fontdata"]
 
 [params]
 

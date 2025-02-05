@@ -99,57 +99,60 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -800.0
-offset_bottom = -450.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2, 2)
-size_flags_vertical = 3
 script = ExtResource("5")
 splash_images = Array[Resource]([ExtResource("9"), ExtResource("3"), ExtResource("11"), ExtResource("2"), ExtResource("4"), ExtResource("10")])
 chunk_radius_presets = Array[int]([2, 8, 24, 48, 97])
 fog_enabled = Array[bool]([true, true, true, true, true])
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -272.0
-offset_top = 12.0
-offset_right = 274.0
-offset_bottom = 140.0
+offset_left = -546.0
+offset_top = 100.0
+offset_right = 546.0
+offset_bottom = 356.0
 grow_horizontal = 2
 
 [node name="Title" type="TextureRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(1092, 256)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("8")
-stretch_mode = 1
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Splash" type="Label" parent="CenterContainer/Title"]
-layout_mode = 0
-offset_left = 200.0
-offset_top = 44.0
-offset_right = 800.0
-offset_bottom = 84.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.475
+anchor_right = 0.475
+offset_left = 122.3
+offset_top = 88.0
+offset_right = 722.3
+offset_bottom = 137.0
 rotation = -0.350811
 pivot_offset = Vector2(300, 20)
 theme = ExtResource("1")
 theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 36
 text = "aaaaaaaaaaaaaaaaaa"
 horizontal_alignment = 1
 
 [node name="SC" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2(0, -666)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -298.0
+offset_top = -530.0
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -172,7 +175,7 @@ layout_mode = 2
 [node name="Play" type="Button" parent="SC/CC/VBC/Play_Buttons/VB"]
 layout_mode = 2
 theme = ExtResource("1")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 64
 text = "Play Game"
 
 [node name="HSeparator6" type="HSeparator" parent="SC/CC/VBC/Play_Buttons/VB"]
@@ -286,6 +289,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 toggle_mode = true
+button_pressed = true
 button_group = SubResource("ButtonGroup_iuq17")
 text = "Low"
 
@@ -302,7 +306,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 toggle_mode = true
-button_pressed = true
 button_group = SubResource("ButtonGroup_iuq17")
 text = "High"
 
@@ -455,37 +458,33 @@ libraries = {
 
 [node name="Splash_Image" type="TextureRect" parent="."]
 show_behind_parent = true
-layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -225.0
-offset_right = 1200.0
-offset_bottom = 675.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 6
 
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Static" to="." method="_on_Test_Static_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Dynamic" to="." method="_on_Test_Dynamic_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Manual" to="." method="_on_Test_Manual_pressed"]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/None" to="." method="_on_Chunk_Type_pressed" binds= [0]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Bad" to="." method="_on_Chunk_Type_pressed" binds= [1]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Mesh" to="." method="_on_Chunk_Type_pressed" binds= [3]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/TileSet" to="." method="_on_Chunk_Type_pressed" binds= [4]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Simple" to="." method="_on_Chunk_Type_pressed" binds= [2]]
-[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Ultimate" to="." method="_on_Chunk_Type_pressed" binds= [5]]
-[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Potato" to="." method="_on_Settings_Preset_pressed" binds= [0]]
-[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Low" to="." method="_on_Settings_Preset_pressed" binds= [1]]
-[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Medium" to="." method="_on_Settings_Preset_pressed" binds= [2]]
-[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/High" to="." method="_on_Settings_Preset_pressed" binds= [3]]
-[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Extreme" to="." method="_on_Settings_Preset_pressed" binds= [4]]
-[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Custom" to="." method="_on_Settings_Preset_pressed" binds= [5]]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/None" to="." method="_on_Chunk_Type_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Bad" to="." method="_on_Chunk_Type_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Mesh" to="." method="_on_Chunk_Type_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/TileSet" to="." method="_on_Chunk_Type_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Simple" to="." method="_on_Chunk_Type_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Chunk_Label_Container/Ultimate" to="." method="_on_Chunk_Type_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Potato" to="." method="_on_Settings_Preset_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Low" to="." method="_on_Settings_Preset_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Medium" to="." method="_on_Settings_Preset_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/High" to="." method="_on_Settings_Preset_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Extreme" to="." method="_on_Settings_Preset_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Performance_Label_Container/Custom" to="." method="_on_Settings_Preset_pressed"]
 [connection signal="changed" from="SC/CC/VBC/Chunk_Radius" to="." method="_on_Chunk_Radius_changed"]
 [connection signal="value_changed" from="SC/CC/VBC/Chunk_Radius/HSlider" to="SC/CC/VBC/Chunk_Radius" method="_on_HSlider_value_changed"]
 [connection signal="changed" from="SC/CC/VBC/Max_Unloaded_Chunks" to="." method="_on_Max_Unloaded_Chunks_changed"]

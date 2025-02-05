@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://csthn8tsi1xak"]
+
+[ext_resource type="Script" path="res://addons/thegates_export/dock/file_dialog.gd" id="1_nv1wy"]
+
+[node name="FileDialog" type="Button"]
+text = "Pick"
+script = ExtResource("1_nv1wy")
+minsize = Vector2i(1000, 600)
+
+[connection signal="pressed" from="." to="." method="open_file_dialog"]

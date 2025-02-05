@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bcyn2himieq3h"
-path="res://.godot/imported/MC_Menu.ttf-aa56ad1800e96572b5ccb7c2b5ead581.fontdata"
+uid="uid://vedg7uktv7in"
+path="res://.godot/imported/Inter-BoldItalic.otf-4c0d09c79a787da4b19a493497672de4.fontdata"
 
 [deps]
 
-source_file="res://Assets/Menu/MC_Menu.ttf"
-dest_files=["res://.godot/imported/MC_Menu.ttf-aa56ad1800e96572b5ccb7c2b5ead581.fontdata"]
+source_file="res://addons/thegates_export/fonts/Inter-BoldItalic.otf"
+dest_files=["res://.godot/imported/Inter-BoldItalic.otf-4c0d09c79a787da4b19a493497672de4.fontdata"]
 
 [params]
 

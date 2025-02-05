@@ -1,0 +1,206 @@
+[gd_scene load_steps=14 format=3 uid="uid://c0hadlluk8ea2"]
+
+[ext_resource type="FontFile" uid="uid://bieguuna7y5ev" path="res://addons/thegates_export/fonts/Inter-Regular.otf" id="1_pslyv"]
+[ext_resource type="PackedScene" uid="uid://csthn8tsi1xak" path="res://addons/thegates_export/dock/file_dialog.tscn" id="1_qc56w"]
+[ext_resource type="FontFile" uid="uid://dlsxr6x8ly8o1" path="res://addons/thegates_export/fonts/Inter-Bold.otf" id="2_exlpp"]
+[ext_resource type="Script" path="res://addons/thegates_export/dock/export_button.gd" id="2_punvs"]
+[ext_resource type="Script" path="res://addons/thegates_export/settings/export_settings_manager.gd" id="3_1g6iw"]
+[ext_resource type="FontFile" uid="uid://bhhqmrno12ef5" path="res://addons/thegates_export/fonts/Inter-Italic.otf" id="3_w6f2b"]
+[ext_resource type="FontFile" uid="uid://vedg7uktv7in" path="res://addons/thegates_export/fonts/Inter-BoldItalic.otf" id="4_brjrt"]
+[ext_resource type="Resource" uid="uid://gh3me1dmrdp7" path="res://addons/thegates_export/settings/export_settings.tres" id="4_c5yno"]
+[ext_resource type="Script" path="res://addons/thegates_export/dock/link_opener.gd" id="4_s4553"]
+[ext_resource type="FontFile" uid="uid://c34vdr4dfgjti" path="res://addons/thegates_export/fonts/Monospace.ttf" id="5_ytjav"]
+
+[sub_resource type="Theme" id="Theme_qcuvx"]
+default_font = ExtResource("1_pslyv")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qokm5"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jy1k3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.282353, 0.282353, 0.282353, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="Export" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_qcuvx")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TheGates" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_qokm5")
+text = "Export to TheGates browser"
+horizontal_alignment = 1
+
+[node name="Title" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jy1k3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Title"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Title/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Title"
+clip_text = true
+
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Title/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Description" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jy1k3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Description"]
+layout_mode = 2
+
+[node name="Desc" type="Label" parent="ScrollContainer/VBoxContainer/Description/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Description"
+
+[node name="DescLineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Description/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DescPreview" type="Label" parent="ScrollContainer/VBoxContainer/Description/VBoxContainer"]
+layout_mode = 2
+text = "Prevew (With BBCode)"
+
+[node name="DescRichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Description/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("1_pslyv")
+theme_override_fonts/mono_font = ExtResource("5_ytjav")
+theme_override_fonts/italics_font = ExtResource("3_w6f2b")
+theme_override_fonts/bold_italics_font = ExtResource("4_brjrt")
+theme_override_fonts/bold_font = ExtResource("2_exlpp")
+bbcode_enabled = true
+fit_content = true
+
+[node name="Image" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jy1k3")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Image"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/Image/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Thumbnail image"
+clip_text = true
+
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Image/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="FileDialog" parent="ScrollContainer/VBoxContainer/Image/VBoxContainer" instance=ExtResource("1_qc56w")]
+layout_mode = 2
+filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.webp, *.bmp ; Image")
+
+[node name="ExportFolder" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jy1k3")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/ExportFolder"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="ScrollContainer/VBoxContainer/ExportFolder/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Export folder"
+clip_text = true
+
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/ExportFolder/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="FileDialog" parent="ScrollContainer/VBoxContainer/ExportFolder/VBoxContainer" instance=ExtResource("1_qc56w")]
+layout_mode = 2
+file_mode = 2
+access = 2
+
+[node name="Space" type="Control" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="ExportButton" type="Button" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Export"
+script = ExtResource("2_punvs")
+settings = ExtResource("4_c5yno")
+
+[node name="Space2" type="Control" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="LinksRichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Links:
+- [url=https://thegates.readthedocs.io]TheGates Docs[/url]
+- [url=https://docs.godotengine.org/en/stable/tutorials/ui/bbcode_in_richtextlabel.html#reference]Godot BBCode[/url]
+- [url=https://github.com/thegatesbrowser/thegates-export-plugin]Improve this plugin[/url]
+- [url=https://tinyurl.com/thegatesemail]Need server? Send email[/url]"
+fit_content = true
+script = ExtResource("4_s4553")
+
+[node name="Control" type="Control" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ExportSettingsManager" type="Node" parent="." node_paths=PackedStringArray("title", "description", "image", "export_folder", "image_fd", "export_folder_fd")]
+script = ExtResource("3_1g6iw")
+settings = ExtResource("4_c5yno")
+title = NodePath("../ScrollContainer/VBoxContainer/Title/VBoxContainer/LineEdit")
+description = NodePath("../ScrollContainer/VBoxContainer/Description/VBoxContainer/DescLineEdit")
+image = NodePath("../ScrollContainer/VBoxContainer/Image/VBoxContainer/LineEdit")
+export_folder = NodePath("../ScrollContainer/VBoxContainer/ExportFolder/VBoxContainer/LineEdit")
+image_fd = NodePath("../ScrollContainer/VBoxContainer/Image/VBoxContainer/FileDialog")
+export_folder_fd = NodePath("../ScrollContainer/VBoxContainer/ExportFolder/VBoxContainer/FileDialog")
+
+[connection signal="text_changed" from="ScrollContainer/VBoxContainer/Description/VBoxContainer/DescLineEdit" to="ScrollContainer/VBoxContainer/Description/VBoxContainer/DescRichTextLabel" method="set_text"]
+[connection signal="file_selected" from="ScrollContainer/VBoxContainer/Image/VBoxContainer/FileDialog" to="ScrollContainer/VBoxContainer/Image/VBoxContainer/LineEdit" method="set_text"]
+[connection signal="dir_selected" from="ScrollContainer/VBoxContainer/ExportFolder/VBoxContainer/FileDialog" to="ScrollContainer/VBoxContainer/ExportFolder/VBoxContainer/LineEdit" method="set_text"]
