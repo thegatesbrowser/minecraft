@@ -148,5 +148,14 @@ light_energy = 0.5
 shadow_enabled = true
 omni_range = 15.0
 
+[node name="auto jump" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -1)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="auto jump2" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314889, 0)
+target_position = Vector3(0, 0, -1)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
 [connection signal="body_entered" from="BlockOutline/Area3D" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="BlockOutline/Area3D" to="." method="_on_Area_body_exited"]

@@ -194,4 +194,3 @@ func _generate_chunk_thread(args: Array):
 func _update_chunk_thread(args: Array):
 	var chunk = args[0]
 	chunk.update()
-
