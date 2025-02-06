@@ -21,8 +21,6 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Console="*res://addons/godot-console/console/src/Console.tscn"
-Print="*res://addons/sdg-print/Print.tscn"
 Globals="*res://globals.tscn"
 WorldGen="*res://chunking/world_gen.tscn"
 FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"

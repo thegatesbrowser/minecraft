@@ -104,8 +104,8 @@ func place_block(global_pos, chunk_id: Vector2, type):
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
 		chunk.place_block(local_pos, type)
 		chunk.modified = true
-	else:
-		Print.error("Player placed a block in a chunk that doesn't exist!")
+	#else:
+		#Print.error("Player placed a block in a chunk that doesn't exist!")
 
 
 func break_block(global_pos: Vector3, chunk_id: Vector2):
@@ -129,8 +129,8 @@ func break_block(global_pos: Vector3, chunk_id: Vector2):
 			await get_tree().process_frame
 			_regen_block(chunk_id + Vector2.DOWN)
 	else:
-		Print.error("Player broke a block in a chunk that doesn't exist!")
-
+		#Print.error("Player broke a block in a chunk that doesn't exist!")
+		pass
 
 func _regen_block(chunk_id):
 	if chunks.has(chunk_id):
