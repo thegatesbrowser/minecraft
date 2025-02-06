@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://4ihu0cir3fnj"]
+
+[ext_resource type="Script" path="res://Items/Item Global.gd" id="1_sya2l"]
+[ext_resource type="Texture2D" uid="uid://bw6w2bx360fad" path="res://assets/atlas/dirt.tres" id="1_xk3jg"]
+
+[resource]
+script = ExtResource("1_sya2l")
+item_name = "Test"
+item_texture = ExtResource("1_xk3jg")

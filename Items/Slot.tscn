@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://dp3vw6ecck05s"]
+
+[ext_resource type="Script" path="res://Items/Slot.gd" id="1_g0jy7"]
+[ext_resource type="Resource" uid="uid://dgq3vvc0n78h0" path="res://Items/Test.tres" id="3_nbh0u"]
+
+[node name="Slot" type="TextureButton"]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 80.0
+offset_bottom = 80.0
+stretch_mode = 4
+script = ExtResource("1_g0jy7")
+Item_resource = ExtResource("3_nbh0u")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="amount" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "1"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
