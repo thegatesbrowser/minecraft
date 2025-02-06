@@ -100,7 +100,7 @@ func _physics_process(delta):
 			auto_jump.rotation.y = head.rotation.y
 			can_auto_jump_check.rotation.y = head.rotation.y
 			
-			if auto_jump.is_colliding() and is_on_floor() and !can_auto_jump_check.is_colliding():
+			if auto_jump.is_colliding() and !can_auto_jump_check.is_colliding():
 				velocity.y = JUMP_VELOCITY
 	
 	## Flying Controls
