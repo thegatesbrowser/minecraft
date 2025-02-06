@@ -59,8 +59,7 @@ func _process(_delta):
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	if Input.is_action_just_pressed("Console"):
-		#Console.toggle_console()
-		pass
+		Console.toggle_console()
 	
 	# Maybe should be in a different script, only available in the actual simulation
 	if Input.is_action_just_pressed("Fullscreen Toggle"):

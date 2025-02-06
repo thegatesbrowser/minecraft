@@ -1,3 +1,12 @@
+[submodule "addons/quentincaffeino-console"]
+	path = addons/godot-console
+	url = https://github.com/SdgGames/godot-console.git
 [submodule "addons/logger"]
 	path = addons/logger
 	url = https://github.com/SdgGames/logger
+[submodule "addons/fps_counter"]
+	path = addons/fps_counter
+	url = https://github.com/SdgGames/fps_counter
+[submodule "addons/sdg-print"]
+	path = addons/sdg-print
+	url = https://github.com/SdgGames/sdg-print
