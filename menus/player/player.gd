@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 
 var speed
+@export_range(0.1,1.1,.1) var max_flying_margin = 0.2
+@export_range(-1.1,-0.1,.1) var min_flying_margin = -0.2
 @export var can_autojump:bool = true
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
@@ -96,7 +98,17 @@ func _physics_process(delta):
 		
 		## Flying Controls
 		
-		velocity.y = camera.rotation.x * speed * 2
+		if camera.rotation.x > max_flying_margin:
+			velocity.y = camera.rotation.x * speed * 2
+		else:
+			velocity.y = lerp(velocity.y,0.0,.1)
+			
+		if  camera.rotation.x < min_flying_margin:
+			velocity.y = camera.rotation.x * speed * 2
+			
+		else:
+			velocity.y = lerp(velocity.y,0.0,.1)
+			
 		if direction:
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed

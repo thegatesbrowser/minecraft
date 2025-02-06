@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bfmloh2bdyn3p"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/Player.tscn" id="2"]
 [ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://menus/player/selection_buttons.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://bk2p64qvo36mo" path="res://menus/debug_overlay.tscn" id="5"]
