@@ -1,5 +1,6 @@
 extends ScrollContainer
 
+var times:int = 0
 @onready var slot_s = preload("res://Items/Slot.tscn")
 @onready var items_collection: GridContainer = $PanelContainer/MarginContainer/VBoxContainer/Items
 @export var amount_of_slots:int = 10
@@ -10,16 +11,39 @@ func _ready() -> void:
 	make_slots()
 	
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("Inventory"):
+		visible = !visible
+		if visible:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if Input.is_action_just_pressed("5"):
 		spawn_item(load("res://Items/Test2.tres"))
 		
+	if Input.is_action_just_pressed("Build"):
+		## split
+		if Globals.last_clicked_slot != null:
+			print(is_even(Globals.last_clicked_slot.amount))
+			if is_even(Globals.last_clicked_slot.amount):
+				if Globals.last_clicked_slot.amount >= 2:
+					var amount = Globals.last_clicked_slot.amount / 2
+					Globals.last_clicked_slot.amount = Globals.last_clicked_slot.amount / 2
+					spawn_item(Globals.last_clicked_slot.Item_resource,amount)
+					Globals.last_clicked_slot.update_slot()
+					Globals.last_clicked_slot = null
 		
+func is_even(x: int):
+	return x % 2 == 0
+			
 func slot_clicked(slot):
+	times += 1
 	if slot == Globals.last_clicked_slot: return
 	if Globals.last_clicked_slot == null:
 		Globals.last_clicked_slot = slot
 	else:
+		## move to blank
 		if slot.Item_resource == null:
+			print("move ", times)
 			slot.Item_resource = Globals.last_clicked_slot.Item_resource
 			slot.amount = Globals.last_clicked_slot.amount
 			Globals.last_clicked_slot.Item_resource = null
@@ -27,9 +51,10 @@ func slot_clicked(slot):
 			Globals.last_clicked_slot.update_slot()
 			Globals.last_clicked_slot = null
 		else:
+			## stack
 			if slot.Item_resource == Globals.last_clicked_slot.Item_resource:
+				print("stack ", times)
 				slot.amount += Globals.last_clicked_slot.amount
-				Globals.last_clicked_slot.amount = 1
 				Globals.last_clicked_slot.Item_resource = null
 				Globals.last_clicked_slot.update_slot()
 				Globals.last_clicked_slot = null
@@ -37,17 +62,27 @@ func slot_clicked(slot):
 			
 			## swap
 			else:
-				var hold_slot_resource = slot.Item_resource
-				slot.Item_resource =  Globals.last_clicked_slot.Item_resource
-				Globals.last_clicked_slot.Item_resource = hold_slot_resource
-				slot.update_slot()
-				Globals.last_clicked_slot.update_slot()
-				Globals.last_clicked_slot = null
+				if slot.Item_resource != null:
+					if slot.Item_resource != Globals.last_clicked_slot.Item_resource:
+						print("swap ",times )
+						var hold_slot_amount = slot.amount
+						var hold_slot_resource = slot.Item_resource
+						
+						slot.Item_resource =  Globals.last_clicked_slot.Item_resource
+						slot.amount = Globals.last_clicked_slot.amount
+						
+						Globals.last_clicked_slot.Item_resource = hold_slot_resource
+						Globals.last_clicked_slot.amount = hold_slot_amount
+						
+						slot.update_slot()
+						Globals.last_clicked_slot.update_slot()
+						Globals.last_clicked_slot = null
 
-func spawn_item(item_resource):
+func spawn_item(item_resource, amount:int = 1):
 	for i in items_collection.get_children():
 		if i.Item_resource == null:
 			i.Item_resource = item_resource
+			i.amount = amount
 			i.update_slot()
 			break
 	#items_collection.aa

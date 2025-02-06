@@ -12,7 +12,11 @@ func _ready() -> void:
 		texture_normal = Item_resource.item_texture
 	
 func _on_pressed() -> void:
-	Globals.slot_clicked.emit(self)
+	if Item_resource != null:
+		Globals.slot_clicked.emit(self)
+	else:
+		if Globals.last_clicked_slot != null:
+			Globals.slot_clicked.emit(self)
 
 
 func update_slot():
