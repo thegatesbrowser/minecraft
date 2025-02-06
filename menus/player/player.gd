@@ -34,8 +34,6 @@ var gravity = 16.5
 @onready var can_auto_jump_check: RayCast3D = $"auto jump2"
 
 
-
-
 func _ready():
 	Console.add_command("player_flying", self, 'toggle_flying')\
 		.set_description("Enables the player to fly (or disables flight).")\
@@ -66,10 +64,11 @@ func _physics_process(delta):
 		# Add the gravity.
 		if not is_on_floor():
 			velocity.y -= gravity * delta
-
+		
 		# Handle Jump.
 		if Input.is_action_pressed("Jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
+	
 	# Handle Sprint.
 	if Input.is_action_pressed("Sprint"):
 		speed = SPRINT_SPEED
@@ -79,8 +78,8 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
 	var direction = (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
+	## Normal Controls
 	if !Globals.flying:
-		## Normal Controls
 		if is_on_floor():
 			if direction:
 				if ANI.current_animation != "walk":
@@ -95,18 +94,17 @@ func _physics_process(delta):
 		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
+		
+		## Auto jump
+		if can_autojump and direction and is_on_floor():
+			auto_jump.rotation.y = head.rotation.y
+			can_auto_jump_check.rotation.y = head.rotation.y
 			
-		## auto jump
-		auto_jump.rotation.y = head.rotation.y
-		can_auto_jump_check.rotation.y = head.rotation.y
-		if can_autojump:
-			if auto_jump.is_colliding() and is_on_floor() and !can_auto_jump_check.is_colliding():
+			if auto_jump.is_colliding() and !can_auto_jump_check.is_colliding():
 				velocity.y = JUMP_VELOCITY
-			
+	
+	## Flying Controls
 	if Globals.flying:
-		
-		## Flying Controls
-		
 		if camera.rotation.x > max_flying_margin:
 			velocity.y = camera.rotation.x * speed * 2
 		else:
@@ -132,6 +130,7 @@ func _physics_process(delta):
 		# Head bob
 		t_bob += delta * velocity.length() * float(is_on_floor())
 		camera.transform.origin = _headbob(t_bob)
+	
 	# FOV
 	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
 	var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
