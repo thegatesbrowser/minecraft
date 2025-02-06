@@ -8,6 +8,10 @@ var speed
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
 @export var JUMP_VELOCITY = 7.0
+
+@export var body:Node
+@export var ANI:AnimationPlayer
+
 const SENSITIVITY = 0.004
 
 #bob variables
@@ -47,6 +51,7 @@ func _unhandled_input(event):
 		return
 		
 	if event is InputEventMouseMotion:
+		body.rotate_y(-event.relative.x * SENSITIVITY)
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
@@ -78,9 +83,13 @@ func _physics_process(delta):
 		## Normal Controls
 		if is_on_floor():
 			if direction:
+				if ANI.current_animation != "walk":
+					ANI.play("walk")
 				velocity.x = direction.x * speed
 				velocity.z = direction.z * speed
 			else:
+				if ANI.current_animation != "idle":
+					ANI.play("idle")
 				velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
 				velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
 		else:
@@ -110,9 +119,13 @@ func _physics_process(delta):
 			velocity.y = lerp(velocity.y,0.0,.1)
 			
 		if direction:
+			if ANI.current_animation != "walk":
+					ANI.play("walk")
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
 		else:
+			if ANI.current_animation != "idle":
+					ANI.play("idle")
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
 			
