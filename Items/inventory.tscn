@@ -9,7 +9,7 @@ custom_minimum_size = Vector2(800, 800)
 mouse_filter = 2
 horizontal_scroll_mode = 0
 script = ExtResource("1_vh6pj")
-amount_of_slots = 100
+amount_of_slots = 40
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2

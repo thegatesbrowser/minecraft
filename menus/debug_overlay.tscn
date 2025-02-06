@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bk2p64qvo36mo"]
 
-[ext_resource type="Theme" uid="uid://c4hslr8ga2ory" path="res://addons/fps_counter/Menu_Theme.tres" id="1"]
+[ext_resource type="Theme" uid="uid://c00ywh0ppv0rc" path="res://addons/fps_counter/Menu_Theme.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2"]
 [ext_resource type="Script" path="res://menus/debug_overlay.gd" id="3"]
 
