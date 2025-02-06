@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bfmloh2bdyn3p"]
+[gd_scene load_steps=10 format=3 uid="uid://bfmloh2bdyn3p"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/Player.tscn" id="2"]
 [ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://menus/player/selection_buttons.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://Items/inventory.tscn" id="4_1emxh"]
 [ext_resource type="PackedScene" uid="uid://bk2p64qvo36mo" path="res://menus/debug_overlay.tscn" id="5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flqqw"]
@@ -54,11 +55,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="Inventory" parent="Overlay/CenterContainer" instance=ExtResource("4_1emxh")]
+layout_mode = 2
+
 [node name="Label" type="Label" parent="Overlay/CenterContainer"]
 layout_mode = 2
 text = "+"
 
 [node name="DebugOverlay" parent="Overlay" instance=ExtResource("5")]
+visible = false
 mouse_filter = 2
 chunk_map_size = 500.0
 

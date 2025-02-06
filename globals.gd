@@ -37,6 +37,9 @@ var settings_preset := ""
 @export var skip_menu := false
 var test_file = null
 
+# Inventory
+signal slot_clicked(slot)
+var last_clicked_slot:Node
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
