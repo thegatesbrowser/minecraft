@@ -35,12 +35,12 @@ var gravity = 16.5
 
 
 func _ready():
-	Console.add_command("player_flying", self, 'toggle_flying')\
-		.set_description("Enables the player to fly (or disables flight).")\
-		.register()
-	Console.add_command("player_clipping", self, 'toggle_clipping')\
-		.set_description("Enables the player to clip through the world (or disables clipping).")\
-		.register()
+	#Console.add_command("player_flying", self, 'toggle_flying')\
+		#.set_description("Enables the player to fly (or disables flight).")\
+		#.register()
+	#Console.add_command("player_clipping", self, 'toggle_clipping')\
+		#.set_description("Enables the player to clip through the world (or disables clipping).")\
+		#.register()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
@@ -244,5 +244,6 @@ func _on_Area_body_exited(_body):
 
 
 func _exit_tree():
-	Console.remove_command("player_flying")
-	Console.remove_command("player_clipping")
+	#Console.remove_command("player_flying")
+	#Console.remove_command("player_clipping")
+	pass

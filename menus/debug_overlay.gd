@@ -65,9 +65,9 @@ const chunk_types := ["No Render", "Simple", "Server", "Mesh", "Tile Set", "Mult
 
 
 func _ready():
-	Console.add_command("toggle_debug_overlay", self, 'toggle_enabled')\
-			.set_description("Enables or disables the Debugging Overlay.")\
-			.register()
+	#Console.add_command("toggle_debug_overlay", self, 'toggle_enabled')\
+			#.set_description("Enables or disables the Debugging Overlay.")\
+			#.register()
 	
 	# Limit the grid width to prevent the FPS from dropping too far.
 	grid_width = min(200, ((Globals.load_radius + 1) * 2) + 1)
@@ -105,9 +105,9 @@ func _ready():
 		elif OS.has_feature("debug"):
 			mode = "Debug"
 		
-		if Print.get_logger("Global").print_level < Print.INFO:
-			Print.get_logger("Global").print_level = Logger.LogLevel.INFO
-		Print.from(0, "Test is using preset %s." % Globals.settings_preset, Print.INFO)
+		#if Print.get_logger("Global").print_level < Print.INFO:
+			#Print.get_logger("Global").print_level = Logger.LogLevel.INFO
+		#Print.from(0, "Test is using preset %s." % Globals.settings_preset, Print.INFO)
 		
 		var args = ""
 		for arg in OS.get_cmdline_args():
@@ -241,8 +241,8 @@ func _reset_interval():
 	test_time += 5
 	
 	var test_status := "Good"
-	if fps.cum_highest < 5:
-		test_status = "Low FPS"
+	#if fps.cum_highest < 5:
+		#test_status = "Low FPS"
 	
 	# Save the data for the test.
 	if Globals.test_mode != Globals.TestMode.NONE:
@@ -281,7 +281,7 @@ func _reset_interval():
 		
 		# Abort if we're exceeding all system resources.
 		if fps.cum_highest < 3:
-			Print.error("Max Framerate is less than 3 FPS! Quitting test due to poor performance!")
+			#Print.error("Max Framerate is less than 3 FPS! Quitting test due to poor performance!")
 			_end_test("Failed - Framerate!")
 	
 	generate_time_max = generate_avg
@@ -298,7 +298,7 @@ func _reset_interval():
 func _on_Reset_Timer_timeout():
 	_reset_interval()
 	if watchdog_elapsed and test_active and !test_ending and Globals.test_mode != Globals.TestMode.RUN_MANUAL:
-		Print.error("Test failed - No chunks have been generated for the past 10 seconds.")
+		#Print.error("Test failed - No chunks have been generated for the past 10 seconds.")
 		_end_test("Failed - Watchdog Timeout")
 	watchdog_elapsed = true
 

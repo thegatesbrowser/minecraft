@@ -2,7 +2,6 @@ extends Node
 
 # Debugging.
 enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
-@export var print_level := Logger.LogLevel.WARNING
 @export var single_threaded_generate := false
 @export var single_threaded_render := false
 @export var capture_mouse_on_start := true
@@ -42,15 +41,14 @@ signal slot_clicked(slot)
 var last_clicked_slot:Node
 
 func _ready():
-	Print.create_logger(0, print_level, Print.VERBOSE)
 	randomize()
 	if world_seed == 0:
 		world_seed = randi()
 	current_block = WorldGen.WOOD1
 	
-	Console.add_command("timelapse_mode", self, '_disable_flicker')\
-		.set_description("Disables the chunk radar refresh line to prevent flickering in timelapses.")\
-		.register()
+	#Console.add_command("timelapse_mode", self, '_disable_flicker')\
+		#.set_description("Disables the chunk radar refresh line to prevent flickering in timelapses.")\
+		#.register()
 
 
 func _disable_flicker():

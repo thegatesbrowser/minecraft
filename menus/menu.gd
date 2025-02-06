@@ -102,7 +102,7 @@ Additional Arguments are as follows:
 	elif args[0].to_lower().find("static") >= 0:
 		Globals.test_mode = Globals.TestMode.STATIC_LOAD
 	else:
-		print("ERROR: Command Line parameters are invalid!")
+		#print("ERROR: Command Line parameters are invalid!")
 		get_tree().quit()
 		return false
 	
@@ -159,7 +159,7 @@ func _input_event(event):
 
 func _change_settings(preset: int):
 	if preset < 0 or preset >= preset_names.size():
-		Print.error("There is no settings preset %s!" % preset)
+		#Print.error("There is no settings preset %s!" % preset)
 		return
 	
 	setting_preset = true
@@ -236,49 +236,49 @@ func update_block_radius(value):
 	value = max(1, value / Globals.chunk_size.x)
 	_recompute_max_stale_chunks(value)
 	Globals.load_radius = value
-	Print.from(0, "Chunk Radius changed to %d." % value, Print.DEBUG)
+	#Print.from(0, "Chunk Radius changed to %d." % value, Print.DEBUG)
 
 
 func _on_Max_Unloaded_Chunks_changed(value):
 	_check_for_custom_preset()
 	Globals.max_stale_chunks = value
-	Print.from(0, "Max Stale Chunk Count changed to %d." % value, Print.DEBUG)
+	#Print.from(0, "Max Stale Chunk Count changed to %d." % value, Print.DEBUG)
 
 
 func _on_Thread_Count_changed(value):
 	_check_for_custom_preset()
 	Globals.chunk_loading_threads = value
-	Print.from(0, "Thread count changed to %d." % value, Print.DEBUG)
+	#Print.from(0, "Thread count changed to %d." % value, Print.DEBUG)
 
 
 func _on_Fog_toggled(button_pressed):
 	_check_for_custom_preset()
 	Globals.no_fog = !button_pressed
-	Print.from(0, "Fog set to %s." % button_pressed, Print.DEBUG)
+	#Print.from(0, "Fog set to %s." % button_pressed, Print.DEBUG)
 
 
 func _on_SingleThreaded_toggled(button_pressed):
 	_check_for_custom_preset()
 	Globals.single_threaded_render = button_pressed
-	Print.from(0, "Single threaded mode set to %s" % button_pressed, Print.DEBUG)
+	#Print.from(0, "Single threaded mode set to %s" % button_pressed, Print.DEBUG)
 
 
 # Non-performance settings.
 func _on_Invert_Mouse_toggled(button_pressed):
 	Globals.mouse_invert_look = button_pressed
-	Print.from(0, "Mouse inversion set to %s" % button_pressed, Print.DEBUG)
+	#Print.from(0, "Mouse inversion set to %s" % button_pressed, Print.DEBUG)
 
 
 func _on_Invert_Controller_toggled(button_pressed):
 	Globals.controller_invert_look = button_pressed
-	Print.from(0, "Controller inversion set to %s" % button_pressed)
+	#Print.from(0, "Controller inversion set to %s" % button_pressed)
 
 
 func _on_Chunk_Type_pressed(type):
 	if type < 0 or type >= splash_images.size():
-		Print.error("There is no settings preset %s!" % type)
+		#Print.error("There is no settings preset %s!" % type)
 		return
-	Print.from(0, "Selected chunk type %s" % type, Print.DEBUG)
+	#Print.from(0, "Selected chunk type %s" % type, Print.DEBUG)
 	splash_image.texture = splash_images[type]
 	Globals.chunk_type = type
 	Globals.flying = (type == 0)

@@ -56,25 +56,19 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Inventory" parent="Overlay/CenterContainer" instance=ExtResource("4_1emxh")]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Overlay/CenterContainer"]
 layout_mode = 2
 text = "+"
 
+[node name="Selection_Buttons" parent="Overlay" instance=ExtResource("4")]
+
 [node name="DebugOverlay" parent="Overlay" instance=ExtResource("5")]
 visible = false
 mouse_filter = 2
 chunk_map_size = 500.0
 
-[node name="Selection_Buttons" parent="Overlay" instance=ExtResource("4")]
-
 [connection signal="break_block" from="Player" to="." method="_on_Player_break_block"]
 [connection signal="place_block" from="Player" to="." method="_on_Player_place_block"]
-[connection signal="chunk_deactivated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_deactivated"]
-[connection signal="chunk_generated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_generated"]
-[connection signal="chunk_purged" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_purged"]
-[connection signal="chunk_reactivated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_reactivated"]
-[connection signal="chunk_started" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_started"]
-[connection signal="chunk_updated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_updated"]
-[connection signal="finished_loading" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_finished_loading"]
