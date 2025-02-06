@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 
 var speed
+@export var can_autojump:bool = true
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
 @export var JUMP_VELOCITY = 7.0
@@ -23,6 +24,10 @@ var gravity = 16.5
 @onready var block = $BlockOutline
 @onready var head = $Head
 @onready var block_collider = $BlockOutline/Area3D
+@onready var auto_jump: RayCast3D = $"auto jump"
+@onready var can_auto_jump_check: RayCast3D = $"auto jump2"
+
+
 
 
 func _ready():
@@ -79,6 +84,13 @@ func _physics_process(delta):
 		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
+			
+		## auto jump
+		auto_jump.rotation.y = head.rotation.y
+		can_auto_jump_check.rotation.y = head.rotation.y
+		if can_autojump:
+			if auto_jump.is_colliding() and is_on_floor() and !can_auto_jump_check.is_colliding():
+				velocity.y = JUMP_VELOCITY
 			
 	if Globals.flying:
 		
