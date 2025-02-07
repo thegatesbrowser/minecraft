@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_dmfkp")
-item_name = "Log1"
+item_name = "LOG1"
 item_texture = ExtResource("1_0d4yy")
 type = 4

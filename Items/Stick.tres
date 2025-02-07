@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item_Global" load_steps=4 format=3 uid="uid://cd4yx6433as05"]
+
+[ext_resource type="Script" path="res://Items/Item Global.gd" id="1_jwmwk"]
+
+[sub_resource type="Gradient" id="Gradient_hc6wb"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a08nj"]
+gradient = SubResource("Gradient_hc6wb")
+
+[resource]
+script = ExtResource("1_jwmwk")
+item_name = "Stick"
+item_texture = SubResource("GradientTexture2D_a08nj")
+type = 0
+placeable = false

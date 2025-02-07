@@ -39,8 +39,12 @@ var settings_preset := ""
 var test_file = null
 
 # Inventory
+signal check_amount_of_item(item)
+signal remove_item(item,amount)
 signal hotbar_slot_clicked(slot)
 signal slot_clicked(slot)
+signal craftable_hovered(craftable,node)
+signal craftable_unhovered
 var last_clicked_slot:Node
 
 func _ready():
