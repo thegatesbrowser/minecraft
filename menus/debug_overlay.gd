@@ -15,7 +15,7 @@ enum Chunk_Statistics { INVALID, STARTED, GENERATED, ACTIVE, INACTIVE, PURGED }
 @onready var chunk_counts_label = $HBoxContainer/MarginContainer3/Chunk_Counts
 @onready var fps = $MarginContainer4/Counter
 @onready var player_pos_label = $Player_Pos
-@onready var chunks = $"../../Chunks"
+@onready var chunks = $"../../NavigationRegion3D/Chunks"
 
 
 var grid_width := 1

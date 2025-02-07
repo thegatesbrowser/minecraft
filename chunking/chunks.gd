@@ -18,7 +18,7 @@ var active_chunks := []
 var stale_chunks := []
 
 var generate_radius := 0
-
+@export var nav:NavigationRegion3D
 
 # Load all chunks within the load radius, and unload chunks outside.
 func update_chunks(player_pos: Vector2):
@@ -185,6 +185,8 @@ func _generate_chunk(chunk: Chunk, use_threading := true):
 	chunk.finalize()
 	emit_signal("chunk_updated", chunk.id, Time.get_ticks_usec() - time)
 	active_chunks.append(chunk)
+	if Globals.nav:
+		nav.bake_navigation_mesh(false)
 
 
 func _generate_chunk_thread(args: Array):
