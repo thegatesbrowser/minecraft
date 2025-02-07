@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://dw11bac28qp5o"]
+
+[ext_resource type="Script" path="res://Items/Item Global.gd" id="1_u27x1"]
+[ext_resource type="Texture2D" path="res://assets/atlas/leaf.tres" id="1_wh2b0"]
+
+[resource]
+script = ExtResource("1_u27x1")
+item_name = "Leaf1"
+item_texture = ExtResource("1_wh2b0")
+type = 8

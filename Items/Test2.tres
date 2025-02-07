@@ -7,3 +7,4 @@
 script = ExtResource("1_sya2l")
 item_name = "Test"
 item_texture = ExtResource("1_xk3jg")
+type = 1

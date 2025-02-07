@@ -103,6 +103,7 @@ func place_block(global_pos, chunk_id: Vector2, type):
 		var chunk = chunks[chunk_id]
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
 		chunk.place_block(local_pos, type)
+		print(type)
 		chunk.modified = true
 	else:
 		Print.error("Player placed a block in a chunk that doesn't exist!")

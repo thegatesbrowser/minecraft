@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://bgful1da4rkm2"]
+
+[ext_resource type="Texture2D" path="res://assets/atlas/grass.tres" id="1_ebg3a"]
+[ext_resource type="Script" path="res://Items/Item Global.gd" id="1_s51ev"]
+
+[resource]
+script = ExtResource("1_s51ev")
+item_name = "Grass"
+item_texture = ExtResource("1_ebg3a")
+type = 0

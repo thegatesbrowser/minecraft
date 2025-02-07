@@ -28,6 +28,7 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var mouse_invert_look := false
 @export var flying := false
 var current_block := 0
+var can_build:bool = false
 
 # Automated Testing
 enum TestMode {NONE, STATIC_LOAD, RUN_LOAD, RUN_MANUAL}
@@ -38,6 +39,7 @@ var settings_preset := ""
 var test_file = null
 
 # Inventory
+signal hotbar_slot_clicked(slot)
 signal slot_clicked(slot)
 var last_clicked_slot:Node
 
