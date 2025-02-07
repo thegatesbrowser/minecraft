@@ -5,6 +5,7 @@ var times:int = 0
 @onready var items_collection: GridContainer = $PanelContainer/MarginContainer/VBoxContainer/Items
 @export var amount_of_slots:int = 10
 
+var possible_items = ["res://Items/Dirt.tres","res://Items/Glass.tres","res://Items/Grass.tres","res://Items/Leaf1.tres","res://Items/Leaf2.tres","res://Items/Log1.tres","res://Items/Log2.tres","res://Items/Stone.tres","res://Items/Wood1.tres","res://Items/Wood2.tres"]
 
 func _ready() -> void:
 	Globals.slot_clicked.connect(slot_clicked)
@@ -111,3 +112,8 @@ func sort():
 
 func _on_sort_pressed() -> void:
 	sort()
+
+
+func _on_add_random_item_pressed() -> void:
+	var item = possible_items.pick_random()
+	spawn_item(load(item))

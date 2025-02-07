@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://dt4x3etw2sx6e"]
+
+[ext_resource type="Texture2D" path="res://assets/atlas/log.tres" id="1_0d4yy"]
+[ext_resource type="Script" path="res://Items/Item Global.gd" id="1_dmfkp"]
+
+[resource]
+script = ExtResource("1_dmfkp")
+item_name = "Log1"
+item_texture = ExtResource("1_0d4yy")
+type = 4

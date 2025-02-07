@@ -148,8 +148,10 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("Mine"):
 			emit_signal("break_block", pos)
 		if Input.is_action_just_pressed("Build"):
-			if !block_is_inside_character:
-				emit_signal("place_block", pos + normal)
+			if Globals.can_build:
+				if !block_is_inside_character:
+					emit_signal("place_block", pos + normal)
+					pass
 	else:
 		block.visible = false
 

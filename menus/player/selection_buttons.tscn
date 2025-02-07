@@ -1,345 +1,72 @@
-[gd_scene load_steps=25 format=3 uid="uid://5jw15x2l8lvw"]
+[gd_scene load_steps=4 format=3 uid="uid://5jw15x2l8lvw"]
 
-[ext_resource type="Script" path="res://menus/player/selection_buttons.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/atlas/leaf.tres" id="2"]
-[ext_resource type="Texture2D" path="res://assets/atlas/leaf2.tres" id="3"]
-[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="4"]
-[ext_resource type="Texture2D" path="res://assets/atlas/glass.tres" id="5"]
-[ext_resource type="Texture2D" path="res://assets/atlas/wood2.tres" id="6"]
-[ext_resource type="Texture2D" path="res://assets/atlas/grass.tres" id="7"]
-[ext_resource type="Texture2D" path="res://assets/atlas/frame1.tres" id="8"]
-[ext_resource type="Texture2D" path="res://assets/atlas/frame2.tres" id="9"]
-[ext_resource type="Texture2D" uid="uid://bw6w2bx360fad" path="res://assets/atlas/dirt.tres" id="10"]
-[ext_resource type="Texture2D" path="res://assets/atlas/log.tres" id="11"]
-[ext_resource type="Texture2D" path="res://assets/atlas/stone.tres" id="12"]
-[ext_resource type="Texture2D" path="res://assets/atlas/log2.tres" id="13"]
-[ext_resource type="Texture2D" path="res://assets/atlas/frame3.tres" id="14"]
+[ext_resource type="Script" path="res://menus/player/selection_buttons 2.gd" id="1_cwfy4"]
+[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://Items/Slot.tscn" id="2_og1jy"]
+[ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://Items/Dirt.tres" id="3_nw6dk"]
 
-[sub_resource type="Shortcut" id="2"]
-
-[sub_resource type="Shortcut" id="5"]
-
-[sub_resource type="Shortcut" id="7"]
-
-[sub_resource type="Shortcut" id="9"]
-
-[sub_resource type="Shortcut" id="11"]
-
-[sub_resource type="Shortcut" id="13"]
-
-[sub_resource type="Shortcut" id="15"]
-
-[sub_resource type="Shortcut" id="17"]
-
-[sub_resource type="Shortcut" id="19"]
-
-[sub_resource type="Shortcut" id="21"]
-
-[node name="Selection_Buttons" type="CenterContainer"]
-anchors_preset = 7
-anchor_left = 0.5
+[node name="Selection_Buttons" type="ScrollContainer"]
+anchors_preset = 12
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -800.0
-offset_top = -132.0
-offset_right = -267.0
-offset_bottom = -100.0
+offset_top = -108.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(3, 3)
-script = ExtResource("1")
+vertical_scroll_mode = 0
+script = ExtResource("1_cwfy4")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-
-[node name="Grass" type="TextureButton" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("2")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Grass"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Grass/CenterContainer"]
-show_behind_parent = true
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("7")
 
-[node name="Dirt" type="TextureButton" parent="HBoxContainer"]
+[node name="Slots" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("5")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
+alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Dirt"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Dirt/CenterContainer"]
-show_behind_parent = true
+[node name="Slot" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("10")
+type = "hotbar"
 
-[node name="Stone" type="TextureButton" parent="HBoxContainer"]
+[node name="Slot2" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("7")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
+type = "hotbar"
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Stone"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Stone/CenterContainer"]
-show_behind_parent = true
+[node name="Slot3" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("12")
+type = "hotbar"
+Item_resource = ExtResource("3_nw6dk")
 
-[node name="Glass" type="TextureButton" parent="HBoxContainer"]
+[node name="Slot4" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("9")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
+type = "hotbar"
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Glass"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Glass/CenterContainer"]
-show_behind_parent = true
+[node name="Slot5" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("5")
+type = "hotbar"
 
-[node name="Log1" type="TextureButton" parent="HBoxContainer"]
+[node name="Slot6" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("11")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
+type = "hotbar"
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Log1"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Log1/CenterContainer"]
-show_behind_parent = true
+[node name="Slot7" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("11")
+type = "hotbar"
 
-[node name="Wood" type="TextureButton" parent="HBoxContainer"]
+[node name="Slot8" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("13")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
+type = "hotbar"
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Wood"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Wood/CenterContainer"]
-show_behind_parent = true
+[node name="Slot9" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("4")
+type = "hotbar"
 
-[node name="Log2" type="TextureButton" parent="HBoxContainer"]
+[node name="Slot10" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("15")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Log2"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Log2/CenterContainer"]
-show_behind_parent = true
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("13")
-
-[node name="Wood2" type="TextureButton" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("17")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Wood2"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Wood2/CenterContainer"]
-show_behind_parent = true
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("6")
-
-[node name="Leaf1" type="TextureButton" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("19")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Leaf1"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Leaf1/CenterContainer"]
-show_behind_parent = true
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("2")
-
-[node name="Leaf2" type="TextureButton" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_default_cursor_shape = 2
-toggle_mode = true
-action_mode = 0
-shortcut = SubResource("21")
-texture_normal = ExtResource("8")
-texture_pressed = ExtResource("9")
-texture_hover = ExtResource("14")
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/Leaf2"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Leaf2/CenterContainer"]
-show_behind_parent = true
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("3")
-
-[connection signal="pressed" from="HBoxContainer/Grass" to="." method="_on_Grass_pressed"]
-[connection signal="pressed" from="HBoxContainer/Dirt" to="." method="_on_Dirt_pressed"]
-[connection signal="pressed" from="HBoxContainer/Stone" to="." method="_on_Stone_pressed"]
-[connection signal="pressed" from="HBoxContainer/Glass" to="." method="_on_Glass_pressed"]
-[connection signal="pressed" from="HBoxContainer/Log1" to="." method="_on_Log1_pressed"]
-[connection signal="pressed" from="HBoxContainer/Wood" to="." method="_on_Wood_pressed"]
-[connection signal="pressed" from="HBoxContainer/Log2" to="." method="_on_Log2_pressed"]
-[connection signal="pressed" from="HBoxContainer/Wood2" to="." method="_on_Wood2_pressed"]
-[connection signal="pressed" from="HBoxContainer/Leaf1" to="." method="_on_Leaf1_pressed"]
-[connection signal="pressed" from="HBoxContainer/Leaf2" to="." method="_on_Leaf2_pressed"]
+type = "hotbar"
