@@ -9,7 +9,7 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var no_fog := false
 
 # Chunk Generation Settings.
-@export var world_seed := 0
+@export var world_seed := 333
 @export var chunk_size := Vector3(16, 256, 16)
 @export var load_radius := 16 # (int, 1, 64)
 @export var max_stale_chunks := 2000

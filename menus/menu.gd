@@ -1,5 +1,8 @@
 extends Control
 
+@export var single_player_scene: PackedScene
+@export var multiplayer_scene: PackedScene
+
 @onready var chunk_radius = $SC/CC/VBC/Chunk_Radius
 @onready var max_unloaded_chunks = $SC/CC/VBC/Max_Unloaded_Chunks
 @onready var thread_count = $SC/CC/VBC/Thread_Count
@@ -25,8 +28,12 @@ var large_chunks := false
 
 func _ready():
 	if Globals.skip_menu:
-		_start_game()
+		_start_game(true)
 		return
+	if Connection.is_server():
+		_on_Play_multiplayer_pressed()
+		return
+	
 	setting_preset = true
 	
 	max_threads = OS.get_processor_count()
@@ -196,14 +203,23 @@ func _recompute_max_stale_chunks(load_radius: float):
 	max_unloaded_chunks.set_value(chunks_in_radius * unloaded_chunks_modifier)
 
 
-func _start_game():
-	var _d = get_tree().change_scene_to_file("res://game.tscn")
+func _start_game(is_multiplayer: bool = false):
+	if is_multiplayer:
+		get_tree().call_deferred("change_scene_to_packed", multiplayer_scene)
+	else:
+		get_tree().call_deferred("change_scene_to_packed", single_player_scene)
 
 
 # Start game signals.
 func _on_Play_pressed():
 	Globals.test_mode = Globals.TestMode.NONE
 	_start_game()
+
+
+# Start game signals.
+func _on_Play_multiplayer_pressed():
+	Globals.test_mode = Globals.TestMode.NONE
+	_start_game(true)
 
 
 func _on_Test_Static_pressed():

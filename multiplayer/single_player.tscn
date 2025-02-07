@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8t6ynqqhm1mc"]
+
+[ext_resource type="PackedScene" uid="uid://bfmloh2bdyn3p" path="res://game.tscn" id="1_w6utc"]
+[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="2_bwt2e"]
+
+[node name="SinglePlayer" type="Node"]
+
+[node name="Game" parent="." node_paths=PackedStringArray("single_player") instance=ExtResource("1_w6utc")]
+single_player = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("2_bwt2e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 128, 8)

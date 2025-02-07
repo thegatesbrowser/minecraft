@@ -1,5 +1,9 @@
 extends Node3D
 
+@export var is_multiplayer: bool
+@export var player_spawner: PlayerSpawner
+@export var single_player: Player
+
 @onready var chunk_scene_0 := preload("res://chunking/chunk_no_render.tscn")
 @onready var chunk_scene_1 := preload("res://chunking/chunk_simple.tscn")
 @onready var chunk_scene_2 := preload("res://chunking/chunk_server.tscn")
@@ -7,16 +11,30 @@ extends Node3D
 @onready var chunk_scene_4 := preload("res://chunking/chunk_tileset.tscn")
 @onready var chunk_scene_5 := preload("res://chunking/chunk_multimesh.tscn")
 
-@onready var player := $Player
 @onready var chunks := $Chunks
-#@onready var env: Environment = $WorldEnvironment.get_environment()
 @onready var debug := $Overlay/DebugOverlay
 
+var player: Player
 var player_pos := Vector2.ZERO
 
 var is_fullscreen = false
 
 func _ready():
+	if Connection.is_server():
+		return
+	
+	if is_multiplayer:
+		player = player_spawner.local_player
+	else:
+		player = single_player
+	
+	start_game()
+
+
+func start_game() -> void:
+	player.place_block.connect(_on_Player_place_block)
+	player.break_block.connect(_on_Player_break_block)
+	
 	WorldGen.set_seed(Globals.world_seed)
 	
 	if Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
@@ -51,6 +69,8 @@ func _ready():
 
 
 func _process(_delta):
+	if Connection.is_server() or player == null: return
+	
 	if Input.is_action_just_pressed("Start"):
 		Globals.paused = !Globals.paused
 		if Globals.paused:
@@ -82,11 +102,11 @@ func _physics_process(delta):
 func _set_draw_distance(radius: int):
 	var distance = (radius) * Globals.chunk_size.x
 	if Globals.no_fog:
-		$Player/Head/Camera3D.far = distance * 10
+		player.set_far(distance * 10)
 #		env.fog_enabled = false
 #		env.dof_blur_far_enabled = false
 	else:
-		$Player/Head/Camera3D.far = distance * 1.25
+		player.set_far(distance * 1.25)
 #		env.fog_enabled = true
 #		env.fog_depth_begin = distance - min(50, distance * 0.1)
 #		env.fog_depth_end = distance

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://bujjlvms3amk4"]
 
 [ext_resource type="Script" path="res://Items/Craftables/Craftable.gd" id="1_2fcoj"]
-[ext_resource type="Resource" uid="uid://cd4yx6433as05" path="res://Items/Stick.tres" id="1_o5shi"]
+[ext_resource type="Resource" uid="uid://toq60d1hqqms" path="res://Items/Stick.tres" id="1_o5shi"]
 
 [sub_resource type="Gradient" id="Gradient_qpk5e"]
 

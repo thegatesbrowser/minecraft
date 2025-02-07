@@ -1,13 +1,13 @@
 [gd_scene load_steps=14 format=3 uid="uid://bfmloh2bdyn3p"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/Player.tscn" id="2"]
 [ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://menus/player/selection_buttons.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://Items/inventory.tscn" id="4_1emxh"]
 [ext_resource type="PackedScene" uid="uid://bk2p64qvo36mo" path="res://menus/debug_overlay.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://Items/Craftables/craftable.tscn" id="7_8fyye"]
 [ext_resource type="Script" path="res://crafting.gd" id="7_p4fxb"]
+[ext_resource type="Script" path="res://multiplayer/spawn_points.gd" id="7_u8af2"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://Items/Craftables/Sticks.tres" id="8_lp82f"]
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://Items/Craftables/craftable_info.tscn" id="10_scij8"]
 
@@ -32,23 +32,6 @@ volumetric_fog_density = 0.0
 [node name="Game" type="Node3D"]
 script = ExtResource("1")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-light_color = Color(1, 1, 0.917647, 1)
-light_energy = 0.8
-shadow_enabled = true
-directional_shadow_max_distance = 160.0
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_7185k")
-
-[node name="Player" parent="." instance=ExtResource("2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 128, 8)
-
-[node name="Chunks" type="Node3D" parent="."]
-process_mode = 2
-script = ExtResource("3")
-
 [node name="Overlay" type="CanvasLayer" parent="."]
 
 [node name="CenterContainer" type="CenterContainer" parent="Overlay"]
@@ -64,7 +47,6 @@ layout_mode = 2
 text = "+"
 
 [node name="DebugOverlay" parent="Overlay" instance=ExtResource("5")]
-visible = false
 mouse_filter = 2
 chunk_map_size = 500.0
 
@@ -130,8 +112,35 @@ craftable = ExtResource("8_lp82f")
 
 [node name="Craftable Info" parent="Overlay" instance=ExtResource("10_scij8")]
 
-[connection signal="break_block" from="Player" to="." method="_on_Player_break_block"]
-[connection signal="place_block" from="Player" to="." method="_on_Player_place_block"]
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128, 0)
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(1, 1, 0.917647, 1)
+light_energy = 0.8
+shadow_enabled = true
+directional_shadow_max_distance = 160.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7185k")
+
+[node name="Chunks" type="Node3D" parent="."]
+process_mode = 2
+script = ExtResource("3")
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+script = ExtResource("7_u8af2")
+
+[node name="SpwanPoint" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 128, 8)
+
+[node name="SpwanPoint2" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 128, 8)
+
+[node name="SpwanPoint3" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 128, 8)
+
 [connection signal="chunk_deactivated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_deactivated"]
 [connection signal="chunk_generated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_generated"]
 [connection signal="chunk_purged" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_purged"]

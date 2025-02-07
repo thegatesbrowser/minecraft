@@ -39,6 +39,10 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/canvas_textures/default_texture_filter=1
 
+[editor]
+
+run/main_run_args="client"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/fps_counter/plugin.cfg", "res://addons/godot-console/console/plugin.cfg", "res://addons/sdg-print/plugin.cfg", "res://addons/thegates_export/plugin.cfg")

@@ -1,7 +1,9 @@
 extends CharacterBody3D
+class_name Player
 
+signal place_block(pos: Vector3)
+signal break_block(pos: Vector3)
 
-var speed
 @export_range(0.1,1.1,.1) var max_flying_margin = 0.2
 @export_range(-1.1,-0.1,.1) var min_flying_margin = -0.2
 @export var can_autojump:bool = true
@@ -23,7 +25,10 @@ var t_bob = 0.0
 const BASE_FOV = 90.0
 const FOV_CHANGE = 1.5
 
+var speed
 var gravity = 16.5
+var far_distance: float = 160
+var block_is_inside_character := false
 
 @onready var camera = $Head/Camera3D
 @onready var ray = $Head/Camera3D/RayCast3D
@@ -42,6 +47,18 @@ func _ready():
 		.set_description("Enables the player to clip through the world (or disables clipping).")\
 		.register()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	camera.far = far_distance
+	print("far_distance ", far_distance)
+
+	if is_multiplayer_authority():
+		camera.current = true
+
+
+func set_far(far: float) -> void:
+	far_distance = far
+	$Head/Camera3D.far = far
+	print("set_far ", far_distance)
 
 
 func _unhandled_input(event):
@@ -96,7 +113,8 @@ func _physics_process(delta):
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
 		
 		## Auto jump
-		if can_autojump and direction and is_on_floor():
+		var moving_forward = input_dir.y < 0
+		if can_autojump and moving_forward and is_on_floor():
 			auto_jump.rotation.y = head.rotation.y
 			can_auto_jump_check.rotation.y = head.rotation.y
 			
@@ -146,15 +164,14 @@ func _physics_process(delta):
 		block.visible = true
 		
 		if Input.is_action_just_pressed("Mine"):
-			emit_signal("break_block", pos)
+			break_block.emit(pos)
 		if Input.is_action_just_pressed("Build"):
 			if Globals.can_build:
 				if !block_is_inside_character:
-					emit_signal("place_block", pos + normal)
+					place_block.emit(pos + normal)
 					pass
 	else:
 		block.visible = false
-
 	
 	move_and_slide()
 
@@ -166,10 +183,6 @@ func _headbob(time) -> Vector3:
 	return pos
 	
 
-var block_is_inside_character := false
-
-signal place_block(pos)
-signal break_block(pos)
 
 func rotate_head(amount_lr: float, amount_ud: float, inverted: bool):
 	if inverted:

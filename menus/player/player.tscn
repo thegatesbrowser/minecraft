@@ -372,12 +372,6 @@ far = 200.0
 transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.05)
 target_position = Vector3(0, -10, 0)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_color = Color(1, 0.984314, 0.752941, 1)
-light_energy = 0.5
-shadow_enabled = true
-omni_range = 15.0
-
 [node name="auto jump" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -1)
 debug_shape_custom_color = Color(1, 0, 0, 1)
