@@ -5,18 +5,26 @@ var times:int = 0
 @onready var items_collection: GridContainer = $PanelContainer/MarginContainer/VBoxContainer/Items
 @export var amount_of_slots:int = 10
 
+var full:bool = false
+var Inventory = []
+
 var possible_items = ["res://Items/Dirt.tres","res://Items/Glass.tres","res://Items/Grass.tres","res://Items/Leaf1.tres","res://Items/Leaf2.tres","res://Items/Log1.tres","res://Items/Log2.tres","res://Items/Stone.tres","res://Items/Wood1.tres","res://Items/Wood2.tres"]
 
 func _ready() -> void:
+	Globals.remove_item.connect(remove_item)
+	Globals.check_amount_of_item.connect(check_amount_of_item)
 	Globals.slot_clicked.connect(slot_clicked)
 	make_slots()
 	
 func _process(delta: float) -> void:
+	check_if_full()
 	if Input.is_action_just_pressed("Inventory"):
 		visible = !visible
 		if visible:
+			Globals.paused = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
+			Globals.paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if Input.is_action_just_pressed("5"):
 		spawn_item(load("res://Items/Test2.tres"))
@@ -78,14 +86,18 @@ func slot_clicked(slot):
 						slot.update_slot()
 						Globals.last_clicked_slot.update_slot()
 						Globals.last_clicked_slot = null
+						
 
 func spawn_item(item_resource, amount:int = 1):
-	for i in items_collection.get_children():
-		if i.Item_resource == null:
-			i.Item_resource = item_resource
-			i.amount = amount
-			i.update_slot()
-			break
+	if !full:
+		for i in items_collection.get_children():
+			if i.Item_resource == null:
+				i.Item_resource = item_resource
+				i.amount = amount
+				i.update_slot()
+				Inventory.append(item_resource.item_name)
+				check_if_full()
+				break
 	#items_collection.aa
 	
 func make_slots():
@@ -117,3 +129,35 @@ func _on_sort_pressed() -> void:
 func _on_add_random_item_pressed() -> void:
 	var item = possible_items.pick_random()
 	spawn_item(load(item))
+
+func check_amount_of_item(item):
+	var amount = 0
+	for i in Inventory:
+		if i == item:
+			amount += 1
+	return amount
+
+func remove_item(item_name:String,amount:int):
+	for i in amount:
+		for slot in items_collection.get_children():
+			if slot.Item_resource != null:
+				if slot.Item_resource.item_name == item_name:
+					if slot.amount == 1:
+						slot.Item_resource = null
+					else:
+						slot.amount -= 1
+					slot.update_slot()
+					var index = Inventory.find(item_name)
+					Inventory.remove_at(index)
+					check_if_full()
+					break
+
+func check_if_full():
+	var free_space:int = 0
+	for i in items_collection.get_children():
+		if i.Item_resource == null:
+			free_space += 1
+	if free_space == 0:
+		full = true
+	else:
+		full = false

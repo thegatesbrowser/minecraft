@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_0svgv")
-item_name = "Glass"
+item_name = "GLASS"
 item_texture = ExtResource("1_1i1ps")
 type = 3

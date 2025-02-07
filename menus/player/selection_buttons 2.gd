@@ -63,8 +63,11 @@ func _unpress_all():
 func _press_key(i):
 	buttons[i].button_pressed = true
 	if buttons[current_key].Item_resource != null:
-		Globals.current_block = keys[buttons[current_key].Item_resource.type]
-		Globals.can_build = true 
+		if buttons[current_key].Item_resource.placeable:
+			Globals.current_block = keys[buttons[current_key].Item_resource.type]
+			Globals.can_build = true 
+		else:
+			Globals.can_build = false 
 	else:
 		Globals.can_build = false
 	current_key = i

@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_sc8s8")
-item_name = "Leaf2"
+item_name = "LEAF2"
 item_texture = ExtResource("1_lced7")
 type = 9

@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_ivu7p")
-item_name = "Dirt"
+item_name = "DIRT"
 item_texture = ExtResource("1_vuhr6")
 type = 1

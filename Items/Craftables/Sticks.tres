@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://bujjlvms3amk4"]
+
+[ext_resource type="Script" path="res://Items/Craftables/Craftable.gd" id="1_2fcoj"]
+[ext_resource type="Resource" uid="uid://cd4yx6433as05" path="res://Items/Stick.tres" id="1_o5shi"]
+
+[sub_resource type="Gradient" id="Gradient_qpk5e"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_21q8u"]
+gradient = SubResource("Gradient_qpk5e")
+
+[resource]
+script = ExtResource("1_2fcoj")
+Name = "Stick"
+texture = SubResource("GradientTexture2D_21q8u")
+output_item = ExtResource("1_o5shi")
+items_needed = {
+1: {
+"amount": 1,
+"name": "WOOD1"
+}
+}
