@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bfmloh2bdyn3p"]
+[gd_scene load_steps=15 format=3 uid="uid://bfmloh2bdyn3p"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/Player.tscn" id="2"]
@@ -29,6 +29,10 @@ tonemap_mode = 2
 glow_enabled = true
 volumetric_fog_density = 0.0
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_pkke0"]
+geometry_parsed_geometry_type = 1
+agent_max_climb = 1.0
+
 [node name="Game" type="Node3D"]
 script = ExtResource("1")
 
@@ -45,9 +49,13 @@ environment = SubResource("Environment_7185k")
 [node name="Player" parent="." instance=ExtResource("2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 128, 8)
 
-[node name="Chunks" type="Node3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_pkke0")
+
+[node name="Chunks" type="Node3D" parent="NavigationRegion3D" node_paths=PackedStringArray("nav")]
 process_mode = 2
 script = ExtResource("3")
+nav = NodePath("..")
 
 [node name="Overlay" type="CanvasLayer" parent="."]
 
@@ -132,10 +140,10 @@ craftable = ExtResource("8_lp82f")
 
 [connection signal="break_block" from="Player" to="." method="_on_Player_break_block"]
 [connection signal="place_block" from="Player" to="." method="_on_Player_place_block"]
-[connection signal="chunk_deactivated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_deactivated"]
-[connection signal="chunk_generated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_generated"]
-[connection signal="chunk_purged" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_purged"]
-[connection signal="chunk_reactivated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_reactivated"]
-[connection signal="chunk_started" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_started"]
-[connection signal="chunk_updated" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_updated"]
-[connection signal="finished_loading" from="Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_finished_loading"]
+[connection signal="chunk_deactivated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_deactivated"]
+[connection signal="chunk_generated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_generated"]
+[connection signal="chunk_purged" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_purged"]
+[connection signal="chunk_reactivated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_reactivated"]
+[connection signal="chunk_started" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_started"]
+[connection signal="chunk_updated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_updated"]
+[connection signal="finished_loading" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_finished_loading"]

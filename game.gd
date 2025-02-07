@@ -8,7 +8,7 @@ extends Node3D
 @onready var chunk_scene_5 := preload("res://chunking/chunk_multimesh.tscn")
 
 @onready var player := $Player
-@onready var chunks := $Chunks
+@onready var chunks := $NavigationRegion3D/Chunks
 #@onready var env: Environment = $WorldEnvironment.get_environment()
 @onready var debug := $Overlay/DebugOverlay
 

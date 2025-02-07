@@ -31,6 +31,7 @@ var current_block := 0
 var can_build:bool = false
 
 # Automated Testing
+@export var nav:bool = false
 enum TestMode {NONE, STATIC_LOAD, RUN_LOAD, RUN_MANUAL}
 @export var test_mode := TestMode.NONE
 var settings_preset := ""

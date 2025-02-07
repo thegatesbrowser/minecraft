@@ -357,7 +357,7 @@ mesh = SubResource("8")
 skeleton = NodePath("../..")
 
 [node name="Head" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.855533, 0)
 layers = 32
 cast_shadow = 0
 
