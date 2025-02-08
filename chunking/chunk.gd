@@ -14,10 +14,9 @@ func update_position():
 func place_block(_local_pos: Vector3, _type, _update = true):
 	Print.error("Attempted to call place_block checked chunk base class!")
 
-
 func break_block(_local_pos: Vector3, _update = true):
 	Print.error("Attempted to call break_block checked chunk base class!")
-
+	print("breake")
 
 func update():
 	Print.error("Attempted to call update checked chunk base class!")
