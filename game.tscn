@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bfmloh2bdyn3p"]
+[gd_scene load_steps=18 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
 [ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]

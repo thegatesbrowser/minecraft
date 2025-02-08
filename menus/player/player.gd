@@ -54,7 +54,6 @@ var last_sync_time_ms: int = 0
 @onready var right_hand: BoneAttachment3D = $"RotationRoot/minecraft_player/Model/Skeleton3D/Right Hand"
 
 
-
 ## Sync properties
 @export var _position: Vector3
 @export var _velocity: Vector3

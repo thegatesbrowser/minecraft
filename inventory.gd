@@ -6,6 +6,9 @@ var times:int = 0
 @onready var items_collection: GridContainer = $PanelContainer/MarginContainer/VBoxContainer/Items
 @export var amount_of_slots:int = 10
 
+var find_item
+var items = []
+var slots = []
 var full:bool = false
 var inventory = []
 
@@ -98,6 +101,7 @@ func spawn_item(item_resource, amount:int = 1):
 				i.update_slot()
 				inventory.append(item_resource.item_name)
 				check_if_full()
+				sort()
 				break
 	#items_collection.aa
 	
@@ -107,21 +111,22 @@ func make_slots():
 		items_collection.add_child(slot)
 
 func sort():
-	var last
 	for i in items_collection.get_children():
-		if last == null:
-			if i.Item_resource != null:
-				last = i
-		else:
-			if i.Item_resource == last.Item_resource:
-				last.amount += 1
-				i.Item_resource = null
-				i.update_slot()
-				last.update_slot()
-			else:
-				if i.Item_resource != null:
-					last = i
-
+		if i.Item_resource != null:
+			print(items.has(i.Item_resource.item_name))
+			if items.has(i.Item_resource.item_name) == false:
+				items.append(i.Item_resource.item_name)
+				slots.append(i)
+				
+	for slot in slots:
+		var find_item = slot
+		for i in items_collection.get_children():
+			if i.Item_resource == find_item.Item_resource:
+				if i != find_item:
+					find_item.amount += i.amount
+					i.Item_resource = null
+					i.update_slot()
+					find_item.update_slot()
 
 func _on_sort_pressed() -> void:
 	sort()
