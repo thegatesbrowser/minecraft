@@ -9,3 +9,4 @@ item_name = "DIRT"
 item_texture = ExtResource("1_vuhr6")
 type = 1
 placeable = true
+holdable = false
