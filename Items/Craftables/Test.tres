@@ -9,6 +9,7 @@ script = ExtResource("1_0ohpl")
 Name = "test"
 texture = ExtResource("3_x6mgq")
 output_item = ExtResource("1_2xbij")
+output_amount = 1
 items_needed = {
 1: {
 "amount": 3,

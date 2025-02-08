@@ -136,7 +136,10 @@ func get_type(local_pos:Vector3):
 
 func break_block(local_pos: Vector3, regen = true):
 	##print(blocks.get_block(local_pos))
-		
+	var chunk_type = get_type(local_pos)
+	if chunk_type != null:
+		Globals.spawn_item_inventory.emit(load(get_type(local_pos)))
+			
 	place_block(local_pos, WorldGen.AIR, regen)
 
 func update():
