@@ -18,7 +18,9 @@ var active_chunks := []
 var stale_chunks := []
 
 var generate_radius := 0
+
 @export var nav:NavigationRegion3D
+
 
 var find_type:Dictionary = {
 	0:WorldGen.AIR,
@@ -88,9 +90,9 @@ func load_chunks(player_pos: Vector2):
 	
 	loading_complete = true
 	emit_signal("finished_loading")
+	
 	if Globals.nav:
-		nav.bake_navigation_mesh(false)
-
+		nav.bake_navigation_mesh()
 
 func load_chunk(player_pos, x, y, use_threading := true):
 	var created_chunk := false

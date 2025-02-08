@@ -24,6 +24,7 @@ fractal_gain = 0.8
 
 [sub_resource type="FastNoiseLite" id="3"]
 noise_type = 3
+frequency = 0.002
 fractal_octaves = 2
 fractal_lacunarity = 3.0
 fractal_gain = 0.9
@@ -64,3 +65,4 @@ cave_noise_hills = SubResource("9")
 cave_chance_hills = SubResource("11")
 cave_noise_plains = SubResource("10")
 cave_chance_plains = SubResource("8")
+creature_noise = SubResource("3")

@@ -60,9 +60,10 @@ var last_sync_time_ms: int = 0
 @export var _rotation: Vector3 = Vector3.ZERO
 @export var _direction: Vector3 = Vector3.ZERO
 
+var health
 
 func _ready():
-	var health = max_health
+	health = max_health
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
@@ -103,6 +104,8 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
+	
+	Globals.player_health = health
 	
 	if Globals.paused:
 		block.visible = false
@@ -192,8 +195,9 @@ func _physics_process(delta):
 		block.global_rotation = Vector3.ZERO
 		block.visible = true
 		
-		if Input.is_action_just_pressed("Mine"):
+		if Input.is_action_pressed("Mine"):
 			break_block.emit(pos)
+			
 		if Input.is_action_just_pressed("Build"):
 			if Globals.can_build:
 				if !block_is_inside_character:
