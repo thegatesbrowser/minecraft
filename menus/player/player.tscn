@@ -30,6 +30,9 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:_direction")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:_rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI")]
 collision_layer = 134217729
@@ -60,7 +63,7 @@ cast_shadow = 0
 skeleton = NodePath("../..")
 
 [node name="Camera3D" type="Camera3D" parent="RotationRoot/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.22)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 cull_mask = 1048543
 fov = 90.0
 near = 0.01
@@ -95,6 +98,7 @@ shape = SubResource("7")
 
 [node name="Visible_Block" type="Node3D" parent="BlockOutline"]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
+visible = false
 
 [node name="Edge" type="MeshInstance3D" parent="BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)

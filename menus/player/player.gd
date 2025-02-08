@@ -222,13 +222,14 @@ func interpolate_client(delta: float) -> void:
 	if not start_interpolate: return
 	
 	# Interpolate rotation
-	var rot_t = 1.0 if is_zero_approx(sync_delta) else delta / sync_delta
-	rotation_root.rotation = rotation_root.rotation.lerp(_rotation, rot_t)
+	rotation_root.rotation = _rotation.slerp(rotation_root.rotation, delta)
 	
-	if _direction.length() == 0:
+	if _direction:
 		# Don't interpolate to avoid small jitter when stopping
 		if (_position - position).length() > 1.0 and _velocity.is_zero_approx():
 			position = _position # Fix misplacement
+		
+		if ANI.current_animation != "walk": ANI.play("walk")
 	else:
 		# Interpolate between position_before_sync and _position
 		# and add to ongoing movement to compensate misplacement
@@ -238,8 +239,10 @@ func interpolate_client(delta: float) -> void:
 		var less_misplacement = position_before_sync.move_toward(_position, t)
 		position += less_misplacement - position_before_sync
 		position_before_sync = less_misplacement
+		
+		if ANI.current_animation != "idle": ANI.play("idle")
 	
-	velocity.y += gravity * delta
+	velocity.y -= gravity * delta
 	move_and_slide()
 
 
@@ -258,6 +261,11 @@ func _headbob(time) -> Vector3:
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
+
+
+func is_print_logs() -> bool:
+	var args = OS.get_cmdline_args() + OS.get_cmdline_user_args()
+	return "--print_logs" in args
 
 
 func _on_Area_body_entered(_body):
