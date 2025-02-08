@@ -9,5 +9,3 @@ class_name Creature
 @export var attacks:bool
 @export var damage:int
 @export var speed:float = 5.0
-@export var creature_coll_baseshape:Shape3D
-@export var coll_size:Vector3

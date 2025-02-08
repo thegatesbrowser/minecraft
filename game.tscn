@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bfmloh2bdyn3p"]
+[gd_scene load_steps=15 format=3 uid="uid://bfmloh2bdyn3p"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/Player.tscn" id="2"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://crafting.gd" id="7_p4fxb"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://Items/Craftables/Sticks.tres" id="8_lp82f"]
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://Items/Craftables/craftable_info.tscn" id="10_scij8"]
-[ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://creatures/creature base.tscn" id="11_5u06p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flqqw"]
 sky_top_color = Color(0, 0.490196, 0.878431, 1)
@@ -49,9 +48,6 @@ environment = SubResource("Environment_7185k")
 
 [node name="Player" parent="." instance=ExtResource("2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 128, 8)
-
-[node name="AI Friendly" parent="." instance=ExtResource("11_5u06p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0422, 128, 8)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_pkke0")
