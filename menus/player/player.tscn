@@ -63,12 +63,12 @@ bones/8/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214059)
 bones/8/scale = Vector3(1, 1, 1)
 
 [node name="Left Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="1"]
-transform = Transform3D(-3.52043e-07, 0.013721, -0.999906, 1.62423e-07, -0.999906, -0.013721, -1, -1.67438e-07, 2.9694e-07, 0.349739, 0.779153, -0.0148718)
+transform = Transform3D(4.82422e-07, 0.013721, -0.999906, 1.80118e-07, -0.999906, -0.013721, -1, -1.73897e-07, -5.375e-07, 0.349739, 0.779153, -0.0148718)
 bone_name = "arm.L_3.001"
 bone_idx = 4
 
 [node name="Right Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="2"]
-transform = Transform3D(2.52135e-07, -0.0369847, 0.999316, -5.23348e-08, -0.999316, -0.0369847, 1, -4.13491e-08, -3.18104e-07, -0.34649, 0.770081, -0.0148718)
+transform = Transform3D(-9.4019e-07, -0.0369847, 0.999316, -7.37552e-08, -0.999316, -0.0369847, 1, -1.11083e-07, 9.92971e-07, -0.34649, 0.770081, -0.0148718)
 bone_name = "arm.R_5.001"
 bone_idx = 7
 

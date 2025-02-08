@@ -54,4 +54,4 @@ size = Vector3(100, 1, 47.945)
 environment = SubResource("Environment_5xxen")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 52.5494, 10.9402, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21.045, 10.9402, 0)

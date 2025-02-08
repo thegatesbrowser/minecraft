@@ -4,6 +4,7 @@ extends Node3D
 @export var player_spawner: PlayerSpawner
 @export var single_player: Player
 
+@onready var creature_s = preload("res://creatures/creature base.tscn")
 @onready var chunk_scene_0 := preload("res://chunking/chunk_no_render.tscn")
 @onready var chunk_scene_1 := preload("res://chunking/chunk_simple.tscn")
 @onready var chunk_scene_2 := preload("res://chunking/chunk_server.tscn")
@@ -29,6 +30,7 @@ func _ready():
 		player = single_player
 	
 	start_game()
+	Globals.spawn_creature.connect(spawn_creature)
 
 
 func start_game() -> void:
@@ -123,3 +125,8 @@ func _on_Player_break_block(pos: Vector3):
 func _on_Player_place_block(pos: Vector3):
 	Globals.remove_item_from_hotbar.emit()
 	chunks.place_block(pos, _player_pos_to_chunk_pos(pos), Globals.current_block)
+
+func spawn_creature(pos:Vector3):
+	var creature = creature_s.instantiate()
+	creature.position = pos + Vector3(0,100,0)
+	add_child(creature)

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Creature" load_steps=3 format=3 uid="uid://dvflyaopd8icg"]
+
+[ext_resource type="PackedScene" uid="uid://dsupdgc7b2e4d" path="res://assets/models/minecraft_player.glb" id="1_5ktq8"]
+[ext_resource type="Script" path="res://creatures/creature.gd" id="1_x6yal"]
+
+[resource]
+script = ExtResource("1_x6yal")
+creature_name = "Pig"
+body_scene = ExtResource("1_5ktq8")
+max_health = 4
+attacks = false
+damage = 0
+speed = 5.0
+coll_height = 1.806
+coll_radius = 0.411

@@ -20,6 +20,11 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var chunk_loading_threads := 7
 
 # Player Settings.
+
+## these are copys for ui puepose
+var max_health:int
+var player_health:int
+
 @export var paused := false
 @export var mouse_sensitivity := Vector2(0.3, 0.3)
 @export var controller_sensitivity := Vector2(5, 2)
@@ -31,13 +36,16 @@ var current_block := 0
 var can_build:bool = false
 
 # Automated Testing
-@export var nav:bool = false
+@export var nav:bool = true
 enum TestMode {NONE, STATIC_LOAD, RUN_LOAD, RUN_MANUAL}
 @export var test_mode := TestMode.NONE
 var settings_preset := ""
 @export var repaint_line := true
 @export var skip_menu := false
 var test_file = null
+
+# AI
+signal spawn_creature(pos)
 
 # Inventory
 signal remove_item_from_hotbar

@@ -1,10 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://buts6uhmr7s2d"]
+[gd_scene load_steps=4 format=3 uid="uid://buts6uhmr7s2d"]
 
 [ext_resource type="Script" path="res://creatures/creature_base.gd" id="1_yo80c"]
+[ext_resource type="Resource" uid="uid://dvflyaopd8icg" path="res://creatures/friendly/Test.tres" id="2_p81ia"]
 
-[node name="AI Friendly" type="CharacterBody3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kr2qb"]
+
+[node name="AI Base" type="CharacterBody3D"]
 script = ExtResource("1_yo80c")
+creature_resource = ExtResource("2_p81ia")
+walk_distance = 50
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="RotationRoot" type="Node3D" parent="."]
+
+[node name="jump" type="RayCast3D" parent="RotationRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.524592, 0)
+target_position = Vector3(0, 0, -2)
+debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
+
+[node name="guide" type="Node3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.904998, 0)
+shape = SubResource("CapsuleShape3D_kr2qb")
+
+[node name="Move" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="Start" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
+[connection signal="timeout" from="Move" to="." method="_on_move_timeout"]
+[connection signal="timeout" from="Start" to="." method="_on_start_timeout"]

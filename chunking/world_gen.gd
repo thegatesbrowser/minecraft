@@ -13,7 +13,8 @@ enum {
 	LEAVES2,
 	WOOD2,
 	GLASS,
-	STUMP # Not real block type, signals that we need a tree here.
+	STUMP, # Not real block type, signals that we need a tree here.
+	CREATURE,
 }
 
 const is_transparent = {
@@ -57,6 +58,8 @@ class Tree_Object:
 @export var cave_chance_plains: Curve
 @export var tree_heights := Vector2(2, 6)
 
+@export var creature_noise: FastNoiseLite
+
 var min_height
 var max_plains_height
 var max_hills_height
@@ -74,6 +77,7 @@ func set_seed(world_seed: int):
 	rand.seed = world_seed
 	hills_noise.seed = world_seed + rand.randi()
 	tree_noise.seed = world_seed + rand.randi()
+	creature_noise.seed = world_seed + rand.randi()
 	plains_noise.seed = world_seed + rand.randi()
 	biome_noise.seed = world_seed + rand.randi()
 	cave_noise_hills.seed = world_seed + rand.randi()
@@ -155,3 +159,4 @@ func _is_tree(x: int, z: int, biome_percent: float, rand: RandomNumberGenerator)
 	var base_rate = lerp(base_tree_rate_hills, base_tree_rate_plains, biome_percent)
 	var is_tree = (rand.randf() < (tree_noise.get_noise_2d(x, z) * base_rate))
 	return is_tree
+	
