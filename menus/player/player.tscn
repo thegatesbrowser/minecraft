@@ -49,16 +49,28 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 bones/0/rotation = Quaternion(-8.55713e-09, 2.96428e-08, -5.07315e-16, 1)
 bones/1/rotation = Quaternion(-0.00473571, 0.00139203, 0.00170838, 0.999986)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/rotation = Quaternion(0.00473803, 4.52507e-08, -0.00170179, 0.999987)
-bones/3/rotation = Quaternion(0.708082, 0.00214074, -0.706113, -0.00455664)
+bones/2/rotation = Quaternion(0.00553006, -1.30266e-06, -0.00170178, 0.999983)
+bones/3/rotation = Quaternion(0.708086, 0.00297828, -0.70611, -0.00371671)
 bones/3/scale = Vector3(1, 1, 1)
+bones/4/position = Vector3(-1.96667e-08, 0.462169, 1.77297e-08)
 bones/4/rotation = Quaternion(0.00386998, -1.26575e-07, -4.57264e-08, 0.999992)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/rotation = Quaternion(0.708082, 0.00214067, -0.706113, -0.00455668)
 bones/5/scale = Vector3(1, 1, 1)
-bones/6/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214065)
+bones/6/rotation = Quaternion(0.706115, -0.00539653, 0.708075, -0.0013031)
+bones/7/position = Vector3(-8.39724e-09, 0.471243, -2.16038e-09)
 bones/8/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214059)
 bones/8/scale = Vector3(1, 1, 1)
+
+[node name="Left Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="1"]
+transform = Transform3D(-1.71289e-07, -0.00536747, -0.999986, 1.0487e-07, -0.999986, 0.00536747, -1, -1.04094e-07, 1.78168e-07, 0.340918, 0.779047, -0.0148718)
+bone_name = "arm.L_3.001"
+bone_idx = 4
+
+[node name="Right Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="2"]
+transform = Transform3D(1.5603e-08, -0.0179055, 0.99984, -1.02846e-07, -0.99984, -0.0179055, 1, -1.01171e-07, -6.4752e-08, -0.337497, 0.769974, -0.0148718)
+bone_name = "arm.R_5.001"
+bone_idx = 7
 
 [node name="AnimationPlayer" parent="RotationRoot/minecraft_player" index="1"]
 playback_default_blend_time = 1.0
