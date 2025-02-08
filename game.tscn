@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=21 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
 [ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]
@@ -8,8 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://Items/Craftables/craftable.tscn" id="7_8fyye"]
 [ext_resource type="Script" path="res://crafting.gd" id="7_p4fxb"]
 [ext_resource type="Script" path="res://multiplayer/spawn_points.gd" id="7_u8af2"]
+[ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://Items/Craftables/Wood1.tres" id="8_dt6y2"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://Items/Craftables/Sticks.tres" id="8_lp82f"]
 [ext_resource type="Script" path="res://menus/stats.gd" id="9_hkku4"]
+[ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://Items/Craftables/Wood2.tres" id="9_pms8n"]
+[ext_resource type="Resource" uid="uid://c1c7ynjb33hsk" path="res://Items/Craftables/Pickaxe.tres" id="10_cron7"]
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://Items/Craftables/craftable_info.tscn" id="10_scij8"]
 
 [sub_resource type="Gradient" id="Gradient_ur5w1"]
@@ -120,6 +123,18 @@ layout_mode = 2
 [node name="Craftable" parent="Overlay/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" instance=ExtResource("7_8fyye")]
 layout_mode = 2
 craftable = ExtResource("8_lp82f")
+
+[node name="Craftable2" parent="Overlay/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" instance=ExtResource("7_8fyye")]
+layout_mode = 2
+craftable = ExtResource("8_dt6y2")
+
+[node name="Craftable3" parent="Overlay/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" instance=ExtResource("7_8fyye")]
+layout_mode = 2
+craftable = ExtResource("9_pms8n")
+
+[node name="Craftable4" parent="Overlay/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" instance=ExtResource("7_8fyye")]
+layout_mode = 2
+craftable = ExtResource("10_cron7")
 
 [node name="Craftable Info" parent="Overlay" instance=ExtResource("10_scij8")]
 
