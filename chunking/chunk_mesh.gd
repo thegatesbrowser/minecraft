@@ -60,6 +60,8 @@ var find_type:Dictionary = {
 	10:"res://Items/Glass.tres",
 	11:STUMP # No
 }
+
+
 const offsets = {
 	AIR:{
 	},
@@ -120,14 +122,20 @@ func place_block(local_pos: Vector3, type, regen = true):
 		update()
 		finalize()
 
-
-func break_block(local_pos: Vector3, regen = true):
-	#print(blocks.get_block(local_pos))
+func get_type(local_pos:Vector3):
 	var type = blocks.get_block(local_pos)
-	#print("type ", find_type[type])
 	if type != 0:
 		if type != 11:
-			Globals.spawn_item_inventory.emit(load(find_type[type]))
+			return find_type[type]
+		else:
+			return null
+	else:
+		return null
+
+
+
+func break_block(local_pos: Vector3, regen = true):
+	##print(blocks.get_block(local_pos))
 		
 	place_block(local_pos, WorldGen.AIR, regen)
 

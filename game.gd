@@ -120,6 +120,6 @@ func _player_pos_to_chunk_pos(pos: Vector3) -> Vector2:
 func _on_Player_break_block(pos: Vector3):
 	chunks.break_block(pos, _player_pos_to_chunk_pos(pos))
 
-
 func _on_Player_place_block(pos: Vector3):
+	Globals.remove_item_from_hotbar.emit()
 	chunks.place_block(pos, _player_pos_to_chunk_pos(pos), Globals.current_block)
