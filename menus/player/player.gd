@@ -197,6 +197,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("Build"):
 			if Globals.can_build:
 				if !block_is_inside_character:
+					Globals.remove_item_from_hotbar.emit()
 					place_block.emit(pos + normal)
 					pass
 	else:

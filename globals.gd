@@ -40,6 +40,7 @@ var settings_preset := ""
 var test_file = null
 
 # Inventory
+signal remove_item_from_hotbar
 signal spawn_item_inventory(item)
 signal check_amount_of_item(item)
 signal remove_item(item,amount)
