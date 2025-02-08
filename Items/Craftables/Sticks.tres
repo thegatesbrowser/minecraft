@@ -13,6 +13,7 @@ script = ExtResource("1_2fcoj")
 Name = "Stick"
 texture = SubResource("GradientTexture2D_21q8u")
 output_item = ExtResource("1_o5shi")
+output_amount = 4
 items_needed = {
 1: {
 "amount": 1,

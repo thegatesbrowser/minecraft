@@ -5,6 +5,7 @@ class_name Craftable
 @export var Name:String
 @export var texture:Texture
 @export var output_item:Item_Global
+@export var output_amount:int = 1
 
 @export var items_needed = {
 	1: {"name": "GRASS",

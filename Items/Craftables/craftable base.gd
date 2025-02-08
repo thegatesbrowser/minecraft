@@ -25,7 +25,7 @@ func craft() -> void:
 		if steps == 0:
 			if inventory.full == false:
 				print("crafted")
-				inventory.spawn_item(craftable.output_item)
+				inventory.spawn_item(craftable.output_item,craftable.output_amount)
 				for i in craftable.items_needed:
 					Globals.remove_item.emit(craftable.items_needed[i].name, craftable.items_needed[i].amount)
 				
@@ -43,6 +43,7 @@ func can_craft():
 		var steps = craftable.items_needed.duplicate().size()
 		for i in craftable.items_needed:
 			#print(craftable.items_needed[i].name)
+			print(inventory.check_amount_of_item(craftable.items_needed[i].name))
 			if inventory.check_amount_of_item(craftable.items_needed[i].name) >= craftable.items_needed[i].amount:
 				steps -= 1
 				#print("is the same")

@@ -23,6 +23,7 @@ var keys
 
 
 func _ready():
+	Globals.remove_item_from_hotbar.connect(remove)
 	Globals.hotbar_slot_clicked.connect(hotbar_slot_clicked)
 	buttons = slots.get_children()
 	keys = [WorldGen.GRASS, WorldGen.DIRT, WorldGen.STONE, WorldGen.GLASS, WorldGen.LOG1, \
@@ -59,6 +60,8 @@ func _unpress_all():
 		i.button_pressed = false
 		i.focused = false
 
+func get_current():
+	return buttons[current_key]
 
 func _press_key(i):
 	buttons[i].button_pressed = true
@@ -127,3 +130,12 @@ func _on_Leaf2_pressed():
 func hotbar_slot_clicked(slot):
 	_unpress_all()
 	_press_key(slot.Item_resource.type)
+
+
+func remove(item_name:String = "", amount:int = 1):
+	if item_name == "":
+		var slot = get_current()
+		slot.amount -= 1
+		if slot.amount <= 0:
+			slot.Item_resource = null
+		slot.update_slot()

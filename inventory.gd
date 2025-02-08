@@ -100,7 +100,8 @@ func spawn_item(item_resource, amount:int = 1):
 				i.Item_resource = item_resource
 				i.amount = amount
 				i.update_slot()
-				inventory.append(item_resource.item_name)
+				for num in amount:
+					inventory.append(item_resource.item_name)
 				check_if_full()
 				sort()
 				break
@@ -140,6 +141,7 @@ func _on_add_random_item_pressed() -> void:
 func check_amount_of_item(item):
 	var amount = 0
 	for i in inventory:
+		print(i)
 		if i == item:
 			amount += 1
 	return amount
