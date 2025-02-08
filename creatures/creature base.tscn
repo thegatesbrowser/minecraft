@@ -1,10 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://buts6uhmr7s2d"]
+[gd_scene load_steps=4 format=3 uid="uid://buts6uhmr7s2d"]
 
 [ext_resource type="Script" path="res://creatures/creature_base.gd" id="1_yo80c"]
+[ext_resource type="Resource" uid="uid://cw04ci8vpqbd5" path="res://creatures/aggresive/zombie.tres" id="2_pcwug"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4sudb"]
+size = Vector3(0.385254, 1.29419, 0.335052)
 
 [node name="AI Friendly" type="CharacterBody3D"]
 script = ExtResource("1_yo80c")
+creature_resource = ExtResource("2_pcwug")
+
+[node name="guide" type="Node3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0012207, 0.63544, -0.0129549)
+shape = SubResource("BoxShape3D_4sudb")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_height_offset = 0.1
+debug_enabled = true
+
+[node name="Move" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="auto jump" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.365561, 0)
+target_position = Vector3(0, 0, -2)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="auto jump2" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88077, 0)
+visible = false
+target_position = Vector3(0, 0, -1)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="timeout" from="Move" to="." method="_on_move_timeout"]
