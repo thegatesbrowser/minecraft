@@ -122,16 +122,14 @@ func place_block(local_pos: Vector3, type, regen = true):
 
 
 func break_block(local_pos: Vector3, regen = true):
-	print(blocks.get_block(local_pos))
+	#print(blocks.get_block(local_pos))
 	var type = blocks.get_block(local_pos)
-	print("type ", find_type[type])
+	#print("type ", find_type[type])
 	if type != 0:
 		if type != 11:
 			Globals.spawn_item_inventory.emit(load(find_type[type]))
 		
-	#print(blocks.id)
 	place_block(local_pos, WorldGen.AIR, regen)
-	#print("break")
 
 func update():
 	# Update the block data.
