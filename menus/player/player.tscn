@@ -46,15 +46,22 @@ ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="RotationRoot/minecraft_player/Model" index="0"]
-bones/1/rotation = Quaternion(-0.00473571, 0.00139204, 0.00170838, 0.999986)
+bones/0/rotation = Quaternion(-8.55713e-09, 2.96428e-08, -5.07315e-16, 1)
+bones/1/rotation = Quaternion(-0.00473571, 0.00139203, 0.00170838, 0.999986)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/rotation = Quaternion(0.00473803, 4.54807e-08, -0.00170179, 0.999987)
-bones/3/rotation = Quaternion(0.708081, 0.00214071, -0.706113, -0.00455665)
+bones/2/rotation = Quaternion(0.00473803, 4.52507e-08, -0.00170179, 0.999987)
+bones/3/rotation = Quaternion(0.708082, 0.00214074, -0.706113, -0.00455664)
 bones/3/scale = Vector3(1, 1, 1)
+bones/4/rotation = Quaternion(0.00386998, -1.26575e-07, -4.57264e-08, 0.999992)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214064)
-bones/6/rotation = Quaternion(0.706113, -0.00455667, 0.708081, -0.00214059)
-bones/6/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(0.708082, 0.00214067, -0.706113, -0.00455668)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214065)
+bones/8/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214059)
+bones/8/scale = Vector3(1, 1, 1)
+
+[node name="AnimationPlayer" parent="RotationRoot/minecraft_player" index="1"]
+playback_default_blend_time = 1.0
 
 [node name="Head" type="MeshInstance3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)

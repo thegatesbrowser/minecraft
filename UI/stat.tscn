@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1d3d84g71d2a"]
+
+[ext_resource type="Script" path="res://UI/stat.gd" id="1_rbt7y"]
+
+[node name="Stat" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_rbt7y")

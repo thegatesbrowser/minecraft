@@ -73,6 +73,8 @@ func load_chunks(player_pos: Vector2):
 	
 	loading_complete = true
 	emit_signal("finished_loading")
+	if Globals.nav:
+		nav.bake_navigation_mesh(false)
 
 
 func load_chunk(player_pos, x, y, use_threading := true):
@@ -184,8 +186,6 @@ func _generate_chunk(chunk: Chunk, use_threading := true):
 	chunk.finalize()
 	emit_signal("chunk_updated", chunk.id, Time.get_ticks_usec() - time)
 	active_chunks.append(chunk)
-	if Globals.nav:
-		nav.bake_navigation_mesh(false)
 
 
 func _generate_chunk_thread(args: Array):
