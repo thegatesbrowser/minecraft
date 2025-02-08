@@ -11,7 +11,7 @@ extends Node3D
 @onready var chunk_scene_4 := preload("res://chunking/chunk_tileset.tscn")
 @onready var chunk_scene_5 := preload("res://chunking/chunk_multimesh.tscn")
 
-@onready var chunks := $Chunks
+@onready var chunks := $NavigationRegion3D/Chunks
 @onready var debug := $Overlay/DebugOverlay
 
 var player: Player

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://buts6uhmr7s2d"]
+
+[ext_resource type="Script" path="res://creatures/creature_base.gd" id="1_yo80c"]
+
+[node name="AI Friendly" type="CharacterBody3D"]
+script = ExtResource("1_yo80c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

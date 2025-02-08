@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Creature" load_steps=2 format=3 uid="uid://dvflyaopd8icg"]
+
+[ext_resource type="Script" path="res://creatures/creature.gd" id="1_x6yal"]
+
+[resource]
+script = ExtResource("1_x6yal")
+creature_name = "Pig"
+max_health = 4
+attacks = false
+damage = 0
+speed = 5.0
