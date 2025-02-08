@@ -62,11 +62,14 @@ func _unpress_all():
 
 func _press_key(i):
 	buttons[i].button_pressed = true
+	Globals.remove_item_in_hand.emit()
 	if buttons[current_key].Item_resource != null:
 		if buttons[current_key].Item_resource.placeable:
 			Globals.current_block = keys[buttons[current_key].Item_resource.type]
 			Globals.can_build = true 
 		else:
+			if buttons[current_key].Item_resource.holdable:
+				Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
 			Globals.can_build = false 
 	else:
 		Globals.can_build = false

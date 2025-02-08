@@ -110,7 +110,7 @@ Additional Arguments are as follows:
 		Globals.test_mode = Globals.TestMode.STATIC_LOAD
 	else:
 		print("ERROR: Command Line parameters are invalid!")
-		get_tree().quit()
+		#get_tree().quit()
 		return false
 	
 	args.remove_at(0)

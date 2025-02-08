@@ -11,6 +11,8 @@ signal break_block(pos: Vector3)
 @export var SPRINT_SPEED = 8.0
 @export var JUMP_VELOCITY = 7.0
 
+@export var max_health:int = 3
+
 ## Player model rotation speed
 @export var rotation_speed := 12.0
 ## Clamp sync delta for faster interpolation
@@ -48,6 +50,11 @@ var last_sync_time_ms: int = 0
 @onready var _synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var _move_direction := Vector3.ZERO
 
+@onready var left_hand: BoneAttachment3D = $"RotationRoot/minecraft_player/Model/Skeleton3D/Left Hand"
+@onready var right_hand: BoneAttachment3D = $"RotationRoot/minecraft_player/Model/Skeleton3D/Right Hand"
+
+
+
 ## Sync properties
 @export var _position: Vector3
 @export var _velocity: Vector3
@@ -56,6 +63,7 @@ var last_sync_time_ms: int = 0
 
 
 func _ready():
+	var health = max_health
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
@@ -70,6 +78,8 @@ func _ready():
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # TODO: Move to mouse mode
 	
+	Globals.add_item_to_hand.connect(add_item_to_hand)
+	Globals.remove_item_in_hand.connect(remove_item_in_hand)
 	camera.far = far_distance
 	camera.current = true
 
@@ -279,3 +289,18 @@ func _on_Area_body_exited(_body):
 func _exit_tree():
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
+
+func add_item_to_hand(item:Item_Global):
+	if item != null:
+		if item.holdable:
+			
+			if left_hand.get_children().size() >= 1:
+				left_hand.get_child(0).queue_free()
+				
+			var mesh_instance = MeshInstance3D.new()
+			mesh_instance.mesh = item.holdable_mesh
+			left_hand.add_child(mesh_instance)
+	
+func remove_item_in_hand():
+	if left_hand.get_children().size() >= 1:
+		left_hand.get_child(0).queue_free()
