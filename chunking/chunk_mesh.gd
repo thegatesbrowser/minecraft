@@ -45,6 +45,21 @@ enum {
 	STUMP # Not real block type, signals that we need a tree here.
 }
 
+
+var find_type:Dictionary = {
+	0:AIR,
+	1:"res://Items/Dirt.tres",
+	2:"res://Items/Grass.tres",
+	3:"res://Items/Stone.tres",
+	4:"res://Items/Log1.tres",
+	5:"res://Items/Leaf1.tres",
+	6:"res://Items/Wood1.tres",
+	7:"res://Items/Log2.tres",
+	8:"res://Items/Leaf2.tres",
+	9:"res://Items/Wood2.tres",
+	10:"res://Items/Glass.tres",
+	11:STUMP # No
+}
 const offsets = {
 	AIR:{
 	},
@@ -107,8 +122,16 @@ func place_block(local_pos: Vector3, type, regen = true):
 
 
 func break_block(local_pos: Vector3, regen = true):
+	print(blocks.get_block(local_pos))
+	var type = blocks.get_block(local_pos)
+	print("type ", find_type[type])
+	if type != 0:
+		if type != 11:
+			Globals.spawn_item_inventory.emit(load(find_type[type]))
+		
+	#print(blocks.id)
 	place_block(local_pos, WorldGen.AIR, regen)
-
+	#print("break")
 
 func update():
 	# Update the block data.
