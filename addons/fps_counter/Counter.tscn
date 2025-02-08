@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c3hsxgmqwip4g"]
 
-[ext_resource type="Theme" uid="uid://c4hslr8ga2ory" path="res://addons/fps_counter/Menu_Theme.tres" id="1"]
+[ext_resource type="Theme" uid="uid://c00ywh0ppv0rc" path="res://addons/fps_counter/Menu_Theme.tres" id="1"]
 [ext_resource type="Script" path="res://addons/fps_counter/Counter.gd" id="2"]
 
 [node name="Counter" type="Control"]

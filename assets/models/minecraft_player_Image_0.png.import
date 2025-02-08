@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dquuwdn3nvmbn"
-path.s3tc="res://.godot/imported/minecraft player_Image_0.png-f774c50d587d5a7a3f00369dc46fef31.s3tc.ctex"
+uid="uid://ldgtc5gy885g"
+path.s3tc="res://.godot/imported/minecraft_player_Image_0.png-f7d57477ee3d97b8b893515300ab8f52.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://assets/models/minecraft player_Image_0.png"
-dest_files=["res://.godot/imported/minecraft player_Image_0.png-f774c50d587d5a7a3f00369dc46fef31.s3tc.ctex"]
+source_file="res://assets/models/minecraft_player_Image_0.png"
+dest_files=["res://.godot/imported/minecraft_player_Image_0.png-f7d57477ee3d97b8b893515300ab8f52.s3tc.ctex"]
 
 [params]
 

@@ -1,4 +1,5 @@
 extends ScrollContainer
+class_name Inventory
 
 var times:int = 0
 @onready var slot_s = preload("res://Items/Slot.tscn")
@@ -6,7 +7,7 @@ var times:int = 0
 @export var amount_of_slots:int = 10
 
 var full:bool = false
-var Inventory = []
+var inventory = []
 
 var possible_items = ["res://Items/Dirt.tres","res://Items/Glass.tres","res://Items/Grass.tres","res://Items/Leaf1.tres","res://Items/Leaf2.tres","res://Items/Log1.tres","res://Items/Log2.tres","res://Items/Stone.tres","res://Items/Wood1.tres","res://Items/Wood2.tres"]
 
@@ -95,7 +96,7 @@ func spawn_item(item_resource, amount:int = 1):
 				i.Item_resource = item_resource
 				i.amount = amount
 				i.update_slot()
-				Inventory.append(item_resource.item_name)
+				inventory.append(item_resource.item_name)
 				check_if_full()
 				break
 	#items_collection.aa
@@ -132,7 +133,7 @@ func _on_add_random_item_pressed() -> void:
 
 func check_amount_of_item(item):
 	var amount = 0
-	for i in Inventory:
+	for i in inventory:
 		if i == item:
 			amount += 1
 	return amount
@@ -147,8 +148,8 @@ func remove_item(item_name:String,amount:int):
 					else:
 						slot.amount -= 1
 					slot.update_slot()
-					var index = Inventory.find(item_name)
-					Inventory.remove_at(index)
+					var index = inventory.find(item_name)
+					inventory.remove_at(index)
 					check_if_full()
 					break
 

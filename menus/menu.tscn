@@ -1,7 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cvh8mc8ybmio1"]
+[gd_scene load_steps=18 format=3 uid="uid://cvh8mc8ybmio1"]
 
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1"]
 [ext_resource type="Texture2D" uid="uid://n1hmbywl5fys" path="res://assets/menu/mesh.png" id="2"]
+[ext_resource type="PackedScene" uid="uid://mqnlrs6hn6g6" path="res://multiplayer/multiplayer.tscn" id="2_bm46h"]
+[ext_resource type="PackedScene" uid="uid://b8t6ynqqhm1mc" path="res://multiplayer/single_player.tscn" id="2_hqdeb"]
 [ext_resource type="Texture2D" uid="uid://5xur7gw1hix8" path="res://assets/menu/bad.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://b40wk8f1w5gqe" path="res://assets/menu/tileset.png" id="4"]
 [ext_resource type="Script" path="res://menus/menu.gd" id="5"]
@@ -102,6 +104,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5")
+single_player_scene = ExtResource("2_hqdeb")
+multiplayer_scene = ExtResource("2_bm46h")
 splash_images = Array[Resource]([ExtResource("9"), ExtResource("3"), ExtResource("11"), ExtResource("2"), ExtResource("4"), ExtResource("10")])
 chunk_radius_presets = Array[int]([2, 8, 24, 48, 97])
 fog_enabled = Array[bool]([true, true, true, true, true])
@@ -152,7 +156,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -530.0
+offset_top = -649.0
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -177,6 +181,12 @@ layout_mode = 2
 theme = ExtResource("1")
 theme_override_font_sizes/font_size = 64
 text = "Play Game"
+
+[node name="Play2" type="Button" parent="SC/CC/VBC/Play_Buttons/VB"]
+layout_mode = 2
+theme = ExtResource("1")
+theme_override_font_sizes/font_size = 64
+text = "Play Multiplayer"
 
 [node name="HSeparator6" type="HSeparator" parent="SC/CC/VBC/Play_Buttons/VB"]
 layout_mode = 2
@@ -470,6 +480,7 @@ expand_mode = 1
 stretch_mode = 6
 
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Play2" to="." method="_on_Play_multiplayer_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Static" to="." method="_on_Test_Static_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Dynamic" to="." method="_on_Test_Dynamic_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Test_Manual" to="." method="_on_Test_Manual_pressed"]

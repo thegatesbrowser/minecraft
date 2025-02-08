@@ -47,7 +47,7 @@ func _input(_event):
 	
 	current_key %= 10
 	_unpress_all()
-	print(buttons[current_key])
+	#print(buttons[current_key])
 	buttons[current_key].focused = true
 	#if buttons[current_key].Item_resource != null:
 	_press_key(current_key)
