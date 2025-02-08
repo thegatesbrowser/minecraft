@@ -128,9 +128,6 @@ func place_block(global_pos, chunk_id: Vector2, type):
 func break_block(global_pos: Vector3, chunk_id: Vector2):
 	if chunks.has(chunk_id):
 		var chunk = chunks[chunk_id]
-		var chunk_type = chunk.get_type(global_pos)
-		if chunk_type != null:
-			Globals.spawn_item_inventory.emit(load(chunk.get_type(global_pos)))
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
 		if local_pos.y > 1:
 			chunk.break_block(local_pos)
