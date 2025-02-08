@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Build"):
 		## split
 		if Globals.last_clicked_slot != null:
-			print(is_even(Globals.last_clicked_slot.amount))
+			#print(is_even(Globals.last_clicked_slot.amount))
 			if is_even(Globals.last_clicked_slot.amount):
 				if Globals.last_clicked_slot.amount >= 2:
 					var amount = Globals.last_clicked_slot.amount / 2
