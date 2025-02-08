@@ -20,6 +20,21 @@ var stale_chunks := []
 var generate_radius := 0
 @export var nav:NavigationRegion3D
 
+var find_type:Dictionary = {
+	0:WorldGen.AIR,
+	1:"res://Items/Dirt.tres",
+	2:"res://Items/Grass.tres",
+	3:"res://Items/Stone.tres",
+	4:"res://Items/Log1.tres",
+	5:"res://Items/Leaf1.tres",
+	6:"res://Items/Wood1.tres",
+	7:"res://Items/Log2.tres",
+	8:"res://Items/Leaf2.tres",
+	9:"res://Items/Wood2.tres",
+	10:"res://Items/Glass.tres",
+	11:WorldGen.STUMP # No
+}
+
 # Load all chunks within the load radius, and unload chunks outside.
 func update_chunks(player_pos: Vector2):
 	if loading_complete and player_chunk_pos == player_pos:
@@ -109,10 +124,13 @@ func place_block(global_pos, chunk_id: Vector2, type):
 	else:
 		Print.error("Player placed a block in a chunk that doesn't exist!")
 
-
+			
 func break_block(global_pos: Vector3, chunk_id: Vector2):
 	if chunks.has(chunk_id):
 		var chunk = chunks[chunk_id]
+		var chunk_type = chunk.get_type(global_pos)
+		if chunk_type != null:
+			Globals.spawn_item_inventory.emit(load(chunk.get_type(global_pos)))
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
 		if local_pos.y > 1:
 			chunk.break_block(local_pos)
