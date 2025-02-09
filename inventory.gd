@@ -60,6 +60,7 @@ func spawn_item(item_resource, amount:int = 1):
 				i.amount = amount
 				i.update_slot()
 				for num in amount:
+					
 					inventory.append(item_resource.item_name)
 				check_if_full()
 				sort()

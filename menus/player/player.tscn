@@ -242,6 +242,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Inventory holder" type="Control" parent="Player UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
