@@ -127,6 +127,9 @@ func hit(damage:int = 1):
 	health -= damage
 	if health <= 0:
 		print("killed")
-		var drop_item = creature_resource.drop_items.pick_random()
-		Globals.spawn_item_inventory.emit(drop_item)
-		queue_free()
+		if creature_resource.drop_items.size() != 0:
+			var drop_item = creature_resource.drop_items.pick_random()
+			Globals.spawn_item_inventory.emit(drop_item)
+			queue_free()
+		else:
+			queue_free()
