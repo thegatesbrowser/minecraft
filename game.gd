@@ -43,7 +43,7 @@ func start_game() -> void:
 		Globals.capture_mouse_on_start = false
 		Globals.paused = false
 	elif Globals.test_mode == Globals.TestMode.NONE:
-		debug.toggle_enabled()
+		debug.disable_overlay()
 	
 	var chunk_types = [chunk_scene_0, chunk_scene_1, chunk_scene_2, chunk_scene_3, chunk_scene_4, chunk_scene_5]
 	chunks.chunk_scene = chunk_types[Globals.chunk_type]

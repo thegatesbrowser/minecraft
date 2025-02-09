@@ -180,6 +180,10 @@ func toggle_enabled():
 	visible = !visible
 
 
+func disable_overlay():
+	visible = false
+
+
 func repaint(player_pos: Vector2, delta):
 	time_since_repaint += delta
 	
