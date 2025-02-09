@@ -7,8 +7,10 @@ class_name Creature
 @export var attacks:bool
 @export var damage:int
 @export var speed:float = 5.0
+@export var coll_shape:Shape3D
 @export var coll_height:float
 @export var coll_radius:float
+@export var walk_ani_name:String
 
 @export_category("Optional")
 @export var creature_name:String

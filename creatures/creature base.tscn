@@ -1,13 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://buts6uhmr7s2d"]
 
 [ext_resource type="Script" path="res://creatures/creature_base.gd" id="1_yo80c"]
-[ext_resource type="Resource" uid="uid://dvflyaopd8icg" path="res://creatures/friendly/Test.tres" id="2_p81ia"]
+[ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://creatures/Fox.tres" id="2_2ii4m"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kr2qb"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_3pi47"]
+size = Vector3(0.285156, 0.395752, 0.614319)
 
 [node name="AI Base" type="CharacterBody3D"]
 script = ExtResource("1_yo80c")
-creature_resource = ExtResource("2_p81ia")
+creature_resource = ExtResource("2_2ii4m")
 
 [node name="RotationRoot" type="Node3D" parent="."]
 
@@ -17,13 +18,12 @@ target_position = Vector3(0, 0, -2)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-debug_enabled = true
 
 [node name="guide" type="Node3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0596904, 0)
-shape = SubResource("CapsuleShape3D_kr2qb")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0680348, 0.19176, -0.0793269)
+shape = SubResource("BoxShape3D_3pi47")
 
 [node name="Move" type="Timer" parent="."]
 wait_time = 10.0
