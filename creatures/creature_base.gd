@@ -30,8 +30,9 @@ func _ready() -> void:
 	health = creature_resource.max_health
 	var body = creature_resource.body_scene.instantiate()
 	rotation_root.add_child(body)
-	collision_shape_3d.shape.height = creature_resource.coll_height
-	collision_shape_3d.shape.radius = creature_resource.coll_radius
+	collision_shape_3d.shape = creature_resource.coll_shape
+	#collision_shape_3d.shape.height = creature_resource.coll_height
+	#collision_shape_3d.shape.radius = creature_resource.coll_radius
 	ani = body.find_child("AnimationPlayer")
 	mesh = body.find_child("Object_7")
 	collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
@@ -45,8 +46,8 @@ func change_state(state):
 			current_state = states.IDLE
 			speed = 0.000000001
 		"walking":
-			if ani.current_animation != "walk":
-				ani.play("walk")
+			if ani.current_animation != creature_resource.walk_ani_name:
+				ani.play(creature_resource.walk_ani_name)
 			current_state = states.WALKING
 			speed = creature_resource.speed
 			

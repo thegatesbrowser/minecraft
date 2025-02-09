@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ldgtc5gy885g"
-path="res://.godot/imported/minecraft_player_Image_0.png-f7d57477ee3d97b8b893515300ab8f52.ctex"
+uid="uid://ce0jc1tvm65ru"
+path="res://.godot/imported/fox_Image_0.png-e1ed68c0368fe5d0856f2a87b45533a4.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "ed9a9fd73e71e28a7a8e0800b4a1bb5e"
+"md5": "d4086b149253ef0ff4f46a2412c82982"
 }
 
 [deps]
 
-source_file="res://assets/models/minecraft_player_Image_0.png"
-dest_files=["res://.godot/imported/minecraft_player_Image_0.png-f7d57477ee3d97b8b893515300ab8f52.ctex"]
+source_file="res://assets/models/fox_Image_0.png"
+dest_files=["res://.godot/imported/fox_Image_0.png-e1ed68c0368fe5d0856f2a87b45533a4.ctex"]
 
 [params]
 
