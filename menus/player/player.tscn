@@ -78,7 +78,6 @@ playback_default_blend_time = 1.0
 [node name="Head" type="MeshInstance3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 layers = 32
-cast_shadow = 0
 skeleton = NodePath("../..")
 
 [node name="Camera3D" type="Camera3D" parent="RotationRoot/Head"]

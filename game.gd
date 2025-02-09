@@ -128,5 +128,5 @@ func _on_Player_place_block(pos: Vector3):
 
 func spawn_creature(pos:Vector3):
 	var creature = creature_s.instantiate()
-	creature.position = pos + Vector3(0,100,0)
+	creature.position = pos + Vector3(0,1,0)
 	add_child(creature)

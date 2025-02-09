@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Utilities" load_steps=2 format=3 uid="uid://djttwhuc8qbk8"]
+
+[ext_resource type="Script" path="res://other/utilities.gd" id="1_3my3i"]
+
+[resource]
+script = ExtResource("1_3my3i")
+Name = "Chest"
+has_inventory = true

@@ -60,6 +60,9 @@ class Tree_Object:
 
 @export var creature_noise: FastNoiseLite
 
+@export var base_creature_rate_hills := 0.1 # (float, 0.01, 0.05)
+@export var base_creature_rate_plains := 0.6 # (float, 0.01, 0.05)
+
 var min_height
 var max_plains_height
 var max_hills_height
@@ -120,6 +123,8 @@ func _get_block_type(x, y, z, rand: RandomNumberGenerator, biome_percent: float,
 	elif y == height + 1:
 		if _is_tree(x, z, biome_percent, rand) and !_is_cave(x, y - 1, z, height, biome_percent):
 			block = STUMP
+		if _is_creature(x, z, biome_percent, rand) and !_is_cave(x, y - 1, z, height, biome_percent):
+			call_deferred_thread_group("spawn_creature",Vector3(x,y,z))
 	else:
 		pass
 	return block
@@ -160,3 +165,11 @@ func _is_tree(x: int, z: int, biome_percent: float, rand: RandomNumberGenerator)
 	var is_tree = (rand.randf() < (tree_noise.get_noise_2d(x, z) * base_rate))
 	return is_tree
 	
+
+func _is_creature(x: int, z: int, biome_percent: float, rand: RandomNumberGenerator) -> bool:
+	var base_rate = lerp(base_creature_rate_hills, base_creature_rate_plains, biome_percent)
+	var is_tree = (rand.randf() < (creature_noise.get_noise_2d(x, z) * base_rate))
+	return is_tree
+
+func spawn_creature(pos:Vector3):
+	Globals.spawn_creature.emit(pos)

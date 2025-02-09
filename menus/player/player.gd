@@ -194,9 +194,15 @@ func _physics_process(delta):
 		block.global_position = pos.floor() + (Vector3.ONE / 2)
 		block.global_rotation = Vector3.ZERO
 		block.visible = true
-		
-		if Input.is_action_pressed("Mine"):
-			break_block.emit(pos)
+		var coll = ray.get_collider()
+		if Input.is_action_just_pressed("Mine"):
+			if coll != null:
+				if coll.has_method("interact"):
+					coll.interact()
+				elif coll.has_method("hit"):
+					coll.hit()
+				else:
+					break_block.emit(pos)
 			
 		if Input.is_action_just_pressed("Build"):
 			if Globals.can_build:

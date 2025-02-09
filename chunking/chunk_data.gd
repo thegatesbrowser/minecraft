@@ -21,7 +21,6 @@ var chunk_id: Vector2
 var chunk_pos: Vector3
 var chunk_size: Vector3
 
-
 func generate(id: Vector2, pos: Vector3):
 	chunk_size = Globals.chunk_size
 	chunk_id = id

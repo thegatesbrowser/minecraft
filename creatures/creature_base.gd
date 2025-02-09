@@ -14,6 +14,7 @@ var health
 
 @onready var guide: Node3D = $guide
 
+var target_reached:bool = false
 var speed : float
 var vel : Vector3
 var state_machine
@@ -25,15 +26,16 @@ var ani:AnimationPlayer
 var mesh:MeshInstance3D
 
 func _ready() -> void:
+	set_physics_process(false)
 	health = creature_resource.max_health
 	var body = creature_resource.body_scene.instantiate()
 	rotation_root.add_child(body)
-	#collision_shape_3d.shape.height = creature_resource.coll_height
-	#collision_shape_3d.shape.radius = creature_resource.coll_radius
+	collision_shape_3d.shape.height = creature_resource.coll_height
+	collision_shape_3d.shape.radius = creature_resource.coll_radius
 	ani = body.find_child("AnimationPlayer")
 	mesh = body.find_child("Object_7")
-	#collision_shape_3d.global_position.y = mesh.get_aabb().size.y / 2
-	
+	collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
+	set_physics_process(true)
 
 func change_state(state):
 	match state:
@@ -61,13 +63,16 @@ func _physics_process(delta):
 	var new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
 	velocity = velocity.move_toward(new_velocity, .25)
 	
-	if guide.global_position != next_pos:
-		guide.look_at(next_pos)
+	if next_pos != null:
+		if guide.global_position != next_pos:
+			guide.look_at(next_pos)
+			
 	rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
 	#rotation_root.rotation.y = guide.rotation.y
-	if jump.is_colliding() and is_on_floor():
-		velocity.y += 10
-	
+	if !target_reached:
+		if jump.is_colliding() and is_on_floor():
+			velocity.y += 10
+		
 	move_and_slide()
 	
 func move_to(target_pos):
@@ -98,17 +103,29 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 
 	
 func move():
-	var sphere_point = get_random_pos_in_sphere(20)
-	move_to(sphere_point)
+	var sphere_point = get_random_pos_in_sphere(walk_distance)
+	var target = sphere_point + global_position
+	print(target)
+	move_to(target)
 
 
 func _on_move_timeout() -> void:
 	move()
-	print("move")
+	target_reached = false
+	#print("move")
 
 func _on_navigation_agent_3d_navigation_finished() -> void:
 	change_state("idle")
 	print("target_reached")
+	target_reached = true
 
 func _on_start_timeout() -> void:
 	move()
+	
+func hit(damage:int = 1):
+	health -= damage
+	if health <= 0:
+		print("killed")
+		var drop_item = creature_resource.drop_items.pick_random()
+		Globals.spawn_item_inventory.emit(drop_item)
+		queue_free()
