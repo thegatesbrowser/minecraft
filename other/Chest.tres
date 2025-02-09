@@ -1,8 +1,12 @@
-[gd_resource type="Resource" script_class="Utilities" load_steps=2 format=3 uid="uid://djttwhuc8qbk8"]
+[gd_resource type="Resource" script_class="Utilities" load_steps=4 format=3 uid="uid://djttwhuc8qbk8"]
 
 [ext_resource type="Script" path="res://other/utilities.gd" id="1_3my3i"]
+[ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://Items/inventory.tscn" id="1_oygod"]
+[ext_resource type="BoxMesh" uid="uid://cmdqh1e0yg8ky" path="res://chunking/blocks_multimesh/wood1.tres" id="2_q127e"]
 
 [resource]
 script = ExtResource("1_3my3i")
 Name = "Chest"
 has_inventory = true
+inventory_scene = ExtResource("1_oygod")
+mesh = ExtResource("2_q127e")

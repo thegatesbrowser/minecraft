@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://5jw15x2l8lvw"]
+[gd_scene load_steps=5 format=3 uid="uid://5jw15x2l8lvw"]
 
 [ext_resource type="Script" path="res://menus/player/selection_buttons 2.gd" id="1_cwfy4"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://Items/Slot.tscn" id="2_og1jy"]
 [ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://Items/Dirt.tres" id="3_nw6dk"]
+[ext_resource type="Resource" uid="uid://bxei0e32tol02" path="res://Items/Chest.tres" id="4_exyvj"]
 
 [node name="Selection_Buttons" type="ScrollContainer"]
 anchors_preset = 12
@@ -58,6 +59,7 @@ type = "hotbar"
 [node name="Slot7" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
+Item_resource = ExtResource("4_exyvj")
 
 [node name="Slot8" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2

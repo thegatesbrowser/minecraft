@@ -2,6 +2,7 @@ extends Control
 
 enum Chunk_Statistics { INVALID, STARTED, GENERATED, ACTIVE, INACTIVE, PURGED }
 
+@export var force_hide:bool = false
 @export var chunk_invalid_color := Color.BLACK
 @export var chunk_started_color := Color.YELLOW
 @export var chunk_generated_color := Color.CYAN

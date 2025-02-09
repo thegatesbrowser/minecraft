@@ -11,16 +11,14 @@ var mesh:MeshInstance3D
 var inventory
 
 func _ready() -> void:
+	print("ut")
 	if resource:
 		body.mesh = resource.mesh
 		collision_shape_3d.shape = body.mesh.create_trimesh_shape()
 		if resource.has_inventory:
-			inventory = resource.inventory_scene.instantiate()
-			inventory.Owner = resource.Name
-			ui.add_child(inventory)
-			inventory.visible = false
-
+			Globals.add_subinventory.emit(self)
 func interact():
 	if resource.has_inventory:
 		print("open inventory")
-		inventory.visible = true
+		Globals.open_inventory.emit(self)
+		

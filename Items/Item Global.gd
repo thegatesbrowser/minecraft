@@ -10,3 +10,7 @@ enum {GRASS, DIRT, STONE, GLASS, LOG1, WOOD1, LOG2, WOOD2, LEAF1, LEAF2}
 @export var placeable:bool = true
 @export var holdable:bool = false
 @export var holdable_mesh:Mesh
+
+#only for stuff like chests and crafting tables not normal blocks like grass
+@export var place_object:PackedScene
+@export var utility:Utilities

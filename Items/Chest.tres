@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Item_Global" load_steps=6 format=3 uid="uid://bxei0e32tol02"]
+
+[ext_resource type="Script" path="res://Items/Item Global.gd" id="1_enl37"]
+[ext_resource type="PackedScene" uid="uid://cxmsmlihr3hyj" path="res://other/utilities_base.tscn" id="1_o5yhc"]
+[ext_resource type="Resource" uid="uid://djttwhuc8qbk8" path="res://other/Chest.tres" id="3_ig7r5"]
+
+[sub_resource type="Gradient" id="Gradient_udyge"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rupka"]
+gradient = SubResource("Gradient_udyge")
+
+[resource]
+script = ExtResource("1_enl37")
+item_name = "Chest"
+item_texture = SubResource("GradientTexture2D_rupka")
+type = 10
+placeable = true
+holdable = false
+place_object = ExtResource("1_o5yhc")
+utility = ExtResource("3_ig7r5")

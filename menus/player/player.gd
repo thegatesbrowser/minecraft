@@ -103,6 +103,7 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
+		$"Player UI".hide()
 		interpolate_client(delta); return
 	
 	Globals.player_health = health
@@ -120,6 +121,7 @@ func _physics_process(delta):
 		if Input.is_action_pressed("Jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
 	
+			
 	# Handle Sprint.
 	if Input.is_action_pressed("Sprint"):
 		speed = SPRINT_SPEED

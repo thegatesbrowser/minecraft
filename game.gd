@@ -124,7 +124,20 @@ func _on_Player_break_block(pos: Vector3):
 
 func _on_Player_place_block(pos: Vector3):
 	Globals.remove_item_from_hotbar.emit()
-	chunks.place_block(pos, _player_pos_to_chunk_pos(pos), Globals.current_block)
+	if Globals.custom_block != null:
+		var object = Globals.custom_block.place_object.instantiate()
+		object.resource = Globals.custom_block.utility
+		
+		#var X = round(pos.x)
+		#var Z = round(pos.y)
+		#var Y = round(pos.z)
+	
+		#position = grid_position * grid_size
+		object.position = pos
+		add_child(object)
+		print(object)
+	else:
+		chunks.place_block(pos, _player_pos_to_chunk_pos(pos), Globals.current_block)
 
 func spawn_creature(pos:Vector3):
 	var creature = creature_s.instantiate()
