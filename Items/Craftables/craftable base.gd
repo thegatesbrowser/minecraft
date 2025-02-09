@@ -1,12 +1,12 @@
 extends TextureButton
 
-var inventory:Node = null
+@export var inventory:Node = null
 
 @export var craftable: Craftable
 
 
 func _ready() -> void:
-	inventory = get_tree().get_root().find_child("Inventory", true, false)
+	#inventory = get_tree().get_root().find_child("Inventory", true, false)
 	if craftable != null:
 		texture_normal = craftable.texture
 

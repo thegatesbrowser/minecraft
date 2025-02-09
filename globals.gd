@@ -33,6 +33,7 @@ var player_health:int
 @export var mouse_invert_look := false
 @export var flying := false
 var current_block := 0
+var custom_block:Item_Global
 var can_build:bool = false
 
 # Automated Testing
@@ -48,6 +49,8 @@ var test_file = null
 signal spawn_creature(pos)
 
 # Inventory
+signal open_inventory(Owner)
+signal add_subinventory(Owner)
 signal remove_item_from_hotbar
 signal spawn_item_inventory(item)
 signal check_amount_of_item(item)
@@ -55,7 +58,7 @@ signal remove_item(item,amount)
 signal hotbar_slot_clicked(slot)
 signal add_item_to_hand(item)
 signal remove_item_in_hand
-signal slot_clicked(slot)
+#signal slot_clicked(slot)
 signal craftable_hovered(craftable,node)
 signal craftable_unhovered
 var last_clicked_slot:Node
@@ -74,3 +77,47 @@ func _ready():
 
 func _disable_flicker():
 	repaint_line = false
+
+
+func slot_clicked(slot):
+	if Globals.last_clicked_slot == null:
+		Globals.last_clicked_slot = slot
+
+	if slot == Globals.last_clicked_slot: return
+	else:
+		## move to blank
+		if slot.Item_resource == null:
+			print("move ")
+			slot.Item_resource = Globals.last_clicked_slot.Item_resource
+			slot.amount = Globals.last_clicked_slot.amount
+			Globals.last_clicked_slot.Item_resource = null
+			slot.update_slot()
+			Globals.last_clicked_slot.update_slot()
+			Globals.last_clicked_slot = null
+		else:
+			## stack
+			if slot.Item_resource == Globals.last_clicked_slot.Item_resource:
+				print("stack ")
+				slot.amount += Globals.last_clicked_slot.amount
+				Globals.last_clicked_slot.Item_resource = null
+				Globals.last_clicked_slot.update_slot()
+				Globals.last_clicked_slot = null
+				slot.update_slot()
+			
+			## swap
+			else:
+				if slot.Item_resource != null:
+					if slot.Item_resource != Globals.last_clicked_slot.Item_resource:
+						print("swap " )
+						var hold_slot_amount = slot.amount
+						var hold_slot_resource = slot.Item_resource
+						
+						slot.Item_resource =  Globals.last_clicked_slot.Item_resource
+						slot.amount = Globals.last_clicked_slot.amount
+						
+						Globals.last_clicked_slot.Item_resource = hold_slot_resource
+						Globals.last_clicked_slot.amount = hold_slot_amount
+						Globals.last_clicked_slot = null
+						
+						slot.update_slot()
+						Globals.last_clicked_slot.update_slot()
