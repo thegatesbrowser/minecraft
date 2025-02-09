@@ -10,6 +10,7 @@ var find_item
 var items = []
 var slots = []
 var full:bool = false
+@export var Owner:String
 var inventory = []
 
 var possible_items = ["res://Items/Dirt.tres","res://Items/Glass.tres","res://Items/Grass.tres","res://Items/Leaf1.tres","res://Items/Leaf2.tres","res://Items/Log1.tres","res://Items/Log2.tres","res://Items/Stone.tres","res://Items/Wood1.tres","res://Items/Wood2.tres"]
@@ -22,15 +23,8 @@ func _ready() -> void:
 	make_slots()
 	
 func _process(delta: float) -> void:
+	interact()
 	check_if_full()
-	if Input.is_action_just_pressed("Inventory"):
-		visible = !visible
-		if visible:
-			Globals.paused = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		else:
-			Globals.paused = false
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if Input.is_action_just_pressed("5"):
 		spawn_item(load("res://Items/Test2.tres"))
 		
@@ -170,3 +164,14 @@ func check_if_full():
 		full = true
 	else:
 		full = false
+
+func interact():
+	if Owner == "Player":
+		if Input.is_action_just_pressed("Inventory"):
+			visible = !visible
+			if visible:
+				Globals.paused = true
+				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			else:
+				Globals.paused = false
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

@@ -90,17 +90,7 @@ chunk_map_size = 500.0
 
 [node name="Inventory" parent="Overlay" instance=ExtResource("4_1emxh")]
 visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -400.0
-offset_right = 400.0
-offset_bottom = 400.0
-grow_horizontal = 2
-grow_vertical = 2
+Owner = "Player"
 
 [node name="Crafting" type="ScrollContainer" parent="Overlay"]
 visible = false

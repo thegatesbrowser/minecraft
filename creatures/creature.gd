@@ -13,3 +13,4 @@ class_name Creature
 @export_category("Optional")
 @export var creature_name:String
 @export var texture:Texture
+@export var drop_items:Array[Item_Global] = []
