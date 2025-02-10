@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://buts6uhmr7s2d"]
+[gd_scene load_steps=5 format=3 uid="uid://buts6uhmr7s2d"]
 
 [ext_resource type="Script" path="res://creatures/creature_base.gd" id="1_yo80c"]
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://creatures/Fox.tres" id="2_2ii4m"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3pi47"]
 size = Vector3(0.285156, 0.395752, 0.614319)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_14nko"]
 
 [node name="AI Base" type="CharacterBody3D"]
 script = ExtResource("1_yo80c")
@@ -25,6 +27,11 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0680348, 0.19176, -0.0793269)
 shape = SubResource("BoxShape3D_3pi47")
 
+[node name="attack range" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="attack range"]
+shape = SubResource("BoxShape3D_14nko")
+
 [node name="Move" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
@@ -32,6 +39,12 @@ autostart = true
 [node name="Start" type="Timer" parent="."]
 one_shot = true
 
+[node name="eyes" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02316, 0)
+target_position = Vector3(0, 0, -3.09)
+debug_shape_custom_color = Color(1, 1, 0, 1)
+
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
+[connection signal="body_entered" from="attack range" to="." method="_on_attack_range_body_entered"]
 [connection signal="timeout" from="Move" to="." method="_on_move_timeout"]
 [connection signal="timeout" from="Start" to="." method="_on_start_timeout"]

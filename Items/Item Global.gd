@@ -7,6 +7,7 @@ enum {GRASS, DIRT, STONE, GLASS, LOG1, WOOD1, LOG2, WOOD2, LEAF1, LEAF2}
 @export var item_name:String
 @export var item_texture:Texture
 @export var type:int
+@export var max_stack:int = 64
 @export var placeable:bool = true
 @export var holdable:bool = false
 @export var holdable_mesh:Mesh

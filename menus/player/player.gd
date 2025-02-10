@@ -11,6 +11,7 @@ signal break_block(pos: Vector3)
 @export var SPRINT_SPEED = 8.0
 @export var JUMP_VELOCITY = 7.0
 
+@export var health_progressbar:ProgressBar
 @export var max_health:int = 3
 
 ## Player model rotation speed
@@ -63,7 +64,9 @@ var last_sync_time_ms: int = 0
 var health
 
 func _ready():
+	health_progressbar.max_value = max_health
 	health = max_health
+	health_progressbar.value = health
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
@@ -315,3 +318,8 @@ func add_item_to_hand(item:Item_Global):
 func remove_item_in_hand():
 	if left_hand.get_children().size() >= 1:
 		left_hand.get_child(0).queue_free()
+
+func hit(damage:int):
+	print("hit")
+	health -= damage
+	health_progressbar.value = health

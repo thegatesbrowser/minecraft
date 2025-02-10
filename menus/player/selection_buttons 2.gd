@@ -74,10 +74,12 @@ func _press_key(i):
 				Globals.custom_block = buttons[current_key].Item_resource
 			Globals.can_build = true 
 		else:
+			Globals.custom_block = null
 			if buttons[current_key].Item_resource.holdable:
 				Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
 			Globals.can_build = false 
 	else:
+		Globals.custom_block = null
 		Globals.can_build = false
 	current_key = i
 
@@ -131,8 +133,9 @@ func _on_Leaf2_pressed():
 	pass
 	
 func hotbar_slot_clicked(slot):
-	_unpress_all()
-	_press_key(slot.Item_resource.type)
+	pass
+	#_unpress_all()
+	#_press_key(slot.Item_resource.type)
 
 
 func remove(item_name:String = "", amount:int = 1):
