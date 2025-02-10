@@ -49,6 +49,10 @@ run/main_run_args="client"
 
 enabled=PackedStringArray("res://addons/fps_counter/plugin.cfg", "res://addons/godot-console/console/plugin.cfg", "res://addons/sdg-print/plugin.cfg", "res://addons/thegates_export/plugin.cfg")
 
+[global_group]
+
+Player=""
+
 [input]
 
 Forward={

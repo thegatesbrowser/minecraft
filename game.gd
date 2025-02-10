@@ -128,12 +128,13 @@ func _on_Player_place_block(pos: Vector3):
 		var object = Globals.custom_block.place_object.instantiate()
 		object.resource = Globals.custom_block.utility
 		
-		#var X = round(pos.x)
-		#var Z = round(pos.y)
+		var X = snappedf(pos.x,0.5)
+		var Z = snappedf(pos.z,0.5)
 		#var Y = round(pos.z)
-	
+		var new_pos = Vector3(X,pos.y,Z)
+		print("new_pos ", new_pos)
 		#position = grid_position * grid_size
-		object.position = pos
+		object.position = new_pos
 		add_child(object)
 		print(object)
 	else:

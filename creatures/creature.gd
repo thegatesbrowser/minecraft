@@ -5,6 +5,7 @@ class_name Creature
 @export var body_scene:PackedScene
 @export var max_health:int
 @export var attacks:bool
+@export var run_away_after_attack:bool
 @export var damage:int
 @export var speed:float = 5.0
 @export var coll_shape:Shape3D

@@ -68,9 +68,10 @@ anti_aliasing_size = 0.01
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vwbus"]
 gradient = SubResource("Gradient_ur5w1")
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("health_progressbar", "rotation_root", "ANI") groups=["Player"]]
 collision_layer = 134217729
 script = ExtResource("1")
+health_progressbar = NodePath("Player UI/stats/VBoxContainer2/Health")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
 

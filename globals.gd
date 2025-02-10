@@ -97,13 +97,14 @@ func slot_clicked(slot):
 		else:
 			## stack
 			if slot.Item_resource == Globals.last_clicked_slot.Item_resource:
-				print("stack ")
-				slot.amount += Globals.last_clicked_slot.amount
-				Globals.last_clicked_slot.Item_resource = null
-				Globals.last_clicked_slot.update_slot()
-				Globals.last_clicked_slot = null
-				slot.update_slot()
-			
+				if slot.amount + Globals.last_clicked_slot.amount  < slot.Item_resource.max_stack:
+					print("stack ")
+					slot.amount += Globals.last_clicked_slot.amount
+					Globals.last_clicked_slot.Item_resource = null
+					Globals.last_clicked_slot.update_slot()
+					Globals.last_clicked_slot = null
+					slot.update_slot()
+				
 			## swap
 			else:
 				if slot.Item_resource != null:
