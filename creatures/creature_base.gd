@@ -65,9 +65,8 @@ func change_state(state,_target_pos = null):
 			speed = creature_resource.speed
 			move_to(_target_pos)
 			print("attack")
-			
+
 func _physics_process(delta):
-	print(current_state)
 	if creature_resource.attacks:
 		var look_at = get_cloest_player()
 		eyes.look_at(look_at.global_position)

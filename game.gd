@@ -1,8 +1,11 @@
 extends Node3D
+class_name Game
 
 @export var is_multiplayer: bool
 @export var player_spawner: PlayerSpawner
 @export var single_player: Player
+
+signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 
 @onready var creature_s = preload("res://creatures/creature base.tscn")
 @onready var chunk_scene_0 := preload("res://chunking/chunk_no_render.tscn")
@@ -30,12 +33,12 @@ func _ready():
 		player = single_player
 	
 	start_game()
-	Globals.spawn_creature.connect(spawn_creature)
 
 
 func start_game() -> void:
 	player.place_block.connect(_on_Player_place_block)
 	player.break_block.connect(_on_Player_break_block)
+	Globals.spawn_creature.connect(spawn_creature)
 	
 	WorldGen.set_seed(Globals.world_seed)
 	
@@ -120,7 +123,10 @@ func _player_pos_to_chunk_pos(pos: Vector3) -> Vector2:
 
 
 func _on_Player_break_block(pos: Vector3):
-	chunks.break_block(pos, _player_pos_to_chunk_pos(pos))
+	var chunk_id = _player_pos_to_chunk_pos(pos)
+	chunks.break_block(pos, chunk_id)
+	change_block.emit(pos, chunk_id, WorldGen.AIR)
+
 
 func _on_Player_place_block(pos: Vector3):
 	Globals.remove_item_from_hotbar.emit()
@@ -138,7 +144,10 @@ func _on_Player_place_block(pos: Vector3):
 		add_child(object)
 		print(object)
 	else:
-		chunks.place_block(pos, _player_pos_to_chunk_pos(pos), Globals.current_block)
+		var chunk_id = _player_pos_to_chunk_pos(pos)
+		chunks.place_block(pos, chunk_id, Globals.current_block)
+		change_block.emit(pos, chunk_id, Globals.current_block)
+
 
 func spawn_creature(pos:Vector3):
 	var creature = creature_s.instantiate()

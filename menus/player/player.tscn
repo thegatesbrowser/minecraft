@@ -63,10 +63,10 @@ corner_radius_bottom_left = 5
 corner_detail = 1
 anti_aliasing_size = 0.01
 
-[sub_resource type="Gradient" id="Gradient_ur5w1"]
+[sub_resource type="Gradient" id="Gradient_w00mo"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vwbus"]
-gradient = SubResource("Gradient_ur5w1")
+gradient = SubResource("Gradient_w00mo")
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("health_progressbar", "rotation_root", "ANI") groups=["Player"]]
 collision_layer = 134217729
@@ -151,7 +151,6 @@ shape = SubResource("7")
 
 [node name="Visible_Block" type="Node3D" parent="BlockOutline"]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
-visible = false
 
 [node name="Edge" type="MeshInstance3D" parent="BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)

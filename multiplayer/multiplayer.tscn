@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=9 format=3 uid="uid://mqnlrs6hn6g6"]
 
 [ext_resource type="Script" path="res://multiplayer/connection/connection.gd" id="1_hlrxf"]
 [ext_resource type="Script" path="res://multiplayer/resolution_changer.gd" id="1_mexsf"]
 [ext_resource type="Script" path="res://multiplayer/player_spawner.gd" id="4_edyrb"]
+[ext_resource type="Script" path="res://multiplayer/world_syncer.gd" id="5_f71qm"]
 [ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="5_wb2xi"]
 [ext_resource type="Resource" uid="uid://b7i7ukiyxx6ha" path="res://multiplayer/connection/connection_events.res" id="6_p6o06"]
 [ext_resource type="Script" path="res://multiplayer/connection/connection_manager.gd" id="6_snsvh"]
@@ -24,6 +25,11 @@ port = 56613
 max_clients = 256
 host = "188.245.188.59"
 use_localhost_in_editor = true
+
+[node name="WorldSyncer" type="Node" parent="." node_paths=PackedStringArray("game", "connection")]
+script = ExtResource("5_f71qm")
+game = NodePath("../Game")
+connection = NodePath("../Connection")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawn_points")]
 spawn_path = NodePath("../Players")

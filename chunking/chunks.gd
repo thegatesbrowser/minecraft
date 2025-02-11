@@ -1,4 +1,5 @@
 extends Node3D
+class_name Chunks
 
 signal chunk_started(pos)
 signal chunk_generated(pos, gen_time)
@@ -117,22 +118,22 @@ func load_chunk(player_pos, x, y, use_threading := true):
 	return created_chunk
 
 
-func place_block(global_pos, chunk_id: Vector2, type):
+func place_block(global_pos, chunk_id: Vector2, type, regen = true):
 	if chunks.has(chunk_id):
 		var chunk = chunks[chunk_id]
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
-		chunk.place_block(local_pos, type)
+		chunk.place_block(local_pos, type, regen)
 		chunk.modified = true
 	else:
 		Print.error("Player placed a block in a chunk that doesn't exist!")
 
 			
-func break_block(global_pos: Vector3, chunk_id: Vector2):
+func break_block(global_pos: Vector3, chunk_id: Vector2, regen = true):
 	if chunks.has(chunk_id):
 		var chunk = chunks[chunk_id]
 		var local_pos = global_pos.posmodv(Globals.chunk_size)
 		if local_pos.y > 1:
-			chunk.break_block(local_pos)
+			chunk.break_block(local_pos, regen)
 			chunk.modified = true
 		
 		if local_pos.x < 1:

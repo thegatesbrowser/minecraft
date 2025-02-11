@@ -67,9 +67,11 @@ func _ready():
 	health_progressbar.max_value = max_health
 	health = max_health
 	health_progressbar.value = health
+
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
+		block.visible = false
 		return
 	
 	Console.add_command("player_flying", self, 'toggle_flying')\
@@ -304,6 +306,7 @@ func _exit_tree():
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
 
+
 func add_item_to_hand(item:Item_Global):
 	if item != null:
 		if item.holdable:
@@ -314,10 +317,12 @@ func add_item_to_hand(item:Item_Global):
 			var mesh_instance = MeshInstance3D.new()
 			mesh_instance.mesh = item.holdable_mesh
 			left_hand.add_child(mesh_instance)
-	
+
+
 func remove_item_in_hand():
 	if left_hand.get_children().size() >= 1:
 		left_hand.get_child(0).queue_free()
+
 
 func hit(damage:int):
 	print("hit")
