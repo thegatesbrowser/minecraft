@@ -8,3 +8,7 @@ script = ExtResource("1_0svgv")
 item_name = "GLASS"
 item_texture = ExtResource("1_1i1ps")
 type = 3
+max_stack = 64
+placeable = true
+holdable = false
+break_time = 0.3

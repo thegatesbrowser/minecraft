@@ -64,9 +64,8 @@ var last_sync_time_ms: int = 0
 var health
 
 func _ready():
-	health_progressbar.max_value = max_health
+	Globals.max_health = max_health
 	health = max_health
-	health_progressbar.value = health
 
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
@@ -108,7 +107,6 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
-		$"Player UI".hide()
 		interpolate_client(delta); return
 	
 	Globals.player_health = health
@@ -202,7 +200,7 @@ func _physics_process(delta):
 		block.global_rotation = Vector3.ZERO
 		block.visible = true
 		var coll = ray.get_collider()
-		if Input.is_action_just_pressed("Mine"):
+		if Input.is_action_pressed("Mine"):
 			if coll != null:
 				if coll.has_method("interact"):
 					coll.interact()
@@ -327,4 +325,3 @@ func remove_item_in_hand():
 func hit(damage:int):
 	print("hit")
 	health -= damage
-	health_progressbar.value = health

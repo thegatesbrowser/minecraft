@@ -68,7 +68,7 @@ func _press_key(i):
 	Globals.remove_item_in_hand.emit()
 	if buttons[current_key].Item_resource != null:
 		if buttons[current_key].Item_resource.placeable:
-			if buttons[current_key].Item_resource.type < 9:
+			if buttons[current_key].Item_resource.type < 10:
 				Globals.current_block = keys[buttons[current_key].Item_resource.type]
 			else:
 				Globals.custom_block = buttons[current_key].Item_resource

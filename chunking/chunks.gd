@@ -117,7 +117,12 @@ func load_chunk(player_pos, x, y, use_threading := true):
 	
 	return created_chunk
 
-
+func get_type(global_pos:Vector3,chunk_id):
+	if chunks.has(chunk_id):
+		var chunk = chunks[chunk_id]
+		var local_pos = global_pos.posmodv(Globals.chunk_size)
+		return chunk.get_type(local_pos)
+	
 func place_block(global_pos, chunk_id: Vector2, type, regen = true):
 	if chunks.has(chunk_id):
 		var chunk = chunks[chunk_id]

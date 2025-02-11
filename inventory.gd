@@ -85,12 +85,13 @@ func sort():
 		for i in items_collection.get_children():
 			if i.Item_resource == find_item.Item_resource:
 				if i != find_item:
-					if find_item.amount + i.amount  < find_item.Item_resource.max_stack:
-						if find_item != null:
-							find_item.amount += i.amount
-							i.Item_resource = null
-							i.update_slot()
-							find_item.update_slot()
+					if find_item != null:
+						if find_item.Item_resource != null:
+							if find_item.amount + i.amount  < find_item.Item_resource.max_stack:
+								find_item.amount += i.amount
+								i.Item_resource = null
+								i.update_slot()
+								find_item.update_slot()
 
 func _on_sort_pressed() -> void:
 	sort()

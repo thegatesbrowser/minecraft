@@ -7,6 +7,7 @@ class_name Game
 
 signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 
+@onready var break_particle_s = preload("res://other/breakparticle.tscn")
 @onready var creature_s = preload("res://creatures/creature base.tscn")
 @onready var chunk_scene_0 := preload("res://chunking/chunk_no_render.tscn")
 @onready var chunk_scene_1 := preload("res://chunking/chunk_simple.tscn")
@@ -14,6 +15,8 @@ signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 @onready var chunk_scene_3 := preload("res://chunking/chunk_mesh.tscn")
 @onready var chunk_scene_4 := preload("res://chunking/chunk_tileset.tscn")
 @onready var chunk_scene_5 := preload("res://chunking/chunk_multimesh.tscn")
+
+@onready var breaktime: Timer = $Breaktime
 
 @onready var chunks := $NavigationRegion3D/Chunks
 @onready var debug := $Overlay/DebugOverlay
@@ -124,8 +127,21 @@ func _player_pos_to_chunk_pos(pos: Vector3) -> Vector2:
 
 func _on_Player_break_block(pos: Vector3):
 	var chunk_id = _player_pos_to_chunk_pos(pos)
-	chunks.break_block(pos, chunk_id)
-	change_block.emit(pos, chunk_id, WorldGen.AIR)
+	
+	#print("breaking resource ",chunks.get_type(pos, chunk_id))
+	var chunk_resource:Item_Global = load(chunks.get_type(pos, chunk_id))
+	
+	if chunk_resource != null:
+		if breaktime.is_stopped():
+			breaktime.wait_time = chunk_resource.break_time
+			breaktime.start()
+			await breaktime.timeout
+			
+			if Input.is_action_pressed("Mine"):
+				chunks.break_block(pos, chunk_id)
+				change_block.emit(pos, chunk_id, WorldGen.AIR)
+			else:
+				breaktime.stop()
 
 
 func _on_Player_place_block(pos: Vector3):
@@ -136,13 +152,17 @@ func _on_Player_place_block(pos: Vector3):
 		
 		var X = snappedf(pos.x,0.5)
 		var Z = snappedf(pos.z,0.5)
-		#var Y = round(pos.z)
+		
+		if step_decimals(X) == 0:
+			X += 0.5
+		if step_decimals(Z) == 0:
+			Z += 0.5
+			
 		var new_pos = Vector3(X,pos.y,Z)
 		print("new_pos ", new_pos)
-		#position = grid_position * grid_size
 		object.position = new_pos
 		add_child(object)
-		print(object)
+		
 	else:
 		var chunk_id = _player_pos_to_chunk_pos(pos)
 		chunks.place_block(pos, chunk_id, Globals.current_block)

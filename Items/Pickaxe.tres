@@ -16,6 +16,7 @@ script = ExtResource("1_dw8ry")
 item_name = "Pickaxe"
 item_texture = SubResource("GradientTexture2D_fukvg")
 type = 0
+max_stack = 64
 placeable = false
 holdable = true
 holdable_mesh = SubResource("BoxMesh_bltho")

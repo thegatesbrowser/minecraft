@@ -8,5 +8,6 @@ script = ExtResource("1_ivu7p")
 item_name = "DIRT"
 item_texture = ExtResource("1_vuhr6")
 type = 1
+max_stack = 64
 placeable = true
 holdable = false

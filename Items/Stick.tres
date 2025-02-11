@@ -11,6 +11,7 @@ script = ExtResource("1_jwmwk")
 item_name = "Stick"
 item_texture = ExtResource("1_anbf2")
 type = 0
+max_stack = 64
 placeable = false
 holdable = true
 holdable_mesh = SubResource("BoxMesh_qdmgp")

@@ -8,3 +8,7 @@ script = ExtResource("1_dmfkp")
 item_name = "LOG1"
 item_texture = ExtResource("1_0d4yy")
 type = 4
+max_stack = 64
+placeable = true
+holdable = false
+break_time = 0.7
