@@ -44,4 +44,6 @@ func receive_chunks(_chunks_data: Dictionary):
 	for chunk_id in _chunks_data:
 		for global_pos in _chunks_data[chunk_id]:
 			game.chunks.place_block(global_pos, chunk_id, _chunks_data[chunk_id][global_pos], false)
+	
+	for chunk_id in _chunks_data:
 		game.chunks._regen_block(chunk_id)
