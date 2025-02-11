@@ -64,7 +64,6 @@ func change_state(state,_target_pos = null):
 			current_state = 3
 			speed = creature_resource.speed
 			move_to(_target_pos)
-			print("attack")
 
 func _physics_process(delta):
 	if creature_resource.attacks:
@@ -73,8 +72,9 @@ func _physics_process(delta):
 		
 		if eyes.is_colliding():
 			var coll = eyes.get_collider()
-			if coll.is_in_group("Player"):
-				change_state("attack",coll.global_position)
+			if coll != null:
+				if coll.is_in_group("Player"):
+					change_state("attack",coll.global_position)
 		
 	if not is_on_floor():
 		velocity.y -= 30 * delta
@@ -130,7 +130,6 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 func move():
 	var sphere_point = get_random_pos_in_sphere(walk_distance)
 	var target = sphere_point + global_position
-	print(target)
 	if current_state != 3:
 		move_to(target)
 		change_state("walking")

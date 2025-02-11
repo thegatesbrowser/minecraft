@@ -14,6 +14,7 @@ script = ExtResource("1_enl37")
 item_name = "Chest"
 item_texture = SubResource("GradientTexture2D_rupka")
 type = 10
+max_stack = 64
 placeable = true
 holdable = false
 place_object = ExtResource("1_o5yhc")

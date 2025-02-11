@@ -8,3 +8,7 @@ script = ExtResource("1_u27x1")
 item_name = "LEAF1"
 item_texture = ExtResource("1_wh2b0")
 type = 8
+max_stack = 64
+placeable = true
+holdable = false
+break_time = 0.2
