@@ -41,6 +41,9 @@ platform/android/java/assets
 *.Plo
 *.lo
 
+# Include zylann.voxel addon libs
+!addons/zylann.voxel/bin/*
+
 # Libs generated files
 .deps/*
 .dirstamp

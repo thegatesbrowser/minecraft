@@ -34,10 +34,10 @@ corner_radius_bottom_left = 5
 corner_detail = 1
 anti_aliasing_size = 0.01
 
-[sub_resource type="Gradient" id="Gradient_w00mo"]
+[sub_resource type="Gradient" id="Gradient_rai08"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_im5ed"]
-gradient = SubResource("Gradient_w00mo")
+gradient = SubResource("Gradient_rai08")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flqqw"]
 sky_top_color = Color(0, 0.490196, 0.878431, 1)
@@ -47,12 +47,12 @@ ground_bottom_color = Color(0.14902, 0.85098, 0.878431, 1)
 ground_horizon_color = Color(0.14902, 0.85098, 0.878431, 1)
 ground_energy_multiplier = 0.5
 
-[sub_resource type="Sky" id="Sky_wjt2t"]
+[sub_resource type="Sky" id="Sky_nu8o0"]
 sky_material = SubResource("ProceduralSkyMaterial_flqqw")
 
 [sub_resource type="Environment" id="Environment_7185k"]
 background_mode = 2
-sky = SubResource("Sky_wjt2t")
+sky = SubResource("Sky_nu8o0")
 tonemap_mode = 2
 glow_enabled = true
 volumetric_fog_density = 0.0
