@@ -21,6 +21,7 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 
 # Player Settings.
 
+var breaking_efficiency:float = 0.0
 ## these are copys for ui puepose
 var max_health:int
 var player_health:int
