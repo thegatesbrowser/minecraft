@@ -1,0 +1,25 @@
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=5 format=3 uid="uid://cgpku20ap67qm"]
+
+[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_54jvr"]
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_cfo7o"]
+unique_name = &"air"
+base_model = SubResource("VoxelBlockyModelEmpty_54jvr")
+resource_name = "air"
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_55323"]
+atlas_size_in_tiles = Vector2i(8, 2)
+tile_left = Vector2i(1, 0)
+tile_right = Vector2i(1, 0)
+tile_bottom = Vector2i(2, 0)
+tile_back = Vector2i(1, 0)
+tile_front = Vector2i(1, 0)
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_4ubr4"]
+unique_name = &"grass"
+base_model = SubResource("VoxelBlockyModelCube_55323")
+resource_name = "grass"
+
+[resource]
+types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_4ubr4")])
+_id_map_data = PackedStringArray("air", "grass")
