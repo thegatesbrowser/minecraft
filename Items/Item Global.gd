@@ -16,3 +16,14 @@ enum {GRASS, DIRT, STONE, GLASS, LOG1, WOOD1, LOG2, WOOD2, LEAF1, LEAF2}
 #only for stuff like chests and crafting tables not normal blocks like grass
 @export var place_object:PackedScene
 @export var utility:Utilities
+
+
+@export_category("Weapons")
+@export var weapon:bool = false
+@export var damage:int
+@export var weapon_model:Mesh
+@export var needs_ammo:bool
+
+@export var ammo_name:String = "Ammo"
+@export var shoots:bool
+@export var fire_rate:float

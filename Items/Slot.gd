@@ -3,7 +3,7 @@ extends TextureButton
 var played_ani:bool = false
 var focused:bool = false
 @export var type:String = 'inventory'
-var amount:int = 1
+@export var amount:int = 1
 
 @export var Item_resource:Item_Global
 

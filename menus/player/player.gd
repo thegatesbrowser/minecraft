@@ -54,6 +54,9 @@ var last_sync_time_ms: int = 0
 @onready var left_hand: BoneAttachment3D = $"RotationRoot/minecraft_player/Model/Skeleton3D/Left Hand"
 @onready var right_hand: BoneAttachment3D = $"RotationRoot/minecraft_player/Model/Skeleton3D/Right Hand"
 
+## Weapons
+@onready var bullet_scene = preload("res://Items/Weapons/bullet.tscn")
+@onready var weapon_base = preload("res://Items/Weapons/WeaponBase.tscn")
 
 ## Sync properties
 @export var _position: Vector3
@@ -64,6 +67,7 @@ var last_sync_time_ms: int = 0
 var health
 
 func _ready():
+	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
 	health = max_health
 
@@ -312,9 +316,15 @@ func add_item_to_hand(item:Item_Global):
 			if left_hand.get_children().size() >= 1:
 				left_hand.get_child(0).queue_free()
 				
-			var mesh_instance = MeshInstance3D.new()
-			mesh_instance.mesh = item.holdable_mesh
-			left_hand.add_child(mesh_instance)
+			if !item.weapon:
+				var mesh_instance = MeshInstance3D.new()
+				mesh_instance.mesh = item.holdable_mesh
+				left_hand.add_child(mesh_instance)
+			else:
+				var weapon = weapon_base.instantiate()
+				weapon.weapon_resource = item
+				left_hand.add_child(weapon)
+				pass
 
 
 func remove_item_in_hand():
@@ -325,3 +335,9 @@ func remove_item_in_hand():
 func hit(damage:int):
 	print("hit")
 	health -= damage
+
+func spawn_bullet():
+	var bullet = bullet_scene.instantiate()
+	bullet.global_transform = camera.global_transform
+	bullet.spawner = self
+	get_parent().add_child(bullet)

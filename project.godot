@@ -54,6 +54,7 @@ enabled=PackedStringArray("res://addons/fps_counter/plugin.cfg", "res://addons/g
 [global_group]
 
 Player=""
+"Main Inventory"=""
 
 [input]
 

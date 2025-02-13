@@ -142,7 +142,6 @@ func _on_move_timeout() -> void:
 
 func _on_navigation_agent_3d_navigation_finished() -> void:
 	change_state("idle")
-	print("target_reached")
 	target_reached = true
 	
 

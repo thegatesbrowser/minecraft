@@ -101,11 +101,14 @@ func _on_add_random_item_pressed() -> void:
 	var item = possible_items.pick_random()
 	spawn_item(load(item))
 
-func check_amount_of_item(item):
+func check_amount_of_item(item:String):
 	var amount = 0
 	for i in inventory:
 		print(i)
 		if i == item:
+			amount += 1
+		elif item in i:
+			#print("yes ",item, " in ", i)
 			amount += 1
 	return amount
 
@@ -117,6 +120,16 @@ func remove_item(item_name:String,amount:int):
 		for slot in items_collection.get_children():
 			if slot.Item_resource != null:
 				if slot.Item_resource.item_name == item_name:
+					if slot.amount == 1:
+						slot.Item_resource = null
+					else:
+						slot.amount -= 1
+					slot.update_slot()
+					var index = inventory.find(item_name)
+					inventory.remove_at(index)
+					check_if_full()
+					break
+				elif item_name in slot.Item_resource.item_name:
 					if slot.amount == 1:
 						slot.Item_resource = null
 					else:
