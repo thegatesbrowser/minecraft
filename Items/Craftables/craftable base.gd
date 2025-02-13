@@ -3,12 +3,13 @@ extends TextureButton
 @export var inventory:Node = null
 
 @export var craftable: Craftable
+@onready var image: TextureRect = $CenterContainer/Image
 
 
 func _ready() -> void:
 	#inventory = get_tree().get_root().find_child("Inventory", true, false)
 	if craftable != null:
-		texture_normal = craftable.texture
+		image.texture = craftable.texture
 
 
 func craft() -> void:
@@ -24,6 +25,7 @@ func craft() -> void:
 		
 		if steps == 0:
 			if inventory.full == false:
+				GlobalAnimation._tween(self,"bounce",.3)
 				print("crafted")
 				inventory.spawn_item(craftable.output_item,craftable.output_amount)
 				for i in craftable.items_needed:
@@ -32,6 +34,7 @@ func craft() -> void:
 
 
 func _on_mouse_entered() -> void:
+	GlobalAnimation._tween(self,"bounce",.3)
 	Globals.craftable_hovered.emit(craftable,self)
 
 

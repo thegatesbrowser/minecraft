@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cvh8mc8ybmio1"]
+[gd_scene load_steps=19 format=3 uid="uid://cvh8mc8ybmio1"]
 
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1"]
 [ext_resource type="Texture2D" uid="uid://n1hmbywl5fys" path="res://assets/menu/mesh.png" id="2"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://be5s6vqldde2o" path="res://assets/menu/none.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://bjanaphicydcq" path="res://assets/menu/multimesh.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://bogy0vgsodrqp" path="res://assets/menu/server.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://d270v37i3lxt7" path="res://assets/textures/blocks/stone.png" id="13_4gbef"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_lav68"]
 
@@ -146,7 +147,7 @@ theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 36
-text = "aaaaaaaaaaaaaaaaaa"
+text = "THE GATES"
 horizontal_alignment = 1
 
 [node name="SC" type="ScrollContainer" parent="."]
@@ -465,6 +466,7 @@ text = "Single Chunk"
 libraries = {
 "": SubResource("AnimationLibrary_gilss")
 }
+autoplay = "Splash"
 
 [node name="Splash_Image" type="TextureRect" parent="."]
 show_behind_parent = true
@@ -475,9 +477,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2")
-expand_mode = 1
-stretch_mode = 6
+texture = ExtResource("13_4gbef")
 
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="SC/CC/VBC/Play_Buttons/VB/Play2" to="." method="_on_Play_multiplayer_pressed"]

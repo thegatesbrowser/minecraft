@@ -26,6 +26,7 @@ Print="*res://addons/sdg-print/Print.tscn"
 Globals="*res://globals.tscn"
 WorldGen="*res://chunking/world_gen.tscn"
 FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"
+GlobalAnimation="*res://animation.gd"
 
 [debug]
 

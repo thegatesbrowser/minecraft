@@ -20,3 +20,4 @@ max_stack = 64
 placeable = false
 holdable = true
 holdable_mesh = SubResource("BoxMesh_bltho")
+break_time = 0.4

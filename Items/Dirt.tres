@@ -11,3 +11,4 @@ type = 1
 max_stack = 64
 placeable = true
 holdable = false
+break_time = 0.4
