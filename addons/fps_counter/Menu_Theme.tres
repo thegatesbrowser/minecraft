@@ -1,7 +1,23 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c00ywh0ppv0rc"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c00ywh0ppv0rc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebg3m"]
 bg_color = Color(0.776471, 0.776471, 0.776471, 0.870588)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dy8xp"]
+bg_color = Color(0, 0, 0, 0.572549)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.176419, 0.176419, 0.176419, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0, 0, 0, 0.152941)
+shadow_size = 2
+shadow_offset = Vector2(3, 3)
+anti_aliasing = false
 
 [resource]
 Label/colors/font_color = Color(0, 0, 0, 1)
@@ -13,3 +29,4 @@ MarginContainer/constants/margin_bottom = 16
 MarginContainer/constants/margin_left = 16
 MarginContainer/constants/margin_right = 16
 MarginContainer/constants/margin_top = 16
+Panel/styles/panel = SubResource("StyleBoxFlat_dy8xp")

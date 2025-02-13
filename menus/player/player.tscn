@@ -34,10 +34,9 @@ properties/3/path = NodePath(".:_rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("health_progressbar", "rotation_root", "ANI") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI") groups=["Player"]]
 collision_layer = 134217729
 script = ExtResource("1")
-health_progressbar = NodePath("")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
 
@@ -50,26 +49,23 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 bones/0/rotation = Quaternion(-8.55713e-09, 2.96428e-08, -5.07315e-16, 1)
 bones/1/rotation = Quaternion(-0.00473571, 0.00139203, 0.00170838, 0.999986)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/rotation = Quaternion(0.0107811, -1.0239e-05, -0.00170175, 0.999941)
-bones/3/rotation = Quaternion(0.70809, 0.00971752, -0.706049, 0.00304165)
+bones/2/rotation = Quaternion(0.00473803, 4.51374e-08, -0.00170179, 0.999987)
+bones/3/rotation = Quaternion(0.708082, 0.00214071, -0.706113, -0.00455664)
 bones/3/scale = Vector3(1, 1, 1)
-bones/4/position = Vector3(-1.96667e-08, 0.462169, 1.77297e-08)
 bones/4/rotation = Quaternion(0.00386998, -1.26575e-07, -4.57264e-08, 0.999992)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/rotation = Quaternion(0.708082, 0.00214067, -0.706113, -0.00455668)
 bones/5/scale = Vector3(1, 1, 1)
-bones/6/rotation = Quaternion(0.706095, -0.0121536, 0.707992, 0.00543557)
-bones/7/position = Vector3(-8.39724e-09, 0.471243, -2.16038e-09)
 bones/8/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214059)
 bones/8/scale = Vector3(1, 1, 1)
 
 [node name="Left Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="1"]
-transform = Transform3D(4.82422e-07, 0.013721, -0.999906, 1.80118e-07, -0.999906, -0.013721, -1, -1.73897e-07, -5.375e-07, 0.349739, 0.779153, -0.0148718)
+transform = Transform3D(-1.1752e-07, -0.00773978, -0.99997, 1.51105e-07, -0.99997, 0.00773979, -1, -1.49211e-07, 4.58806e-09, 0.339821, 1.03312, -0.0148718)
 bone_name = "arm.L_3.001"
 bone_idx = 4
 
 [node name="Right Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="2"]
-transform = Transform3D(-9.4019e-07, -0.0369847, 0.999316, -7.37552e-08, -0.999316, -0.0369847, 1, -1.11083e-07, 9.92971e-07, -0.34649, 0.770081, -0.0148718)
+transform = Transform3D(-4.5441e-07, -0.0155336, 0.999879, -1.46868e-07, -0.999879, -0.0155336, 1, -1.51989e-07, 4.48378e-07, -0.336379, 1.03312, -0.0148718)
 bone_name = "arm.R_5.001"
 bone_idx = 7
 

@@ -135,6 +135,7 @@ func _on_Player_break_block(pos: Vector3):
 		if breaktime.is_stopped():
 			breaktime.wait_time = chunk_resource.break_time
 			breaktime.start()
+			
 			await breaktime.timeout
 			
 			if Input.is_action_pressed("Mine"):

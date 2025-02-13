@@ -2,21 +2,23 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk8erttqb4guk"
-path.s3tc="res://.godot/imported/normal.png-31340e881f6fd25e4e8f261c53de251c.s3tc.ctex"
+uid="uid://dvuwcnfhtc5mc"
+path="res://.godot/imported/chest_normal.png-8c8133552f93f17acc19c3f5af046f10.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
+}
+generator_parameters={
+"md5": "f3b2dfd28e3e45be708cccf706e309c6"
 }
 
 [deps]
 
-source_file="res://assets/textures/entity/chest/normal.png"
-dest_files=["res://.godot/imported/normal.png-31340e881f6fd25e4e8f261c53de251c.s3tc.ctex"]
+source_file="res://assets/models/chest_normal.png"
+dest_files=["res://.godot/imported/chest_normal.png-8c8133552f93f17acc19c3f5af046f10.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

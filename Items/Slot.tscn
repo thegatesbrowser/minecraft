@@ -1,14 +1,62 @@
-[gd_scene load_steps=3 format=3 uid="uid://dp3vw6ecck05s"]
+[gd_scene load_steps=5 format=3 uid="uid://dp3vw6ecck05s"]
 
 [ext_resource type="Script" path="res://Items/Slot.gd" id="1_g0jy7"]
-[ext_resource type="Texture2D" path="res://assets/atlas/frame3.tres" id="3_5pdal"]
+[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_nbp6w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]
+bg_color = Color(0, 0, 0, 0.572549)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.176419, 0.176419, 0.176419, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0, 0, 0, 0.152941)
+shadow_size = 2
+shadow_offset = Vector2(3, 3)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bokx8"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
 
 [node name="Slot" type="TextureButton"]
 custom_minimum_size = Vector2(80, 80)
 offset_right = 80.0
 offset_bottom = 80.0
+pivot_offset = Vector2(40, 40)
 stretch_mode = 4
 script = ExtResource("1_g0jy7")
+
+[node name="CenterContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Image" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_nbp6w")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 show_behind_parent = true
@@ -19,9 +67,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ecmii")
 
 [node name="amount" type="Label" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -30,20 +78,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -40.0
 offset_top = -23.0
+offset_right = -2.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 text = "1"
-horizontal_alignment = 1
+horizontal_alignment = 2
 
-[node name="pressed" type="TextureRect" parent="."]
+[node name="pressed" type="Panel" parent="."]
+visible = false
 show_behind_parent = true
-layout_mode = 0
-offset_left = -1.0
-offset_top = -1.0
-offset_right = 81.0
-offset_bottom = 81.0
-texture = ExtResource("3_5pdal")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bokx8")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

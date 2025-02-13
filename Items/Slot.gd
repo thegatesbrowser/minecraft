@@ -1,22 +1,28 @@
 extends TextureButton
 
+var played_ani:bool = false
 var focused:bool = false
 @export var type:String = 'inventory'
 var amount:int = 1
 
 @export var Item_resource:Item_Global
 
+@onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
 
 func _process(delta: float) -> void:
 	if focused:
+		if !played_ani:
+			GlobalAnimation._tween(self,"bounce",.3)
+			played_ani = true
 		$pressed.show()
 	else:
+		played_ani = false
 		$pressed.hide()
 		
 func _ready() -> void:
 	if Item_resource != null:
-		texture_normal = Item_resource.item_texture
+		image.texture = Item_resource.item_texture
 	update_slot()
 	
 func _on_pressed() -> void:
@@ -36,8 +42,8 @@ func update_slot():
 	if Item_resource != null:
 		if amount >= 2:
 			amount_label.show()
-		texture_normal = Item_resource.item_texture
+		image.texture = Item_resource.item_texture
 	else:
 		amount_label.hide()
 		amount = 0
-		texture_normal = null
+		image.texture = null

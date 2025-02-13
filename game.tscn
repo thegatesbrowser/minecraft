@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=28 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
 [ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]
 [ext_resource type="Script" path="res://menus/player/inventory_holder.gd" id="3_fe1qo"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://Items/Craftables/craftable.tscn" id="4_bg8ft"]
 [ext_resource type="PackedScene" uid="uid://bk2p64qvo36mo" path="res://menus/debug_overlay.tscn" id="5"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://Items/Craftables/Sticks.tres" id="5_jvylc"]
@@ -15,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://Items/Craftables/craftable_info.tscn" id="11_cdfh2"]
 [ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://menus/player/selection_buttons.tscn" id="12_qvgc7"]
 [ext_resource type="Script" path="res://menus/stats.gd" id="13_jjeu3"]
+[ext_resource type="Script" path="res://pause_menu.gd" id="15_uiy3n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7nga"]
 bg_color = Color(1, 0, 0, 1)
@@ -38,6 +40,14 @@ anti_aliasing_size = 0.01
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_im5ed"]
 gradient = SubResource("Gradient_rai08")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_2g6cg"]
+color = Color(1, 1, 1, 1)
+thickness = 3
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
+color = Color(1, 1, 1, 1)
+thickness = 2
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flqqw"]
 sky_top_color = Color(0, 0.490196, 0.878431, 1)
@@ -95,101 +105,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-
-[node name="Inventory holder" type="Control" parent="Overlay/Player UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_fe1qo")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Overlay/Player UI/Inventory holder"]
-custom_minimum_size = Vector2(1012, 800)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -502.0
-offset_top = -400.0
-offset_right = 502.0
-offset_bottom = 400.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Crafting" type="ScrollContainer" parent="Overlay/Player UI/Inventory holder/HBoxContainer"]
-custom_minimum_size = Vector2(200, 800)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-horizontal_scroll_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel" type="Panel" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting"]
-layout_mode = 2
+pivot_offset = Vector2(960, 540)
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting"]
-custom_minimum_size = Vector2(200, 800)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "CRAFTABLES"
-horizontal_alignment = 1
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Craftable" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
-layout_mode = 2
-inventory = NodePath("../../../../../Inventory")
-craftable = ExtResource("5_jvylc")
-
-[node name="Craftable2" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
-layout_mode = 2
-inventory = NodePath("../../../../../Inventory")
-craftable = ExtResource("6_qmem5")
-
-[node name="Craftable3" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
-layout_mode = 2
-inventory = NodePath("../../../../../Inventory")
-craftable = ExtResource("7_2v6u3")
-
-[node name="Craftable4" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
-layout_mode = 2
-inventory = NodePath("../../../../../Inventory")
-craftable = ExtResource("8_fjhcp")
-
-[node name="Craftable5" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
-layout_mode = 2
-inventory = NodePath("../../../../../Inventory")
-craftable = ExtResource("9_gbvy1")
-
-[node name="Inventory" parent="Overlay/Player UI/Inventory holder/HBoxContainer" instance=ExtResource("10_hxw3b")]
-layout_mode = 2
-
-[node name="Craftable Info" parent="Overlay/Player UI/Inventory holder" instance=ExtResource("11_cdfh2")]
-layout_mode = 0
-offset_bottom = 47.0
 mouse_filter = 2
+theme = ExtResource("3_v2bsq")
 
 [node name="Selection_Buttons" parent="Overlay/Player UI" instance=ExtResource("12_qvgc7")]
+process_mode = 3
 layout_mode = 1
 
 [node name="stats" type="HBoxContainer" parent="Overlay/Player UI"]
@@ -199,12 +122,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -416.0
-offset_top = -152.0
-offset_right = 416.0
+offset_left = -460.0
+offset_top = -174.0
+offset_right = 460.0
 offset_bottom = -112.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 theme_override_constants/separation = 260
 alignment = 1
 script = ExtResource("13_jjeu3")
@@ -313,6 +237,139 @@ texture = SubResource("GradientTexture2D_im5ed")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="Inventory holder" type="Control" parent="Overlay/Player UI"]
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -72.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(960, 540)
+mouse_filter = 2
+script = ExtResource("3_fe1qo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Overlay/Player UI/Inventory holder"]
+custom_minimum_size = Vector2(1012, 800)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -502.0
+offset_top = -400.0
+offset_right = 502.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crafting" type="ScrollContainer" parent="Overlay/Player UI/Inventory holder/HBoxContainer"]
+custom_minimum_size = Vector2(0, 800)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+horizontal_scroll_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "CRAFTABLES"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_2g6cg")
+
+[node name="VBoxContainer2" type="GridContainer" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Craftable" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("5_jvylc")
+
+[node name="Craftable2" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("6_qmem5")
+
+[node name="Craftable3" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("7_2v6u3")
+
+[node name="Craftable4" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("8_fjhcp")
+
+[node name="Craftable5" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("9_gbvy1")
+
+[node name="Inventory" parent="Overlay/Player UI/Inventory holder/HBoxContainer" instance=ExtResource("10_hxw3b")]
+layout_mode = 2
+
+[node name="Craftable Info" parent="Overlay/Player UI/Inventory holder" instance=ExtResource("11_cdfh2")]
+layout_mode = 0
+offset_bottom = 47.0
+mouse_filter = 2
+
+[node name="Pause Menu" type="PanelContainer" parent="Overlay"]
+visible = false
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 212.0
+grow_vertical = 2
+pivot_offset = Vector2(106, 540)
+theme = ExtResource("3_v2bsq")
+script = ExtResource("15_uiy3n")
+
+[node name="MarginContainer" type="MarginContainer" parent="Overlay/Pause Menu"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/Pause Menu/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Overlay/Pause Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Pause Menu"
+
+[node name="HSeparator" type="HSeparator" parent="Overlay/Pause Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_xl6xy")
+
+[node name="Main Menu" type="Button" parent="Overlay/Pause Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128, 0)
 
@@ -349,6 +406,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 128, 8)
 [node name="Breaktime" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="pressed" from="Overlay/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="Overlay/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="chunk_deactivated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_deactivated"]
 [connection signal="chunk_generated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_generated"]
 [connection signal="chunk_purged" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_purged"]

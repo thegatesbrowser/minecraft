@@ -118,7 +118,7 @@ func slot_clicked(slot):
 						
 						Globals.last_clicked_slot.Item_resource = hold_slot_resource
 						Globals.last_clicked_slot.amount = hold_slot_amount
+						Globals.last_clicked_slot.update_slot()
 						Globals.last_clicked_slot = null
 						
 						slot.update_slot()
-						Globals.last_clicked_slot.update_slot()

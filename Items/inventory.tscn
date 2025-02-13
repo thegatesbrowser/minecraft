@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxe66yexhl7t1"]
+[gd_scene load_steps=4 format=3 uid="uid://bxe66yexhl7t1"]
 
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_e6rhx"]
 [ext_resource type="Script" path="res://inventory.gd" id="1_vh6pj"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_n2m6g"]
+color = Color(1, 1, 1, 1)
+thickness = 3
 
 [node name="Inventory" type="ScrollContainer"]
 process_mode = 3
@@ -17,6 +22,7 @@ offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_e6rhx")
 horizontal_scroll_mode = 0
 script = ExtResource("1_vh6pj")
 amount_of_slots = 40
@@ -38,9 +44,14 @@ layout_mode = 2
 
 [node name="Inventroy name" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "INVENTORY"
 horizontal_alignment = 1
 uppercase = true
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_n2m6g")
 
 [node name="close" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 visible = false
@@ -54,6 +65,7 @@ text = "SORT"
 
 [node name="add random item" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "add random item *debug*"
 
 [node name="Items" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
