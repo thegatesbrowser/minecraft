@@ -133,7 +133,10 @@ func _on_Player_break_block(pos: Vector3):
 	
 	if chunk_resource != null:
 		if breaktime.is_stopped():
-			breaktime.wait_time = chunk_resource.break_time
+			if chunk_resource.break_time - Globals.breaking_efficiency == 0:
+				breaktime.wait_time = 0
+			else:
+				breaktime.wait_time = chunk_resource.break_time - Globals.breaking_efficiency
 			breaktime.start()
 			
 			await breaktime.timeout

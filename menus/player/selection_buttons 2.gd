@@ -72,13 +72,18 @@ func _press_key(i):
 				Globals.current_block = keys[buttons[current_key].Item_resource.type]
 			else:
 				Globals.custom_block = buttons[current_key].Item_resource
+			Globals.breaking_efficiency = 0.0
 			Globals.can_build = true 
 		else:
 			Globals.custom_block = null
 			if buttons[current_key].Item_resource.holdable:
+				Globals.breaking_efficiency = buttons[current_key].Item_resource.breaking_efficiency
 				Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
+			else:
+				Globals.breaking_efficiency = 0.0
 			Globals.can_build = false 
 	else:
+		Globals.breaking_efficiency = 0.0
 		Globals.custom_block = null
 		Globals.can_build = false
 	current_key = i

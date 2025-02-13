@@ -17,6 +17,8 @@ enum {GRASS, DIRT, STONE, GLASS, LOG1, WOOD1, LOG2, WOOD2, LEAF1, LEAF2}
 @export var place_object:PackedScene
 @export var utility:Utilities
 
+@export_category("Tools")
+@export var breaking_efficiency:float = 0.0
 
 @export_category("Weapons")
 @export var weapon:bool = false
