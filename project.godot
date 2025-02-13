@@ -239,7 +239,7 @@ Inventory={
 
 textures/canvas_textures/default_texture_filter=0
 anti_aliasing/quality/msaa_2d=1
-anti_aliasing/quality/msaa_3d=2
+anti_aliasing/quality/use_taa=true
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 environment/default_environment="res://Assets/default_env.tres"

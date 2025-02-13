@@ -1,6 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://1t85qkud3hd1"]
+[gd_scene load_steps=27 format=3 uid="uid://1t85qkud3hd1"]
 
 [ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="1_r5mbk"]
+[ext_resource type="Script" path="res://voxel/voxel_test.gd" id="1_xykq1"]
+[ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://voxel/terrain_materal.material" id="2_02ol2"]
+[ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://voxel/voxel_blocky_type_library.tres" id="2_3jqxj"]
 [ext_resource type="PackedScene" uid="uid://bk2p64qvo36mo" path="res://menus/debug_overlay.tscn" id="2_lnecb"]
 [ext_resource type="Script" path="res://menus/player/inventory_holder.gd" id="3_4uhcl"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://Items/Craftables/craftable.tscn" id="4_s8rsh"]
@@ -32,9 +35,6 @@ tonemap_mode = 2
 glow_enabled = true
 volumetric_fog_density = 0.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s157r"]
-vertex_color_use_as_albedo = true
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_n0vum"]
 noise_type = 4
 frequency = 0.007
@@ -43,17 +43,8 @@ frequency = 0.007
 noise = SubResource("FastNoiseLite_n0vum")
 channel = 0
 
-[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_kllch"]
-
-[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_vpkt0"]
-
-[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_enht2"]
-
-[sub_resource type="VoxelBlockyLibrary" id="VoxelBlockyLibrary_ymrvr"]
-models = Array[VoxelBlockyModel]([SubResource("VoxelBlockyModelEmpty_kllch"), SubResource("VoxelBlockyModelCube_vpkt0"), SubResource("VoxelBlockyModelMesh_enht2")])
-
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_25wtg"]
-library = SubResource("VoxelBlockyLibrary_ymrvr")
+library = ExtResource("2_3jqxj")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hhxlf"]
 bg_color = Color(1, 0, 0, 1)
@@ -79,6 +70,7 @@ anti_aliasing_size = 0.01
 gradient = SubResource("Gradient_w00mo")
 
 [node name="VoxelTest" type="Node3D"]
+script = ExtResource("1_xykq1")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -91,7 +83,7 @@ directional_shadow_max_distance = 160.0
 environment = SubResource("Environment_v7gnl")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="."]
-material_override = SubResource("StandardMaterial3D_s157r")
+material_override = ExtResource("2_02ol2")
 generator = SubResource("VoxelGeneratorNoise2D_dsyn1")
 mesher = SubResource("VoxelMesherBlocky_25wtg")
 
