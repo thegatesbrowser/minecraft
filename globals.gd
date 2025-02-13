@@ -63,6 +63,9 @@ signal craftable_hovered(craftable,node)
 signal craftable_unhovered
 var last_clicked_slot:Node
 
+# Weapons
+signal spawn_bullet
+
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
 	randomize()

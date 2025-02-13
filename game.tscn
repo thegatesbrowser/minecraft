@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=30 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
 [ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]
@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://Items/Craftables/craftable_info.tscn" id="11_cdfh2"]
 [ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://menus/player/selection_buttons.tscn" id="12_qvgc7"]
 [ext_resource type="Script" path="res://menus/stats.gd" id="13_jjeu3"]
+[ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://Items/Craftables/Ammo.tres" id="13_kkf35"]
+[ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://Items/Craftables/Pistol.tres" id="14_ye6pm"]
 [ext_resource type="Script" path="res://pause_menu.gd" id="15_uiy3n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7nga"]
@@ -239,7 +241,6 @@ stretch_mode = 4
 
 [node name="Inventory holder" type="Control" parent="Overlay/Player UI"]
 process_mode = 3
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -328,7 +329,17 @@ layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("9_gbvy1")
 
-[node name="Inventory" parent="Overlay/Player UI/Inventory holder/HBoxContainer" instance=ExtResource("10_hxw3b")]
+[node name="Craftable6" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("13_kkf35")
+
+[node name="Craftable7" parent="Overlay/Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("14_ye6pm")
+
+[node name="Inventory" parent="Overlay/Player UI/Inventory holder/HBoxContainer" groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 
 [node name="Craftable Info" parent="Overlay/Player UI/Inventory holder" instance=ExtResource("11_cdfh2")]
