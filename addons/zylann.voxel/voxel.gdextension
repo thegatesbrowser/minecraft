@@ -7,3 +7,5 @@ compatibility_minimum = 4.1
 
 linux.x86_64 = "res://addons/zylann.voxel/bin/libvoxel.linux.template_debug.x86_64.so"
 linux.debug.x86_64 = "res://addons/zylann.voxel/bin/libvoxel.linux.template_debug.x86_64.so"
+windows.x86_64 = "res://addons/zylann.voxel/bin/libvoxel.windows.template_debug.x86_64.dll"
+windows.debug.x86_64 = "res://addons/zylann.voxel/bin/libvoxel.windows.template_debug.x86_64.dll"
