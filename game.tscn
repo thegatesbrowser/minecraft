@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=32 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
 [ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]
@@ -19,6 +19,7 @@
 [ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://Items/Craftables/Ammo.tres" id="13_kkf35"]
 [ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://Items/Craftables/Pistol.tres" id="14_ye6pm"]
 [ext_resource type="Script" path="res://pause_menu.gd" id="15_uiy3n"]
+[ext_resource type="Script" path="res://UI/input_settings.gd" id="18_1gacs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7nga"]
 bg_color = Color(1, 0, 0, 1)
@@ -50,6 +51,9 @@ thickness = 3
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
 thickness = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5s33"]
+bg_color = Color(0.0846899, 0.0846899, 0.0846899, 1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flqqw"]
 sky_top_color = Color(0, 0.490196, 0.878431, 1)
@@ -241,6 +245,7 @@ stretch_mode = 4
 
 [node name="Inventory holder" type="Control" parent="Overlay/Player UI"]
 process_mode = 3
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -347,45 +352,108 @@ layout_mode = 0
 offset_bottom = 47.0
 mouse_filter = 2
 
-[node name="Pause Menu" type="PanelContainer" parent="Overlay"]
+[node name="Pause Menu" type="Control" parent="Overlay"]
 visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_uiy3n")
+
+[node name="Pause Menu" type="PanelContainer" parent="Overlay/Pause Menu"]
+layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 212.0
 grow_vertical = 2
 pivot_offset = Vector2(106, 540)
 theme = ExtResource("3_v2bsq")
-script = ExtResource("15_uiy3n")
 
-[node name="MarginContainer" type="MarginContainer" parent="Overlay/Pause Menu"]
+[node name="MarginContainer" type="MarginContainer" parent="Overlay/Pause Menu/Pause Menu"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/Pause Menu/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/Pause Menu/Pause Menu/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="Overlay/Pause Menu/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Overlay/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "Pause Menu"
 
-[node name="HSeparator" type="HSeparator" parent="Overlay/Pause Menu/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Overlay/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_xl6xy")
 
-[node name="Main Menu" type="Button" parent="Overlay/Pause Menu/MarginContainer/VBoxContainer"]
+[node name="Main Menu" type="Button" parent="Overlay/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Main Menu"
+
+[node name="Settings" type="Button" parent="Overlay/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="Settings" type="TabContainer" parent="Overlay/Pause Menu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -321.0
+offset_right = 600.0
+offset_bottom = 321.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_v2bsq")
+current_tab = 0
+
+[node name="InputSettings" type="PanelContainer" parent="Overlay/Pause Menu/Settings"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q5s33")
+script = ExtResource("18_1gacs")
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Overlay/Pause Menu/Settings/InputSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/Pause Menu/Settings/InputSettings/MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Overlay/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionList" type="VBoxContainer" parent="Overlay/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ResetButton" type="Button" parent="Overlay/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+text = "reset to default"
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128, 0)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+visible = false
 light_color = Color(1, 1, 0.917647, 1)
 light_energy = 0.8
 shadow_enabled = true
@@ -417,7 +485,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 128, 8)
 [node name="Breaktime" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="pressed" from="Overlay/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="Overlay/Pause Menu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Overlay/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="Overlay/Pause Menu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Overlay/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="Overlay/Pause Menu" method="_on_settings_pressed"]
 [connection signal="chunk_deactivated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_deactivated"]
 [connection signal="chunk_generated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_generated"]
 [connection signal="chunk_purged" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_purged"]
