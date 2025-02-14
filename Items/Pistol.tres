@@ -20,6 +20,7 @@ max_stack = 1
 placeable = false
 holdable = true
 break_time = 0.4
+breaking_efficiency = 0.0
 weapon = true
 damage = 1
 weapon_model = SubResource("BoxMesh_jgasq")

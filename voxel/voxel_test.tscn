@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://1t85qkud3hd1"]
 
-[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="1_r5mbk"]
+[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/Player.tscn" id="1_r5mbk"]
 [ext_resource type="Script" path="res://voxel/voxel_test.gd" id="1_xykq1"]
 [ext_resource type="Script" path="res://multiplayer/mouse_mode.gd" id="2_1cour"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://voxel/terrain_materal.material" id="2_02ol2"]
