@@ -9,7 +9,7 @@ func _ready() -> void:
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("show_mouse"): set_captured(false)
-	if Input.is_action_just_released("show_mouse"): set_captured(true)
+	#if Input.is_action_just_released("show_mouse"): set_captured(true)
 
 
 func on_visibility_changed() -> void:

@@ -38,14 +38,11 @@ const FOV_CHANGE = 1.5
 var speed
 var gravity = 16.5
 var far_distance: float = 160
-var block_is_inside_character := false
 var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
 
 @onready var camera = $RotationRoot/Head/Camera3D
 @onready var ray = $RotationRoot/Head/Camera3D/RayCast3D
-@onready var block = $BlockOutline
-@onready var block_collider = $BlockOutline/Area3D
 @onready var auto_jump: RayCast3D = $RotationRoot/AutoJump
 @onready var can_auto_jump_check: RayCast3D = $RotationRoot/AutoJump2
 @onready var _synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
@@ -74,7 +71,6 @@ func _ready():
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
-		block.visible = false
 		return
 	
 	Console.add_command("player_flying", self, 'toggle_flying')\
@@ -115,10 +111,6 @@ func _physics_process(delta):
 	
 	Globals.player_health = health
 	
-	if Globals.paused:
-		block.visible = false
-		return
-
 	if !Globals.flying:
 		# Add the gravity.
 		if not is_on_floor():
@@ -194,15 +186,9 @@ func _physics_process(delta):
 	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
 	var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
 	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
-	
+
 	# BUILDING / BREAKING
 	if ray.is_colliding():
-		var normal = ray.get_collision_normal()
-		var pos = ray.get_collision_point() - normal * 0.5
-		
-		block.global_position = pos.floor() + (Vector3.ONE / 2)
-		block.global_rotation = Vector3.ZERO
-		block.visible = true
 		var coll = ray.get_collider()
 		if Input.is_action_pressed("Mine"):
 			if coll != null:
@@ -210,16 +196,6 @@ func _physics_process(delta):
 					coll.interact()
 				elif coll.has_method("hit"):
 					coll.hit()
-				else:
-					break_block.emit(pos)
-			
-		if Input.is_action_just_pressed("Build"):
-			if Globals.can_build:
-				if !block_is_inside_character:
-					place_block.emit(pos + normal)
-					pass
-	else:
-		block.visible = false
 	
 	move_and_slide()
 	set_sync_properties()
@@ -296,14 +272,6 @@ func is_print_logs() -> bool:
 	return "--print_logs" in args
 
 
-func _on_Area_body_entered(_body):
-	block_is_inside_character = true
-
-
-func _on_Area_body_exited(_body):
-	block_is_inside_character = false
-
-
 func _exit_tree():
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
@@ -335,6 +303,7 @@ func remove_item_in_hand():
 func hit(damage:int):
 	print("hit")
 	health -= damage
+
 
 func spawn_bullet():
 	var bullet = bullet_scene.instantiate()

@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://1t85qkud3hd1"]
+[gd_scene load_steps=28 format=3 uid="uid://1t85qkud3hd1"]
 
 [ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="1_r5mbk"]
 [ext_resource type="Script" path="res://voxel/voxel_test.gd" id="1_xykq1"]
+[ext_resource type="Script" path="res://multiplayer/mouse_mode.gd" id="2_1cour"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://voxel/terrain_materal.material" id="2_02ol2"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://voxel/voxel_blocky_type_library.tres" id="2_3jqxj"]
 [ext_resource type="PackedScene" uid="uid://bk2p64qvo36mo" path="res://menus/debug_overlay.tscn" id="2_lnecb"]
@@ -82,19 +83,18 @@ directional_shadow_max_distance = 160.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_v7gnl")
 
-[node name="VoxelTerrain" type="VoxelTerrain" parent="."]
+[node name="MouseMode" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("2_1cour")
+
+[node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 material_override = ExtResource("2_02ol2")
 generator = SubResource("VoxelGeneratorNoise2D_dsyn1")
 mesher = SubResource("VoxelMesherBlocky_25wtg")
 
 [node name="Player" parent="." instance=ExtResource("1_r5mbk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
-
-[node name="Left Hand" parent="Player/RotationRoot/minecraft_player/Model/Skeleton3D" index="1"]
-transform = Transform3D(4.82422e-07, 0.013721, -0.999906, 1.80118e-07, -0.999906, -0.013721, -1, -1.73897e-07, -5.375e-07, 0.349739, 0.779153, -0.0148718)
-
-[node name="Right Hand" parent="Player/RotationRoot/minecraft_player/Model/Skeleton3D" index="2"]
-transform = Transform3D(-9.4019e-07, -0.0369847, 0.999316, -7.37552e-08, -0.999316, -0.0369847, 1, -1.11083e-07, 9.92971e-07, -0.34649, 0.770081, -0.0148718)
 
 [node name="VoxelViewer" type="VoxelViewer" parent="Player/RotationRoot/Head/Camera3D" index="1"]
 
