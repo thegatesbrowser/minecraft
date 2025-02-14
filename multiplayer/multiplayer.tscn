@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://multiplayer/resolution_changer.gd" id="1_mexsf"]
 [ext_resource type="Script" path="res://multiplayer/player_spawner.gd" id="4_edyrb"]
 [ext_resource type="Script" path="res://multiplayer/world_syncer.gd" id="5_f71qm"]
-[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="5_wb2xi"]
+[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/Player.tscn" id="5_wb2xi"]
 [ext_resource type="Resource" uid="uid://b7i7ukiyxx6ha" path="res://multiplayer/connection/connection_events.res" id="6_p6o06"]
 [ext_resource type="Script" path="res://multiplayer/connection/connection_manager.gd" id="6_snsvh"]
 [ext_resource type="PackedScene" uid="uid://ca1tf375ldayj" path="res://game.tscn" id="7_kg2pg"]

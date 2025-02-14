@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl6uy0bfqjh2"]
+
+[ext_resource type="Script" path="res://other/gate.gd" id="1_1jvx6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jvvuh"]
+size = Vector3(1, 2, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mywou"]
+size = Vector3(1, 2, 0.1)
+
+[node name="Gate" type="StaticBody3D"]
+script = ExtResource("1_1jvx6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02243, 0)
+mesh = SubResource("BoxMesh_jvvuh")
+
+[node name="Gate" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02243, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Gate"]
+shape = SubResource("BoxShape3D_mywou")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="UI/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+placeholder_text = "world url"
+alignment = 1
+
+[connection signal="body_entered" from="Gate" to="." method="_on_gate_body_entered"]
