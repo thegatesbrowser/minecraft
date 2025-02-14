@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhbq1pylotnm8"]
-
-[ext_resource type="Script" path="res://chunking/chunk_server.gd" id="1"]
-
-[node name="Chunk_Server" type="Node3D"]
-script = ExtResource("1")

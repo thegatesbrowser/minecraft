@@ -9,11 +9,8 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var no_fog := false
 
 # Chunk Generation Settings.
-@export var world_seed := 333
 @export var chunk_size := Vector3(16, 256, 16)
-@export var load_radius := 16 # (int, 1, 64)
 @export var max_stale_chunks := 2000
-@export var chunk_type := 0
 @export var skyblock := false
 
 # Configurable setting based checked user's hardware.
@@ -37,15 +34,6 @@ var current_block := 0
 var custom_block:Item_Global
 var can_build:bool = false
 
-# Automated Testing
-@export var nav:bool = true
-enum TestMode {NONE, STATIC_LOAD, RUN_LOAD, RUN_MANUAL}
-@export var test_mode := TestMode.NONE
-var settings_preset := ""
-@export var repaint_line := true
-@export var skip_menu := false
-var test_file = null
-
 # AI
 signal spawn_creature(pos)
 
@@ -67,20 +55,9 @@ var last_clicked_slot:Node
 # Weapons
 signal spawn_bullet
 
+
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
-	randomize()
-	if world_seed == 0:
-		world_seed = randi()
-	current_block = WorldGen.WOOD1
-	
-	Console.add_command("timelapse_mode", self, '_disable_flicker')\
-		.set_description("Disables the chunk radar refresh line to prevent flickering in timelapses.")\
-		.register()
-
-
-func _disable_flicker():
-	repaint_line = false
 
 
 func slot_clicked(slot):

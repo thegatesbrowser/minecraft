@@ -1,11 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://1t85qkud3hd1"]
+[gd_scene load_steps=27 format=3 uid="uid://1t85qkud3hd1"]
 
-[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/Player.tscn" id="1_r5mbk"]
+[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://menus/player/player.tscn" id="1_r5mbk"]
 [ext_resource type="Script" path="res://voxel/voxel_test.gd" id="1_xykq1"]
-[ext_resource type="Script" path="res://multiplayer/mouse_mode.gd" id="2_1cour"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://voxel/terrain_materal.material" id="2_02ol2"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://voxel/voxel_blocky_type_library.tres" id="2_3jqxj"]
-[ext_resource type="PackedScene" uid="uid://bk2p64qvo36mo" path="res://menus/debug_overlay.tscn" id="2_lnecb"]
+[ext_resource type="PackedScene" path="res://menus/debug_overlay.tscn" id="2_lnecb"]
 [ext_resource type="Script" path="res://menus/player/inventory_holder.gd" id="3_4uhcl"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://Items/Craftables/craftable.tscn" id="4_s8rsh"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://Items/Craftables/Sticks.tres" id="5_hjr5t"]
@@ -36,12 +35,12 @@ tonemap_mode = 2
 glow_enabled = true
 volumetric_fog_density = 0.0
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_n0vum"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ksu3p"]
 noise_type = 4
 frequency = 0.007
 
 [sub_resource type="VoxelGeneratorNoise2D" id="VoxelGeneratorNoise2D_dsyn1"]
-noise = SubResource("FastNoiseLite_n0vum")
+noise = SubResource("FastNoiseLite_ksu3p")
 channel = 0
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_25wtg"]
@@ -83,11 +82,6 @@ directional_shadow_max_distance = 160.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_v7gnl")
 
-[node name="MouseMode" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("2_1cour")
-
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 material_override = ExtResource("2_02ol2")
 generator = SubResource("VoxelGeneratorNoise2D_dsyn1")
@@ -95,6 +89,12 @@ mesher = SubResource("VoxelMesherBlocky_25wtg")
 
 [node name="Player" parent="." instance=ExtResource("1_r5mbk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+
+[node name="Left Hand" parent="Player/RotationRoot/minecraft_player/Model/Skeleton3D" index="1"]
+transform = Transform3D(3.05999e-07, -0.00773978, -0.99997, 1.31547e-07, -0.99997, 0.00773978, -1, -1.33414e-07, -2.40713e-07, 0.339821, 1.03312, -0.0148718)
+
+[node name="Right Hand" parent="Player/RotationRoot/minecraft_player/Model/Skeleton3D" index="2"]
+transform = Transform3D(-4.60463e-07, -0.0155336, 0.999879, -1.38486e-07, -0.999879, -0.0155336, 1, -1.45572e-07, 4.54998e-07, -0.336379, 1.03312, -0.0148718)
 
 [node name="VoxelViewer" type="VoxelViewer" parent="Player/RotationRoot/Head/Camera3D" index="1"]
 

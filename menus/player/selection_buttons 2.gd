@@ -26,8 +26,8 @@ func _ready():
 	Globals.remove_item_from_hotbar.connect(remove)
 	Globals.hotbar_slot_clicked.connect(hotbar_slot_clicked)
 	buttons = slots.get_children()
-	keys = [WorldGen.GRASS, WorldGen.DIRT, WorldGen.STONE, WorldGen.GLASS, WorldGen.LOG1, \
-		WorldGen.WOOD1, WorldGen.LOG2, WorldGen.WOOD2, WorldGen.LEAVES1, WorldGen.LEAVES2]
+	#keys = [WorldGen.GRASS, WorldGen.DIRT, WorldGen.STONE, WorldGen.GLASS, WorldGen.LOG1, \
+		#WorldGen.WOOD1, WorldGen.LOG2, WorldGen.WOOD2, WorldGen.LEAVES1, WorldGen.LEAVES2]
 
 
 func _input(_event):

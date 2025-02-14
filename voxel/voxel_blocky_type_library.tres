@@ -22,4 +22,4 @@ resource_name = "grass"
 
 [resource]
 types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_4ubr4")])
-_id_map_data = PackedStringArray("air", "grass")
+_id_map_data = PackedStringArray("air", "grass", "unnamed", "unnamed")

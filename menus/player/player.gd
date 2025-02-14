@@ -96,9 +96,6 @@ func set_far(far: float) -> void: # TODO: Fix setting far distance
 func _unhandled_input(event):
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
 	
-	if Globals.paused or Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
-		return
-	
 	if event is InputEventMouseMotion:
 		rotation_root.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)

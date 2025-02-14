@@ -1,8 +1,9 @@
 extends Control
 
-var played_ani:bool = false
+var played_ani: bool
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Start"):
 		visible = !visible
@@ -18,7 +19,8 @@ func _process(delta: float) -> void:
 			$Settings.hide()
 			played_ani = false
 			hide()
-		
+
+
 func _on_main_menu_pressed() -> void:
 	await get_tree().process_frame
 	Globals.paused = false

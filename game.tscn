@@ -1,11 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=36 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://game.gd" id="1"]
-[ext_resource type="Script" path="res://chunking/chunks.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2_ifuak"]
 [ext_resource type="Script" path="res://menus/player/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://Items/Craftables/craftable.tscn" id="4_bg8ft"]
-[ext_resource type="PackedScene" uid="uid://bk2p64qvo36mo" path="res://menus/debug_overlay.tscn" id="5"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://Items/Craftables/Sticks.tres" id="5_jvylc"]
 [ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://Items/Craftables/Wood1.tres" id="6_qmem5"]
 [ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://Items/Craftables/Wood2.tres" id="7_2v6u3"]
@@ -20,6 +19,8 @@
 [ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://Items/Craftables/Pistol.tres" id="14_ye6pm"]
 [ext_resource type="Script" path="res://pause_menu.gd" id="15_uiy3n"]
 [ext_resource type="Script" path="res://UI/input_settings.gd" id="18_1gacs"]
+[ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://voxel/terrain_materal.material" id="19_nv6q3"]
+[ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://voxel/voxel_blocky_type_library.tres" id="20_xf4w1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7nga"]
 bg_color = Color(1, 0, 0, 1)
@@ -81,12 +82,30 @@ cell_size = 0.5
 cell_height = 0.4
 agent_max_climb = 1.0
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n0vum"]
+noise_type = 4
+frequency = 0.007
+
+[sub_resource type="VoxelGeneratorNoise2D" id="VoxelGeneratorNoise2D_rvvqb"]
+noise = SubResource("FastNoiseLite_n0vum")
+channel = 0
+
+[sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
+library = ExtResource("20_xf4w1")
+
 [node name="Game" type="Node3D"]
 script = ExtResource("1")
 
 [node name="Overlay" type="CanvasLayer" parent="."]
 
-[node name="CenterContainer" type="CenterContainer" parent="Overlay"]
+[node name="Counter" parent="Overlay" instance=ExtResource("2_ifuak")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 1
+
+[node name="ScreenCenterCross" type="CenterContainer" parent="Overlay"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -94,14 +113,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Overlay/CenterContainer"]
+[node name="Label" type="Label" parent="Overlay/ScreenCenterCross"]
 layout_mode = 2
 text = "+"
-
-[node name="DebugOverlay" parent="Overlay" instance=ExtResource("5")]
-visible = false
-mouse_filter = 2
-chunk_map_size = 500.0
 
 [node name="Player UI" type="Control" parent="Overlay"]
 process_mode = 3
@@ -453,7 +467,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-visible = false
 light_color = Color(1, 1, 0.917647, 1)
 light_energy = 0.8
 shadow_enabled = true
@@ -465,10 +478,10 @@ environment = SubResource("Environment_7185k")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_6jrpq")
 
-[node name="Chunks" type="Node3D" parent="NavigationRegion3D" node_paths=PackedStringArray("nav")]
-process_mode = 2
-script = ExtResource("3")
-nav = NodePath("..")
+[node name="VoxelTerrain" type="VoxelTerrain" parent="NavigationRegion3D" groups=["VoxelTerrain"]]
+material_override = ExtResource("19_nv6q3")
+generator = SubResource("VoxelGeneratorNoise2D_rvvqb")
+mesher = SubResource("VoxelMesherBlocky_crwyq")
 
 [node name="SpawnPoints" type="Node3D" parent="."]
 script = ExtResource("7_u8af2")
@@ -487,10 +500,3 @@ one_shot = true
 
 [connection signal="pressed" from="Overlay/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="Overlay/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="Overlay/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="Overlay/Pause Menu" method="_on_settings_pressed"]
-[connection signal="chunk_deactivated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_deactivated"]
-[connection signal="chunk_generated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_generated"]
-[connection signal="chunk_purged" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_purged"]
-[connection signal="chunk_reactivated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_reactivated"]
-[connection signal="chunk_started" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_started"]
-[connection signal="chunk_updated" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_chunk_updated"]
-[connection signal="finished_loading" from="NavigationRegion3D/Chunks" to="Overlay/DebugOverlay" method="_on_Chunks_finished_loading"]

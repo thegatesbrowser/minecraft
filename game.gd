@@ -9,12 +9,6 @@ signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 
 @onready var break_particle_s = preload("res://other/breakparticle.tscn")
 @onready var creature_s = preload("res://creatures/creature base.tscn")
-@onready var chunk_scene_0 := preload("res://chunking/chunk_no_render.tscn")
-@onready var chunk_scene_1 := preload("res://chunking/chunk_simple.tscn")
-@onready var chunk_scene_2 := preload("res://chunking/chunk_server.tscn")
-@onready var chunk_scene_3 := preload("res://chunking/chunk_mesh.tscn")
-@onready var chunk_scene_4 := preload("res://chunking/chunk_tileset.tscn")
-@onready var chunk_scene_5 := preload("res://chunking/chunk_multimesh.tscn")
 
 @onready var breaktime: Timer = $Breaktime
 
@@ -25,55 +19,6 @@ var player: Player
 var player_pos := Vector2.ZERO
 
 var is_fullscreen = false
-
-func _ready():
-	if Connection.is_server():
-		return
-	
-	if is_multiplayer:
-		player = player_spawner.local_player
-	else:
-		player = single_player
-	
-	start_game()
-
-
-func start_game() -> void:
-	player.place_block.connect(_on_Player_place_block)
-	player.break_block.connect(_on_Player_break_block)
-	Globals.spawn_creature.connect(spawn_creature)
-	
-	WorldGen.set_seed(Globals.world_seed)
-	
-	if Globals.test_mode == Globals.TestMode.STATIC_LOAD or Globals.test_mode == Globals.TestMode.RUN_LOAD:
-		Globals.capture_mouse_on_start = false
-		Globals.paused = false
-	elif Globals.test_mode == Globals.TestMode.NONE:
-		debug.disable_overlay()
-	
-	var chunk_types = [chunk_scene_0, chunk_scene_1, chunk_scene_2, chunk_scene_3, chunk_scene_4, chunk_scene_5]
-	chunks.chunk_scene = chunk_types[Globals.chunk_type]
-	var chunk_has_collision = [false, true, false, true, true, false]
-	
-	if !chunk_has_collision[Globals.chunk_type]:
-		Globals.flying = true
-	
-	# Generate chunk 0 so we don't fall through the world.
-	chunks.load_chunk(_player_pos_to_chunk_pos(player.position), 0, 0, false)
-	if Globals.test_mode == Globals.TestMode.STATIC_LOAD:
-		var pos = player.global_position
-		pos = Vector3(pos.x, WorldGen.get_height(pos.x, pos.z) + 20, pos.z)
-		if chunk_has_collision[Globals.chunk_type]:
-			chunks.place_block(pos, _player_pos_to_chunk_pos(pos), WorldGen.GLASS)
-		else:
-			player.global_position = pos
-	
-	# Change the mouse mode only when we're done loading.
-	if Globals.capture_mouse_on_start:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	# Set the draw distance to match our settings.
-	_set_draw_distance(Globals.load_radius)
 
 
 func _process(_delta):
@@ -143,7 +88,7 @@ func _on_Player_break_block(pos: Vector3):
 			
 			if Input.is_action_pressed("Mine"):
 				chunks.break_block(pos, chunk_id)
-				change_block.emit(pos, chunk_id, WorldGen.AIR)
+				change_block.emit(pos, chunk_id, 0)
 			else:
 				breaktime.stop()
 
