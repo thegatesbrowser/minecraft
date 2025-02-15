@@ -1,14 +1,12 @@
-[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://dxnjkyrqoqbq4"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://dxnjkyrqoqbq4"]
 
-[ext_resource type="Texture2D" path="res://assets/atlas/stone.tres" id="1_2hqjt"]
-[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_pc7ax"]
+[ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_2hqjt"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_lqmys"]
 
 [resource]
-script = ExtResource("1_pc7ax")
-item_name = "STONE"
-item_texture = ExtResource("1_2hqjt")
-type = 2
+script = ExtResource("1_lqmys")
+break_time = 0.4
+unique_name = &""
+texture = ExtResource("1_2hqjt")
 max_stack = 64
-placeable = true
-holdable = false
-break_time = 0.7
+breaking_efficiency = 0.0

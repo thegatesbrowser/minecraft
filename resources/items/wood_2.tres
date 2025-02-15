@@ -1,14 +1,17 @@
-[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://0vp352rb3ntn"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://0vp352rb3ntn"]
 
-[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_gkd85"]
-[ext_resource type="Texture2D" path="res://assets/atlas/wood2.tres" id="1_v2kt2"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_gkd85"]
+[ext_resource type="Texture2D" uid="uid://3g5apdh6qsf" path="res://assets/atlas/wood2.tres" id="1_v2kt2"]
 
 [resource]
 script = ExtResource("1_gkd85")
-item_name = "WOOD2"
-item_texture = ExtResource("1_v2kt2")
-type = 7
+unique_name = "WOOD2"
+texture = ExtResource("1_v2kt2")
 max_stack = 64
-placeable = true
-holdable = false
-break_time = 0.7
+breaking_efficiency = 0.0
+weapon = false
+damage = 0
+needs_ammo = false
+ammo_name = "Ammo"
+shoots = false
+fire_rate = 0.0

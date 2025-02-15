@@ -4,7 +4,7 @@ var inventory:Node
 @onready var fire_rate: Timer = $fire_rate
 @onready var model: MeshInstance3D = $model
 
-@export var weapon_resource:Item_Global
+@export var weapon_resource: ItemBase
 
 
 func _ready() -> void:

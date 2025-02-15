@@ -7,7 +7,6 @@ signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 @export var breaktime: Timer
 
 var player: Player
-var player_pos := Vector2.ZERO
 var is_fullscreen = false
 
 
@@ -31,13 +30,6 @@ func _process(_delta):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
-	
-	player_pos = _player_pos_to_chunk_pos(player.position)
-
-
-func _player_pos_to_chunk_pos(pos: Vector3) -> Vector2:
-	var pos_round = (pos / Globals.chunk_size).floor()
-	return Vector2(pos_round.x, pos_round.z)
 
 
 func _on_Player_break_block(_pos: Vector3):

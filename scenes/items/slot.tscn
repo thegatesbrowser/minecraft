@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dp3vw6ecck05s"]
 
-[ext_resource type="Script" path="res://scripts/items/slot.gd" id="1_g0jy7"]
+[ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_g0jy7"]
 [ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_nbp6w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]

@@ -1,9 +1,6 @@
 extends CharacterBody3D
 class_name Player
 
-signal place_block(pos: Vector3)
-signal break_block(pos: Vector3)
-
 @export_range(0.1,1.1,.1) var max_flying_margin = 0.2
 @export_range(-1.1,-0.1,.1) var min_flying_margin = -0.2
 
@@ -259,7 +256,7 @@ func _exit_tree():
 	Console.remove_command("player_clipping")
 
 
-func add_item_to_hand(item:Item_Global):
+func add_item_to_hand(item: ItemBase):
 	if item != null:
 		if item.holdable:
 			

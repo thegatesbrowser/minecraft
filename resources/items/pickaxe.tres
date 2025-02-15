@@ -1,9 +1,6 @@
-[gd_resource type="Resource" script_class="Item_Global" load_steps=5 format=3 uid="uid://j36n47ah560y"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=4 format=3 uid="uid://j36n47ah560y"]
 
-[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_dw8ry"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_bltho"]
-size = Vector3(2, 0.2, 0.2)
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_dw8ry"]
 
 [sub_resource type="Gradient" id="Gradient_ev0rv"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1)
@@ -13,14 +10,9 @@ gradient = SubResource("Gradient_ev0rv")
 
 [resource]
 script = ExtResource("1_dw8ry")
-item_name = "Pickaxe"
-item_texture = SubResource("GradientTexture2D_fukvg")
-type = 0
+unique_name = "Pickaxe"
+texture = SubResource("GradientTexture2D_fukvg")
 max_stack = 64
-placeable = false
-holdable = true
-holdable_mesh = SubResource("BoxMesh_bltho")
-break_time = 0.4
 breaking_efficiency = 0.2
 weapon = false
 damage = 0

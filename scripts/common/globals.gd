@@ -29,7 +29,7 @@ var player_health:int
 @export var controller_invert_look := false
 @export var mouse_invert_look := false
 var current_block := 0
-var custom_block:Item_Global
+var custom_block: ItemBase
 var can_build:bool = false
 
 # AI

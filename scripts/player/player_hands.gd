@@ -12,7 +12,7 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Build"):
 		if terrain_interaction.can_place():
-			terrain_interaction.place_block(&"rock")
+			terrain_interaction.place_block(&"stone")
 	
 	if Input.is_action_just_pressed("Mine"):
 		if terrain_interaction.can_break():

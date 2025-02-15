@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2_ifuak"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
-[ext_resource type="Script" path="res://scripts/player/inventory_holder.gd" id="3_fe1qo"]
+[ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="4_bg8ft"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="5_jvylc"]
@@ -20,7 +20,7 @@
 [ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/pistol.tres" id="14_ye6pm"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
-[ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain_materal.material" id="19_nv6q3"]
+[ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="19_nv6q3"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="20_xf4w1"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
 
@@ -405,6 +405,7 @@ craftable = ExtResource("14_ye6pm")
 
 [node name="Inventory" parent="UI/Player UI/Inventory holder/HBoxContainer" groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
+script = null
 
 [node name="Craftable Info" parent="UI/Player UI/Inventory holder" instance=ExtResource("11_cdfh2")]
 layout_mode = 0

@@ -51,7 +51,6 @@ func _process(_delta: float) -> void:
 
 func is_even(x: int):
 	return x % 2 == 0
-			
 
 
 func spawn_item(item_resource, amount:int = 1):
@@ -64,7 +63,7 @@ func spawn_item(item_resource, amount:int = 1):
 				i.update_slot()
 				for num in amount:
 					
-					inventory.append(item_resource.item_name)
+					inventory.append(item_resource.unique_name)
 				check_if_full()
 				sort()
 				break
@@ -80,9 +79,9 @@ func make_slots():
 func sort():
 	for i in items_collection.get_children():
 		if i.Item_resource != null:
-			print(items.has(i.Item_resource.item_name))
-			if items.has(i.Item_resource.item_name) == false:
-				items.append(i.Item_resource.item_name)
+			print(items.has(i.Item_resource.unique_name))
+			if items.has(i.Item_resource.unique_name) == false:
+				items.append(i.Item_resource.unique_name)
 				slots.append(i)
 				
 	for slot in slots:
@@ -120,30 +119,30 @@ func check_amount_of_item(item:String):
 	return amount
 
 
-func remove_item(item_name:String,amount:int):
+func remove_item(unique_name:String,amount:int):
 	
 	if Owner != null: return ## Owner mean its not the players inventory
 	
 	for i in amount:
 		for slot in items_collection.get_children():
 			if slot.Item_resource != null:
-				if slot.Item_resource.item_name == item_name:
+				if slot.Item_resource.unique_name == unique_name:
 					if slot.amount == 1:
 						slot.Item_resource = null
 					else:
 						slot.amount -= 1
 					slot.update_slot()
-					var index = inventory.find(item_name)
+					var index = inventory.find(unique_name)
 					inventory.remove_at(index)
 					check_if_full()
 					break
-				elif item_name in slot.Item_resource.item_name:
+				elif unique_name in slot.Item_resource.unique_name:
 					if slot.amount == 1:
 						slot.Item_resource = null
 					else:
 						slot.amount -= 1
 					slot.update_slot()
-					var index = inventory.find(item_name)
+					var index = inventory.find(unique_name)
 					inventory.remove_at(index)
 					check_if_full()
 					break
@@ -166,7 +165,7 @@ func check_slots():
 	for i in items_collection.get_children():
 		if i.Item_resource != null:
 			for amount in i.amount:
-				inventory.append(i.Item_resource.item_name)
+				inventory.append(i.Item_resource.unique_name)
 
 
 func _on_close_pressed() -> void:

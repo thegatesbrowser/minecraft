@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Item_Global" load_steps=5 format=3 uid="uid://wmfg0glqnqj"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=5 format=3 uid="uid://wmfg0glqnqj"]
 
-[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_hine8"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_hine8"]
 
 [sub_resource type="Gradient" id="Gradient_rmwa7"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 0, 1, 1)
@@ -13,13 +13,9 @@ size = Vector3(1, 0.1, 0.1)
 
 [resource]
 script = ExtResource("1_hine8")
-item_name = "Pistol"
-item_texture = SubResource("GradientTexture2D_y571k")
-type = 0
+unique_name = "Pistol"
+texture = SubResource("GradientTexture2D_y571k")
 max_stack = 1
-placeable = false
-holdable = true
-break_time = 0.4
 breaking_efficiency = 0.0
 weapon = true
 damage = 1

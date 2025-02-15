@@ -5,7 +5,7 @@ var focused:bool = false
 @export var type:String = 'inventory'
 @export var amount:int = 1
 
-@export var Item_resource:Item_Global
+@export var Item_resource: ItemBase
 
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
 
 func _ready() -> void:
 	if Item_resource != null:
-		image.texture = Item_resource.item_texture
+		image.texture = Item_resource.texture
 	update_slot()
 
 
@@ -45,7 +45,7 @@ func update_slot():
 	if Item_resource != null:
 		if amount >= 2:
 			amount_label.show()
-		image.texture = Item_resource.item_texture
+		image.texture = Item_resource.texture
 	else:
 		amount_label.hide()
 		amount = 0

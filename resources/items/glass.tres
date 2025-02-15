@@ -1,14 +1,18 @@
-[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://d3ecx624ljcyc"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://d3ecx624ljcyc"]
 
-[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_0svgv"]
-[ext_resource type="Texture2D" path="res://assets/atlas/glass.tres" id="1_1i1ps"]
+[ext_resource type="Texture2D" uid="uid://c76xm0xhxrne8" path="res://assets/atlas/glass.tres" id="1_1i1ps"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_hhhbr"]
 
 [resource]
-script = ExtResource("1_0svgv")
-item_name = "GLASS"
-item_texture = ExtResource("1_1i1ps")
-type = 3
+script = ExtResource("1_hhhbr")
+break_time = 0.4
+unique_name = &"glass"
+texture = ExtResource("1_1i1ps")
 max_stack = 64
-placeable = true
-holdable = false
-break_time = 0.3
+breaking_efficiency = 0.0
+weapon = false
+damage = 0
+needs_ammo = false
+ammo_name = "Ammo"
+shoots = false
+fire_rate = 0.0

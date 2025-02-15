@@ -1,10 +1,18 @@
-[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://bgful1da4rkm2"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bgful1da4rkm2"]
 
-[ext_resource type="Texture2D" path="res://assets/atlas/grass.tres" id="1_ebg3a"]
-[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_s51ev"]
+[ext_resource type="Texture2D" uid="uid://djrvggh13sxxn" path="res://assets/atlas/grass.tres" id="1_ebg3a"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_xvy7c"]
 
 [resource]
-script = ExtResource("1_s51ev")
-item_name = "GRASS"
-item_texture = ExtResource("1_ebg3a")
-type = 0
+script = ExtResource("1_xvy7c")
+break_time = 0.4
+unique_name = &"grass"
+texture = ExtResource("1_ebg3a")
+max_stack = 64
+breaking_efficiency = 0.0
+weapon = false
+damage = 0
+needs_ammo = false
+ammo_name = "Ammo"
+shoots = false
+fire_rate = 0.0

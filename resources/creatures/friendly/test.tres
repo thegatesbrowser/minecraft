@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dsupdgc7b2e4d" path="res://assets/models/minecraft_player.glb" id="1_5ktq8"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="1_x6yal"]
 [ext_resource type="Resource" uid="uid://toq60d1hqqms" path="res://resources/items/stick.tres" id="2_g1jkj"]
-[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="2_pua4k"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_pua4k"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f02ms"]
 radius = 0.411

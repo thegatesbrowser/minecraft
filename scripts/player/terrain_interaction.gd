@@ -7,6 +7,7 @@ class_name TerrainInteraction
 @export var voxel_blocky_type_library: VoxelBlockyTypeLibrary
 
 const VOXEL_TERRAIN_GROUP = "VoxelTerrain"
+const AIR_TYPE = 0
 
 var terrain: VoxelTerrain
 var voxel_tool: VoxelTool
@@ -57,15 +58,17 @@ func can_break() -> bool:
 	return last_hit != null
 
 
+## Places a block with the given type
 func place_block(type: StringName):
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
 	voxel_tool.do_point(last_hit.previous_position)
 
 
+## Breaks the block and returns the type name
 func break_block() -> StringName:
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
-	voxel_tool.value = 0
+	voxel_tool.value = AIR_TYPE
 
 	var voxel: int = voxel_tool.get_voxel(last_hit.position)
 	voxel_tool.do_point(last_hit.position)

@@ -1,8 +1,7 @@
-[gd_resource type="AtlasTexture" load_steps=2 format=2]
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dbmwae8ialhej"]
 
 [ext_resource type="Texture2D" uid="uid://bj6lta8stj7xg" path="res://assets/textures_mesh.png" id="1"]
 
 [resource]
-flags = 19
-atlas = ExtResource( 1 )
-region = Rect2( 96, 16, 16, 16 )
+atlas = ExtResource("1")
+region = Rect2(96, 16, 16, 16)

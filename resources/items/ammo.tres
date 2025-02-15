@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Item_Global" load_steps=4 format=3 uid="uid://c3sbkqtek6ll8"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=4 format=3 uid="uid://c3sbkqtek6ll8"]
 
-[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_uidyx"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_uidyx"]
 
 [sub_resource type="Gradient" id="Gradient_gfrv1"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 0, 1)
@@ -10,13 +10,9 @@ gradient = SubResource("Gradient_gfrv1")
 
 [resource]
 script = ExtResource("1_uidyx")
-item_name = "Ammo"
-item_texture = SubResource("GradientTexture2D_xg4ma")
-type = 0
+unique_name = &"ammo"
+texture = SubResource("GradientTexture2D_xg4ma")
 max_stack = 64
-placeable = false
-holdable = false
-break_time = 0.4
 breaking_efficiency = 0.0
 weapon = false
 damage = 0

@@ -144,8 +144,8 @@ func hotbar_slot_clicked(_slot):
 	#_press_key(slot.Item_resource.type)
 
 
-func remove(item_name:String = "", amount:int = 1):
-	if item_name == "":
+func remove(unique_name:String = "", amount:int = 1):
+	if unique_name == "":
 		var slot = get_current()
 		slot.amount -= 1
 		if slot.amount <= 0:

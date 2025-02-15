@@ -44,10 +44,10 @@ tile_back = Vector2i(3, 0)
 tile_front = Vector2i(3, 0)
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_k4bih"]
-unique_name = &"rock"
+unique_name = &"stone"
 base_model = SubResource("VoxelBlockyModelCube_rqnpp")
-resource_name = "rock"
+resource_name = "stone"
 
 [resource]
 types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_k4bih")])
-_id_map_data = PackedStringArray("air", "grass", "unnamed", "unnamed", "dirt", "rock")
+_id_map_data = PackedStringArray("air", "grass", "unnamed", "unnamed", "dirt", "rock", "stone")

@@ -41,4 +41,7 @@ spawn_points = NodePath("../Game/SpawnPoints")
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
 
+[node name="Inventory holder" parent="Game/UI/Player UI" index="2"]
+script = null
+
 [editable path="Game"]
