@@ -1,5 +1,7 @@
 extends Control
 
+const SPLASH_ANIMATION_NAME = "Splash"
+
 @export var single_player_btn: Button
 @export var multiplayer_btn: Button
 @export var singleplayer_scene: PackedScene
@@ -13,11 +15,11 @@ extends Control
 
 func _ready():
 	if Connection.is_server():
-		start_multiplayer()
+		start_scene(multiplayer_scene)
 		return
 	
-	multiplayer_btn.pressed.connect(start_multiplayer)
-	single_player_btn.pressed.connect(start_singleplayer)
+	single_player_btn.pressed.connect(func(): start_scene(singleplayer_scene))
+	multiplayer_btn.pressed.connect(func(): start_scene(multiplayer_scene))
 	
 	setup_splash_screen()
 
@@ -26,12 +28,8 @@ func setup_splash_screen():
 	var saying = splash_sayings[randi() % splash_sayings.size()]
 	splash.text = saying
 	
-	animation_player.play("Splash")
+	animation_player.play(SPLASH_ANIMATION_NAME)
 
 
-func start_singleplayer():
-	get_tree().change_scene_to_packed(singleplayer_scene)
-
-
-func start_multiplayer():
-	get_tree().change_scene_to_packed(multiplayer_scene)
+func start_scene(scene: PackedScene):
+	get_tree().call_deferred("change_scene_to_packed", scene)

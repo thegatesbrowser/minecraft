@@ -26,7 +26,6 @@ func _ready() -> void:
 
 
 func _create_action_list():
-	print("_create_action_list")
 	InputMap.load_from_project_settings()
 	for item in action_list.get_children():
 		item.queue_free()

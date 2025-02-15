@@ -21,7 +21,7 @@
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain_materal.material" id="19_nv6q3"]
-[ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_blocky_type_library.tres" id="20_xf4w1"]
+[ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="20_xf4w1"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flqqw"]
@@ -57,6 +57,7 @@ frequency = 0.007
 [sub_resource type="VoxelGeneratorNoise2D" id="VoxelGeneratorNoise2D_rvvqb"]
 noise = SubResource("FastNoiseLite_n0vum")
 channel = 0
+height_start = 0.0
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("20_xf4w1")
@@ -121,6 +122,7 @@ navigation_mesh = SubResource("NavigationMesh_6jrpq")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="NavigationRegion3D" groups=["VoxelTerrain"]]
 material_override = ExtResource("19_nv6q3")
+use_gpu_generation = true
 generator = SubResource("VoxelGeneratorNoise2D_rvvqb")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 

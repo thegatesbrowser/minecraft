@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://ql4u3t5lhtyt"]
+[gd_scene load_steps=14 format=3 uid="uid://ql4u3t5lhtyt"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
 [ext_resource type="PackedScene" uid="uid://dsupdgc7b2e4d" path="res://assets/models/minecraft_player.glb" id="2_gmbcs"]
 [ext_resource type="PackedScene" uid="uid://dkl03ijbkqti4" path="res://scenes/items/weapons/bullet.tscn" id="2_y2grk"]
 [ext_resource type="PackedScene" uid="uid://cx2ae4w7whc6p" path="res://scenes/items/weapons/weapon_base.tscn" id="3_jtlx2"]
+[ext_resource type="Script" path="res://scripts/player/player_hands.gd" id="4_064gd"]
+[ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_5801w"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -45,94 +47,99 @@ ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
 bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
 
-[node name="TerrainInteraction" type="Node" parent="." node_paths=PackedStringArray("camera", "block")]
+[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction")]
+script = ExtResource("4_064gd")
+terrain_interaction = NodePath("TerrainInteraction")
+voxel_blocky_type_library = ExtResource("5_5801w")
+
+[node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block")]
 script = ExtResource("2_5q13p")
-camera = NodePath("../RotationRoot/Head/Camera3D")
+camera = NodePath("../../RotationRoot/Head/Camera3D")
 block = NodePath("BlockOutline")
 
-[node name="BlockOutline" type="Node3D" parent="TerrainInteraction"]
+[node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 
-[node name="Area3D" type="Area3D" parent="TerrainInteraction/BlockOutline"]
+[node name="Area3D" type="Area3D" parent="Hands/TerrainInteraction/BlockOutline"]
 collision_layer = 0
 collision_mask = 134217728
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TerrainInteraction/BlockOutline/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hands/TerrainInteraction/BlockOutline/Area3D"]
 shape = SubResource("6")
 
-[node name="CollisionShape2" type="CollisionShape3D" parent="TerrainInteraction/BlockOutline/Area3D"]
+[node name="CollisionShape2" type="CollisionShape3D" parent="Hands/TerrainInteraction/BlockOutline/Area3D"]
 shape = SubResource("7")
 
-[node name="Visible_Block" type="Node3D" parent="TerrainInteraction/BlockOutline"]
+[node name="Visible_Block" type="Node3D" parent="Hands/TerrainInteraction/BlockOutline"]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 
-[node name="Edge" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge2" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge2" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge3" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge3" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, 0.5, 0)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge4" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge4" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, -0.5, 0)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge5" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge5" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge6" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge6" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge7" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge7" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, 0.5, 0)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge8" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge8" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, -0.5, 0)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge9" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge9" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, 0.5)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge10" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge10" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0.5)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge11" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge11" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, -0.5)
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
-[node name="Edge12" type="MeshInstance3D" parent="TerrainInteraction/BlockOutline/Visible_Block"]
+[node name="Edge12" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, -0.5)
 cast_shadow = 0
 mesh = SubResource("8")
@@ -205,7 +212,7 @@ shape = SubResource("10")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2gamh")
 
-[connection signal="body_entered" from="TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_entered"]
-[connection signal="body_exited" from="TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_exited"]
+[connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_exited"]
 
 [editable path="RotationRoot/minecraft_player"]
