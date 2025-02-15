@@ -37,9 +37,9 @@ const FOV_CHANGE = 1.5
 
 var speed
 var gravity = 16.5
-var far_distance: float = 160
 var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
+var is_flying: bool
 
 @onready var camera = $RotationRoot/Head/Camera3D
 @onready var ray = $RotationRoot/Head/Camera3D/RayCast3D
@@ -84,13 +84,7 @@ func _ready():
 	
 	Globals.add_item_to_hand.connect(add_item_to_hand)
 	Globals.remove_item_in_hand.connect(remove_item_in_hand)
-	camera.far = far_distance
 	camera.current = true
-
-
-func set_far(far: float) -> void: # TODO: Fix setting far distance
-	far_distance = far
-	$RotationRoot/Head/Camera3D.far = far
 
 
 func _unhandled_input(event):
@@ -108,7 +102,7 @@ func _physics_process(delta):
 	
 	Globals.player_health = health
 	
-	if !Globals.flying:
+	if !is_flying:
 		# Add the gravity.
 		if not is_on_floor():
 			velocity.y -= gravity * delta
@@ -129,7 +123,7 @@ func _physics_process(delta):
 	_move_direction = (rotation_root.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	## Normal Controls
-	if !Globals.flying:
+	if !is_flying:
 		if is_on_floor():
 			if _move_direction:
 				if ANI.current_animation != "walk":
@@ -152,7 +146,7 @@ func _physics_process(delta):
 				velocity.y = JUMP_VELOCITY
 	
 	## Flying Controls
-	if Globals.flying:
+	if is_flying:
 		if camera.rotation.x > max_flying_margin:
 			velocity.y = camera.rotation.x * speed * 2
 		else:
@@ -248,13 +242,13 @@ func interpolate_client(delta: float) -> void:
 
 
 func toggle_flying():
-	Globals.flying = !Globals.flying
+	is_flying = !is_flying
 
 
 func toggle_clipping():
 	$CollisionShape3D.disabled = !$CollisionShape3D.disabled
 	if $CollisionShape3D.disabled:
-		Globals.flying = true
+		is_flying = true
 
 
 func _headbob(time) -> Vector3:

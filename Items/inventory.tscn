@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bxe66yexhl7t1"]
 
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_e6rhx"]
-[ext_resource type="Script" path="res://inventory.gd" id="1_vh6pj"]
+[ext_resource type="Script" path="res://scripts/inventory.gd" id="1_vh6pj"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_n2m6g"]
 color = Color(1, 1, 1, 1)

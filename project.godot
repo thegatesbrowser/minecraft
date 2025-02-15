@@ -12,7 +12,7 @@ config_version=5
 
 config/name="MineMark"
 config/tags=PackedStringArray("20_games")
-run/main_scene="res://menus/menu.tscn"
+run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.3")
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 boot_splash/image="res://assets/splash.png"
@@ -23,9 +23,9 @@ config/icon="res://icon.png"
 
 Console="*res://addons/godot-console/console/src/Console.tscn"
 Print="*res://addons/sdg-print/Print.tscn"
-Globals="*res://globals.tscn"
+Globals="*res://scenes/globals.tscn"
 FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"
-GlobalAnimation="*res://animation.gd"
+GlobalAnimation="*res://scripts/common/animation.gd"
 
 [debug]
 

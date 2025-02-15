@@ -1,8 +1,7 @@
 extends PanelContainer
 
-@onready var input_button_scene = preload("res://UI/input_button.tscn")
+@export var input_button_scene: PackedScene
 @onready var action_list = $MarginContainer/VBoxContainer/ScrollContainer/ActionList
-
 
 var is_remapping = false
 var action_to_remap = null
@@ -20,9 +19,12 @@ var input_actions = {
 	"Sprint": "Run",
 	"Inventory": "Inventory"
 }
+
+
 func _ready() -> void:
 	_create_action_list()
-	
+
+
 func _create_action_list():
 	print("_create_action_list")
 	InputMap.load_from_project_settings()
@@ -44,14 +46,16 @@ func _create_action_list():
 			
 		action_list.add_child(button)
 		button.pressed.connect(_on_input_butt_pressed.bind(button,action))
-		
+
+
 func _on_input_butt_pressed(button, action):
 	if !is_remapping:
 		is_remapping = true
 		action_to_remap = action
 		remapping_button = button
 		button.find_child("LabelInput").text = "Press key to bind..."
-		
+
+
 func _input(event: InputEvent) -> void:
 	if is_remapping:
 		if (
@@ -66,11 +70,10 @@ func _input(event: InputEvent) -> void:
 			action_to_remap = null
 			remapping_button = null
 			accept_event()
-			
-func _update_action_list(button, event):
 
+
+func _update_action_list(button, event):
 	button.find_child("LabelInput").text = event.as_text().trim_suffix(" (Physical)")
-	
 
 
 func _on_reset_button_pressed() -> void:

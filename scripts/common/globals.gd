@@ -6,7 +6,6 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var single_threaded_generate := false
 @export var single_threaded_render := false
 @export var capture_mouse_on_start := true
-@export var no_fog := false
 
 # Chunk Generation Settings.
 @export var chunk_size := Vector3(16, 256, 16)
@@ -29,7 +28,6 @@ var player_health:int
 @export var max_look_vertical := 75
 @export var controller_invert_look := false
 @export var mouse_invert_look := false
-@export var flying := false
 var current_block := 0
 var custom_block:Item_Global
 var can_build:bool = false

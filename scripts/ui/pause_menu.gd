@@ -1,6 +1,12 @@
 extends Control
 
+@onready var menu_scene: PackedScene = preload("res://scenes/menu.tscn")
 var played_ani: bool
+
+
+func _ready() -> void:
+	if menu_scene == null:
+		assert(false, "Menu scene not found")
 
 
 func _process(_delta: float) -> void:
@@ -24,7 +30,7 @@ func _process(_delta: float) -> void:
 func _on_main_menu_pressed() -> void:
 	await get_tree().process_frame
 	Globals.paused = false
-	get_tree().change_scene_to_file("res://menus/Menu.tscn")
+	get_tree().change_scene_to_packed(menu_scene)
 
 
 func _on_settings_pressed() -> void:
