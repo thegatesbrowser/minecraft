@@ -50,12 +50,12 @@ weapon_base = ExtResource("3_jtlx2")
 [node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction")]
 script = ExtResource("4_064gd")
 terrain_interaction = NodePath("TerrainInteraction")
-voxel_blocky_type_library = ExtResource("5_5801w")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block")]
 script = ExtResource("2_5q13p")
 camera = NodePath("../../RotationRoot/Head/Camera3D")
 block = NodePath("BlockOutline")
+voxel_blocky_type_library = ExtResource("5_5801w")
 
 [node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

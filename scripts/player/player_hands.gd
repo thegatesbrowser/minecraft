@@ -1,7 +1,10 @@
 extends Node
 
 @export var terrain_interaction: TerrainInteraction
-@export var voxel_blocky_type_library: VoxelBlockyTypeLibrary
+
+
+func _ready():
+	terrain_interaction.enable()
 
 
 func _process(_delta: float) -> void:
@@ -9,13 +12,11 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Build"):
 		if terrain_interaction.can_place():
-			var type = voxel_blocky_type_library.get_model_index_default("rock")
-			terrain_interaction.place_block(type)
+			terrain_interaction.place_block(&"rock")
 	
 	if Input.is_action_just_pressed("Mine"):
 		if terrain_interaction.can_break():
-			var voxel = terrain_interaction.break_block()
-			print(voxel)
+			var type = terrain_interaction.break_block()
 	
 	# BUILDING / BREAKING
 	# if ray.is_colliding():

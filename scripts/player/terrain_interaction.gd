@@ -4,12 +4,14 @@ class_name TerrainInteraction
 @export var distance: float = 10
 @export var camera: Camera3D
 @export var block: Node3D
+@export var voxel_blocky_type_library: VoxelBlockyTypeLibrary
 
 const VOXEL_TERRAIN_GROUP = "VoxelTerrain"
 
 var terrain: VoxelTerrain
 var voxel_tool: VoxelTool
 
+var is_enabled: bool
 var block_is_inside_character: bool
 var last_hit: VoxelRaycastResult
 
@@ -24,7 +26,7 @@ func _ready():
 
 
 func _physics_process(_delta):
-	if not is_multiplayer_authority():
+	if not is_multiplayer_authority() or not is_enabled:
 		return
 
 	var origin = camera.get_global_transform().origin
@@ -39,6 +41,14 @@ func _physics_process(_delta):
 		block.hide()
 
 
+func enable():
+	is_enabled = true
+
+
+func disable():
+	is_enabled = false
+
+
 func can_place() -> bool:
 	return last_hit != null and !block_is_inside_character
 
@@ -47,19 +57,21 @@ func can_break() -> bool:
 	return last_hit != null
 
 
-func place_block(type: int):
+func place_block(type: StringName):
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
-	voxel_tool.value = type
+	voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
 	voxel_tool.do_point(last_hit.previous_position)
 
 
-func break_block() -> int:
+func break_block() -> StringName:
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	voxel_tool.value = 0
 
-	var voxel = voxel_tool.get_voxel(last_hit.position)
+	var voxel: int = voxel_tool.get_voxel(last_hit.position)
 	voxel_tool.do_point(last_hit.position)
-	return voxel
+
+	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
+	return array[0]
 
 
 func _on_Area_body_entered(_body):
