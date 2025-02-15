@@ -136,8 +136,9 @@ func _on_Leaf1_pressed():
 
 func _on_Leaf2_pressed():
 	pass
-	
-func hotbar_slot_clicked(slot):
+
+
+func hotbar_slot_clicked(_slot):
 	pass
 	#_unpress_all()
 	#_press_key(slot.Item_resource.type)

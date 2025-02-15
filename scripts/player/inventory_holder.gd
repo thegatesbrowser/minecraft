@@ -8,7 +8,8 @@ func _ready() -> void:
 	Globals.add_subinventory.connect(add_subinventory)
 	Globals.open_inventory.connect(open_inventory)
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Inventory"):
 		visible = !visible
 		
@@ -16,7 +17,7 @@ func _process(delta: float) -> void:
 			if "Owner" in i:
 				if i.Owner != null:
 					i.hide()
-				
+		
 		if visible:
 			GlobalAnimation._tween(self,"bounce_in",.2)
 			Globals.paused = true
@@ -26,11 +27,13 @@ func _process(delta: float) -> void:
 			Globals.paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+
 func add_subinventory(Owner:Node):
 	var inventory = inventory_s.instantiate()
 	inventory.Owner = Owner
 	h_box_container.add_child(inventory)
 	inventory.visible = false
+
 
 func open_inventory(Owner:Node):
 	for i in h_box_container.get_children():
@@ -38,9 +41,9 @@ func open_inventory(Owner:Node):
 			if i.Owner == Owner:
 				print("opne")
 				i.show()
-			
+	
 	show()
-		
+	
 	if visible:
 		GlobalAnimation._tween(self,"bounce_in",.2)
 		Globals.paused = true
@@ -48,4 +51,3 @@ func open_inventory(Owner:Node):
 	else:
 		Globals.paused = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	

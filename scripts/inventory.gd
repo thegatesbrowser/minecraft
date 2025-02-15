@@ -10,7 +10,6 @@ class_name Inventory
 @export var Owner: Node
 
 var times:int = 0
-var find_item
 var items = []
 var slots = []
 var full:bool = false
@@ -31,7 +30,7 @@ func _ready() -> void:
 	make_slots()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	check_slots()
 	check_if_full()
 	if Input.is_action_just_pressed("5"):

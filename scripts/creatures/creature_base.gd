@@ -9,10 +9,8 @@ var health
 @onready var jump: RayCast3D = $RotationRoot/jump
 @onready var rotation_root: Node3D = $RotationRoot
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
-@onready var _move: Timer = $Move
 @onready var eyes: RayCast3D = $eyes
 @onready var attack_coll: CollisionShape3D = $"attack range/CollisionShape3D"
-
 
 @onready var guide: Node3D = $guide
 
@@ -26,6 +24,7 @@ var target_pos
 
 var ani:AnimationPlayer
 var mesh:MeshInstance3D
+
 
 func _ready() -> void:
 	set_physics_process(false)
@@ -42,6 +41,7 @@ func _ready() -> void:
 	collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
 	attack_coll.position.y =  mesh.get_aabb().size.y / 2
 	set_physics_process(true)
+
 
 func change_state(state,_target_pos = null):
 	match state:
@@ -64,6 +64,7 @@ func change_state(state,_target_pos = null):
 			current_state = 3
 			speed = creature_resource.speed
 			move_to(_target_pos)
+
 
 func _physics_process(delta):
 	if creature_resource.attacks:

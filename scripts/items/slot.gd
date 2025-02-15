@@ -10,7 +10,8 @@ var focused:bool = false
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	if focused:
 		if !played_ani:
 			GlobalAnimation._tween(self,"bounce",.3)
@@ -19,12 +20,14 @@ func _process(delta: float) -> void:
 	else:
 		played_ani = false
 		$pressed.hide()
-		
+
+
 func _ready() -> void:
 	if Item_resource != null:
 		image.texture = Item_resource.item_texture
 	update_slot()
-	
+
+
 func _on_pressed() -> void:
 	if type == "hotbar":
 		if Item_resource != null:
