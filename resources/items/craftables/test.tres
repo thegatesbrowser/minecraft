@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=4 format=3 uid="uid://cc1qpdilrm2wb"]
+
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_0ohpl"]
+[ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="1_2xbij"]
+[ext_resource type="Texture2D" uid="uid://bw6w2bx360fad" path="res://assets/atlas/dirt.tres" id="3_x6mgq"]
+
+[resource]
+script = ExtResource("1_0ohpl")
+Name = "test"
+texture = ExtResource("3_x6mgq")
+output_item = ExtResource("1_2xbij")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 3,
+"name": "GRASS"
+},
+2: {
+"amount": 1,
+"name": "LEAF1"
+}
+}

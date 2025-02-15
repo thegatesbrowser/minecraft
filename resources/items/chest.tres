@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Item_Global" load_steps=5 format=3 uid="uid://bxei0e32tol02"]
+
+[ext_resource type="Texture2D" uid="uid://hl47wgp2cc8n" path="res://assets/atlas/chest.tres" id="1_bud5q"]
+[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_enl37"]
+[ext_resource type="PackedScene" uid="uid://cxmsmlihr3hyj" path="res://scenes/other/utilities_base.tscn" id="1_o5yhc"]
+[ext_resource type="Resource" uid="uid://djttwhuc8qbk8" path="res://resources/chest.tres" id="3_ig7r5"]
+
+[resource]
+script = ExtResource("1_enl37")
+item_name = "Chest"
+item_texture = ExtResource("1_bud5q")
+type = 10
+max_stack = 64
+placeable = true
+holdable = false
+break_time = 0.4
+place_object = ExtResource("1_o5yhc")
+utility = ExtResource("3_ig7r5")
+breaking_efficiency = 0.0
+weapon = false
+damage = 0
+needs_ammo = false
+ammo_name = "Ammo"
+shoots = false
+fire_rate = 0.0

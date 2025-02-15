@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxmsmlihr3hyj"]
+
+[ext_resource type="Script" path="res://scripts/other/utilities_base.gd" id="1_jcfkw"]
+[ext_resource type="Resource" uid="uid://djttwhuc8qbk8" path="res://resources/chest.tres" id="2_ovark"]
+[ext_resource type="ArrayMesh" uid="uid://bbiqx8j8ggoif" path="res://assets/models/chest.mesh" id="3_q4oap"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_o23sf"]
+
+[node name="utilities base" type="StaticBody3D"]
+script = ExtResource("1_jcfkw")
+resource = ExtResource("2_ovark")
+
+[node name="body" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_q4oap")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_o23sf")

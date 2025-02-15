@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Creature" load_steps=5 format=3 uid="uid://dwphi1dev865q"]
+
+[ext_resource type="PackedScene" uid="uid://bknf4aa4fmqsg" path="res://assets/models/fox.glb" id="1_ohjhc"]
+[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="2_sffgm"]
+[ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ldbmh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e0a6d"]
+size = Vector3(0.285156, 0.395752, 0.614319)
+
+[resource]
+script = ExtResource("3_ldbmh")
+body_scene = ExtResource("1_ohjhc")
+max_health = 5
+attacks = true
+run_away_after_attack = false
+damage = 1
+speed = 7.0
+coll_shape = SubResource("BoxShape3D_e0a6d")
+coll_height = 0.0
+coll_radius = 0.0
+walk_ani_name = "ArmatureAction"
+creature_name = "Fox"
+drop_items = Array[ExtResource("2_sffgm")]([])

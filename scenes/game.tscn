@@ -1,27 +1,28 @@
-[gd_scene load_steps=37 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=38 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2_ifuak"]
-[ext_resource type="Script" path="res://player/inventory_holder.gd" id="3_fe1qo"]
+[ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
+[ext_resource type="Script" path="res://scripts/player/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
-[ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://Items/Craftables/craftable.tscn" id="4_bg8ft"]
-[ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://Items/Craftables/Sticks.tres" id="5_jvylc"]
-[ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://Items/Craftables/Wood1.tres" id="6_qmem5"]
-[ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://Items/Craftables/Wood2.tres" id="7_2v6u3"]
-[ext_resource type="Script" path="res://multiplayer/spawn_points.gd" id="7_u8af2"]
-[ext_resource type="Resource" uid="uid://c1c7ynjb33hsk" path="res://Items/Craftables/Pickaxe.tres" id="8_fjhcp"]
-[ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://Items/Craftables/Chest.tres" id="9_gbvy1"]
-[ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://Items/inventory.tscn" id="10_hxw3b"]
-[ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://Items/Craftables/craftable_info.tscn" id="11_cdfh2"]
-[ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://player/selection_buttons.tscn" id="12_qvgc7"]
+[ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="4_bg8ft"]
+[ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="5_jvylc"]
+[ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://resources/items/craftables/wood_1.tres" id="6_qmem5"]
+[ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://resources/items/craftables/wood_2.tres" id="7_2v6u3"]
+[ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="7_u8af2"]
+[ext_resource type="Resource" uid="uid://c1c7ynjb33hsk" path="res://resources/items/craftables/pickaxe.tres" id="8_fjhcp"]
+[ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="9_gbvy1"]
+[ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://scenes/items/inventory.tscn" id="10_hxw3b"]
+[ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
+[ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://scenes/player/selection_buttons.tscn" id="12_qvgc7"]
 [ext_resource type="Script" path="res://scripts/common/animation.gd" id="13_jjeu3"]
-[ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://Items/Craftables/Ammo.tres" id="13_kkf35"]
-[ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://Items/Craftables/Pistol.tres" id="14_ye6pm"]
+[ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://resources/items/craftables/ammo.tres" id="13_kkf35"]
+[ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/pistol.tres" id="14_ye6pm"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain_materal.material" id="19_nv6q3"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_blocky_type_library.tres" id="20_xf4w1"]
-[ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scripts/ui/input_button.tscn" id="22_2hbom"]
+[ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flqqw"]
 sky_top_color = Color(0, 0.490196, 0.878431, 1)
@@ -94,8 +95,10 @@ thickness = 2
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5s33"]
 bg_color = Color(0.0846899, 0.0846899, 0.0846899, 1)
 
-[node name="Game" type="Node3D"]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("breaktime")]
 script = ExtResource("1")
+creature_s = ExtResource("2_pgqmj")
+breaktime = NodePath("Breaktime")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128, 0)
@@ -171,6 +174,7 @@ theme = ExtResource("3_v2bsq")
 [node name="Selection_Buttons" parent="UI/Player UI" instance=ExtResource("12_qvgc7")]
 process_mode = 3
 layout_mode = 1
+script = null
 
 [node name="stats" type="HBoxContainer" parent="UI/Player UI"]
 layout_mode = 1
@@ -294,7 +298,7 @@ texture = SubResource("GradientTexture2D_im5ed")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Inventory holder" type="Control" parent="UI/Player UI"]
+[node name="Inventory holder" type="Control" parent="UI/Player UI" node_paths=PackedStringArray("h_box_container")]
 process_mode = 3
 visible = false
 layout_mode = 1
@@ -307,6 +311,8 @@ grow_vertical = 2
 pivot_offset = Vector2(960, 540)
 mouse_filter = 2
 script = ExtResource("3_fe1qo")
+inventory_s = ExtResource("10_hxw3b")
+h_box_container = NodePath("HBoxContainer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Player UI/Inventory holder"]
 custom_minimum_size = Vector2(1012, 800)

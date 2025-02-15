@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Item_Global" load_steps=3 format=3 uid="uid://c5ahbt0pwj3hk"]
+
+[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="1_ivu7p"]
+[ext_resource type="Texture2D" uid="uid://bw6w2bx360fad" path="res://assets/atlas/dirt.tres" id="1_vuhr6"]
+
+[resource]
+script = ExtResource("1_ivu7p")
+item_name = "DIRT"
+item_texture = ExtResource("1_vuhr6")
+type = 1
+max_stack = 64
+placeable = true
+holdable = false
+break_time = 0.4
+breaking_efficiency = 0.0
+weapon = false
+damage = 0
+needs_ammo = false
+ammo_name = "Ammo"
+shoots = false
+fire_rate = 0.0

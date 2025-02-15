@@ -1,0 +1,81 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxe66yexhl7t1"]
+
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_e6rhx"]
+[ext_resource type="Script" path="res://scripts/inventory.gd" id="1_vh6pj"]
+[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="3_v400e"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_n2m6g"]
+color = Color(1, 1, 1, 1)
+thickness = 3
+
+[node name="Inventory" type="ScrollContainer" node_paths=PackedStringArray("items_collection", "inventroy_name")]
+process_mode = 3
+custom_minimum_size = Vector2(800, 800)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -400.0
+offset_right = 400.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_e6rhx")
+horizontal_scroll_mode = 0
+script = ExtResource("1_vh6pj")
+slot_s = ExtResource("3_v400e")
+items_collection = NodePath("PanelContainer/MarginContainer/VBoxContainer/Items")
+amount_of_slots = 40
+inventroy_name = NodePath("PanelContainer/MarginContainer/VBoxContainer/InventroyName")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="InventroyName" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "INVENTORY"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_n2m6g")
+
+[node name="Close" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "close"
+
+[node name="Sort" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "SORT"
+
+[node name="AddRandomItem" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "add random item *debug*"
+
+[node name="Items" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 9
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Sort" to="." method="_on_sort_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/AddRandomItem" to="." method="_on_add_random_item_pressed"]

@@ -1,19 +1,13 @@
 extends Node3D
 class_name Game
 
-@export var is_multiplayer: bool
-@export var player_spawner: PlayerSpawner
-@export var single_player: Player
-
 signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 
-@onready var creature_s = preload("res://creatures/creature base.tscn")
-
-@onready var breaktime: Timer = $Breaktime
+@export var creature_s: PackedScene
+@export var breaktime: Timer
 
 var player: Player
 var player_pos := Vector2.ZERO
-
 var is_fullscreen = false
 
 

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://cn74d63vbktv"]
+
+[ext_resource type="Resource" uid="uid://wmfg0glqnqj" path="res://resources/items/pistol.tres" id="1_dgnf4"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_ypykj"]
+
+[sub_resource type="Gradient" id="Gradient_rmwa7"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 0, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dyyyw"]
+gradient = SubResource("Gradient_rmwa7")
+
+[resource]
+script = ExtResource("1_ypykj")
+Name = "Pistol"
+texture = SubResource("GradientTexture2D_dyyyw")
+output_item = ExtResource("1_dgnf4")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 4,
+"name": "STONE"
+}
+}

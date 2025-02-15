@@ -1,39 +1,42 @@
 extends ScrollContainer
 class_name Inventory
 
-var times:int = 0
-@onready var slot_s = preload("res://Items/Slot.tscn")
-@onready var items_collection: GridContainer = $PanelContainer/MarginContainer/VBoxContainer/Items
+@export var slot_s: PackedScene
+@export var test_2: PackedScene
+@export var items_collection: GridContainer
 @export var amount_of_slots:int = 10
+@export var inventroy_name: Label
 
-@onready var inventroy_name: Label = $"PanelContainer/MarginContainer/VBoxContainer/Inventroy name"
+@export var Owner: Node
 
-
+var times:int = 0
 var find_item
 var items = []
 var slots = []
 var full:bool = false
-@export var Owner:Node
 var inventory = []
 
-var possible_items = ["res://Items/Dirt.tres","res://Items/Glass.tres","res://Items/Grass.tres","res://Items/Leaf1.tres","res://Items/Leaf2.tres","res://Items/Log1.tres","res://Items/Log2.tres","res://Items/Stone.tres","res://Items/Wood1.tres","res://Items/Wood2.tres"]
+# var possible_items = ["res://Items/Dirt.tres","res://Items/Glass.tres","res://Items/Grass.tres","res://Items/Leaf1.tres","res://Items/Leaf2.tres","res://Items/Log1.tres","res://Items/Log2.tres","res://Items/Stone.tres","res://Items/Wood1.tres","res://Items/Wood2.tres"]
+var possible_items = []
+
 
 func _ready() -> void:
 	if Owner != null:
 		inventroy_name.text = str(Owner.resource.Name, " Inventory")
+	
 	Globals.spawn_item_inventory.connect(spawn_item)
 	Globals.remove_item.connect(remove_item)
 	Globals.check_amount_of_item.connect(check_amount_of_item)
 	#Globals.slot_clicked.connect(slot_clicked)
 	make_slots()
-	
+
+
 func _process(delta: float) -> void:
 	check_slots()
 	check_if_full()
 	if Input.is_action_just_pressed("5"):
-		spawn_item(load("res://Items/Test2.tres"))
+		spawn_item(test_2.instantiate())	
 	
-				
 	if Input.is_action_just_pressed("Build"):
 		## split
 		if Globals.last_clicked_slot != null:
@@ -45,7 +48,8 @@ func _process(delta: float) -> void:
 					spawn_item(Globals.last_clicked_slot.Item_resource,amount)
 					Globals.last_clicked_slot.update_slot()
 					Globals.last_clicked_slot = null
-		
+
+
 func is_even(x: int):
 	return x % 2 == 0
 			
@@ -66,11 +70,13 @@ func spawn_item(item_resource, amount:int = 1):
 				sort()
 				break
 	#items_collection.aa
-	
+
+
 func make_slots():
 	for i in amount_of_slots:
 		var slot = slot_s.instantiate()
 		items_collection.add_child(slot)
+
 
 func sort():
 	for i in items_collection.get_children():
@@ -93,6 +99,7 @@ func sort():
 								i.update_slot()
 								find_item.update_slot()
 
+
 func _on_sort_pressed() -> void:
 	sort()
 
@@ -100,6 +107,7 @@ func _on_sort_pressed() -> void:
 func _on_add_random_item_pressed() -> void:
 	var item = possible_items.pick_random()
 	spawn_item(load(item))
+
 
 func check_amount_of_item(item:String):
 	var amount = 0
@@ -111,6 +119,7 @@ func check_amount_of_item(item:String):
 			#print("yes ",item, " in ", i)
 			amount += 1
 	return amount
+
 
 func remove_item(item_name:String,amount:int):
 	
@@ -140,6 +149,7 @@ func remove_item(item_name:String,amount:int):
 					check_if_full()
 					break
 
+
 func check_if_full():
 	var free_space:int = 0
 	for i in items_collection.get_children():
@@ -150,6 +160,7 @@ func check_if_full():
 	else:
 		full = false
 
+
 func check_slots():
 	inventory.clear()
 	
@@ -157,6 +168,7 @@ func check_slots():
 		if i.Item_resource != null:
 			for amount in i.amount:
 				inventory.append(i.Item_resource.item_name)
+
 
 func _on_close_pressed() -> void:
 	#Globals.paused = false

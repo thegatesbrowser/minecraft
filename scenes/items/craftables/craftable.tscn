@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3jgvc45n8k2i"]
+
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable_base.gd" id="1_eofgj"]
+[ext_resource type="Resource" uid="uid://cc1qpdilrm2wb" path="res://resources/items/craftables/test.tres" id="2_r81gs"]
+[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="3_pygll"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oq77m"]
+bg_color = Color(0, 0, 0, 0.572549)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.176419, 0.176419, 0.176419, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0, 0, 0, 0.152941)
+shadow_size = 2
+shadow_offset = Vector2(3, 3)
+anti_aliasing = false
+
+[node name="Craftable" type="TextureButton"]
+custom_minimum_size = Vector2(90, 90)
+offset_right = 40.0
+offset_bottom = 40.0
+stretch_mode = 5
+script = ExtResource("1_eofgj")
+craftable = ExtResource("2_r81gs")
+
+[node name="CenterContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Image" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("3_pygll")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_oq77m")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="craft"]

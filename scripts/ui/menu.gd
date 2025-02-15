@@ -15,7 +15,7 @@ func _ready():
 	if Connection.is_server():
 		start_multiplayer()
 		return
-
+	
 	multiplayer_btn.pressed.connect(start_multiplayer)
 	single_player_btn.pressed.connect(start_singleplayer)
 	
@@ -25,7 +25,7 @@ func _ready():
 func setup_splash_screen():
 	var saying = splash_sayings[randi() % splash_sayings.size()]
 	splash.text = saying
-
+	
 	animation_player.play("Splash")
 
 

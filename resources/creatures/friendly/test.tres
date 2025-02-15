@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Creature" load_steps=6 format=3 uid="uid://dvflyaopd8icg"]
+
+[ext_resource type="PackedScene" uid="uid://dsupdgc7b2e4d" path="res://assets/models/minecraft_player.glb" id="1_5ktq8"]
+[ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="1_x6yal"]
+[ext_resource type="Resource" uid="uid://toq60d1hqqms" path="res://resources/items/stick.tres" id="2_g1jkj"]
+[ext_resource type="Script" path="res://scripts/items/item_global.gd" id="2_pua4k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f02ms"]
+radius = 0.411
+height = 1.806
+
+[resource]
+script = ExtResource("1_x6yal")
+body_scene = ExtResource("1_5ktq8")
+max_health = 10
+attacks = false
+damage = 0
+speed = 5.0
+coll_shape = SubResource("CapsuleShape3D_f02ms")
+coll_height = 1.806
+coll_radius = 0.411
+walk_ani_name = ""
+creature_name = "Pig"
+drop_items = Array[ExtResource("2_pua4k")]([ExtResource("2_g1jkj")])
