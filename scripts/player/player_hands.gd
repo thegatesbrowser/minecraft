@@ -1,9 +1,14 @@
 extends Node
 
-@export var terrain_interaction: TerrainInteraction
+signal place_block(block_name)
+var timer = Timer.new()
 
+@export var utilies_base_s = preload("res://scenes/other/utilities_base.tscn")
+@export var terrain_interaction: TerrainInteraction
+@export var item_library = preload("res://resources/items_library.tres")
 
 func _ready():
+	item_library.init_items()
 	terrain_interaction.enable()
 
 
@@ -12,18 +17,32 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Build"):
 		if terrain_interaction.can_place():
-			terrain_interaction.place_block(&"stone")
-	
+			if Globals.can_build:
+				terrain_interaction.place_block(Globals.current_block)
+				Globals.remove_item_from_hotbar.emit()
+				
 	if Input.is_action_just_pressed("Mine"):
 		if terrain_interaction.can_break():
-			var type = terrain_interaction.break_block()
-	
-	# BUILDING / BREAKING
-	# if ray.is_colliding():
-	# 	var coll = ray.get_collider()
-	# 	if Input.is_action_pressed("Mine"):
-	# 		if coll != null:
-	# 			if coll.has_method("interact"):
-	# 				coll.interact()
-	# 			elif coll.has_method("hit"):
-	# 				coll.hit()
+			var type = terrain_interaction.get_type()
+			
+			
+			var timer = Timer.new()
+			
+			if Globals.custom_block.is_empty():
+				timer.wait_time = item_library.get_item(type).break_time
+			else:
+				if item_library.get_item(Globals.custom_block) is ItemTool:
+					if item_library.get_item(Globals.custom_block).suitable_objects.has(item_library.get_item(type)):
+						timer.wait_time = item_library.get_item(type).break_time - item_library.get_item(Globals.custom_block).breaking_efficiency
+					else:
+						timer.wait_time = item_library.get_item(type).break_time
+						
+			add_child(timer)
+			timer.start()
+			
+			await timer.timeout
+			
+			if Input.is_action_pressed("Mine"):
+				timer.queue_free()
+				terrain_interaction.break_block()
+				Globals.spawn_item_inventory.emit(item_library.get_item(type))

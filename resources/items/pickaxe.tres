@@ -1,22 +1,22 @@
-[gd_resource type="Resource" script_class="ItemBase" load_steps=4 format=3 uid="uid://j36n47ah560y"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=6 format=3 uid="uid://bnocc46636wyo"]
 
-[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_dw8ry"]
+[ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="1_nm7br"]
+[ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="2_b4wtr"]
 
-[sub_resource type="Gradient" id="Gradient_ev0rv"]
+[sub_resource type="BoxMesh" id="BoxMesh_4rbsm"]
+size = Vector3(1, 0.2, 0.2)
+
+[sub_resource type="Gradient" id="Gradient_ud3w4"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_fukvg"]
-gradient = SubResource("Gradient_ev0rv")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_41ys5"]
+gradient = SubResource("Gradient_ud3w4")
 
 [resource]
-script = ExtResource("1_dw8ry")
-unique_name = "Pickaxe"
-texture = SubResource("GradientTexture2D_fukvg")
+script = ExtResource("1_nm7br")
+suitable_objects = [ExtResource("2_b4wtr")]
+unique_name = &"PICKAXE"
+texture = SubResource("GradientTexture2D_41ys5")
 max_stack = 64
-breaking_efficiency = 0.2
-weapon = false
-damage = 0
-needs_ammo = false
-ammo_name = "Ammo"
-shoots = false
-fire_rate = 0.0
+holdable_mesh = SubResource("BoxMesh_4rbsm")
+breaking_efficiency = 0.0

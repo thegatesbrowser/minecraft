@@ -1,4 +1,5 @@
 extends Control
+class_name Inventory_Holder
 
 @export var inventory_s: PackedScene
 @export var h_box_container: HBoxContainer
@@ -7,10 +8,11 @@ extends Control
 func _ready() -> void:
 	Globals.add_subinventory.connect(add_subinventory)
 	Globals.open_inventory.connect(open_inventory)
-
-
-func _process(_delta: float) -> void:
+	
+	pass
+func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Inventory"):
+		print("show")
 		visible = !visible
 		
 		for i in h_box_container.get_children():

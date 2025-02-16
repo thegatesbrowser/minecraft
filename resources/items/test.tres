@@ -11,3 +11,5 @@ gradient = SubResource("Gradient_2wfci")
 script = ExtResource("1_r0xol")
 unique_name = "Test"
 texture = SubResource("GradientTexture2D_og8jt")
+max_stack = 64
+breaking_efficiency = 0.0

@@ -6,7 +6,6 @@
 script = ExtResource("1")
 print_level = 0
 chunk_size = Vector3(16, 128, 16)
-chunk_type = 3
 chunk_loading_threads = 8
 max_look_vertical = 90
 controller_invert_look = true

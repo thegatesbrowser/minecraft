@@ -1,5 +1,5 @@
 extends ScrollContainer
-
+class_name HotBar
 
 @onready var slots: HBoxContainer = $MarginContainer/VBoxContainer/Slots
 
@@ -67,25 +67,25 @@ func _press_key(i):
 	buttons[i].button_pressed = true
 	Globals.remove_item_in_hand.emit()
 	if buttons[current_key].Item_resource != null:
-		if buttons[current_key].Item_resource.placeable:
-			if buttons[current_key].Item_resource.type < 10:
-				Globals.current_block = keys[buttons[current_key].Item_resource.type]
-			else:
-				Globals.custom_block = buttons[current_key].Item_resource
-			Globals.breaking_efficiency = 0.0
+		
+		## add holdable if has one
+		
+		if buttons[current_key].Item_resource.holdable_mesh != null:
+			Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
+		
+		if buttons[current_key].Item_resource is ItemBlock:
+			Globals.current_block = buttons[current_key].Item_resource.unique_name
 			Globals.can_build = true 
+		elif buttons[current_key].Item_resource is ItemTool:
+			Globals.can_build = false
 		else:
-			Globals.custom_block = null
-			if buttons[current_key].Item_resource.holdable:
-				Globals.breaking_efficiency = buttons[current_key].Item_resource.breaking_efficiency
-				Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
-			else:
-				Globals.breaking_efficiency = 0.0
-			Globals.can_build = false 
+			Globals.custom_block = buttons[current_key].Item_resource.unique_name
+			Globals.can_build = true 
 	else:
-		Globals.breaking_efficiency = 0.0
-		Globals.custom_block = null
+		#Globals.custom_block = ""
+		#Globals.current_block = ""
 		Globals.can_build = false
+		
 	current_key = i
 
 

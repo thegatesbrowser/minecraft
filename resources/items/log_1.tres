@@ -1,14 +1,12 @@
-[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://dt4x3etw2sx6e"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://d26i62gur1o23"]
 
 [ext_resource type="Texture2D" path="res://assets/atlas/log.tres" id="1_0d4yy"]
-[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_dmfkp"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_tsfsv"]
 
 [resource]
-script = ExtResource("1_dmfkp")
-unique_name = "LOG1"
+script = ExtResource("1_tsfsv")
+break_time = 0.4
+unique_name = &"LOG1"
 texture = ExtResource("1_0d4yy")
-type = 4
 max_stack = 64
-placeable = true
-holdable = false
-break_time = 0.7
+breaking_efficiency = 0.0

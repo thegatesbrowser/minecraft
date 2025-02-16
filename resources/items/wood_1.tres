@@ -1,17 +1,12 @@
-[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://74ckvv5mqskn"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://1826b5fcnlfo"]
 
-[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_6h2db"]
 [ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="1_emy8a"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_qxx17"]
 
 [resource]
-script = ExtResource("1_6h2db")
-unique_name = "WOOD1"
+script = ExtResource("1_qxx17")
+break_time = 0.4
+unique_name = &"WOOD1"
 texture = ExtResource("1_emy8a")
 max_stack = 64
 breaking_efficiency = 0.0
-weapon = false
-damage = 0
-needs_ammo = false
-ammo_name = "Ammo"
-shoots = false
-fire_rate = 0.0

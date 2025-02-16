@@ -61,6 +61,7 @@ func _unpress_all():
 func _press_key(i):
 	buttons[i].button_pressed = true
 	Globals.current_block = keys[i]
+	print(keys[i])
 	current_key = i
 
 
