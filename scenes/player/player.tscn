@@ -49,6 +49,7 @@ weapon_base = ExtResource("3_jtlx2")
 
 [node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction")]
 script = ExtResource("4_064gd")
+utilies_base_s = null
 terrain_interaction = NodePath("TerrainInteraction")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block")]

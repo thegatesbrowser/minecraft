@@ -12,7 +12,6 @@ func _ready() -> void:
 	pass
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Inventory"):
-		print("show")
 		visible = !visible
 		
 		for i in h_box_container.get_children():

@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_y0vpk")
 break_time = 0.4
-unique_name = &"LEAF2"
+unique_name = &"leaf2"
 texture = ExtResource("1_lced7")
 max_stack = 64
 breaking_efficiency = 0.0

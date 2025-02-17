@@ -10,7 +10,7 @@ gradient = SubResource("Gradient_rmwa7")
 
 [resource]
 script = ExtResource("1_hine8")
-unique_name = &""
+unique_name = &"pistol"
 texture = SubResource("GradientTexture2D_y571k")
 max_stack = 1
 breaking_efficiency = 0.0

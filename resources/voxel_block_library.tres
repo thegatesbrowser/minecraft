@@ -58,9 +58,9 @@ tile_back = Vector2i(4, 0)
 tile_front = Vector2i(4, 0)
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_yomcl"]
-unique_name = &"LOG1"
+unique_name = &"oak_log"
 base_model = SubResource("VoxelBlockyModelCube_dcwgv")
-resource_name = "LOG1"
+resource_name = "oak_log"
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_rg3iw"]
 atlas_size_in_tiles = Vector2i(8, 2)
@@ -72,9 +72,9 @@ tile_back = Vector2i(4, 1)
 tile_front = Vector2i(4, 1)
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_7argj"]
-unique_name = &"LOG2"
+unique_name = &"birch_log"
 base_model = SubResource("VoxelBlockyModelCube_rg3iw")
-resource_name = "LOG2"
+resource_name = "birch_log"
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_xuk0k"]
 atlas_size_in_tiles = Vector2i(8, 2)
@@ -86,9 +86,9 @@ tile_back = Vector2i(7, 0)
 tile_front = Vector2i(7, 0)
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_fu35l"]
-unique_name = &"WOOD1"
+unique_name = &"oak_wood"
 base_model = SubResource("VoxelBlockyModelCube_xuk0k")
-resource_name = "WOOD1"
+resource_name = "oak_wood"
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_gikdy"]
 atlas_size_in_tiles = Vector2i(8, 2)
@@ -100,9 +100,9 @@ tile_back = Vector2i(7, 1)
 tile_front = Vector2i(7, 1)
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_bbxuy"]
-unique_name = &"WOOD2"
+unique_name = &"birch_wood"
 base_model = SubResource("VoxelBlockyModelCube_gikdy")
-resource_name = "WOOD2"
+resource_name = "birch_wood"
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_j6y2v"]
 atlas_size_in_tiles = Vector2i(8, 2)
@@ -114,9 +114,9 @@ tile_back = Vector2i(6, 0)
 tile_front = Vector2i(6, 0)
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pwkao"]
-unique_name = &"LEAF1"
+unique_name = &"oak_leaf"
 base_model = SubResource("VoxelBlockyModelCube_j6y2v")
-resource_name = "LEAF1"
+resource_name = "oak_leaf"
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_il7i2"]
 atlas_size_in_tiles = Vector2i(8, 2)
@@ -128,10 +128,10 @@ tile_back = Vector2i(6, 1)
 tile_front = Vector2i(6, 1)
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pgid7"]
-unique_name = &"LEAF2"
+unique_name = &"birch_leaf"
 base_model = SubResource("VoxelBlockyModelCube_il7i2")
-resource_name = "LEAF2"
+resource_name = "birch_leaf"
 
 [resource]
 types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7")])
-_id_map_data = PackedStringArray("air", "grass", "unnamed", "unnamed", "dirt", "rock", "stone", "LOG1", "LOG2", "WOOD1", "WOOD2", "LEAF1", "LEAF2")
+_id_map_data = PackedStringArray("air", "grass", "unnamed", "unnamed", "dirt", "rock", "stone", "LOG1", "LOG2", "WOOD1", "WOOD2", "LEAF1", "LEAF2", "oak_log", "birch_log", "oak_wood", "birch_wood", "leaf1", "leaf2", "oak_leaf", "birch_leaf")

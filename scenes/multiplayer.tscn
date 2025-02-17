@@ -73,12 +73,12 @@ stream = SubResource("AudioStreamRandomizer_6qgro")
 max_distance = 10.0
 panning_strength = 3.0
 
-[node name="LEAF1" type="AudioStreamPlayer3D" parent="SoundManager"]
+[node name="leaf1" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_6qgro")
 max_distance = 52.51
 panning_strength = 3.0
 
-[node name="LEAF2" type="AudioStreamPlayer3D" parent="SoundManager"]
+[node name="leaf2" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_6qgro")
 max_distance = 52.51
 panning_strength = 3.0
@@ -88,22 +88,22 @@ stream = SubResource("AudioStreamRandomizer_hbxe3")
 max_distance = 52.51
 panning_strength = 3.0
 
-[node name="WOOD1" type="AudioStreamPlayer3D" parent="SoundManager"]
+[node name="oak_wood" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_k1v6a")
 max_distance = 52.51
 panning_strength = 3.0
 
-[node name="WOOD2" type="AudioStreamPlayer3D" parent="SoundManager"]
+[node name="birch_wood" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_k1v6a")
 max_distance = 52.51
 panning_strength = 3.0
 
-[node name="LOG1" type="AudioStreamPlayer3D" parent="SoundManager"]
+[node name="oak_log" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_k1v6a")
 max_distance = 52.51
 panning_strength = 3.0
 
-[node name="LOG2" type="AudioStreamPlayer3D" parent="SoundManager"]
+[node name="birch_log" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_k1v6a")
 max_distance = 52.51
 panning_strength = 3.0

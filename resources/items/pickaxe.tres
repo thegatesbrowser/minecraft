@@ -16,7 +16,7 @@ gradient = SubResource("Gradient_ud3w4")
 [resource]
 script = ExtResource("1_nm7br")
 suitable_objects = Array[ExtResource("2_0r0eq")]([ExtResource("2_b4wtr")])
-unique_name = &"PICKAXE"
+unique_name = &"pickaxe"
 texture = SubResource("GradientTexture2D_41ys5")
 max_stack = 64
 holdable_mesh = SubResource("BoxMesh_4rbsm")
