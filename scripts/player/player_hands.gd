@@ -5,9 +5,8 @@ signal place_block(block_name)
 
 var timer = Timer.new()
 
-@export var utilies_base_s = preload("res://scenes/other/utilities_base.tscn")
 @export var terrain_interaction: TerrainInteraction
-@export var item_library:ItemsLibrary
+@export var item_library: ItemsLibrary
 
 func _ready():
 	item_library.init_items()

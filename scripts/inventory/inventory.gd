@@ -16,7 +16,7 @@ var full:bool = false
 var inventory = []
 
 # var possible_items = ["res://Items/Dirt.tres","res://Items/Glass.tres","res://Items/Grass.tres","res://Items/Leaf1.tres","res://Items/Leaf2.tres","res://Items/Log1.tres","res://Items/Log2.tres","res://Items/Stone.tres","res://Items/Wood1.tres","res://Items/Wood2.tres"]
-@export var item_library = preload("res://resources/items_library.tres")
+@export var item_library: ItemsLibrary
 
 
 func _ready() -> void:

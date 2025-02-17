@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemsLibrary" load_steps=13 format=3 uid="uid://cytxicahdwqm7"]
 
-[ext_resource type="Script" path="res://scripts/items/items_libarary.gd" id="1_n30f3"]
+[ext_resource type="Script" path="res://scripts/items/items_library.gd" id="1_n30f3"]
 [ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="1_udeus"]
 [ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="2_40n5o"]
 [ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="3_5ujum"]

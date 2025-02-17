@@ -14,6 +14,7 @@ script = ExtResource("1_x6yal")
 body_scene = ExtResource("1_5ktq8")
 max_health = 10
 attacks = false
+run_away_after_attack = false
 damage = 0
 speed = 5.0
 coll_shape = SubResource("CapsuleShape3D_f02ms")
