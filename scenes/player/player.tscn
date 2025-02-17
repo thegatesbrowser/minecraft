@@ -55,7 +55,6 @@ item_library = ExtResource("5_qnsii")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block")]
 script = ExtResource("2_5q13p")
-distance = null
 camera = NodePath("../../RotationRoot/Head/Camera3D")
 block = NodePath("BlockOutline")
 voxel_blocky_type_library = ExtResource("5_5801w")

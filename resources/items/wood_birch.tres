@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://c2tw0hhp6mydb"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_ia8ta"]
+[ext_resource type="Texture2D" uid="uid://3g5apdh6qsf" path="res://assets/atlas/wood2.tres" id="2_dto66"]
+
+[resource]
+script = ExtResource("1_ia8ta")
+break_time = 0.4
+unique_name = &"wood_birch"
+texture = ExtResource("2_dto66")
+max_stack = 64
+breaking_efficiency = 0.0
