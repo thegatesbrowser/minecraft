@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=6 format=3 uid="uid://bnocc46636wyo"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=7 format=3 uid="uid://bnocc46636wyo"]
 
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="1_nm7br"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_0r0eq"]
 [ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="2_b4wtr"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4rbsm"]
@@ -14,7 +15,7 @@ gradient = SubResource("Gradient_ud3w4")
 
 [resource]
 script = ExtResource("1_nm7br")
-suitable_objects = [ExtResource("2_b4wtr")]
+suitable_objects = Array[ExtResource("2_0r0eq")]([ExtResource("2_b4wtr")])
 unique_name = &"PICKAXE"
 texture = SubResource("GradientTexture2D_41ys5")
 max_stack = 64

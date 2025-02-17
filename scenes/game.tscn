@@ -1,10 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=38 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2_ifuak"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
-[ext_resource type="Script" path="res://scenes/inventory_manager.gd" id="3_qxvt1"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="4_bg8ft"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="5_jvylc"]
@@ -102,9 +101,7 @@ script = ExtResource("1")
 creature_s = ExtResource("2_pgqmj")
 breaktime = NodePath("Breaktime")
 
-[node name="InventoryManager" type="Node" parent="." node_paths=PackedStringArray("main_inventory")]
-script = ExtResource("3_qxvt1")
-main_inventory = NodePath("../Player UI/Inventory holder/HBoxContainer/Inventory")
+[node name="InventoryManager" type="Node" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128, 0)

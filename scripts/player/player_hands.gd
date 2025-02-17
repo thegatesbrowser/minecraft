@@ -1,6 +1,8 @@
 extends Node
 
+
 signal place_block(block_name)
+
 var timer = Timer.new()
 
 @export var utilies_base_s = preload("res://scenes/other/utilities_base.tscn")
@@ -18,6 +20,10 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Build"):
 		if terrain_interaction.can_place():
 			if Globals.can_build:
+				
+				var soundmanager = get_node("/root/Main").find_child("SoundManager")
+				soundmanager.play_sound(Globals.current_block,terrain_interaction.last_hit.position)
+				
 				terrain_interaction.place_block(Globals.current_block)
 				Globals.remove_item_from_hotbar.emit()
 				
@@ -43,6 +49,9 @@ func _process(_delta: float) -> void:
 			await timer.timeout
 			
 			if Input.is_action_pressed("Mine"):
+				var soundmanager = get_node("/root/Main").find_child("SoundManager")
+				soundmanager.play_sound(type,terrain_interaction.last_hit.position)
+				
 				timer.queue_free()
 				terrain_interaction.break_block()
 				Globals.spawn_item_inventory.emit(item_library.get_item(type))

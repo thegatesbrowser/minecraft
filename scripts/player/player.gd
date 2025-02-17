@@ -61,6 +61,7 @@ var is_flying: bool
 
 var health
 
+
 func _ready():
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
@@ -97,7 +98,6 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
-	
 	Globals.player_health = health
 	
 	if !is_flying:
