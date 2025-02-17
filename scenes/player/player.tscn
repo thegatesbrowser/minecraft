@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ql4u3t5lhtyt"]
+[gd_scene load_steps=15 format=3 uid="uid://ql4u3t5lhtyt"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cx2ae4w7whc6p" path="res://scenes/items/weapons/weapon_base.tscn" id="3_jtlx2"]
 [ext_resource type="Script" path="res://scripts/player/player_hands.gd" id="4_064gd"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_5801w"]
+[ext_resource type="Resource" uid="uid://cytxicahdwqm7" path="res://resources/items_library.tres" id="5_qnsii"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -50,6 +51,7 @@ weapon_base = ExtResource("3_jtlx2")
 [node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction")]
 script = ExtResource("4_064gd")
 terrain_interaction = NodePath("TerrainInteraction")
+item_library = ExtResource("5_qnsii")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block")]
 script = ExtResource("2_5q13p")
@@ -157,20 +159,22 @@ bones/1/scale = Vector3(1, 1, 1)
 bones/2/rotation = Quaternion(0.00473803, 4.51374e-08, -0.00170179, 0.999987)
 bones/3/rotation = Quaternion(0.708082, 0.00214071, -0.706113, -0.00455664)
 bones/3/scale = Vector3(1, 1, 1)
+bones/4/position = Vector3(-8.02735e-09, 0.436824, 3.79688e-09)
 bones/4/rotation = Quaternion(0.00386998, -1.26575e-07, -4.57264e-08, 0.999992)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/rotation = Quaternion(0.708082, 0.00214067, -0.706113, -0.00455668)
 bones/5/scale = Vector3(1, 1, 1)
+bones/7/position = Vector3(0.000474975, 0.436475, 0.000474975)
 bones/8/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214059)
 bones/8/scale = Vector3(1, 1, 1)
 
 [node name="Left Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="1"]
-transform = Transform3D(3.05999e-07, -0.00773978, -0.99997, 1.31547e-07, -0.99997, 0.00773978, -1, -1.33414e-07, -2.40713e-07, 0.339821, 1.03312, -0.0148718)
+transform = Transform3D(3.05999e-07, -0.00773978, -0.99997, 1.31547e-07, -0.99997, 0.00773978, -1, -1.33414e-07, -2.40713e-07, 0.339821, 0.804392, -0.0148718)
 bone_name = "arm.L_3.001"
 bone_idx = 4
 
 [node name="Right Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="2"]
-transform = Transform3D(-4.60463e-07, -0.0155336, 0.999879, -1.38486e-07, -0.999879, -0.0155336, 1, -1.45572e-07, 4.54998e-07, -0.336379, 1.03312, -0.0148718)
+transform = Transform3D(-4.60463e-07, -0.0155336, 0.999879, -1.38486e-07, -0.999879, -0.0155336, 1, -1.45572e-07, 4.54998e-07, -0.335904, 0.804741, -0.0143969)
 bone_name = "arm.R_5.001"
 bone_idx = 7
 

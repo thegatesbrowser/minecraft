@@ -16,13 +16,13 @@ var full:bool = false
 var inventory = []
 
 # var possible_items = ["res://Items/Dirt.tres","res://Items/Glass.tres","res://Items/Grass.tres","res://Items/Leaf1.tres","res://Items/Leaf2.tres","res://Items/Log1.tres","res://Items/Log2.tres","res://Items/Stone.tres","res://Items/Wood1.tres","res://Items/Wood2.tres"]
-var possible_items = []
+@export var item_library: ItemsLibrary
 
 
 func _ready() -> void:
 	if Owner != null:
 		inventroy_name.text = str(Owner.resource.Name, " Inventory")
-	
+		
 	Globals.spawn_item_inventory.connect(spawn_item)
 	Globals.remove_item.connect(remove_item)
 	Globals.check_amount_of_item.connect(check_amount_of_item)
@@ -34,7 +34,7 @@ func _process(_delta: float) -> void:
 	check_slots()
 	check_if_full()
 	if Input.is_action_just_pressed("5"):
-		spawn_item(test_2.instantiate())	
+		spawn_item(test_2.instantiate())
 	
 	if Input.is_action_just_pressed("Build"):
 		## split
@@ -62,12 +62,10 @@ func spawn_item(item_resource, amount:int = 1):
 				i.amount = amount
 				i.update_slot()
 				for num in amount:
-					
 					inventory.append(item_resource.unique_name)
 				check_if_full()
 				sort()
 				break
-	#items_collection.aa
 
 
 func make_slots():
@@ -103,11 +101,11 @@ func _on_sort_pressed() -> void:
 
 
 func _on_add_random_item_pressed() -> void:
-	var item = possible_items.pick_random()
-	spawn_item(load(item))
+	var item = item_library.items_array.pick_random()
+	spawn_item(item)
 
 
-func check_amount_of_item(item:String):
+func check_amount_of_item(item:StringName):
 	var amount = 0
 	for i in inventory:
 		print(i)
@@ -119,8 +117,7 @@ func check_amount_of_item(item:String):
 	return amount
 
 
-func remove_item(unique_name:String,amount:int):
-	
+func remove_item(unique_name:StringName,amount:int):
 	if Owner != null: return ## Owner mean its not the players inventory
 	
 	for i in amount:

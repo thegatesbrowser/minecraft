@@ -28,8 +28,8 @@ var player_health:int
 @export var max_look_vertical := 75
 @export var controller_invert_look := false
 @export var mouse_invert_look := false
-var current_block := 0
-var custom_block: ItemBase
+var current_block:StringName ## unique_name
+var custom_block:StringName ## unique_name
 var can_build:bool = false
 
 # AI
@@ -49,6 +49,11 @@ signal remove_item_in_hand
 signal craftable_hovered(craftable,node)
 signal craftable_unhovered
 var last_clicked_slot:Node
+
+#signal add_item_to_hand(item)
+#signal remove_item_in_hand
+#signal craftable_hovered(craftable,node)
+#signal craftable_unhovered
 
 # Weapons
 signal spawn_bullet

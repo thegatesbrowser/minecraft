@@ -1,11 +1,18 @@
-[gd_resource type="Resource" script_class="ItemsLibrary" load_steps=6 format=3 uid="uid://cytxicahdwqm7"]
+[gd_resource type="Resource" script_class="ItemsLibrary" load_steps=13 format=3 uid="uid://cytxicahdwqm7"]
 
-[ext_resource type="Script" path="res://scripts/items/items_libarary.gd" id="1_n30f3"]
+[ext_resource type="Script" path="res://scripts/items/items_library.gd" id="1_n30f3"]
 [ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="1_udeus"]
 [ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="2_40n5o"]
 [ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="3_5ujum"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="4_bm54l"]
+[ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="5_ry5ga"]
+[ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="6_u3ykv"]
+[ext_resource type="Resource" uid="uid://bbwu7wqguky81" path="res://resources/items/leaf_oak.tres" id="7_c3cri"]
+[ext_resource type="Resource" uid="uid://bk4meuo0rs246" path="res://resources/items/leaf_birch.tres" id="8_eteuy"]
+[ext_resource type="Resource" uid="uid://d3ecx624ljcyc" path="res://resources/items/glass.tres" id="9_vogbc"]
+[ext_resource type="Resource" uid="uid://d26i62gur1o23" path="res://resources/items/log_oak.tres" id="10_rprqd"]
+[ext_resource type="Resource" uid="uid://cogc5ac14y0ad" path="res://resources/items/log_birch.tres" id="11_v0vys"]
 
 [resource]
 script = ExtResource("1_n30f3")
-items_array = Array[ExtResource("4_bm54l")]([ExtResource("1_udeus"), ExtResource("2_40n5o"), ExtResource("3_5ujum")])
+items_array = Array[ExtResource("4_bm54l")]([ExtResource("1_udeus"), ExtResource("2_40n5o"), ExtResource("3_5ujum"), ExtResource("5_ry5ga"), ExtResource("6_u3ykv"), ExtResource("7_c3cri"), ExtResource("8_eteuy"), ExtResource("9_vogbc"), ExtResource("10_rprqd"), ExtResource("11_v0vys")])

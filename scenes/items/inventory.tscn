@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxe66yexhl7t1"]
+[gd_scene load_steps=6 format=3 uid="uid://bxe66yexhl7t1"]
 
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_e6rhx"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory.gd" id="1_vh6pj"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="3_v400e"]
+[ext_resource type="Resource" uid="uid://cytxicahdwqm7" path="res://resources/items_library.tres" id="4_2bd2u"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_n2m6g"]
 color = Color(1, 1, 1, 1)
@@ -30,6 +31,7 @@ slot_s = ExtResource("3_v400e")
 items_collection = NodePath("PanelContainer/MarginContainer/VBoxContainer/Items")
 amount_of_slots = 40
 inventroy_name = NodePath("PanelContainer/MarginContainer/VBoxContainer/InventroyName")
+item_library = ExtResource("4_2bd2u")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2

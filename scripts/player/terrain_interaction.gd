@@ -51,7 +51,7 @@ func disable():
 
 
 func can_place() -> bool:
-	return last_hit != null and !block_is_inside_character
+	return last_hit != null and !block_is_inside_character and Globals.can_build
 
 
 func can_break() -> bool:
@@ -76,7 +76,11 @@ func break_block() -> StringName:
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
 	return array[0]
 
-
+func get_type() -> StringName:
+	var voxel: int = voxel_tool.get_voxel(last_hit.position)
+	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
+	return array[0]
+	
 func _on_Area_body_entered(_body):
 	block_is_inside_character = true
 

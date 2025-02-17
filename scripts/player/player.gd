@@ -61,6 +61,7 @@ var is_flying: bool
 
 var health
 
+
 func _ready():
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
@@ -97,7 +98,6 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
-	
 	Globals.player_health = health
 	
 	if !is_flying:
@@ -258,20 +258,18 @@ func _exit_tree():
 
 func add_item_to_hand(item: ItemBase):
 	if item != null:
-		if item.holdable:
+		
+		if left_hand.get_children().size() >= 1:
+			left_hand.get_child(0).queue_free()
 			
-			if left_hand.get_children().size() >= 1:
-				left_hand.get_child(0).queue_free()
-				
-			if !item.weapon:
-				var mesh_instance = MeshInstance3D.new()
-				mesh_instance.mesh = item.holdable_mesh
-				left_hand.add_child(mesh_instance)
-			else:
-				var weapon = weapon_base.instantiate()
-				weapon.weapon_resource = item
-				left_hand.add_child(weapon)
-				pass
+		if not item is ItemWeapon:
+			var mesh_instance = MeshInstance3D.new()
+			mesh_instance.mesh = item.holdable_mesh
+			left_hand.add_child(mesh_instance)
+		else:
+			var weapon = weapon_base.instantiate()
+			weapon.weapon_resource = item
+			left_hand.add_child(weapon)
 
 
 func remove_item_in_hand():

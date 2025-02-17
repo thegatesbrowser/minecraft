@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3jgvc45n8k2i"]
+[gd_scene load_steps=4 format=3 uid="uid://b3jgvc45n8k2i"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable_base.gd" id="1_eofgj"]
-[ext_resource type="Resource" uid="uid://cc1qpdilrm2wb" path="res://resources/items/craftables/test.tres" id="2_r81gs"]
 [ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="3_pygll"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oq77m"]
@@ -26,7 +25,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 stretch_mode = 5
 script = ExtResource("1_eofgj")
-craftable = ExtResource("2_r81gs")
 
 [node name="CenterContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(90, 90)

@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=9 format=3 uid="uid://cgpku20ap67qm"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=21 format=3 uid="uid://cgpku20ap67qm"]
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_54jvr"]
 
@@ -48,6 +48,90 @@ unique_name = &"stone"
 base_model = SubResource("VoxelBlockyModelCube_rqnpp")
 resource_name = "stone"
 
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_dcwgv"]
+atlas_size_in_tiles = Vector2i(8, 2)
+tile_left = Vector2i(4, 0)
+tile_right = Vector2i(4, 0)
+tile_bottom = Vector2i(5, 0)
+tile_top = Vector2i(5, 0)
+tile_back = Vector2i(4, 0)
+tile_front = Vector2i(4, 0)
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_yomcl"]
+unique_name = &"log_oak"
+base_model = SubResource("VoxelBlockyModelCube_dcwgv")
+resource_name = "log_oak"
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_rg3iw"]
+atlas_size_in_tiles = Vector2i(8, 2)
+tile_left = Vector2i(4, 1)
+tile_right = Vector2i(4, 1)
+tile_bottom = Vector2i(5, 1)
+tile_top = Vector2i(5, 1)
+tile_back = Vector2i(4, 1)
+tile_front = Vector2i(4, 1)
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_7argj"]
+unique_name = &"log_birch"
+base_model = SubResource("VoxelBlockyModelCube_rg3iw")
+resource_name = "log_birch"
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_xuk0k"]
+atlas_size_in_tiles = Vector2i(8, 2)
+tile_left = Vector2i(7, 0)
+tile_right = Vector2i(7, 0)
+tile_bottom = Vector2i(7, 0)
+tile_top = Vector2i(7, 0)
+tile_back = Vector2i(7, 0)
+tile_front = Vector2i(7, 0)
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_fu35l"]
+unique_name = &"wood_oak"
+base_model = SubResource("VoxelBlockyModelCube_xuk0k")
+resource_name = "wood_oak"
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_gikdy"]
+atlas_size_in_tiles = Vector2i(8, 2)
+tile_left = Vector2i(7, 1)
+tile_right = Vector2i(7, 1)
+tile_bottom = Vector2i(7, 1)
+tile_top = Vector2i(7, 1)
+tile_back = Vector2i(7, 1)
+tile_front = Vector2i(7, 1)
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_bbxuy"]
+unique_name = &"wood_birch"
+base_model = SubResource("VoxelBlockyModelCube_gikdy")
+resource_name = "wood_birch"
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_j6y2v"]
+atlas_size_in_tiles = Vector2i(8, 2)
+tile_left = Vector2i(6, 0)
+tile_right = Vector2i(6, 0)
+tile_bottom = Vector2i(6, 0)
+tile_top = Vector2i(6, 0)
+tile_back = Vector2i(6, 0)
+tile_front = Vector2i(6, 0)
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pwkao"]
+unique_name = &"leaf_oak"
+base_model = SubResource("VoxelBlockyModelCube_j6y2v")
+resource_name = "leaf_oak"
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_il7i2"]
+atlas_size_in_tiles = Vector2i(8, 2)
+tile_left = Vector2i(6, 1)
+tile_right = Vector2i(6, 1)
+tile_bottom = Vector2i(6, 1)
+tile_top = Vector2i(6, 1)
+tile_back = Vector2i(6, 1)
+tile_front = Vector2i(6, 1)
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pgid7"]
+unique_name = &"leaf_birch"
+base_model = SubResource("VoxelBlockyModelCube_il7i2")
+resource_name = "leaf_birch"
+
 [resource]
-types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_k4bih")])
-_id_map_data = PackedStringArray("air", "grass", "unnamed", "unnamed", "dirt", "rock", "stone")
+types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7")])
+_id_map_data = PackedStringArray("air", "grass", "unnamed", "unnamed", "dirt", "rock", "stone", "LOG1", "LOG2", "WOOD1", "WOOD2", "LEAF1", "LEAF2", "oak_log", "birch_log", "oak_wood", "birch_wood", "leaf1", "leaf2", "oak_leaf", "birch_leaf", "birch_lea", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch")

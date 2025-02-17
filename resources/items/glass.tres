@@ -5,14 +5,8 @@
 
 [resource]
 script = ExtResource("1_hhhbr")
-break_time = 0.4
+break_time = 10.0
 unique_name = &"glass"
 texture = ExtResource("1_1i1ps")
 max_stack = 64
 breaking_efficiency = 0.0
-weapon = false
-damage = 0
-needs_ammo = false
-ammo_name = "Ammo"
-shoots = false
-fire_rate = 0.0
