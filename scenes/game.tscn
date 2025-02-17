@@ -124,6 +124,7 @@ navigation_mesh = SubResource("NavigationMesh_6jrpq")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="NavigationRegion3D" groups=["VoxelTerrain"]]
 material_override = ExtResource("19_nv6q3")
+use_gpu_generation = true
 generator = SubResource("VoxelGeneratorNoise2D_rvvqb")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 

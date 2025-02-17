@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ql4u3t5lhtyt"]
+[gd_scene load_steps=15 format=3 uid="uid://ql4u3t5lhtyt"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cx2ae4w7whc6p" path="res://scenes/items/weapons/weapon_base.tscn" id="3_jtlx2"]
 [ext_resource type="Script" path="res://scripts/player/player_hands.gd" id="4_064gd"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_5801w"]
+[ext_resource type="Resource" uid="uid://cytxicahdwqm7" path="res://resources/items_library.tres" id="5_qnsii"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -49,11 +50,12 @@ weapon_base = ExtResource("3_jtlx2")
 
 [node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction")]
 script = ExtResource("4_064gd")
-utilies_base_s = null
 terrain_interaction = NodePath("TerrainInteraction")
+item_library = ExtResource("5_qnsii")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block")]
 script = ExtResource("2_5q13p")
+distance = null
 camera = NodePath("../../RotationRoot/Head/Camera3D")
 block = NodePath("BlockOutline")
 voxel_blocky_type_library = ExtResource("5_5801w")

@@ -76,7 +76,7 @@ func break_block() -> StringName:
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
 	return array[0]
 
-func get_type():
+func get_type() -> StringName:
 	var voxel: int = voxel_tool.get_voxel(last_hit.position)
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
 	return array[0]
