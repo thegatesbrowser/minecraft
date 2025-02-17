@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://c1c7ynjb33hsk"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_76c4a"]
-[ext_resource type="Resource" uid="uid://bnocc46636wyo" path="res://resources/items/pickaxe.tres" id="1_gxr33"]
+[ext_resource type="Resource" uid="uid://j36n47ah560y" path="res://resources/items/pickaxe.tres" id="1_gxr33"]
 
 [sub_resource type="Gradient" id="Gradient_ev0rv"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1)

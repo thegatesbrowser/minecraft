@@ -379,9 +379,8 @@ layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("14_ye6pm")
 
-[node name="Inventory" parent="Player UI/Inventory holder/HBoxContainer" node_paths=PackedStringArray("inventroy_name") groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
+[node name="Inventory" parent="Player UI/Inventory holder/HBoxContainer" groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
-inventroy_name = NodePath("../Crafting/MarginContainer/VBoxContainer/Label")
 
 [node name="Craftable Info" parent="Player UI/Inventory holder" instance=ExtResource("11_cdfh2")]
 layout_mode = 0

@@ -1,15 +1,15 @@
 extends Node
 
-
 signal place_block(block_name)
+
+@export var terrain_interaction: TerrainInteraction
+@export var items_library: ItemsLibrary
 
 var timer = Timer.new()
 
-@export var terrain_interaction: TerrainInteraction
-@export var item_library: ItemsLibrary
 
 func _ready():
-	item_library.init_items()
+	items_library.init_items()
 	terrain_interaction.enable()
 
 
@@ -25,7 +25,7 @@ func _process(_delta: float) -> void:
 				
 				terrain_interaction.place_block(Globals.current_block)
 				Globals.remove_item_from_hotbar.emit()
-				
+	
 	if Input.is_action_just_pressed("Mine"):
 		if terrain_interaction.can_break():
 			var type = terrain_interaction.get_type()
@@ -34,13 +34,13 @@ func _process(_delta: float) -> void:
 			var timer = Timer.new()
 			
 			if Globals.custom_block.is_empty():
-				timer.wait_time = item_library.get_item(type).break_time
+				timer.wait_time = items_library.get_item(type).break_time
 			else:
-				if item_library.get_item(Globals.custom_block) is ItemTool:
-					if item_library.get_item(Globals.custom_block).suitable_objects.has(item_library.get_item(type)):
-						timer.wait_time = item_library.get_item(type).break_time - item_library.get_item(Globals.custom_block).breaking_efficiency
+				if items_library.get_item(Globals.custom_block) is ItemTool:
+					if items_library.get_item(Globals.custom_block).suitable_objects.has(items_library.get_item(type)):
+						timer.wait_time = items_library.get_item(type).break_time - items_library.get_item(Globals.custom_block).breaking_efficiency
 					else:
-						timer.wait_time = item_library.get_item(type).break_time
+						timer.wait_time = items_library.get_item(type).break_time
 						
 			add_child(timer)
 			timer.start()
@@ -53,4 +53,4 @@ func _process(_delta: float) -> void:
 				
 				timer.queue_free()
 				terrain_interaction.break_block()
-				Globals.spawn_item_inventory.emit(item_library.get_item(type))
+				Globals.spawn_item_inventory.emit(items_library.get_item(type))

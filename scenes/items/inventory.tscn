@@ -31,7 +31,7 @@ slot_s = ExtResource("3_v400e")
 items_collection = NodePath("PanelContainer/MarginContainer/VBoxContainer/Items")
 amount_of_slots = 40
 inventroy_name = NodePath("PanelContainer/MarginContainer/VBoxContainer/InventroyName")
-item_library = ExtResource("4_2bd2u")
+items_library = ExtResource("4_2bd2u")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
