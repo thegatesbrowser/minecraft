@@ -1,6 +1,7 @@
 extends ScrollContainer
 class_name Inventory
 
+@export var drop_item_scene:PackedScene
 @export var slot_s: PackedScene
 @export var test_2: PackedScene
 @export var items_collection: GridContainer
@@ -9,6 +10,7 @@ class_name Inventory
 
 @export var Owner: Node
 
+var owner_id:int
 var times:int = 0
 var items = []
 var slots = []
@@ -32,9 +34,18 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	check_slots()
 	check_if_full()
-	if Input.is_action_just_pressed("5"):
-		spawn_item(test_2.instantiate())
 	
+	if Input.is_action_just_pressed("Drop"):
+		if Globals.last_clicked_slot != null:
+			if Globals.last_clicked_slot.Item_resource != null:
+				var drop_item = drop_item_scene.instantiate()
+				drop_item.Item = Globals.last_clicked_slot.Item_resource
+				for i in get_tree().get_nodes_in_group("Player"):
+					if i.your_id == owner_id:
+						drop_item.global_position = get_node(i.get_drop_node()).global_position
+						get_parent().add_child(drop_item)
+						remove_item(Globals.last_clicked_slot.Item_resource.unique_name,1)
+					
 	if Input.is_action_just_pressed("Build"):
 		## split
 		if Globals.last_clicked_slot != null:

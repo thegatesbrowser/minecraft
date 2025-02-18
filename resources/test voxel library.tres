@@ -1,0 +1,14 @@
+[gd_resource type="VoxelBlockyLibrary" load_steps=5 format=3 uid="uid://dc3buhcao2ah5"]
+
+[ext_resource type="VoxelBlockyModelCube" uid="uid://56v370khjjlr" path="res://resources/items/test.tres" id="1_rwskr"]
+[ext_resource type="Material" uid="uid://cvhj80gdgchp2" path="res://assets/materials/texturemat_mesh.tres" id="2_ytgpk"]
+
+[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_psqg1"]
+resource_name = "gjgjk"
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_jqo0e"]
+atlas_size_in_tiles = Vector2i(8, 2)
+material_override_0 = ExtResource("2_ytgpk")
+
+[resource]
+models = Array[VoxelBlockyModel]([SubResource("VoxelBlockyModelEmpty_psqg1"), ExtResource("1_rwskr"), SubResource("VoxelBlockyModelCube_jqo0e")])
