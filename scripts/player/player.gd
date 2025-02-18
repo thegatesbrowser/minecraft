@@ -1,6 +1,9 @@
 extends CharacterBody3D
 class_name Player
 
+
+var your_id:int = 1
+
 @export_range(0.1,1.1,.1) var max_flying_margin = 0.2
 @export_range(-1.1,-0.1,.1) var min_flying_margin = -0.2
 
@@ -38,6 +41,8 @@ var gravity = 16.5
 var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
 var is_flying: bool
+
+@onready var drop_node: Node3D = $RotationRoot/Head/Camera3D/Drop_node
 
 @onready var camera = $RotationRoot/Head/Camera3D
 @onready var ray = $RotationRoot/Head/Camera3D/RayCast3D
@@ -100,6 +105,12 @@ func _physics_process(delta):
 		interpolate_client(delta); return
 	Globals.player_health = health
 	
+	if your_id != get_multiplayer_authority():
+		var inventory = get_tree().get_first_node_in_group("Main Inventory")
+		your_id = get_multiplayer_authority()
+		inventory.owner_id = your_id
+	
+		
 	if !is_flying:
 		# Add the gravity.
 		if not is_on_floor():
@@ -287,3 +298,7 @@ func spawn_bullet():
 	bullet.global_transform = camera.global_transform
 	bullet.spawner = self
 	get_parent().add_child(bullet)
+
+func get_drop_node():
+	
+	return drop_node.get_path()

@@ -18,6 +18,6 @@ output_amount = 1
 items_needed = {
 1: {
 "amount": 4,
-"name": "STONE"
+"name": "stone"
 }
 }

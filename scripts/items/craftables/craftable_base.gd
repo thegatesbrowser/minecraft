@@ -32,7 +32,6 @@ func craft() -> void:
 					Globals.remove_item.emit(craftable.items_needed[i].name, craftable.items_needed[i].amount)
 				
 
-
 func _on_mouse_entered() -> void:
 	GlobalAnimation._tween(self,"bounce",.3)
 	Globals.craftable_hovered.emit(craftable,self)

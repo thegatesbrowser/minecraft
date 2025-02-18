@@ -6,6 +6,7 @@ signal disconnected
 
 static var is_peer_connected: bool
 
+var your_id:int
 @export var port: int
 @export var max_clients: int
 @export var host: String
