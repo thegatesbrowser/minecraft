@@ -197,8 +197,6 @@ far = 160.0
 transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.05)
 target_position = Vector3(0, -10, 0)
 
-[node name="VoxelViewer" type="VoxelViewer" parent="RotationRoot/Head/Camera3D"]
-
 [node name="AutoJump" type="RayCast3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 target_position = Vector3(0, 0, -1)

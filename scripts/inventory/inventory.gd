@@ -38,7 +38,6 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Build"):
 		## split
 		if Globals.last_clicked_slot != null:
-			#print(is_even(Globals.last_clicked_slot.amount))
 			if is_even(Globals.last_clicked_slot.amount):
 				if Globals.last_clicked_slot.amount >= 2:
 					var amount = Globals.last_clicked_slot.amount / 2
@@ -76,7 +75,6 @@ func make_slots():
 func sort():
 	for i in items_collection.get_children():
 		if i.Item_resource != null:
-			print(items.has(i.Item_resource.unique_name))
 			if items.has(i.Item_resource.unique_name) == false:
 				items.append(i.Item_resource.unique_name)
 				slots.append(i)

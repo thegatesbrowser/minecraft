@@ -6,10 +6,10 @@
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="4_bg8ft"]
+[ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="5_jvylc"]
 [ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://resources/items/craftables/wood_1.tres" id="6_qmem5"]
 [ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://resources/items/craftables/wood_2.tres" id="7_2v6u3"]
-[ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="7_u8af2"]
 [ext_resource type="Resource" uid="uid://c1c7ynjb33hsk" path="res://resources/items/craftables/pickaxe.tres" id="8_fjhcp"]
 [ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="9_gbvy1"]
 [ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://scenes/items/inventory.tscn" id="10_hxw3b"]
@@ -128,8 +128,10 @@ use_gpu_generation = true
 generator = SubResource("VoxelGeneratorNoise2D_rvvqb")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 
+[node name="VoxelTerrainMultiplayerSynchronizer" type="VoxelTerrainMultiplayerSynchronizer" parent="NavigationRegion3D/VoxelTerrain"]
+
 [node name="SpawnPoints" type="Node3D" parent="."]
-script = ExtResource("7_u8af2")
+script = ExtResource("5_ekbqf")
 
 [node name="SpwanPoint" type="Node3D" parent="SpawnPoints"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 128, 8)

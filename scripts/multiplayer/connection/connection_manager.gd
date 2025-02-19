@@ -3,7 +3,7 @@ extends Node
 @export var connection: Connection
 @export var connection_events: ConnectionEvents
 
-const RECONNECT_DELAY = 15
+const RECONNECT_DELAY = 10
 
 var connected: bool
 
@@ -17,8 +17,6 @@ func _ready():
 
 
 func start_connection() -> void:
-	# wait for local player
-	await get_tree().create_timer(1).timeout
 	connection.start_client()
 	
 	connection_events.status_changed_emit(ConnectionEvents.Status.CONNECTING)
