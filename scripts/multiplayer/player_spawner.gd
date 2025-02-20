@@ -1,15 +1,12 @@
 extends MultiplayerSpawner
 class_name PlayerSpawner
 
-signal local_player_spawned(player: Player)
 signal player_spawned(id: int, player: Player)
 signal player_despawned(id: int)
 
+@export var view_distance: int = 128
 @export var player_scene: PackedScene
 @export var spawn_points: SpawnPoints
-
-const HIDDEN_POSITION = Vector3.UP * 1000
-var local_player: Player
 
 
 func _ready() -> void:
@@ -18,32 +15,15 @@ func _ready() -> void:
 	multiplayer.peer_disconnected.connect(destroy_player)
 	spawned.connect(on_spawned)
 	despawned.connect(on_despawned)
-	create_local_player()
-
-
-func create_local_player() -> void:
-	if Connection.is_server(): return
-	var spawn_position = spawn_points.get_spawn_position()
-	var player: Player = player_scene.instantiate()
-	
-	player.name = "LocalPlayer"
-	player.call_deferred("set_position", spawn_position)
-	local_player = player
-	
-	get_node(spawn_path).add_child(player)
-	local_player_spawned.emit(local_player)
-
-
-func respawn_local_player() -> void:
-	var spawn_position = spawn_points.get_spawn_position()
-	local_player.respawn(spawn_position)
-	Debug.log_msg("Respawn player at " + str(spawn_position))
 
 
 func create_player(id: int) -> void:
 	if not multiplayer.is_server(): return
-	spawn(id)
-	Debug.log_msg("Player %d spawned" % [id])
+	
+	var spawn_position = spawn_points.get_spawn_position()
+	spawn([id, spawn_position])
+
+	Debug.log_msg("Player %d spawned at %.v" % [id, spawn_position])
 
 
 func destroy_player(id: int) -> void:
@@ -53,31 +33,40 @@ func destroy_player(id: int) -> void:
 	player_despawned.emit(id)
 
 
-func custom_spawn(id: int) -> Node:
-	var player: Player
-	if id == multiplayer.get_unique_id():
-		local_player.set_multiplayer_authority(id)
-		local_player.name = str(id)
-		
-		var fake = player_scene.instantiate() as Player
-		fake.set_multiplayer_authority(0)
-		fake.name = "FakeLocalPlayer"
-		fake.position = HIDDEN_POSITION
-		call_deferred("remove_fake", fake)
-		
-		player = fake
-	else:
-		player = player_scene.instantiate() as Player
-		player.set_multiplayer_authority(id)
-		player.name = str(id)
-		player.position = HIDDEN_POSITION
+func custom_spawn(data: Array) -> Node:
+	var id: int = data[0]
+	var spawn_position: Vector3 = data[1]
+	
+	var player = player_scene.instantiate() as Player
+	player.set_multiplayer_authority(id)
+	player.name = str(id)
+	player.position = spawn_position
+	
+	create_viewer(id, player)
 	
 	player_spawned.emit(id, player)
 	return player
 
 
-func remove_fake(fake: Player) -> void:
-	fake.queue_free()
+func create_viewer(id: int, player: Player) -> void:
+	if Connection.is_server():
+		var viewer := VoxelViewer.new()
+
+		viewer.view_distance = view_distance
+		viewer.requires_visuals = false
+		viewer.requires_collisions = false
+		
+		viewer.set_network_peer_id(id)
+		viewer.set_requires_data_block_notifications(true)
+		player.add_child(viewer)
+	
+	elif id == multiplayer.get_unique_id():
+		var viewer := VoxelViewer.new()
+		
+		# larger so blocks don't get unloaded too soon
+		viewer.view_distance = view_distance + 16
+		
+		player.add_child(viewer)
 
 
 func on_spawned(node: Node) -> void:

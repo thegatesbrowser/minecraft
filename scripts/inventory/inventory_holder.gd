@@ -8,8 +8,8 @@ class_name Inventory_Holder
 func _ready() -> void:
 	Globals.add_subinventory.connect(add_subinventory)
 	Globals.open_inventory.connect(open_inventory)
-	
-	pass
+
+
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Inventory"):
 		visible = !visible

@@ -41,7 +41,7 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI") groups=["Player"]]
-collision_layer = 134217729
+collision_layer = 134217731
 script = ExtResource("1")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
@@ -197,8 +197,14 @@ far = 160.0
 transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.05)
 target_position = Vector3(0, -10, 0)
 
+<<<<<<< HEAD
 [node name="VoxelViewer" type="VoxelViewer" parent="RotationRoot/Head/Camera3D"]
 
+[node name="Drop_node" type="Node3D" parent="RotationRoot/Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.475605, -0.61644)
+
+=======
+>>>>>>> d5025f71d5d7434cc596389c01399504df66349c
 [node name="AutoJump" type="RayCast3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 target_position = Vector3(0, 0, -1)
