@@ -2,6 +2,7 @@
 .godot/
 .DS_Store
 ~*
+*.tmp
 
 # Visual Studio 2017 and Visual Studio Code workspace folder
 /.vs
