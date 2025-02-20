@@ -7,3 +7,8 @@ func play_sound(type: StringName,pos: Vector3):
 	if sound != null:
 		sound.global_position = pos
 		sound.play()
+
+func play_UI_sound(type:StringName = &"UI"):
+	var sound = find_child(type)
+	if sound != null:
+		sound.play()

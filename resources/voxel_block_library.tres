@@ -130,6 +130,7 @@ tile_bottom = Vector2i(6, 0)
 tile_top = Vector2i(6, 0)
 tile_back = Vector2i(6, 0)
 tile_front = Vector2i(6, 0)
+culls_neighbors = false
 material_override_0 = SubResource("StandardMaterial3D_p2ign")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pwkao"]
@@ -151,6 +152,7 @@ tile_bottom = Vector2i(6, 1)
 tile_top = Vector2i(6, 1)
 tile_back = Vector2i(6, 1)
 tile_front = Vector2i(6, 1)
+culls_neighbors = false
 material_override_0 = SubResource("StandardMaterial3D_43mqd")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pgid7"]
@@ -160,4 +162,4 @@ resource_name = "leaf_birch"
 
 [resource]
 types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7")])
-_id_map_data = PackedStringArray("air", "grass", "unnamed", "unnamed", "dirt", "rock", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch")
+_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch")
