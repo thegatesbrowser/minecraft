@@ -6,11 +6,8 @@
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="4_bg8ft"]
-<<<<<<< HEAD
-[ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/Generator.tres" id="4_de07b"]
-=======
+[ext_resource type="VoxelGeneratorScript" path="res://resources/Generator.tres" id="4_de07b"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
->>>>>>> d5025f71d5d7434cc596389c01399504df66349c
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="5_jvylc"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://resources/items/craftables/wood_1.tres" id="6_qmem5"]
