@@ -7,16 +7,16 @@ const TreeGenerator = preload("./tree_generator.gd")
 const HeightmapCurve = preload("res://resources/heightmap_curve.tres")
 
 # TODO Don't hardcode, get by name from library somehow
-var AIR = VoxelLibrary.get_model_index_default("air")
-var DIRT = VoxelLibrary.get_model_index_default("dirt")
-var GRASS = VoxelLibrary.get_model_index_default("grass")
-var WATER_FULL = VoxelLibrary.get_model_index_default("air")
-var WATER_TOP = VoxelLibrary.get_model_index_default("air")
-var LOG = VoxelLibrary.get_model_index_default("log_oak")
-var LEAVES = VoxelLibrary.get_model_index_default("leaf_oak")
-var TALL_GRASS = VoxelLibrary.get_model_index_default("air")
-var DEAD_SHRUB = VoxelLibrary.get_model_index_default("air")
-var STONE = VoxelLibrary.get_model_index_default("stone")
+var AIR := VoxelLibrary.get_model_index_default("air")
+var DIRT := VoxelLibrary.get_model_index_default("dirt")
+var GRASS := VoxelLibrary.get_model_index_default("grass")
+var WATER_FULL := VoxelLibrary.get_model_index_default("air")
+var WATER_TOP := VoxelLibrary.get_model_index_default("air")
+var LOG := VoxelLibrary.get_model_index_default("log_oak")
+var LEAVES := VoxelLibrary.get_model_index_default("leaf_oak")
+var TALL_GRASS := VoxelLibrary.get_model_index_default("air")
+var DEAD_SHRUB := VoxelLibrary.get_model_index_default("air")
+var STONE := VoxelLibrary.get_model_index_default("stone")
 
 const _CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
