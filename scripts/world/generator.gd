@@ -124,7 +124,8 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 						Vector3(x, 0, z), Vector3(x + 1, relative_height, z + 1), _CHANNEL)
 					if height >= 0:
 						buffer.set_voxel(GRASS, x, relative_height - 1, z, _CHANNEL)
-						buffer.set_voxel(DIRT, x, relative_height - 2, z, _CHANNEL)
+						if relative_height - 2 >= 0:
+							buffer.set_voxel(DIRT, x, relative_height - 2, z, _CHANNEL)
 						if relative_height < block_size and rng.randf() < 0.2:
 							
 							var foliage = TALL_GRASS
