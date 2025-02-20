@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://clt86wlubencc"]
+
+[ext_resource type="Script" path="res://scripts/items/dropped_item.gd" id="1_jdsxj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrmkj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_824ji"]
+material = SubResource("StandardMaterial3D_nrmkj")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ejm1y"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Dropped Item" type="RigidBody3D"]
+script = ExtResource("1_jdsxj")
+
+[node name="block mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_824ji")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ejm1y")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_ejm1y")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
