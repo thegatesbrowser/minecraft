@@ -1,21 +1,22 @@
 #tool
 extends VoxelGeneratorScript
 
+const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
 const TreeGenerator = preload("./tree_generator.gd")
 const HeightmapCurve = preload("res://resources/heightmap_curve.tres")
 
 # TODO Don't hardcode, get by name from library somehow
-const AIR = 0
-const DIRT = 1
-const GRASS = 2
-const WATER_FULL = 0
-const WATER_TOP = 0
-const LOG = 0
-const LEAVES = 0
-const TALL_GRASS = 0
-const DEAD_SHRUB = 0
-#const STONE = 8
+var AIR = VoxelLibrary.get_model_index_default("air")
+var DIRT = VoxelLibrary.get_model_index_default("dirt")
+var GRASS = VoxelLibrary.get_model_index_default("grass")
+var WATER_FULL = VoxelLibrary.get_model_index_default("air")
+var WATER_TOP = VoxelLibrary.get_model_index_default("air")
+var LOG = VoxelLibrary.get_model_index_default("log_oak")
+var LEAVES = VoxelLibrary.get_model_index_default("leaf_oak")
+var TALL_GRASS = VoxelLibrary.get_model_index_default("air")
+var DEAD_SHRUB = VoxelLibrary.get_model_index_default("air")
+var STONE = VoxelLibrary.get_model_index_default("stone")
 
 const _CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
@@ -42,6 +43,8 @@ var _trees_max_y := 0
 
 
 func _init():
+	
+	
 	# TODO Even this must be based on a seed, but I'm lazy
 	var tree_generator = TreeGenerator.new()
 	tree_generator.log_type = LOG
@@ -95,7 +98,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 		buffer.fill(AIR, _CHANNEL)
 
 	elif origin_in_voxels.y + block_size < _heightmap_min_y:
-		buffer.fill(DIRT, _CHANNEL)
+		buffer.fill(STONE, _CHANNEL)
 
 	else:
 		var rng := RandomNumberGenerator.new()
@@ -115,15 +118,20 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 				if relative_height > block_size:
 					buffer.fill_area(DIRT,
 						Vector3(x, 0, z), Vector3(x + 1, block_size, z + 1), _CHANNEL)
+				
 				elif relative_height > 0:
-					buffer.fill_area(DIRT,
+					buffer.fill_area(STONE,
 						Vector3(x, 0, z), Vector3(x + 1, relative_height, z + 1), _CHANNEL)
 					if height >= 0:
 						buffer.set_voxel(GRASS, x, relative_height - 1, z, _CHANNEL)
+						buffer.set_voxel(DIRT, x, relative_height - 2, z, _CHANNEL)
 						if relative_height < block_size and rng.randf() < 0.2:
+							
 							var foliage = TALL_GRASS
-							if rng.randf() < 0.1:
+							if rng.randf() < 0.001:
 								foliage = DEAD_SHRUB
+								Globals.call_deferred("Spawn_creature",Vector3(0,92.241, 0))
+								
 							buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
 				
 				# Water

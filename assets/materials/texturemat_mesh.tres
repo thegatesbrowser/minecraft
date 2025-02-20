@@ -3,8 +3,5 @@
 [ext_resource type="Texture2D" uid="uid://bki3bl6i5mcym" path="res://assets/materials/textureatl_mesh.tres" id="1"]
 
 [resource]
-transparency = 2
-alpha_scissor_threshold = 0.98
-alpha_antialiasing_mode = 0
 albedo_texture = ExtResource("1")
 texture_filter = 0

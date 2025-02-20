@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=26 format=3 uid="uid://mqnlrs6hn6g6"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://dr6debrnyiqol" path="res://assets/sounds/dig/wood1.ogg" id="15_pu3bv"]
 [ext_resource type="AudioStream" uid="uid://cyevtqgbjrfs1" path="res://assets/sounds/dig/wood2.ogg" id="16_sdbfq"]
 [ext_resource type="AudioStream" uid="uid://c4nm3gwgs2nqw" path="res://assets/sounds/dig/wood3.ogg" id="17_cgiyb"]
+[ext_resource type="AudioStream" uid="uid://p7rvj8qo7oh2" path="res://assets/sounds/step/stone4.ogg" id="18_8knw8"]
 [ext_resource type="AudioStream" uid="uid://bc7u4yimst3ah" path="res://assets/sounds/dig/wood4.ogg" id="18_a8qjd"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6qgro"]
@@ -41,6 +42,13 @@ stream_0/stream = ExtResource("15_pu3bv")
 stream_1/stream = ExtResource("16_sdbfq")
 stream_2/stream = ExtResource("17_cgiyb")
 stream_3/stream = ExtResource("18_a8qjd")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_md85o"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 3.0
+streams_count = 1
+stream_0/stream = ExtResource("18_8knw8")
 
 [node name="Main" type="Node"]
 
@@ -101,6 +109,11 @@ panning_strength = 3.0
 stream = SubResource("AudioStreamRandomizer_k1v6a")
 max_distance = 52.51
 panning_strength = 3.0
+
+[node name="UI" type="AudioStreamPlayer" parent="SoundManager"]
+stream = SubResource("AudioStreamRandomizer_md85o")
+pitch_scale = 4.0
+bus = &"UI"
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawn_points")]
 spawn_path = NodePath("../Players")

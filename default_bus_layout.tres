@@ -1,0 +1,35 @@
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://yjf23q0kqavj"]
+
+[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_yp8kp"]
+resource_name = "Chorus"
+wet = 1.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_dq5jm"]
+resource_name = "Reverb"
+room_size = 0.0
+damping = 0.32
+hipass = 0.32
+
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_opf4q"]
+resource_name = "Delay"
+tap2_pan = 1.0
+
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_nw8vl"]
+resource_name = "Distortion"
+drive = 0.02
+
+[resource]
+bus/1/name = &"UI"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectChorus_yp8kp")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectReverb_dq5jm")
+bus/1/effect/1/enabled = false
+bus/1/effect/2/effect = SubResource("AudioEffectDelay_opf4q")
+bus/1/effect/2/enabled = false
+bus/1/effect/3/effect = SubResource("AudioEffectDistortion_nw8vl")
+bus/1/effect/3/enabled = false

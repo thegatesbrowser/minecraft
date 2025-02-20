@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=4 format=3 uid="uid://dh62ut64ibysg"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_2ncyk"]
-[ext_resource type="Resource" path="res://resources/items/wood_oak.tres" id="1_t8vil"]
+[ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="1_t8vil"]
 [ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_jflvk"]
 
 [resource]
