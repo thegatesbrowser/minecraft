@@ -1,11 +1,15 @@
-[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://toq60d1hqqms"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=4 format=3 uid="uid://toq60d1hqqms"]
 
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_anbf2"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_jwmwk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_rbi0u"]
+size = Vector3(1, 0.2, 0.2)
 
 [resource]
 script = ExtResource("1_jwmwk")
 unique_name = &"stick"
 texture = ExtResource("1_anbf2")
 max_stack = 64
+holdable_mesh = SubResource("BoxMesh_rbi0u")
 breaking_efficiency = 0.0

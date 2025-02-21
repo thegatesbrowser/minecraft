@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=4 format=3 uid="uid://ddnn87htgsb3u"]
+
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_bhfpp"]
+[ext_resource type="Resource" uid="uid://w07v8ic6w05j" path="res://resources/items/axe.tres" id="1_uldn1"]
+[ext_resource type="Texture2D" uid="uid://da7thlspud757" path="res://assets/atlas/axe.tres" id="3_ufxdb"]
+
+[resource]
+script = ExtResource("1_bhfpp")
+Name = "axe"
+texture = ExtResource("3_ufxdb")
+output_item = ExtResource("1_uldn1")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 2,
+"name": "stick"
+},
+2: {
+"amount": 3,
+"name": "wood"
+}
+}

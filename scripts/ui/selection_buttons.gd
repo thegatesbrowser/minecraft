@@ -70,17 +70,27 @@ func _press_key(i):
 		
 		## add holdable if has one
 		
+		## general holdables
 		if buttons[current_key].Item_resource.holdable_mesh != null:
-			Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
-		
+				Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
+				
 		if buttons[current_key].Item_resource is ItemBlock:
 			Globals.current_block = buttons[current_key].Item_resource.unique_name
 			Globals.can_build = true 
+			Globals.custom_block = &""
 		elif buttons[current_key].Item_resource is ItemTool:
 			Globals.can_build = false
+			Globals.custom_block = buttons[current_key].Item_resource.unique_name
+			#Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
+				
+		elif buttons[current_key].Item_resource is ItemWeapon:
+			Globals.can_build = false
+			Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
+			Globals.custom_block = buttons[current_key].Item_resource.unique_name
 		else:
 			Globals.custom_block = buttons[current_key].Item_resource.unique_name
 			Globals.can_build = true 
+			
 	else:
 		#Globals.custom_block = ""
 		#Globals.current_block = ""

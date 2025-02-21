@@ -116,12 +116,16 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 				
 				# Dirt and grass
 				if relative_height > block_size:
-					buffer.fill_area(DIRT,
+					buffer.fill_area(STONE,
 						Vector3(x, 0, z), Vector3(x + 1, block_size, z + 1), _CHANNEL)
+					
+					buffer.fill_area(DIRT,
+						Vector3(x, 0, z), Vector3(x , block_size, z ), _CHANNEL)
 				
 				elif relative_height > 0:
 					buffer.fill_area(STONE,
 						Vector3(x, 0, z), Vector3(x + 1, relative_height, z + 1), _CHANNEL)
+						
 					if height >= 0:
 						buffer.set_voxel(GRASS, x, relative_height - 1, z, _CHANNEL)
 						buffer.set_voxel(DIRT, x, relative_height - 2, z, _CHANNEL)

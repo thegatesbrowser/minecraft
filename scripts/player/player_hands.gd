@@ -41,12 +41,14 @@ func _process(_delta: float) -> void:
 					else:
 						timer.wait_time = items_library.get_item(type).break_time
 			
+			print(timer.wait_time)
 			timer.start()
 			await timer.timeout
 			
 			if Input.is_action_pressed("Mine"):
-				var soundmanager = get_node("/root/Main").find_child("SoundManager")
-				soundmanager.play_sound(type,terrain_interaction.last_hit.position)
+				if terrain_interaction.last_hit != null:
+					var soundmanager = get_node("/root/Main").find_child("SoundManager")
+					soundmanager.play_sound(type,terrain_interaction.last_hit.position)
 				
 				terrain_interaction.break_block()
 				Globals.spawn_item_inventory.emit(items_library.get_item(type))
