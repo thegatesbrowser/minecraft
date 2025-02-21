@@ -516,5 +516,17 @@ process_mode = 3
 [node name="AI Base" parent="." instance=ExtResource("2_pgqmj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92.241, 0)
 
+[node name="AI Base2" parent="." instance=ExtResource("2_pgqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92.241, 17.2829)
+
+[node name="AI Base3" parent="." instance=ExtResource("2_pgqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, 17.2829)
+
+[node name="AI Base4" parent="." instance=ExtResource("2_pgqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, -12.2729)
+
+[node name="AI Base5" parent="." instance=ExtResource("2_pgqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, -38.9589)
+
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]

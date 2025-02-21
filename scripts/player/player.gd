@@ -93,7 +93,7 @@ func _ready():
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
-	
+	if Globals.paused: return
 	if event is InputEventMouseMotion:
 		rotation_root.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
@@ -103,6 +103,7 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
+	if Globals.paused: return
 	Globals.player_health = health
 	
 	if your_id != get_multiplayer_authority():

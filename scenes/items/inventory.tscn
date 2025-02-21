@@ -67,7 +67,6 @@ layout_mode = 2
 text = "close"
 
 [node name="Sort" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "SORT"
 

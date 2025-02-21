@@ -11,15 +11,16 @@ size = Vector3(0.285156, 0.395752, 0.614319)
 [sub_resource type="SphereMesh" id="SphereMesh_wyi4v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_akaej"]
+transparency = 1
 no_depth_test = true
 shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.113725)
 
-[node name="AI Base" type="CharacterBody3D"]
+[node name="AI Base" type="CharacterBody3D" groups=["NPCS"]]
 script = ExtResource("1_yo80c")
 creature_resource = ExtResource("2_2ii4m")
 
 [node name="RotationRoot" type="Node3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
 [node name="jump" type="RayCast3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.524592, 0)
@@ -38,10 +39,8 @@ shape = SubResource("BoxShape3D_3pi47")
 shape = SubResource("BoxShape3D_14nko")
 
 [node name="Move" type="Timer" parent="."]
+wait_time = 10.0
 autostart = true
-
-[node name="Start" type="Timer" parent="."]
-one_shot = true
 
 [node name="eyes" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02316, 0)
@@ -49,9 +48,9 @@ target_position = Vector3(0, 0, -3.09)
 debug_shape_custom_color = Color(1, 1, 0, 1)
 
 [node name="target" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("SphereMesh_wyi4v")
 surface_material_override/0 = SubResource("StandardMaterial3D_akaej")
 
 [connection signal="body_entered" from="attack range" to="." method="_on_attack_range_body_entered"]
 [connection signal="timeout" from="Move" to="." method="_on_move_timeout"]
-[connection signal="timeout" from="Start" to="." method="_on_start_timeout"]

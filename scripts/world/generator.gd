@@ -4,7 +4,8 @@ extends VoxelGeneratorScript
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
 const TreeGenerator = preload("./tree_generator.gd")
-const HeightmapCurve = preload("res://resources/heightmap_curve.tres")
+@export var HeightmapCurve = preload("res://resources/heightmap_curve.tres")
+@export var _heightmap_noise:FastNoiseLite
 
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
@@ -17,6 +18,7 @@ var LEAVES := VoxelLibrary.get_model_index_default("leaf_oak")
 var TALL_GRASS := VoxelLibrary.get_model_index_default("air")
 var DEAD_SHRUB := VoxelLibrary.get_model_index_default("air")
 var STONE := VoxelLibrary.get_model_index_default("stone")
+var SAND := VoxelLibrary.get_model_index_default("sand")
 
 const _CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
@@ -37,7 +39,6 @@ var _tree_structures := []
 var _heightmap_min_y := int(HeightmapCurve.min_value)
 var _heightmap_max_y := int(HeightmapCurve.max_value)
 var _heightmap_range := 0
-var _heightmap_noise := FastNoiseLite.new()
 var _trees_min_y := 0
 var _trees_max_y := 0
 
@@ -61,9 +62,7 @@ func _init():
 	_trees_min_y = _heightmap_min_y
 	_trees_max_y = _heightmap_max_y + tallest_tree_height
 
-	#_heightmap_noise.seed = 131183
-	_heightmap_noise.frequency = 1.0 / 128.0
-	_heightmap_noise.fractal_octaves = 4
+	#_heightmap_noise.fractal_octaves = 4
 
 	# IMPORTANT
 	# If we don't do this `Curve` could bake itself when interpolated,
@@ -150,7 +149,6 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 					if oy + block_size == 0:
 						# Surface block
 						buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
-						
 				gx += 1
 
 			gz += 1
