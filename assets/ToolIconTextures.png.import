@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d00pwbg8otnsy"
-path.s3tc="res://.godot/imported/tool icon textures.png-77ff00496778168942957453dda65584.s3tc.ctex"
+path.s3tc="res://.godot/imported/ToolIconTextures.png-8b4e53732a3beaa0bbba47d3411d19db.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/tool icon textures.png"
-dest_files=["res://.godot/imported/tool icon textures.png-77ff00496778168942957453dda65584.s3tc.ctex"]
+source_file="res://assets/ToolIconTextures.png"
+dest_files=["res://.godot/imported/ToolIconTextures.png-8b4e53732a3beaa0bbba47d3411d19db.s3tc.ctex"]
 
 [params]
 
