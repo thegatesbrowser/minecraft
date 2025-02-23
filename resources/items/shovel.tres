@@ -47,8 +47,8 @@ blend_shape_mode = 0
 [resource]
 script = ExtResource("1_nj1yc")
 suitable_objects = Array[ExtResource("2_bioos")]([ExtResource("3_876yr"), ExtResource("4_tpgx7")])
+breaking_efficiency = 0.2
 unique_name = &"shovel"
 texture = ExtResource("4_odg66")
 max_stack = 64
 holdable_mesh = SubResource("ArrayMesh_y5jlx")
-breaking_efficiency = 0.2

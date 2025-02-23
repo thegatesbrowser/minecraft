@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemsLibrary" load_steps=17 format=3 uid="uid://cytxicahdwqm7"]
+[gd_resource type="Resource" script_class="ItemsLibrary" load_steps=18 format=3 uid="uid://cytxicahdwqm7"]
 
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="1_n30f3"]
 [ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="1_udeus"]
@@ -16,7 +16,8 @@
 [ext_resource type="Resource" uid="uid://blqe3qx1cpq57" path="res://resources/items/shovel.tres" id="13_cn8o2"]
 [ext_resource type="Resource" uid="uid://w07v8ic6w05j" path="res://resources/items/axe.tres" id="14_qtr4r"]
 [ext_resource type="Resource" uid="uid://j36n47ah560y" path="res://resources/items/pickaxe.tres" id="15_csxal"]
+[ext_resource type="Resource" uid="uid://jja3ve6j76yl" path="res://resources/items/Meat.tres" id="16_wuxvt"]
 
 [resource]
 script = ExtResource("1_n30f3")
-items_array = Array[ExtResource("4_bm54l")]([ExtResource("1_udeus"), ExtResource("2_40n5o"), ExtResource("3_5ujum"), ExtResource("5_ry5ga"), ExtResource("6_u3ykv"), ExtResource("7_c3cri"), ExtResource("8_eteuy"), ExtResource("9_vogbc"), ExtResource("10_rprqd"), ExtResource("11_v0vys"), ExtResource("12_5qwqh"), ExtResource("13_cn8o2"), ExtResource("14_qtr4r"), ExtResource("15_csxal")])
+items_array = Array[ExtResource("4_bm54l")]([ExtResource("1_udeus"), ExtResource("2_40n5o"), ExtResource("3_5ujum"), ExtResource("5_ry5ga"), ExtResource("6_u3ykv"), ExtResource("7_c3cri"), ExtResource("8_eteuy"), ExtResource("9_vogbc"), ExtResource("10_rprqd"), ExtResource("11_v0vys"), ExtResource("12_5qwqh"), ExtResource("13_cn8o2"), ExtResource("14_qtr4r"), ExtResource("15_csxal"), ExtResource("16_wuxvt")])

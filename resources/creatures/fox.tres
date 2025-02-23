@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Creature" load_steps=5 format=3 uid="uid://dwphi1dev865q"]
+[gd_resource type="Resource" script_class="Creature" load_steps=6 format=3 uid="uid://dwphi1dev865q"]
 
 [ext_resource type="PackedScene" uid="uid://bknf4aa4fmqsg" path="res://assets/models/fox.glb" id="1_ohjhc"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_sffgm"]
+[ext_resource type="Resource" uid="uid://jja3ve6j76yl" path="res://resources/items/Meat.tres" id="3_g1f5t"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ldbmh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e0a6d"]
@@ -20,4 +21,4 @@ coll_height = 0.0
 coll_radius = 0.0
 walk_ani_name = "ArmatureAction"
 creature_name = "Fox"
-drop_items = Array[ExtResource("2_sffgm")]([])
+drop_items = Array[ExtResource("2_sffgm")]([ExtResource("3_g1f5t")])

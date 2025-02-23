@@ -8,6 +8,3 @@ class_name ItemBase
 @export var holdable_mesh: Mesh
 
 @export var utility: Utilities
-
-@export_category("Tools")
-@export var breaking_efficiency: float = 0.0

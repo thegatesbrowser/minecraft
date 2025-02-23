@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ql4u3t5lhtyt"]
+[gd_scene load_steps=16 format=3 uid="uid://ql4u3t5lhtyt"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/player/player_hands.gd" id="4_064gd"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_5801w"]
 [ext_resource type="Resource" uid="uid://cytxicahdwqm7" path="res://resources/items_library.tres" id="5_qnsii"]
+[ext_resource type="PackedScene" uid="uid://wwqa6ta7xtgq" path="res://scenes/other/breakparticle.tscn" id="8_8k80t"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -59,6 +60,7 @@ distance = 5.0
 camera = NodePath("../../RotationRoot/Head/Camera3D")
 block = NodePath("BlockOutline")
 voxel_blocky_type_library = ExtResource("5_5801w")
+break_particle_scene = ExtResource("8_8k80t")
 
 [node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -171,12 +173,12 @@ bones/8/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214059)
 bones/8/scale = Vector3(1, 1, 1)
 
 [node name="Left Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="1"]
-transform = Transform3D(6.71149e-08, -0.00773975, -0.99997, 1.85564e-07, -0.99997, 0.00773975, -1, -1.86501e-07, -1.2039e-07, 0.339821, 0.804392, -0.0148718)
+transform = Transform3D(3.05766e-07, -0.00773974, -0.99997, 1.74388e-07, -0.99997, 0.00773974, -1, -1.75319e-07, -2.39923e-07, 0.339821, 0.804392, -0.0148718)
 bone_name = "arm.L_3.001"
 bone_idx = 4
 
 [node name="Right Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="2"]
-transform = Transform3D(3.73769e-07, -0.0155335, 0.999879, -9.47141e-08, -0.999879, -0.0155335, 1, -8.88389e-08, -3.7892e-07, -0.335904, 0.804741, -0.0143968)
+transform = Transform3D(3.74234e-07, -0.0155335, 0.999879, -1.01233e-07, -0.999879, -0.0155335, 1, -9.16413e-08, -5.58264e-07, -0.335904, 0.804741, -0.0143968)
 bone_name = "arm.R_5.001"
 bone_idx = 7
 

@@ -1,6 +1,8 @@
 extends ScrollContainer
 class_name HotBar
 
+var selected_item: ItemBase 
+
 @onready var slots: HBoxContainer = $MarginContainer/VBoxContainer/Slots
 
 #
@@ -24,11 +26,8 @@ var keys
 
 func _ready():
 	Globals.remove_item_from_hotbar.connect(remove)
-	Globals.hotbar_slot_clicked.connect(hotbar_slot_clicked)
+	#Globals.hotbar_slot_clicked.connect(hotbar_slot_clicked)
 	buttons = slots.get_children()
-	#keys = [WorldGen.GRASS, WorldGen.DIRT, WorldGen.STONE, WorldGen.GLASS, WorldGen.LOG1, \
-		#WorldGen.WOOD1, WorldGen.LOG2, WorldGen.WOOD2, WorldGen.LEAVES1, WorldGen.LEAVES2]
-
 
 func _input(_event):
 	if Input.is_action_just_released("Scroll_Up"):
@@ -44,6 +43,20 @@ func _input(_event):
 		if Input.is_action_just_pressed("0"):
 			current_key = 9
 	
+	if Input.is_action_just_pressed("Mine"):
+		if selected_item != null:
+			if selected_item is ItemFood:
+				var timer = Timer.new()
+				timer.wait_time = selected_item.eat_time
+				timer.name = "food eat timer"
+				add_child(timer,true)
+				timer.start()
+				
+				await timer.timeout
+				
+				if Input.is_action_pressed("Mine"):
+					remove()
+					print("ate ", selected_item.unique_name, " gained ", selected_item.food_points," food points")
 	
 	
 	current_key %= 10
@@ -67,7 +80,7 @@ func _press_key(i):
 	buttons[i].button_pressed = true
 	Globals.remove_item_in_hand.emit()
 	if buttons[current_key].Item_resource != null:
-		
+		selected_item = buttons[current_key].Item_resource
 		## add holdable if has one
 		
 		## general holdables
@@ -82,77 +95,21 @@ func _press_key(i):
 			Globals.can_build = false
 			Globals.custom_block = buttons[current_key].Item_resource.unique_name
 			#Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
-				
 		elif buttons[current_key].Item_resource is ItemWeapon:
 			Globals.can_build = false
 			Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
 			Globals.custom_block = buttons[current_key].Item_resource.unique_name
+		elif buttons[current_key].Item_resource is ItemFood: 
+			Globals.can_build = false
+			selected_item = buttons[current_key].Item_resource
 		else:
 			Globals.custom_block = buttons[current_key].Item_resource.unique_name
 			Globals.can_build = true 
 			
 	else:
-		#Globals.custom_block = ""
-		#Globals.current_block = ""
 		Globals.can_build = false
 		
 	current_key = i
-
-
-func _on_Grass_pressed():
-	_unpress_all()
-	_press_key(GRASS)
-
-
-func _on_Dirt_pressed():
-	_unpress_all()
-	_press_key(DIRT)
-
-
-func _on_Stone_pressed():
-	_unpress_all()
-	_press_key(STONE)
-
-
-func _on_Glass_pressed():
-	_unpress_all()
-	_press_key(GLASS)
-
-
-func _on_Log1_pressed():
-	_unpress_all()
-	_press_key(LOG1)
-
-
-func _on_Log2_pressed():
-	_unpress_all()
-	_press_key(LOG2)
-
-
-func _on_Wood_pressed():
-	_unpress_all()
-	_press_key(WOOD1)
-
-
-func _on_Wood2_pressed():
-	_unpress_all()
-	_press_key(WOOD2)
-
-
-func _on_Leaf1_pressed():
-	_unpress_all()
-	_press_key(LEAF1)
-
-
-func _on_Leaf2_pressed():
-	pass
-
-
-func hotbar_slot_clicked(_slot):
-	pass
-	#_unpress_all()
-	#_press_key(slot.Item_resource.type)
-
 
 func remove(unique_name:String = "", amount:int = 1):
 	if unique_name == "":

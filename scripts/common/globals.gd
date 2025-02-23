@@ -111,4 +111,4 @@ func slot_clicked(slot):
 						slot.update_slot()
 
 func Spawn_creature(pos):
-	spawn_creature.emit(pos)
+	spawn_creature.emit()

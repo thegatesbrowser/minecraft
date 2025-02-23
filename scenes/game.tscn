@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=38 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2_ifuak"]
@@ -11,7 +11,6 @@
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="5_jvylc"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://resources/items/craftables/wood_1.tres" id="6_qmem5"]
-[ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="6_vgsvt"]
 [ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://resources/items/craftables/wood_2.tres" id="7_2v6u3"]
 [ext_resource type="Resource" uid="uid://c1c7ynjb33hsk" path="res://resources/items/craftables/pickaxe.tres" id="8_fjhcp"]
 [ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="9_gbvy1"]
@@ -116,9 +115,6 @@ generator = ExtResource("4_de07b")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 
 [node name="VoxelTerrainMultiplayerSynchronizer" type="VoxelTerrainMultiplayerSynchronizer" parent="VoxelTerrain"]
-
-[node name="CreatureSpawner" type="Node3D" parent="VoxelTerrain"]
-script = ExtResource("6_vgsvt")
 
 [node name="SpawnPoints" type="Node3D" parent="."]
 script = ExtResource("5_ekbqf")
@@ -512,21 +508,6 @@ text = "reset to default"
 
 [node name="Selection_Buttons" parent="UI" instance=ExtResource("12_qvgc7")]
 process_mode = 3
-
-[node name="AI Base" parent="." instance=ExtResource("2_pgqmj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92.241, 0)
-
-[node name="AI Base2" parent="." instance=ExtResource("2_pgqmj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92.241, 17.2829)
-
-[node name="AI Base3" parent="." instance=ExtResource("2_pgqmj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, 17.2829)
-
-[node name="AI Base4" parent="." instance=ExtResource("2_pgqmj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, -12.2729)
-
-[node name="AI Base5" parent="." instance=ExtResource("2_pgqmj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, -38.9589)
 
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]

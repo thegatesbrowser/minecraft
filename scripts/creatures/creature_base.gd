@@ -1,8 +1,22 @@
 extends CharacterBody3D
+class_name CreatureBase
 
 @export var creature_resource:Creature
 
 var health
+
+@export_group("Sync Properties")
+@export var _position: Vector3
+@export var _velocity: Vector3
+@export var _rotation: Vector3 = Vector3.ZERO
+@export var _direction: Vector3 = Vector3.ZERO
+
+@onready var _synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
+var position_before_sync: Vector3 = Vector3.ZERO
+var last_sync_time_ms: int = 0
+@export var sync_delta_max := 0.2
+@export var sync_delta := 0.0
+@export var start_interpolate := false
 
 @export var walk_distance = 50
 @onready var jump: RayCast3D = $RotationRoot/jump
@@ -13,13 +27,14 @@ var health
 
 @onready var guide: Node3D = $guide
 
-var target_reached: bool = false
+@export var target_reached: bool = false
 var speed : float
 var vel : Vector3
 var state_machine
 enum states {IDLE, WALKING, ATTACKING}
 var current_state = states.IDLE
 var target_position: Vector3
+var gravity:float = 30
 
 var ani: AnimationPlayer
 var mesh: MeshInstance3D
@@ -28,6 +43,10 @@ var mesh: MeshInstance3D
 func _ready() -> void:
 		
 	health = creature_resource.max_health
+	
+	#if not is_multiplayer_authority():
+		#_synchronizer.delta_synchronized.connect(on_synchronized)
+		#_synchronizer.synchronized.connect(on_synchronized)
 	
 	var body = creature_resource.body_scene.instantiate()
 	rotation_root.add_child(body)
@@ -67,7 +86,7 @@ func change_state(state):
 
 
 func _physics_process(delta):
-	
+	#if not is_multiplayer_authority(): return
 	## check if reached target
 	if global_position.distance_to(target_position) < 5:
 		if target_reached == false:
@@ -143,6 +162,7 @@ func _on_move_timeout() -> void:
 	change_state("walking")
 	
 func hit(damage:int = 1):
+	print("hit")
 	health -= damage
 	if health <= 0:
 		print("killed")
@@ -176,3 +196,44 @@ func _on_attack_range_body_entered(body: Node3D) -> void:
 
 func toggle_debug():
 	$target.visible = !$target.visible
+	
+func on_synchronized() -> void:
+	velocity = _velocity
+	position_before_sync = position
+	
+	var sync_time_ms = Time.get_ticks_msec()
+	sync_delta = clampf(float(sync_time_ms - last_sync_time_ms) / 1000, 0, sync_delta_max)
+	last_sync_time_ms = sync_time_ms
+	
+	if not start_interpolate:
+		start_interpolate = true
+		position = _position
+		rotation_root.rotation = _rotation
+
+func set_sync_properties() -> void:
+	_position = position
+	_velocity = velocity
+	_rotation = rotation_root.rotation
+
+func interpolate_client(delta: float) -> void:
+	if not start_interpolate: return
+	
+	# Interpolate rotation
+	rotation_root.rotation = _rotation.slerp(rotation_root.rotation, delta)
+	
+	# Don't interpolate to avoid small jitter when stopping
+	if (_position - position).length() > 1.0 and _velocity.is_zero_approx():
+		position = _position # Fix misplacement
+
+		# Interpolate between position_before_sync and _position
+		# and add to ongoing movement to compensate misplacement
+	var t = 1.0 if is_zero_approx(sync_delta) else delta / sync_delta
+	sync_delta = clampf(sync_delta - delta, 0, sync_delta_max)
+	
+	var less_misplacement = position_before_sync.move_toward(_position, t)
+	position += less_misplacement - position_before_sync
+	position_before_sync = less_misplacement
+		
+	
+	velocity.y -= gravity * delta
+	move_and_slide()

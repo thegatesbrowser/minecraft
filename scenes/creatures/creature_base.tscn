@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://buts6uhmr7s2d"]
+[gd_scene load_steps=8 format=3 uid="uid://buts6uhmr7s2d"]
 
 [ext_resource type="Script" path="res://scripts/creatures/creature_base.gd" id="1_yo80c"]
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_2ii4m"]
@@ -15,6 +15,17 @@ transparency = 1
 no_depth_test = true
 shading_mode = 0
 albedo_color = Color(1, 1, 1, 0.113725)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oq0u8"]
+properties/0/path = NodePath(".:_position")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:_velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 0
+properties/2/path = NodePath(".:_rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="AI Base" type="CharacterBody3D" groups=["NPCS"]]
 script = ExtResource("1_yo80c")
@@ -51,6 +62,9 @@ debug_shape_custom_color = Color(1, 1, 0, 1)
 visible = false
 mesh = SubResource("SphereMesh_wyi4v")
 surface_material_override/0 = SubResource("StandardMaterial3D_akaej")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_oq0u8")
 
 [connection signal="body_entered" from="attack range" to="." method="_on_attack_range_body_entered"]
 [connection signal="timeout" from="Move" to="." method="_on_move_timeout"]

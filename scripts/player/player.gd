@@ -103,6 +103,7 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
+	
 	if Globals.paused: return
 	Globals.player_health = health
 	
@@ -154,6 +155,12 @@ func _physics_process(delta):
 		if can_autojump and moving_forward and is_on_floor():
 			if auto_jump.is_colliding() and !can_auto_jump_check.is_colliding():
 				velocity.y = JUMP_VELOCITY
+	
+	if Input.is_action_just_pressed("Build"):
+		if ray.is_colliding():
+			var coll = ray.get_collider()
+			if coll is CreatureBase:
+				coll.hit()
 	
 	## Flying Controls
 	if is_flying:
