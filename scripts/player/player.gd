@@ -93,7 +93,7 @@ func _ready():
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
-	
+	if Globals.paused: return
 	if event is InputEventMouseMotion:
 		rotation_root.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
@@ -103,6 +103,7 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
+	if Globals.paused: return
 	Globals.player_health = health
 	
 	if your_id != get_multiplayer_authority():
@@ -270,8 +271,8 @@ func _exit_tree():
 func add_item_to_hand(item: ItemBase):
 	if item != null:
 		
-		if left_hand.get_children().size() >= 1:
-			left_hand.get_child(0).queue_free()
+		for i in left_hand.get_children():
+			i.queue_free()
 			
 		if not item is ItemWeapon:
 			var mesh_instance = MeshInstance3D.new()
@@ -284,21 +285,24 @@ func add_item_to_hand(item: ItemBase):
 
 
 func remove_item_in_hand():
-	if left_hand.get_children().size() >= 1:
-		left_hand.get_child(0).queue_free()
+	for i in left_hand.get_children():
+		i.queue_free()
 
 
 func hit(damage:int):
-	print("hit")
 	health -= damage
 
 
 func spawn_bullet():
-	var bullet = bullet_scene.instantiate()
-	bullet.global_transform = camera.global_transform
-	bullet.spawner = self
-	get_parent().add_child(bullet)
+	sync_bullet.rpc(camera.global_transform, self)
 
+
+@rpc("any_peer","call_local")
+func sync_bullet(_transform:Transform3D,spawner:Node):
+	var bullet = bullet_scene.instantiate()
+	bullet.global_transform = _transform
+	#bullet.spawner = spawner
+	get_parent().add_child(bullet)
 func get_drop_node():
 	
 	return drop_node.get_path()

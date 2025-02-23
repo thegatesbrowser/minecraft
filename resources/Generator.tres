@@ -1,6 +1,12 @@
-[gd_resource type="VoxelGeneratorScript" load_steps=2 format=3 uid="uid://dprd06y5qsr36"]
+[gd_resource type="VoxelGeneratorScript" load_steps=4 format=3 uid="uid://dprd06y5qsr36"]
 
 [ext_resource type="Script" path="res://scripts/world/generator.gd" id="1_gocow"]
+[ext_resource type="Curve" uid="uid://cvrt8qtqhadv1" path="res://resources/heightmap_curve.tres" id="1_ye8b5"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gmjam"]
+noise_type = 5
 
 [resource]
 script = ExtResource("1_gocow")
+HeightmapCurve = ExtResource("1_ye8b5")
+_heightmap_noise = SubResource("FastNoiseLite_gmjam")

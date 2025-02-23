@@ -84,24 +84,31 @@ func make_slots():
 
 
 func sort():
+	items.clear()
+	slots.clear()
 	for i in items_collection.get_children():
 		if i.Item_resource != null:
 			if items.has(i.Item_resource.unique_name) == false:
 				items.append(i.Item_resource.unique_name)
 				slots.append(i)
 				
-	for slot in slots:
-		var find_item = slot
-		for i in items_collection.get_children():
-			if i.Item_resource == find_item.Item_resource:
-				if i != find_item:
-					if find_item != null:
-						if find_item.Item_resource != null:
-							if find_item.amount + i.amount  < find_item.Item_resource.max_stack:
-								find_item.amount += i.amount
-								i.Item_resource = null
-								i.update_slot()
-								find_item.update_slot()
+	for slot in items_collection.get_children():
+		var find_item
+		if slot.Item_resource != null:
+			if slot.amount < slot.Item_resource.max_stack:
+				find_item = slot
+				
+				for i in slots:
+					if i.Item_resource == find_item.Item_resource:
+						if i != find_item:
+							if find_item != null:
+								if find_item.Item_resource != null:
+									if find_item.amount + i.amount  <= find_item.Item_resource.max_stack:
+										find_item.amount += i.amount
+										i.Item_resource = null
+										i.update_slot()
+										find_item.update_slot()
+										return
 
 
 func _on_sort_pressed() -> void:
@@ -116,7 +123,7 @@ func _on_add_random_item_pressed() -> void:
 func check_amount_of_item(item:StringName):
 	var amount = 0
 	for i in inventory:
-		print(i)
+		#print(i)
 		if i == item:
 			amount += 1
 		elif item in i:

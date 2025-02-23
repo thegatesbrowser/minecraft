@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=39 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2_ifuak"]
@@ -22,7 +22,9 @@
 [ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://resources/items/craftables/ammo.tres" id="13_kkf35"]
 [ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/pistol.tres" id="14_ye6pm"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
+[ext_resource type="Resource" uid="uid://ddnn87htgsb3u" path="res://resources/items/craftables/axe.tres" id="17_72vki"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
+[ext_resource type="Resource" uid="uid://cdgc65lkfgvyq" path="res://resources/items/craftables/shovel.tres" id="18_6q4po"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="19_nv6q3"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
 
@@ -354,17 +356,30 @@ layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("8_fjhcp")
 
+[node name="Craftable8" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("17_72vki")
+
+[node name="Craftable9" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+layout_mode = 2
+inventory = NodePath("../../../../../Inventory")
+craftable = ExtResource("18_6q4po")
+
 [node name="Craftable5" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+visible = false
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("9_gbvy1")
 
 [node name="Craftable6" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+visible = false
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("13_kkf35")
 
 [node name="Craftable7" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+visible = false
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("14_ye6pm")
@@ -500,6 +515,18 @@ process_mode = 3
 
 [node name="AI Base" parent="." instance=ExtResource("2_pgqmj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92.241, 0)
+
+[node name="AI Base2" parent="." instance=ExtResource("2_pgqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 92.241, 17.2829)
+
+[node name="AI Base3" parent="." instance=ExtResource("2_pgqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, 17.2829)
+
+[node name="AI Base4" parent="." instance=ExtResource("2_pgqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, -12.2729)
+
+[node name="AI Base5" parent="." instance=ExtResource("2_pgqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4738, 92.241, -38.9589)
 
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]

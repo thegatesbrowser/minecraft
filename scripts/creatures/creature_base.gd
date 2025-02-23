@@ -4,7 +4,7 @@ extends CharacterBody3D
 
 var health
 
-@export var walk_distance = 20
+@export var walk_distance = 50
 @onready var jump: RayCast3D = $RotationRoot/jump
 @onready var rotation_root: Node3D = $RotationRoot
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
@@ -13,33 +13,37 @@ var health
 
 @onready var guide: Node3D = $guide
 
-var target_reached:bool = false
+var target_reached: bool = false
 var speed : float
 var vel : Vector3
 var state_machine
 enum states {IDLE, WALKING, ATTACKING}
 var current_state = states.IDLE
-var target_position
+var target_position: Vector3
 
-var ani:AnimationPlayer
-var mesh:MeshInstance3D
+var ani: AnimationPlayer
+var mesh: MeshInstance3D
 
 
 func _ready() -> void:
-	set_physics_process(false)
+		
 	health = creature_resource.max_health
+	
 	var body = creature_resource.body_scene.instantiate()
 	rotation_root.add_child(body)
+	
 	collision_shape_3d.shape = creature_resource.coll_shape
 	attack_coll.shape = creature_resource.coll_shape
 	attack_coll.scale = Vector3(1.1,1.1,1.1)
-	#collision_shape_3d.shape.height = creature_resource.coll_height
-	#collision_shape_3d.shape.radius = creature_resource.coll_radius
+	
 	ani = body.find_child("AnimationPlayer")
 	mesh = body.find_child("Object_7")
+	ani.speed_scale = creature_resource.speed / 2
+	
 	collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
 	attack_coll.position.y =  mesh.get_aabb().size.y / 2
-	set_physics_process(true)
+	
+	change_state("idle")
 
 
 func change_state(state):
@@ -63,43 +67,54 @@ func change_state(state):
 
 
 func _physics_process(delta):
-	var cloest = get_cloest_player()
+	
+	## check if reached target
+	if global_position.distance_to(target_position) < 5:
+		if target_reached == false:
+			change_state("idle")
+			target_reached = true
+	
 	if creature_resource.attacks:
 		var look_at = get_cloest_player()
 	
 		if look_at != null:
 			eyes.look_at(look_at.global_position)
 		
-		#if eyes.is_colliding():
-			#var coll = eyes.get_collider()
-			#if coll != null:
-				#if coll.is_in_group("Player"):
-					#change_state("attack",coll.global_position)
-		
+		if eyes.is_colliding():
+			var coll = eyes.get_collider()
+			if coll != null:
+				if coll.is_in_group("Player"):
+					change_state("attack")
+					target_position = coll.global_position
+					
 	if not is_on_floor():
 		velocity.y -= 30 * delta
 		
 	if target_position != null: 
-		$target.global_position = target_position
-		var current_pos = global_position
-		var new_velocity_x = (target_position.x - current_pos.x)
-		var new_velocity_z = (target_position.z - current_pos.z)
-		var new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
-		
+		var new_velocity
+		if !target_reached:
+			$target.global_position = target_position
+			var current_pos = global_position
+			var new_velocity_x = (target_position.x - current_pos.x)
+			var new_velocity_z = (target_position.z - current_pos.z)
+			new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
+		else:
+			new_velocity = Vector3(0,0,0)
+			
 		velocity = velocity.move_toward(new_velocity, .25)
 		
 	
 	if target_position != null:
-		if guide.global_position != target_position:
-			guide.look_at(target_position)
+		if !target_reached:
+			if guide.global_position != target_position:
+				guide.look_at(target_position)
 			
 	rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
-	#rotation_root.rotation.y = guide.rotation.y
+	
 	if !target_reached:
 		if jump.is_colliding() and is_on_floor():
 			velocity.y += 10
-	#if cloest != null:
-		#if cloest.global_position.distance_to(global_position) < 40:
+	
 	move_and_slide()
 			
 func get_random_pos_in_sphere(radius : float) -> Vector3:
@@ -124,6 +139,7 @@ func get_random_pos_in_sphere(radius : float) -> Vector3:
 func _on_move_timeout() -> void:
 	var sphere_point = get_random_pos_in_sphere(walk_distance)
 	target_position = sphere_point + global_position
+	target_reached = false
 	change_state("walking")
 	
 func hit(damage:int = 1):
@@ -157,3 +173,6 @@ func _on_attack_range_body_entered(body: Node3D) -> void:
 		if body.is_in_group("Player"):
 			if body.has_method("hit"):
 				body.hit(creature_resource.damage)
+
+func toggle_debug():
+	$target.visible = !$target.visible

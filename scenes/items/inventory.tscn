@@ -67,11 +67,11 @@ layout_mode = 2
 text = "close"
 
 [node name="Sort" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "SORT"
 
 [node name="AddRandomItem" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "add random item *debug*"

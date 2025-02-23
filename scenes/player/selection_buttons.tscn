@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://5jw15x2l8lvw"]
+[gd_scene load_steps=6 format=3 uid="uid://5jw15x2l8lvw"]
 
 [ext_resource type="Script" path="res://scripts/ui/selection_buttons.gd" id="1_favd0"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_og1jy"]
+[ext_resource type="Resource" uid="uid://w07v8ic6w05j" path="res://resources/items/axe.tres" id="3_eiowm"]
+[ext_resource type="Resource" uid="uid://blqe3qx1cpq57" path="res://resources/items/shovel.tres" id="4_s2j5j"]
+[ext_resource type="Resource" uid="uid://j36n47ah560y" path="res://resources/items/pickaxe.tres" id="5_lqket"]
 
 [node name="Selection_Buttons" type="ScrollContainer"]
 anchors_preset = 12
@@ -36,14 +39,17 @@ alignment = 1
 [node name="Slot" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
+Item_resource = ExtResource("3_eiowm")
 
 [node name="Slot2" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
+Item_resource = ExtResource("4_s2j5j")
 
 [node name="Slot3" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
+Item_resource = ExtResource("5_lqket")
 
 [node name="Slot4" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2

@@ -41,6 +41,7 @@ func _process(_delta: float) -> void:
 					else:
 						timer.wait_time = items_library.get_item(type).break_time
 			
+			#print(timer.wait_time)
 			timer.start()
 			await timer.timeout
 			

@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_n4faw")
-break_time = 0.4
+break_time = 0.8
 unique_name = &"log_birch"
 texture = ExtResource("2_x6jtw")
 max_stack = 64
