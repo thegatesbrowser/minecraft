@@ -4,8 +4,11 @@ extends VoxelGeneratorScript
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
 const TreeGenerator = preload("./tree_generator.gd")
+
+
 @export var HeightmapCurve = preload("res://resources/heightmap_curve.tres")
 @export var _heightmap_noise:FastNoiseLite
+@export var creature_odds:float =  0.0001
 
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
@@ -128,15 +131,12 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 					if height >= 0:
 						buffer.set_voxel(GRASS, x, relative_height - 1, z, _CHANNEL)
 						if relative_height - 2 >= 0:
-							buffer.set_voxel(DIRT, x, relative_height - 2, z, _CHANNEL)
+							buffer.set_voxel(DIRT,x, relative_height - 2, z, _CHANNEL)
+					#
 						if relative_height < block_size and rng.randf() < 0.2:
-							
-							var foliage = TALL_GRASS
-							if rng.randf() < 0.001:
-								foliage = DEAD_SHRUB
-								Globals.call_deferred("Spawn_creature",Vector3(0,92.241, 0))
-								
-							buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
+							if rng.randf() < creature_odds:
+								Globals.call_deferred("Spawn_creature",Vector3(x,relative_height + 80,z))
+								#print(Vector3(x,relative_height,z))
 				
 				# Water
 				if height < 0 and oy < 0:
@@ -181,7 +181,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 					VoxelBuffer.CHANNEL_TYPE, AIR)
 
 	buffer.compress_uniform_channels()
-
+	
 
 func _get_tree_instances_in_chunk(
 	cpos: Vector3, offset: Vector3, chunk_size: int, tree_instances: Array):

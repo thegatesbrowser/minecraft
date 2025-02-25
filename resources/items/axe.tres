@@ -49,8 +49,9 @@ blend_shape_mode = 0
 [resource]
 script = ExtResource("1_d6pyb")
 suitable_objects = Array[ExtResource("2_l2dcs")]([ExtResource("3_t0tka"), ExtResource("4_ivtm3"), ExtResource("5_kftwn"), ExtResource("6_45qwk")])
+breaking_efficiency = 0.6
+damage = 2
 unique_name = &"axe"
 texture = ExtResource("7_rah0e")
 max_stack = 64
 holdable_mesh = SubResource("ArrayMesh_jqtxc")
-breaking_efficiency = 0.5

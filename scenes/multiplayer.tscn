@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=44 format=3 uid="uid://mqnlrs6hn6g6"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -35,6 +35,7 @@
 [ext_resource type="AudioStream" uid="uid://dkmhotcmyyo1" path="res://assets/sounds/block/item_frame_add_item2.ogg" id="30_1ny5t"]
 [ext_resource type="AudioStream" uid="uid://cftecgxiqhol6" path="res://assets/sounds/block/item_frame_add_item3.ogg" id="31_ot16s"]
 [ext_resource type="AudioStream" uid="uid://d4mieippat2vk" path="res://assets/sounds/block/item_frame_add_item4.ogg" id="32_ik8i6"]
+[ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="35_06sqe"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6qgro"]
 streams_count = 4
@@ -171,7 +172,13 @@ script = ExtResource("6_l50oc")
 player_scene = ExtResource("7_n7355")
 spawn_points = NodePath("../Game/SpawnPoints")
 
+[node name="CreatureSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../Creatures")
+script = ExtResource("35_06sqe")
+
 [node name="Players" type="Node3D" parent="."]
+
+[node name="Creatures" type="Node3D" parent="."]
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
 

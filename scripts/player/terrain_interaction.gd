@@ -7,6 +7,7 @@ signal block_broken(type: StringName)
 @export var camera: Camera3D
 @export var block: Node3D
 @export var voxel_blocky_type_library: VoxelBlockyTypeLibrary
+@export var break_particle_scene:PackedScene
 
 const VOXEL_TERRAIN_GROUP = "VoxelTerrain"
 const AIR_TYPE = 0
@@ -72,6 +73,10 @@ func place_block(type: StringName) -> void:
 
 ## Breaks the block and returns the type name
 func break_block() -> void:
+	#var break_particle = break_particle_scene.instantiate()
+	#break_particle.global_position = last_hit.position
+	#get_tree().root.add_child(break_particle)
+	
 	_break_block_server.rpc_id(1, last_hit.position)
 
 
@@ -88,6 +93,7 @@ func _break_block_server(position: Vector3) -> void:
 	voxel_tool.value = AIR_TYPE
 
 	var voxel: int = voxel_tool.get_voxel(position)
+	
 	voxel_tool.do_point(position)
 
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)

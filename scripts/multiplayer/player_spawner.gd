@@ -41,6 +41,7 @@ func custom_spawn(data: Array) -> Node:
 	player.set_multiplayer_authority(id)
 	player.name = str(id)
 	player.position = spawn_position
+	player.spawn_position = spawn_position
 	
 	create_viewer(id, player)
 	
@@ -54,7 +55,7 @@ func create_viewer(id: int, player: Player) -> void:
 
 		viewer.view_distance = view_distance
 		viewer.requires_visuals = false
-		viewer.requires_collisions = false
+		viewer.requires_collisions = true
 		
 		viewer.set_network_peer_id(id)
 		viewer.set_requires_data_block_notifications(true)
