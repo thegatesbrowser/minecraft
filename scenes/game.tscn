@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=33 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2_ifuak"]
@@ -17,7 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://scenes/items/inventory.tscn" id="10_hxw3b"]
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
 [ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://scenes/player/selection_buttons.tscn" id="12_qvgc7"]
-[ext_resource type="Script" path="res://scripts/common/animation.gd" id="13_jjeu3"]
 [ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://resources/items/craftables/ammo.tres" id="13_kkf35"]
 [ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/pistol.tres" id="14_ye6pm"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
@@ -50,29 +49,6 @@ volumetric_fog_density = 0.0
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7nga"]
-bg_color = Color(1, 0, 0, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-corner_detail = 1
-anti_aliasing_size = 0.01
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_at0vu"]
-bg_color = Color(0, 1, 0, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-corner_detail = 1
-anti_aliasing_size = 0.01
-
-[sub_resource type="Gradient" id="Gradient_6edmk"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_im5ed"]
-gradient = SubResource("Gradient_6edmk")
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_2g6cg"]
 color = Color(1, 1, 1, 1)
@@ -142,128 +118,6 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("3_v2bsq")
 
-[node name="stats" type="HBoxContainer" parent="Player UI"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -460.0
-offset_top = -174.0
-offset_right = 460.0
-offset_bottom = -112.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
-theme_override_constants/separation = 260
-alignment = 1
-script = ExtResource("13_jjeu3")
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="Player UI/stats"]
-layout_mode = 2
-alignment = 1
-
-[node name="Health" type="ProgressBar" parent="Player UI/stats/VBoxContainer2"]
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_y7nga")
-theme_override_styles/fill = SubResource("StyleBoxFlat_at0vu")
-value = 79.06
-
-[node name="Armour" type="HBoxContainer" parent="Player UI/stats/VBoxContainer2"]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="Player UI/stats/VBoxContainer2/Armour"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect2" type="TextureRect" parent="Player UI/stats/VBoxContainer2/Armour"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect3" type="TextureRect" parent="Player UI/stats/VBoxContainer2/Armour"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect4" type="TextureRect" parent="Player UI/stats/VBoxContainer2/Armour"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect5" type="TextureRect" parent="Player UI/stats/VBoxContainer2/Armour"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect6" type="TextureRect" parent="Player UI/stats/VBoxContainer2/Armour"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/stats"]
-layout_mode = 2
-alignment = 2
-
-[node name="Hunger" type="HBoxContainer" parent="Player UI/stats/VBoxContainer"]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="Player UI/stats/VBoxContainer/Hunger"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect2" type="TextureRect" parent="Player UI/stats/VBoxContainer/Hunger"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect3" type="TextureRect" parent="Player UI/stats/VBoxContainer/Hunger"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect4" type="TextureRect" parent="Player UI/stats/VBoxContainer/Hunger"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect5" type="TextureRect" parent="Player UI/stats/VBoxContainer/Hunger"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="TextureRect6" type="TextureRect" parent="Player UI/stats/VBoxContainer/Hunger"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_im5ed")
-expand_mode = 1
-stretch_mode = 4
-
 [node name="Inventory holder" type="Control" parent="Player UI" node_paths=PackedStringArray("h_box_container")]
 process_mode = 3
 visible = false
@@ -278,9 +132,9 @@ pivot_offset = Vector2(960, 540)
 mouse_filter = 2
 script = ExtResource("3_fe1qo")
 inventory_s = ExtResource("10_hxw3b")
-h_box_container = NodePath("HBoxContainer")
+h_box_container = NodePath("Inventory")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Player UI/Inventory holder"]
+[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder"]
 custom_minimum_size = Vector2(1012, 800)
 layout_mode = 1
 anchors_preset = 8
@@ -295,7 +149,7 @@ offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Crafting" type="ScrollContainer" parent="Player UI/Inventory holder/HBoxContainer"]
+[node name="Crafting" type="ScrollContainer" parent="Player UI/Inventory holder/Inventory"]
 custom_minimum_size = Vector2(0, 800)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -303,84 +157,84 @@ size_flags_vertical = 4
 horizontal_scroll_mode = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="Panel" parent="Player UI/Inventory holder/HBoxContainer/Crafting"]
+[node name="Panel" type="Panel" parent="Player UI/Inventory holder/Inventory/Crafting"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/HBoxContainer/Crafting"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/Inventory/Crafting"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "CRAFTABLES"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_2g6cg")
 
-[node name="VBoxContainer2" type="GridContainer" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer2" type="GridContainer" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer"]
 layout_mode = 2
 columns = 2
 
-[node name="Craftable" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("5_jvylc")
 
-[node name="Craftable2" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable2" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("6_qmem5")
 
-[node name="Craftable3" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable3" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("7_2v6u3")
 
-[node name="Craftable4" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable4" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("8_fjhcp")
 
-[node name="Craftable8" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable8" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("17_72vki")
 
-[node name="Craftable9" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable9" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("18_6q4po")
 
-[node name="Craftable5" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable5" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 visible = false
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("9_gbvy1")
 
-[node name="Craftable6" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable6" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 visible = false
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("13_kkf35")
 
-[node name="Craftable7" parent="Player UI/Inventory holder/HBoxContainer/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
+[node name="Craftable7" parent="Player UI/Inventory holder/Inventory/Crafting/MarginContainer/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("inventory") instance=ExtResource("4_bg8ft")]
 visible = false
 layout_mode = 2
 inventory = NodePath("../../../../../Inventory")
 craftable = ExtResource("14_ye6pm")
 
-[node name="Inventory" parent="Player UI/Inventory holder/HBoxContainer" groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
+[node name="Inventory" parent="Player UI/Inventory holder/Inventory" groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 
 [node name="Craftable Info" parent="Player UI/Inventory holder" instance=ExtResource("11_cdfh2")]

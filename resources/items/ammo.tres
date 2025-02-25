@@ -13,4 +13,3 @@ script = ExtResource("1_uidyx")
 unique_name = &"ammo"
 texture = SubResource("GradientTexture2D_xg4ma")
 max_stack = 64
-breaking_efficiency = 0.0

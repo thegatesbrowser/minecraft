@@ -10,3 +10,4 @@ noise_type = 5
 script = ExtResource("1_gocow")
 HeightmapCurve = ExtResource("1_ye8b5")
 _heightmap_noise = SubResource("FastNoiseLite_gmjam")
+creature_odds = 0.0001

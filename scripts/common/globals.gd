@@ -19,8 +19,8 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 
 var breaking_efficiency:float = 0.0
 ## these are copys for ui puepose
-var max_health:int
-var player_health:int
+var max_health:int = 3
+var player_health:int = 3
 
 @export var paused := false
 @export var mouse_sensitivity := Vector2(0.3, 0.3)
@@ -111,4 +111,4 @@ func slot_clicked(slot):
 						slot.update_slot()
 
 func Spawn_creature(pos):
-	spawn_creature.emit()
+	spawn_creature.emit(pos)

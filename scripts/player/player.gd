@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name Player
 
-
+var spawn_position:Vector3
 var your_id:int = 1
 
 @export_range(0.1,1.1,.1) var max_flying_margin = 0.2
@@ -156,12 +156,32 @@ func _physics_process(delta):
 			if auto_jump.is_colliding() and !can_auto_jump_check.is_colliding():
 				velocity.y = JUMP_VELOCITY
 	
-	if Input.is_action_just_pressed("Build"):
+	if Input.is_action_just_pressed("Mine"):
+		var hotbar = get_node("/root/Main").find_child("Selection_Buttons") as HotBar
+		var hotbar_item = hotbar.get_current().Item_resource
+		#print(hotbar.get_current().Item_resource)
+		
 		if ray.is_colliding():
 			var coll = ray.get_collider()
+			
 			if coll is CreatureBase:
-				coll.hit()
-	
+				if hotbar_item != null:
+					if "damage" in hotbar_item:
+						coll.hit(hotbar_item.damage)
+					else:
+						coll.hit()
+				else:
+					coll.hit()
+					
+			if coll is Player:
+				if hotbar_item != null:
+					if "damage" in hotbar_item:
+						rpc_id(coll.get_multiplayer_authority(),"hit",hotbar_item.damage)
+					else:
+						rpc_id(coll.get_multiplayer_authority(),"hit")
+				else:
+					rpc_id(coll.get_multiplayer_authority(),"hit")
+				
 	## Flying Controls
 	if is_flying:
 		if camera.rotation.x > max_flying_margin:
@@ -295,9 +315,13 @@ func remove_item_in_hand():
 	for i in left_hand.get_children():
 		i.queue_free()
 
-
-func hit(damage:int):
+@rpc("any_peer","call_local")
+func hit(damage:int = 1):
 	health -= damage
+	
+	if health <= 0:
+		print("player death")
+		#position = spawn_position
 
 
 func spawn_bullet():
@@ -310,6 +334,6 @@ func sync_bullet(_transform:Transform3D,spawner:Node):
 	bullet.global_transform = _transform
 	#bullet.spawner = spawner
 	get_parent().add_child(bullet)
-func get_drop_node():
 	
+func get_drop_node():
 	return drop_node.get_path()

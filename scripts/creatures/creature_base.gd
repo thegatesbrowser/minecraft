@@ -3,6 +3,7 @@ class_name CreatureBase
 
 @export var creature_resource:Creature
 
+var creature_spawner:MultiplayerSpawner
 var health
 
 @export_group("Sync Properties")
@@ -41,13 +42,13 @@ var mesh: MeshInstance3D
 
 
 func _ready() -> void:
-		
+	creature_spawner = get_node("/root/Main").find_child("CreatureSpawner")
 	health = creature_resource.max_health
 	
 	#if not is_multiplayer_authority():
 		#_synchronizer.delta_synchronized.connect(on_synchronized)
 		#_synchronizer.synchronized.connect(on_synchronized)
-	
+	#
 	var body = creature_resource.body_scene.instantiate()
 	rotation_root.add_child(body)
 	
@@ -86,7 +87,7 @@ func change_state(state):
 
 
 func _physics_process(delta):
-	#if not is_multiplayer_authority(): return
+	if not is_multiplayer_authority(): return
 	## check if reached target
 	if global_position.distance_to(target_position) < 5:
 		if target_reached == false:
@@ -162,18 +163,16 @@ func _on_move_timeout() -> void:
 	change_state("walking")
 	
 func hit(damage:int = 1):
-	print("hit")
+	#print("hit")
 	health -= damage
 	if health <= 0:
-		print("killed")
+		print("creature killed")
 		if creature_resource.drop_items.size() != 0:
 			var drop_item = creature_resource.drop_items.pick_random()
 			Globals.spawn_item_inventory.emit(drop_item)
-			queue_free()
-		else:
-			queue_free()
-
-
+		#creature_spawner.destroy_creature(name)
+		#queue_free()
+		
 func get_cloest_player():
 	var last_distance
 	var closest_player:Node
@@ -237,3 +236,7 @@ func interpolate_client(delta: float) -> void:
 	
 	velocity.y -= gravity * delta
 	move_and_slide()
+	
+
+func _exit_tree():
+	pass

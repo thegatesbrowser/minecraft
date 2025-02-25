@@ -17,15 +17,12 @@ shading_mode = 0
 albedo_color = Color(1, 1, 1, 0.113725)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oq0u8"]
-properties/0/path = NodePath(".:_position")
+properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 0
-properties/1/path = NodePath(".:_velocity")
+properties/0/replication_mode = 1
+properties/1/path = NodePath("RotationRoot:rotation")
 properties/1/spawn = true
-properties/1/replication_mode = 0
-properties/2/path = NodePath(".:_rotation")
-properties/2/spawn = true
-properties/2/replication_mode = 1
+properties/1/replication_mode = 1
 
 [node name="AI Base" type="CharacterBody3D" groups=["NPCS"]]
 script = ExtResource("1_yo80c")
@@ -34,7 +31,7 @@ creature_resource = ExtResource("2_2ii4m")
 [node name="RotationRoot" type="Node3D" parent="."]
 
 [node name="jump" type="RayCast3D" parent="RotationRoot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.524592, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
 target_position = Vector3(0, 0, -2)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
@@ -54,7 +51,7 @@ wait_time = 10.0
 autostart = true
 
 [node name="eyes" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02316, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05284, 0)
 target_position = Vector3(0, 0, -3.09)
 debug_shape_custom_color = Color(1, 1, 0, 1)
 
