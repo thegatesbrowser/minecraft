@@ -1,6 +1,7 @@
 extends Node
 class_name TerrainInteraction
 
+var blocks = []
 signal block_broken(type: StringName)
 
 @export var distance: float = 10
@@ -69,7 +70,7 @@ func get_type() -> StringName:
 ## Places a block with the given type
 func place_block(type: StringName) -> void:
 	_place_block_server.rpc_id(1, type, last_hit.previous_position)
-
+	#blocks.
 
 ## Breaks the block and returns the type name
 func break_block() -> void:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://buts6uhmr7s2d"]
 
 [ext_resource type="Script" path="res://scripts/creatures/creature_base.gd" id="1_yo80c"]
-[ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_2ii4m"]
+[ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_4djsj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3pi47"]
 size = Vector3(0.285156, 0.395752, 0.614319)
@@ -23,10 +23,13 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("RotationRoot:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath(".:health")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [node name="AI Base" type="CharacterBody3D" groups=["NPCS"]]
 script = ExtResource("1_yo80c")
-creature_resource = ExtResource("2_2ii4m")
+creature_resource = ExtResource("2_4djsj")
 
 [node name="RotationRoot" type="Node3D" parent="."]
 

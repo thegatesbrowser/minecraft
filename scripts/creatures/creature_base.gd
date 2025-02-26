@@ -87,6 +87,11 @@ func change_state(state):
 
 
 func _physics_process(delta):
+	
+	#if health <= 0:
+		#print("creature killed")
+		#queue_free()
+			
 	if not is_multiplayer_authority(): return
 	## check if reached target
 	if global_position.distance_to(target_position) < 5:
@@ -125,11 +130,10 @@ func _physics_process(delta):
 		
 	
 	if target_position != null:
-		if !target_reached:
-			if guide.global_position != target_position:
-				guide.look_at(target_position)
-			
-	rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
+		guide.look_at(target_position)
+		
+	if target_position != null:
+		rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
 	
 	if !target_reached:
 		if jump.is_colliding() and is_on_floor():
@@ -166,13 +170,15 @@ func hit(damage:int = 1):
 	#print("hit")
 	health -= damage
 	if health <= 0:
-		print("creature killed")
 		if creature_resource.drop_items.size() != 0:
 			var drop_item = creature_resource.drop_items.pick_random()
 			Globals.spawn_item_inventory.emit(drop_item)
-		#creature_spawner.destroy_creature(name)
-		#queue_free()
-		
+			sync_death.rpc()
+			
+@rpc("any_peer","call_local")
+func sync_death():
+	queue_free()
+	
 func get_cloest_player():
 	var last_distance
 	var closest_player:Node
