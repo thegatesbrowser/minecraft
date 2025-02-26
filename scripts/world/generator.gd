@@ -22,6 +22,7 @@ var TALL_GRASS := VoxelLibrary.get_model_index_default("air")
 var DEAD_SHRUB := VoxelLibrary.get_model_index_default("air")
 var STONE := VoxelLibrary.get_model_index_default("stone")
 var SAND := VoxelLibrary.get_model_index_default("sand")
+#var PORTAL := VoxelLibrary.get_model_index_default("portal")
 
 const _CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
@@ -154,7 +155,8 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			gz += 1
 
 	# Trees
-
+	var voxel_tool_2 := buffer.get_voxel_tool()
+	
 	if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
 		var voxel_tool := buffer.get_voxel_tool()
 		var structure_instances := []

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Creature" load_steps=6 format=3 uid="uid://bcl5545ds8qns"]
+
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_05ufc"]
+[ext_resource type="PackedScene" uid="uid://cbr6q5t2843m7" path="res://assets/models/magic animal 1.glb" id="1_giyky"]
+[ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="2_qh5tl"]
+[ext_resource type="Resource" uid="uid://c7cae3cajkgfq" path="res://resources/items/portal.tres" id="3_k0n1b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7724m"]
+size = Vector3(0.285156, 0.395752, 0.614319)
+
+[resource]
+script = ExtResource("2_qh5tl")
+body_scene = ExtResource("1_giyky")
+max_health = 5
+attacks = false
+run_away_after_attack = false
+damage = 0
+speed = 5.0
+coll_shape = SubResource("BoxShape3D_7724m")
+coll_height = 0.0
+coll_radius = 0.0
+walk_ani_name = "move"
+creature_name = "Luminos"
+drop_items = Array[ExtResource("1_05ufc")]([ExtResource("3_k0n1b")])
