@@ -1,12 +1,13 @@
-[gd_scene load_steps=33 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=31 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://c3hsxgmqwip4g" path="res://addons/fps_counter/Counter.tscn" id="2_ifuak"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
+[ext_resource type="PackedScene" uid="uid://bai247yhexqwe" path="res://scenes/sky.tscn" id="3_jfwkf"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="4_bg8ft"]
-[ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/Generator.tres" id="4_de07b"]
+[ext_resource type="PackedScene" uid="uid://byjn5yc1m1okl" path="res://addons/SunshineVolumetricClouds/CloudsPrefab.tscn" id="4_mockf"]
+[ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/Generator.tres" id="4_tpxqt"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="5_jvylc"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
@@ -25,27 +26,6 @@
 [ext_resource type="Resource" uid="uid://cdgc65lkfgvyq" path="res://resources/items/craftables/shovel.tres" id="18_6q4po"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="19_nv6q3"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_flqqw"]
-sky_top_color = Color(0, 0.490196, 0.878431, 1)
-sky_horizon_color = Color(0, 0.85098, 0.878431, 1)
-sky_energy_multiplier = 0.5
-ground_bottom_color = Color(0.14902, 0.85098, 0.878431, 1)
-ground_horizon_color = Color(0.14902, 0.85098, 0.878431, 1)
-ground_energy_multiplier = 0.5
-sun_angle_max = 8.48
-sun_curve = 217.223
-
-[sub_resource type="Sky" id="Sky_nu8o0"]
-sky_material = SubResource("ProceduralSkyMaterial_flqqw")
-
-[sub_resource type="Environment" id="Environment_7185k"]
-background_mode = 2
-sky = SubResource("Sky_nu8o0")
-tonemap_mode = 2
-glow_enabled = true
-glow_bloom = 0.24
-volumetric_fog_density = 0.0
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
@@ -66,20 +46,25 @@ script = ExtResource("1")
 creature_s = ExtResource("2_pgqmj")
 breaktime = NodePath("Breaktime")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.667196, -0.49845, -0.553531, -0.647287, 0.020241, 0.761977, -0.368604, 0.866682, -0.336145, 0, 9.91598, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("3_jfwkf")]
+
+[node name="CloudsSystem" parent="." node_paths=PackedStringArray("sunLight") instance=ExtResource("4_mockf")]
+updateConstantly = true
+sunLight = NodePath("../DirectionalLight3D")
+cloudsCutoff = 0.06127
+cloudsFloor = 150.0
+cloudsCeiling = 500.0
+useFogDefault = false
+fogColorDefault = Color(0.815686, 0.843137, 0.866667, 1)
+
 [node name="InventoryManager" type="Node" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128, 0)
-
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-light_color = Color(1, 1, 0.917647, 1)
-light_energy = 0.8
-shadow_enabled = true
-directional_shadow_max_distance = 160.0
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_7185k")
 
 [node name="Breaktime" type="Timer" parent="."]
 one_shot = true
@@ -87,7 +72,7 @@ one_shot = true
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 material_override = ExtResource("19_nv6q3")
 use_gpu_generation = true
-generator = ExtResource("4_de07b")
+generator = ExtResource("4_tpxqt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 
 [node name="VoxelTerrainMultiplayerSynchronizer" type="VoxelTerrainMultiplayerSynchronizer" parent="VoxelTerrain"]
@@ -243,13 +228,6 @@ offset_bottom = 47.0
 mouse_filter = 2
 
 [node name="UI" type="CanvasLayer" parent="."]
-
-[node name="FPSCounter" parent="UI" instance=ExtResource("2_ifuak")]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_bottom = 0.0
-grow_horizontal = 0
-grow_vertical = 1
 
 [node name="ScreenCenterCross" type="CenterContainer" parent="UI"]
 anchors_preset = 15

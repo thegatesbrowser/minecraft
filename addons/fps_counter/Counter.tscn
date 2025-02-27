@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://c3hsxgmqwip4g"]
+[gd_scene load_steps=5 format=3 uid="uid://c3hsxgmqwip4g"]
 
 [ext_resource type="Theme" uid="uid://c00ywh0ppv0rc" path="res://addons/fps_counter/Menu_Theme.tres" id="1"]
 [ext_resource type="Script" path="res://addons/fps_counter/Counter.gd" id="2"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_kr0gs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0obux"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Counter" type="Control"]
 layout_mode = 3
@@ -29,7 +33,11 @@ mouse_filter = 2
 
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
-theme = ExtResource("1")
+theme = ExtResource("3_kr0gs")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_0obux")
 text = "Cur. FPS: 10
 Minimum: 1
 Maximum: 100 

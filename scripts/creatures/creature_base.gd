@@ -57,7 +57,7 @@ func _ready() -> void:
 	attack_coll.scale = Vector3(1.1,1.1,1.1)
 	
 	ani = body.find_child("AnimationPlayer")
-	mesh = body.find_child("Object_7")
+	mesh = body.find_child(creature_resource.mesh_name)
 	ani.speed_scale = creature_resource.speed / 2
 	
 	collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
@@ -69,8 +69,8 @@ func _ready() -> void:
 func change_state(state):
 	match state:
 		"idle":
-			if ani.current_animation != "idle":
-				ani.play("idle")
+			if ani.current_animation != creature_resource.idle_ani_name:
+				ani.play(creature_resource.idle_ani_name)
 			current_state = states.IDLE
 			speed = 0.000000001
 		"walking":
@@ -87,11 +87,6 @@ func change_state(state):
 
 
 func _physics_process(delta):
-	
-	#if health <= 0:
-		#print("creature killed")
-		#queue_free()
-			
 	if not is_multiplayer_authority(): return
 	## check if reached target
 	if global_position.distance_to(target_position) < 5:
@@ -130,10 +125,11 @@ func _physics_process(delta):
 		
 	
 	if target_position != null:
-		guide.look_at(target_position)
-		
-	if target_position != null:
-		rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
+		if !target_reached:
+			if guide.global_position != target_position:
+				guide.look_at(target_position)
+			
+	rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
 	
 	if !target_reached:
 		if jump.is_colliding() and is_on_floor():
@@ -170,13 +166,16 @@ func hit(damage:int = 1):
 	#print("hit")
 	health -= damage
 	if health <= 0:
+		print("creature killed")
 		if creature_resource.drop_items.size() != 0:
 			var drop_item = creature_resource.drop_items.pick_random()
 			Globals.spawn_item_inventory.emit(drop_item)
-			sync_death.rpc()
-			
+		#creature_spawner.destroy_creature(name)
+		destory.rpc()
+		
+		
 @rpc("any_peer","call_local")
-func sync_death():
+func destory():
 	queue_free()
 	
 func get_cloest_player():

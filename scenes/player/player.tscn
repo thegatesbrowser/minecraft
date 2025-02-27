@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ql4u3t5lhtyt"]
+[gd_scene load_steps=17 format=3 uid="uid://ql4u3t5lhtyt"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -9,6 +9,7 @@
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_5801w"]
 [ext_resource type="Resource" uid="uid://cytxicahdwqm7" path="res://resources/items_library.tres" id="5_qnsii"]
 [ext_resource type="PackedScene" uid="uid://wwqa6ta7xtgq" path="res://scenes/other/breakparticle.tscn" id="8_8k80t"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -220,6 +221,20 @@ shape = SubResource("10")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2gamh")
+
+[node name="hit" type="AudioStreamPlayer3D" parent="."]
+
+[node name="Pos" type="Label" parent="."]
+visible = false
+offset_right = 81.0
+offset_bottom = 63.0
+theme = ExtResource("10_fsqbe")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 25
+text = "pos"
+horizontal_alignment = 1
+uppercase = true
 
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_exited"]

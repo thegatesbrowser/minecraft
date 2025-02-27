@@ -1,8 +1,9 @@
 
+const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
 
-
-var trunk_len_min := 6
+var possible_types:Dictionary
+var trunk_len_min:= 5
 var trunk_len_max := 15
 var log_type := 1
 var leaves_type := 2
@@ -10,6 +11,16 @@ var channel := VoxelBuffer.CHANNEL_TYPE
 
 
 func generate() -> Structure:
+	
+	var possible_tree_type_size = possible_types.size()
+	var tree_key = possible_types.keys()[randi() % possible_tree_type_size]
+	var tree_type:Array = possible_types[tree_key]
+	
+	print(possible_types[tree_key])
+	
+	log_type = tree_type.front()
+	leaves_type = tree_type.back()
+	
 	var voxels := {}
 	# Let's make crappy trees
 	

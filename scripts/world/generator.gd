@@ -8,7 +8,14 @@ const TreeGenerator = preload("./tree_generator.gd")
 
 @export var HeightmapCurve = preload("res://resources/heightmap_curve.tres")
 @export var _heightmap_noise:FastNoiseLite
+@export var grass_odds:float = 0.1
 @export var creature_odds:float =  0.0001
+@export var possible_creatures: Array[Creature]
+
+@export var possible_tree_types:Dictionary = {
+	"oak": [VoxelLibrary.get_model_index_default("log_oak"),VoxelLibrary.get_model_index_default("leaf_oak")],
+	"birch": [VoxelLibrary.get_model_index_default("log_birch"),VoxelLibrary.get_model_index_default("leaf_oak")]
+}
 
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
@@ -17,12 +24,12 @@ var GRASS := VoxelLibrary.get_model_index_default("grass")
 var WATER_FULL := VoxelLibrary.get_model_index_default("air")
 var WATER_TOP := VoxelLibrary.get_model_index_default("air")
 var LOG := VoxelLibrary.get_model_index_default("log_oak")
-var LEAVES := VoxelLibrary.get_model_index_default("leaf_oak")
-var TALL_GRASS := VoxelLibrary.get_model_index_default("air")
+var OAK_LEAVES := VoxelLibrary.get_model_index_default("leaf_oak")
+var BIRCH_LEAVES := VoxelLibrary.get_model_index_default("leaf_birch")
+var TALL_GRASS := VoxelLibrary.get_model_index_default("tall_grass")
 var DEAD_SHRUB := VoxelLibrary.get_model_index_default("air")
 var STONE := VoxelLibrary.get_model_index_default("stone")
 var SAND := VoxelLibrary.get_model_index_default("sand")
-#var PORTAL := VoxelLibrary.get_model_index_default("portal")
 
 const _CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
@@ -52,8 +59,9 @@ func _init():
 	
 	# TODO Even this must be based on a seed, but I'm lazy
 	var tree_generator = TreeGenerator.new()
-	tree_generator.log_type = LOG
-	tree_generator.leaves_type = LEAVES
+	
+	tree_generator.possible_types = possible_tree_types
+	
 	for i in 16:
 		var s = tree_generator.generate()
 		_tree_structures.append(s)
@@ -65,7 +73,6 @@ func _init():
 			tallest_tree_height = h
 	_trees_min_y = _heightmap_min_y
 	_trees_max_y = _heightmap_max_y + tallest_tree_height
-
 	#_heightmap_noise.fractal_octaves = 4
 
 	# IMPORTANT
@@ -136,9 +143,12 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 					#
 						if relative_height < block_size and rng.randf() < 0.2:
 							if rng.randf() < creature_odds:
-								Globals.call_deferred("Spawn_creature",Vector3(x,relative_height + 80,z))
-								#print(Vector3(x,relative_height,z))
-				
+								Globals.call_deferred("Spawn_creature",Vector3(x,relative_height + 80,z),possible_creatures.pick_random())
+								
+							if rng.randf() < grass_odds:
+								var foliage = TALL_GRASS
+								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
+								
 				# Water
 				if height < 0 and oy < 0:
 					var start_relative_height := 0
@@ -155,8 +165,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			gz += 1
 
 	# Trees
-	var voxel_tool_2 := buffer.get_voxel_tool()
-	
+
 	if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
 		var voxel_tool := buffer.get_voxel_tool()
 		var structure_instances := []
@@ -187,7 +196,6 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 
 func _get_tree_instances_in_chunk(
 	cpos: Vector3, offset: Vector3, chunk_size: int, tree_instances: Array):
-		
 	var rng := RandomNumberGenerator.new()
 	rng.seed = _get_chunk_seed_2d(cpos)
 

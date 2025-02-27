@@ -12,7 +12,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CenterContainer/Title/Splash:rotation")
+tracks/0/path = NodePath("CenterContainer/Label/Splash:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -23,7 +23,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CenterContainer/Title/Splash:scale:x")
+tracks/1/path = NodePath("CenterContainer/Label/Splash:scale:x")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -34,7 +34,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CenterContainer/Title/Splash:scale:y")
+tracks/2/path = NodePath("CenterContainer/Label/Splash:scale:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -49,7 +49,7 @@ loop_mode = 1
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CenterContainer/Title/Splash:scale:x")
+tracks/0/path = NodePath("CenterContainer/Label/Splash:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -60,7 +60,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CenterContainer/Title/Splash:scale:y")
+tracks/1/path = NodePath("CenterContainer/Label/Splash:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -71,7 +71,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CenterContainer/Title/Splash:rotation")
+tracks/2/path = NodePath("CenterContainer/Label/Splash:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -99,7 +99,7 @@ multiplayer_btn = NodePath("CenterContainer2/VBoxContainer/Multiplayer")
 singleplayer_scene = ExtResource("3_0kue3")
 multiplayer_scene = ExtResource("2_koh5b")
 splash_sayings = PackedStringArray("Punching trees since... always!", "Loading... or just daydreaming?", "TheGates: Where worlds collide!", "Crafting chaos, one block at a time.", "Breaking blocks, opening doors.", "Did you bring enough torches?", "TheGates: Infinite portals, infinite fun!", "Dig down. Regret later.", "Opening doors... to blocky madness!")
-splash = NodePath("CenterContainer/Title/Splash")
+splash = NodePath("CenterContainer/Label/Splash")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -114,6 +114,7 @@ offset_bottom = 404.0
 grow_horizontal = 2
 
 [node name="Title" type="TextureRect" parent="CenterContainer"]
+visible = false
 custom_minimum_size = Vector2(1092, 256)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -122,21 +123,31 @@ texture = ExtResource("3_snl8p")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Splash" type="Label" parent="CenterContainer/Title"]
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme = ExtResource("4_1o25k")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.32549)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 105
+theme_override_font_sizes/font_size = 176
+text = "PORTAL WARS"
+
+[node name="Splash" type="Label" parent="CenterContainer/Label"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.475
 anchor_right = 0.475
-offset_left = 122.3
-offset_top = 88.0
-offset_right = 722.3
-offset_bottom = 137.0
+offset_left = 129.1
+offset_top = 114.0
+offset_right = 729.1
+offset_bottom = 177.0
 rotation = -0.350811
 pivot_offset = Vector2(300, 20)
 theme = ExtResource("4_1o25k")
-theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
+theme_override_colors/font_color = Color(1, 0, 0.0166664, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
+theme_override_constants/outline_size = 15
 theme_override_font_sizes/font_size = 36
 text = "THE GATES"
 horizontal_alignment = 1
@@ -164,8 +175,11 @@ text = "Singleplayer"
 [node name="Multiplayer" type="Button" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1o25k")
-theme_override_font_sizes/font_size = 64
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.286275)
+theme_override_constants/outline_size = 60
+theme_override_font_sizes/font_size = 124
 text = "Multiplayer"
+flat = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

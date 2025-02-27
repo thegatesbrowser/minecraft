@@ -48,7 +48,7 @@ run/main_run_args="client"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/fps_counter/plugin.cfg", "res://addons/godot-console/console/plugin.cfg", "res://addons/sdg-print/plugin.cfg", "res://addons/thegates_export/plugin.cfg")
+enabled=PackedStringArray("res://addons/SunshineVolumetricClouds/plugin.cfg", "res://addons/fps_counter/plugin.cfg", "res://addons/godot-console/console/plugin.cfg", "res://addons/sdg-print/plugin.cfg", "res://addons/thegates_export/plugin.cfg")
 
 [global_group]
 
@@ -251,6 +251,7 @@ Drop={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/volumetric_fog/volume_size=128
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 environment/default_environment="res://Assets/default_env.tres"

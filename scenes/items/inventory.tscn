@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxe66yexhl7t1"]
+[gd_scene load_steps=6 format=3 uid="uid://bxe66yexhl7t1"]
 
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_e6rhx"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory.gd" id="1_vh6pj"]
-[ext_resource type="PackedScene" uid="uid://clt86wlubencc" path="res://scenes/items/dropped_item.tscn" id="3_ijdo6"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="3_v400e"]
 [ext_resource type="Resource" uid="uid://cytxicahdwqm7" path="res://resources/items_library.tres" id="4_2bd2u"]
 
@@ -28,7 +27,6 @@ mouse_filter = 2
 theme = ExtResource("1_e6rhx")
 horizontal_scroll_mode = 0
 script = ExtResource("1_vh6pj")
-drop_item_scene = ExtResource("3_ijdo6")
 slot_s = ExtResource("3_v400e")
 items_collection = NodePath("PanelContainer/MarginContainer/VBoxContainer/Items")
 amount_of_slots = 40

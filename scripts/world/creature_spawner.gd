@@ -15,12 +15,12 @@ func _ready() -> void:
 		
 	Globals.spawn_creature.connect(spawn_creature)
 	
-func spawn_creature(pos: Vector3, id: int = 1) -> void:
+func spawn_creature(pos: Vector3, creature:Creature) -> void:
 	if not multiplayer.is_server(): return
 		
 	var spawn_position = pos
-	spawn([id, spawn_position])
-	print("creature spawn")
+	spawn([1, spawn_position,creature.get_path()])
+	#print("creature spawn")
 
 func destroy_creature(Name: String) -> void:
 	if not multiplayer.is_server(): return
@@ -51,11 +51,14 @@ func custom_spawn(data: Array) -> Node:
 	var id: int = data[0]
 	var spawn_position: Vector3 = data[1]
 	
+	## Loads from the path of the resource
+	var creature_resource = load(data[2])
 	
-	var creature = creature_base.instantiate()
+	var creature = creature_base.instantiate() as CreatureBase
 	creature.set_multiplayer_authority(id)
 	creature.name = str(id)
 	creature.position = spawn_position
+	creature.creature_resource = creature_resource
 	
 	create_viewer(id, creature)
 	

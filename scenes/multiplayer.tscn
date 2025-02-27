@@ -182,4 +182,10 @@ script = ExtResource("35_06sqe")
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
 
+[node name="VoxelTerrain" parent="Game" index="6"]
+material_override = null
+
+[node name="FPSCounter" parent="Game/UI" index="0"]
+visible = false
+
 [editable path="Game"]

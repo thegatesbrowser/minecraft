@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bkg02u1wtw0q3"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_6cpgl"]
+[ext_resource type="Texture2D" uid="uid://djxr6uhl80usp" path="res://assets/textures/blocks/tallgrass.png" id="2_3dlfr"]
+
+[resource]
+script = ExtResource("1_6cpgl")
+break_time = 0.2
+unique_name = &"tall_grass"
+texture = ExtResource("2_3dlfr")
+max_stack = 64
