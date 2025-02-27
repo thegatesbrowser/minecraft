@@ -57,7 +57,7 @@ func _ready() -> void:
 	attack_coll.scale = Vector3(1.1,1.1,1.1)
 	
 	ani = body.find_child("AnimationPlayer")
-	mesh = body.find_child("Object_7")
+	mesh = body.find_child(creature_resource.mesh_name)
 	ani.speed_scale = creature_resource.speed / 2
 	
 	collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
@@ -69,8 +69,8 @@ func _ready() -> void:
 func change_state(state):
 	match state:
 		"idle":
-			if ani.current_animation != "idle":
-				ani.play("idle")
+			if ani.current_animation != creature_resource.idle_ani_name:
+				ani.play(creature_resource.idle_ani_name)
 			current_state = states.IDLE
 			speed = 0.000000001
 		"walking":
@@ -171,8 +171,13 @@ func hit(damage:int = 1):
 			var drop_item = creature_resource.drop_items.pick_random()
 			Globals.spawn_item_inventory.emit(drop_item)
 		#creature_spawner.destroy_creature(name)
-		#queue_free()
+		destory.rpc()
 		
+		
+@rpc("any_peer","call_local")
+func destory():
+	queue_free()
+	
 func get_cloest_player():
 	var last_distance
 	var closest_player:Node

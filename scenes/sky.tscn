@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bai247yhexqwe"]
+
+[ext_resource type="Environment" uid="uid://dgwki8y1f6sbc" path="res://addons/SunshineVolumetricClouds/ExampleWorldEnvironment.tres" id="1_tr73s"]
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = ExtResource("1_tr73s")
