@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://csip818ximhn5"
-path="res://.godot/imported/item_frame_rotate_item4.ogg-155ce88a5d8401416527cee1fb7d2c3b.oggvorbisstr"
+path="res://.godot/imported/Item_Frame_rotate_item4.ogg-f0c91adbcfa97c15c117a5e84dcf2bec.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/sounds/block/item_frame_rotate_item4.ogg"
-dest_files=["res://.godot/imported/item_frame_rotate_item4.ogg-155ce88a5d8401416527cee1fb7d2c3b.oggvorbisstr"]
+source_file="res://assets/sounds/block/Item_Frame_rotate_item4.ogg"
+dest_files=["res://.godot/imported/Item_Frame_rotate_item4.ogg-f0c91adbcfa97c15c117a5e84dcf2bec.oggvorbisstr"]
 
 [params]
 
