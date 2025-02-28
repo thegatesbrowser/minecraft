@@ -33,7 +33,7 @@ var custom_block:StringName ## unique_name
 var can_build:bool = false
 
 # AI
-signal spawn_creature(pos)
+signal spawn_creature(pos,creature)
 
 # Inventory
 signal open_inventory(Owner)
@@ -74,7 +74,7 @@ func slot_clicked(slot):
 	else:
 		## move to blank
 		if slot.Item_resource == null:
-			print("move ")
+			#print("move ")
 			slot.Item_resource = Globals.last_clicked_slot.Item_resource
 			slot.amount = Globals.last_clicked_slot.amount
 			Globals.last_clicked_slot.Item_resource = null
@@ -85,7 +85,7 @@ func slot_clicked(slot):
 			## stack
 			if slot.Item_resource == Globals.last_clicked_slot.Item_resource:
 				if slot.amount + Globals.last_clicked_slot.amount  < slot.Item_resource.max_stack:
-					print("stack ")
+					#print("stack ")
 					slot.amount += Globals.last_clicked_slot.amount
 					Globals.last_clicked_slot.Item_resource = null
 					Globals.last_clicked_slot.update_slot()
@@ -96,7 +96,7 @@ func slot_clicked(slot):
 			else:
 				if slot.Item_resource != null:
 					if slot.Item_resource != Globals.last_clicked_slot.Item_resource:
-						print("swap " )
+						#print("swap " )
 						var hold_slot_amount = slot.amount
 						var hold_slot_resource = slot.Item_resource
 						
@@ -110,5 +110,5 @@ func slot_clicked(slot):
 						
 						slot.update_slot()
 
-func Spawn_creature(pos):
-	spawn_creature.emit(pos)
+func Spawn_creature(pos,creature):
+	spawn_creature.emit(pos,creature)

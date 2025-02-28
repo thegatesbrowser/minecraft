@@ -76,6 +76,9 @@ func _ready():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
 		return
+	Console.add_command("pos", self, 'show_pos')\
+		.set_description("shows the position of the player).")\
+		.register()
 	
 	Console.add_command("player_flying", self, 'toggle_flying')\
 		.set_description("Enables the player to fly (or disables flight).")\
@@ -105,6 +108,7 @@ func _physics_process(delta):
 		interpolate_client(delta); return
 	
 	if Globals.paused: return
+	$Pos.text = str("pos   ", global_position)
 	Globals.player_health = health
 	
 	if your_id != get_multiplayer_authority():
@@ -277,7 +281,9 @@ func toggle_clipping():
 	if $CollisionShape3D.disabled:
 		is_flying = true
 
-
+func show_pos():
+	$Pos.visible = !$Pos.visible
+	
 func _headbob(time) -> Vector3:
 	var pos = Vector3.ZERO
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
@@ -334,6 +340,6 @@ func sync_bullet(_transform:Transform3D,spawner:Node):
 	bullet.global_transform = _transform
 	#bullet.spawner = spawner
 	get_parent().add_child(bullet)
-	
-func get_drop_node():
-	return drop_node.get_path()
+	#
+#func get_drop_node():
+	#return drop_node.get_path()

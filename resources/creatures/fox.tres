@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Creature" load_steps=6 format=3 uid="uid://dwphi1dev865q"]
 
-[ext_resource type="PackedScene" uid="uid://bknf4aa4fmqsg" path="res://assets/models/fox.glb" id="1_66hiw"]
+[ext_resource type="PackedScene" uid="uid://bknf4aa4fmqsg" path="res://assets/models/fox.glb" id="1_ohjhc"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_sffgm"]
 [ext_resource type="Resource" uid="uid://jja3ve6j76yl" path="res://resources/items/Meat.tres" id="3_g1f5t"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ldbmh"]
@@ -10,15 +10,15 @@ size = Vector3(0.285156, 0.395752, 0.614319)
 
 [resource]
 script = ExtResource("3_ldbmh")
-body_scene = ExtResource("1_66hiw")
+body_scene = ExtResource("1_ohjhc")
 max_health = 5
-attacks = true
+attacks = false
 run_away_after_attack = false
 damage = 1
 speed = 7.0
 coll_shape = SubResource("BoxShape3D_e0a6d")
-coll_height = 0.0
-coll_radius = 0.0
 walk_ani_name = "ArmatureAction"
+idle_ani_name = "idle"
+mesh_name = "Object_7"
 creature_name = "Fox"
 drop_items = Array[ExtResource("2_sffgm")]([ExtResource("3_g1f5t")])
