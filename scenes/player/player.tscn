@@ -200,7 +200,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 cull_mask = 1048543
 fov = 90.0
 near = 0.01
-far = 500.0
+far = 160.0
 
 [node name="RayCast3D" type="RayCast3D" parent="RotationRoot/Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.05)

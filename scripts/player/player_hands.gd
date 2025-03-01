@@ -39,7 +39,7 @@ func _process(_delta: float) -> void:
 				if item.utility.has_inventory:
 					Globals.open_inventory.emit(terrain_interaction.last_hit.position)
 					
-			#print(type)k
+			print(type)
 			if Globals.custom_block.is_empty():
 				timer.wait_time = item.break_time
 				

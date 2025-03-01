@@ -1,7 +1,7 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://qlhr72xx7i8g"]
 
-[ext_resource type="Texture2D" uid="uid://d00pwbg8otnsy" path="res://assets/ToolIconTextures.png" id="1_n4mvw"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l5e0i"]
 
 [resource]
-atlas = ExtResource("1_n4mvw")
+atlas = SubResource("CompressedTexture2D_l5e0i")
 region = Rect2(17, 0, 16, 16)

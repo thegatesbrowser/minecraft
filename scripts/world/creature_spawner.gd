@@ -3,7 +3,6 @@ extends MultiplayerSpawner
 signal player_spawned(id: int, creature)
 signal creature_despawned(id: int)
 
-var debug:bool
 var creature_base = preload("res://scenes/creatures/creature_base.tscn")
 @export var view_distance: int = 128
 
@@ -20,7 +19,6 @@ func spawn_creature(pos: Vector3, creature:Creature) -> void:
 	if not multiplayer.is_server(): return
 		
 	var spawn_position = pos
-	print("creature spawn pos ", spawn_position)
 	spawn([1, spawn_position,creature.get_path()])
 	#print("creature spawn")
 
@@ -29,10 +27,7 @@ func destroy_creature(Name: String) -> void:
 	get_node(spawn_path).get_node(Name).queue_free()
 
 	
-func _process(delta: float) -> void:
-	if debug:
-		for i in get_tree().get_nodes_in_group("NPCS"):
-			i.toggle_debug()
+
 
 func get_cloest_player(pos):
 	var last_distance
@@ -48,7 +43,6 @@ func get_cloest_player(pos):
 		return closest_player
 
 func toggle_AI_debug():
-	#debug = !debug
 	for i in get_tree().get_nodes_in_group("NPCS"):
 		i.toggle_debug()
 		
@@ -77,7 +71,7 @@ func create_viewer(id: int, creature: CreatureBase) -> void:
 		var viewer := VoxelViewer.new()
 
 		viewer.view_distance = view_distance
-		viewer.requires_visuals = true
+		viewer.requires_visuals = false
 		viewer.requires_collisions = true
 		
 		viewer.set_network_peer_id(id)

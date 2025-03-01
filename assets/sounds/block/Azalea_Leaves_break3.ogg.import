@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://bqkby1vtht45a"
-path="res://.godot/imported/azalea_leaves_break3.ogg-454471ac9941aa7a1cea0913ec741ca7.oggvorbisstr"
+path="res://.godot/imported/Azalea_Leaves_break3.ogg-518002639f2ba999e01a9fef261163a8.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/sounds/block/azalea_leaves_break3.ogg"
-dest_files=["res://.godot/imported/azalea_leaves_break3.ogg-454471ac9941aa7a1cea0913ec741ca7.oggvorbisstr"]
+source_file="res://assets/sounds/block/Azalea_Leaves_break3.ogg"
+dest_files=["res://.godot/imported/Azalea_Leaves_break3.ogg-518002639f2ba999e01a9fef261163a8.oggvorbisstr"]
 
 [params]
 

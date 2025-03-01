@@ -1,7 +1,5 @@
 [gd_resource type="Theme" load_steps=7 format=3 uid="uid://c1tenirmy1xiy"]
 
-[ext_resource type="FontFile" uid="uid://bcyn2himieq3h" path="res://assets/menu/mc_menu.ttf" id="1_8vte5"]
-
 [sub_resource type="StyleBoxFlat" id="3"]
 bg_color = Color(0.187176, 0.187176, 0.187176, 1)
 border_width_left = 3
@@ -50,8 +48,11 @@ anti_aliasing = false
 [sub_resource type="StyleBoxFlat" id="5"]
 bg_color = Color(0.6, 0.6, 0.6, 0.278431)
 
+[sub_resource type="FontVariation" id="FontVariation_ynt1i"]
+spacing_bottom = -5
+
 [resource]
-default_font = ExtResource("1_8vte5")
+default_font = SubResource("FontVariation_ynt1i")
 Button/constants/hseparation = 10
 Button/styles/hover = SubResource("3")
 Button/styles/normal = SubResource("3")

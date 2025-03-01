@@ -10,7 +10,7 @@
 
 [resource]
 script = ExtResource("1_gocow")
-generate_trees = true
+generate_trees = false
 HeightmapCurve = ExtResource("1_ye8b5")
 _heightmap_noise = SubResource("FastNoiseLite_sv834")
 grass_odds = 1.0

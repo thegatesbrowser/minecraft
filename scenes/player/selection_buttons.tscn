@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://5jw15x2l8lvw"]
+[gd_scene load_steps=4 format=3 uid="uid://5jw15x2l8lvw"]
 
 [ext_resource type="Script" path="res://scripts/ui/selection_buttons.gd" id="1_favd0"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_og1jy"]
-[ext_resource type="Resource" uid="uid://c2c8qekfermsb" path="res://resources/items/pistol.tres" id="3_kmp8w"]
-[ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="4_asbhg"]
+[ext_resource type="Resource" uid="uid://lxq2aq82pa5e" path="res://resources/items/chest.tres" id="3_jry67"]
 
 [node name="Selection_Buttons" type="ScrollContainer"]
 anchors_preset = 12
@@ -39,13 +38,11 @@ alignment = 1
 layout_mode = 2
 type = "hotbar"
 amount = 4
-Item_resource = ExtResource("3_kmp8w")
+Item_resource = ExtResource("3_jry67")
 
 [node name="Slot2" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
-amount = 62
-Item_resource = ExtResource("4_asbhg")
 
 [node name="Slot3" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2

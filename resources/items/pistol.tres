@@ -22,3 +22,4 @@ fire_rate = 0.1
 unique_name = &"pistol"
 texture = SubResource("GradientTexture2D_43pwu")
 max_stack = 1
+breaking_efficiency = 0.0

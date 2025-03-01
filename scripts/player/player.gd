@@ -329,12 +329,17 @@ func hit(damage:int = 1):
 		print("player death")
 		#position = spawn_position
 
+
 func spawn_bullet():
-	if is_multiplayer_authority():
-		sync_bullet.rpc(camera.global_transform)
+	sync_bullet.rpc(camera.global_transform, self)
 
 
 @rpc("any_peer","call_local")
-func sync_bullet(transform_):
-	Globals.add_object.emit(1,transform_,"res://scenes/items/weapons/bullet.tscn")
-	
+func sync_bullet(_transform:Transform3D,spawner:Node):
+	var bullet = bullet_scene.instantiate()
+	bullet.global_transform = _transform
+	#bullet.spawner = spawner
+	get_parent().add_child(bullet)
+	#
+#func get_drop_node():
+	#return drop_node.get_path()
