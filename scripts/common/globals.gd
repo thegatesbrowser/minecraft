@@ -59,7 +59,7 @@ var known_storage = []
 
 # Weapons
 signal spawn_bullet
-
+signal add_object(id:int,position,instance_path:String)
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)

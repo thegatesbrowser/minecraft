@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=48 format=3 uid="uid://mqnlrs6hn6g6"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -37,6 +37,9 @@
 [ext_resource type="AudioStream" uid="uid://d4mieippat2vk" path="res://assets/sounds/block/item_frame_add_item4.ogg" id="32_ik8i6"]
 [ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="35_06sqe"]
 [ext_resource type="Script" path="res://scripts/multiplayer/inventory_spawner.gd" id="36_j5lsn"]
+[ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_vqa4r"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="38_8j2si"]
+[ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="38_iak5s"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6qgro"]
 streams_count = 4
@@ -103,20 +106,18 @@ script = ExtResource("1_5pkvj")
 
 [node name="ConnectionManager" type="Node" parent="." node_paths=PackedStringArray("connection")]
 script = ExtResource("2_o7nue")
-connection = NodePath("../Connection")
+connection = NodePath("../SoundManager/Connection")
 connection_events = ExtResource("3_c26l8")
-
-[node name="Connection" type="Node" parent="."]
-script = ExtResource("4_iqpav")
-port = 56613
-max_clients = 256
-host = "188.245.188.59"
-use_localhost_in_editor = true
 
 [node name="SoundManager" type="Node" parent="."]
 script = ExtResource("6_x8auu")
 
 [node name="grass" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = SubResource("AudioStreamRandomizer_6qgro")
+max_distance = 10.0
+panning_strength = 3.0
+
+[node name="grass2" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_6qgro")
 max_distance = 10.0
 panning_strength = 3.0
@@ -167,6 +168,13 @@ volume_db = -11.555
 pitch_scale = 4.0
 bus = &"UI"
 
+[node name="Connection" type="Node" parent="SoundManager"]
+script = ExtResource("4_iqpav")
+port = 56613
+max_clients = 256
+host = "188.245.188.59"
+use_localhost_in_editor = true
+
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawn_points")]
 spawn_path = NodePath("../Players")
 script = ExtResource("6_l50oc")
@@ -181,6 +189,10 @@ script = ExtResource("35_06sqe")
 spawn_path = NodePath("../Game/Player UI/Inventory holder/Inventory")
 script = ExtResource("36_j5lsn")
 
+[node name="OtherSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../Node3D")
+script = ExtResource("37_vqa4r")
+
 [node name="Players" type="Node3D" parent="."]
 
 [node name="Creatures" type="Node3D" parent="."]
@@ -190,7 +202,38 @@ script = ExtResource("36_j5lsn")
 [node name="VoxelTerrain" parent="Game" index="6"]
 material_override = null
 
-[node name="Inventory holder" parent="Game/Player UI" index="0"]
-visible = true
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Chat" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -256.0
+offset_right = 214.0
+offset_bottom = -6.0
+grow_vertical = 0
+theme = ExtResource("38_8j2si")
+script = ExtResource("38_iak5s")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Chat"]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="Chat/VBoxContainer"]
+custom_minimum_size = Vector2(1.45519e-11, 200)
+layout_mode = 2
+text = "dawfawf"
+editable = false
+
+[node name="LineEdit" type="LineEdit" parent="Chat/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "messgae"
+alignment = 1
+clear_button_enabled = true
+deselect_on_focus_loss_enabled = false
+select_all_on_focus = true
+
+[connection signal="text_submitted" from="Chat/VBoxContainer/LineEdit" to="Chat" method="_on_line_edit_text_submitted"]
 
 [editable path="Game"]

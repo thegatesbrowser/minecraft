@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://by82u1qe5rbch"]
 
 [node name="InputButton" type="Button"]
-custom_minimum_size = Vector2(0, 18)
+custom_minimum_size = Vector2(1.45519e-11, 40)
 focus_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

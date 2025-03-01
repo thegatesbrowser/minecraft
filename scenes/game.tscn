@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=40 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -26,6 +26,7 @@
 [ext_resource type="Resource" uid="uid://cdgc65lkfgvyq" path="res://resources/items/craftables/shovel.tres" id="18_6q4po"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="19_nv6q3"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
+[ext_resource type="FontFile" uid="uid://bcyn2himieq3h" path="res://assets/menu/mc_menu.ttf" id="25_wvygi"]
 [ext_resource type="PackedScene" uid="uid://byjn5yc1m1okl" path="res://addons/SunshineVolumetricClouds/CloudsPrefab.tscn" id="26_gjks3"]
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
@@ -35,9 +36,82 @@ library = ExtResource("5_td8xe")
 color = Color(1, 1, 1, 1)
 thickness = 3
 
+[sub_resource type="StyleBoxFlat" id="3"]
+bg_color = Color(0.187176, 0.187176, 0.187176, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.151276, 0.151276, 0.151276, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+
+[sub_resource type="StyleBoxEmpty" id="6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wr3k"]
+bg_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.176419, 0.176419, 0.176419, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0, 0, 0, 0.152941)
+shadow_size = 2
+shadow_offset = Vector2(3, 3)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug056"]
+bg_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.176419, 0.176419, 0.176419, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0, 0, 0, 0.152941)
+shadow_size = 2
+shadow_offset = Vector2(3, 3)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="5"]
+bg_color = Color(0.6, 0.6, 0.6, 0.278431)
+
+[sub_resource type="Theme" id="Theme_loycu"]
+default_font = ExtResource("25_wvygi")
+Button/constants/hseparation = 10
+Button/styles/hover = SubResource("3")
+Button/styles/normal = SubResource("3")
+Button/styles/pressed = SubResource("3")
+HSeparator/constants/separation = 16
+HSeparator/styles/separator = SubResource("6")
+Panel/styles/panel = SubResource("StyleBoxFlat_8wr3k")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_ug056")
+VScrollBar/styles/grabber = SubResource("5")
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
 thickness = 2
+
+[sub_resource type="Theme" id="Theme_bucph"]
+default_font = ExtResource("25_wvygi")
+default_font_size = 25
+Button/constants/hseparation = 10
+Button/styles/hover = SubResource("3")
+Button/styles/normal = SubResource("3")
+Button/styles/pressed = SubResource("3")
+HSeparator/constants/separation = 16
+HSeparator/styles/separator = SubResource("6")
+Panel/styles/panel = SubResource("StyleBoxFlat_8wr3k")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_ug056")
+VScrollBar/styles/grabber = SubResource("5")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5s33"]
 bg_color = Color(0.0846899, 0.0846899, 0.0846899, 1)
@@ -59,7 +133,7 @@ worldEnvironment = NodePath("../WorldEnvironment")
 cloudsFloor = 100.0
 ambientColorDefault = Color(0.602482, 0.602482, 0.602482, 3.1)
 useFogDefault = false
-fogColorDefault = Color(0.815686, 0.843137, 0.866667, 1)
+fogColorDefault = Color(0.518, 0.553, 0.608, 1)
 
 [node name="InventoryManager" type="Node" parent="."]
 
@@ -269,7 +343,7 @@ anchor_bottom = 1.0
 offset_right = 212.0
 grow_vertical = 2
 pivot_offset = Vector2(106, 540)
-theme = ExtResource("3_v2bsq")
+theme = SubResource("Theme_loycu")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/Pause Menu/Pause Menu"]
 layout_mode = 2
@@ -284,7 +358,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 31
 text = "Pause Menu"
 
 [node name="HSeparator" type="HSeparator" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
@@ -292,15 +366,16 @@ layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_xl6xy")
 
 [node name="Main Menu" type="Button" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Main Menu"
 
 [node name="Settings" type="Button" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 31
 text = "Settings"
 
 [node name="Settings" type="TabContainer" parent="UI/Pause Menu"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -314,7 +389,8 @@ offset_bottom = 321.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
-theme = ExtResource("3_v2bsq")
+theme = SubResource("Theme_bucph")
+theme_override_font_sizes/font_size = 25
 current_tab = 0
 
 [node name="InputSettings" type="PanelContainer" parent="UI/Pause Menu/Settings"]

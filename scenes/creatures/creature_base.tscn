@@ -9,24 +9,27 @@ size = Vector3(0.285156, 0.395752, 0.785471)
 [sub_resource type="BoxShape3D" id="BoxShape3D_14nko"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_wyi4v"]
+radius = 2.0
+height = 4.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_akaej"]
 transparency = 1
 no_depth_test = true
 shading_mode = 0
-albedo_color = Color(1, 1, 1, 0.113725)
+albedo_color = Color(1, 0, 0, 0.74902)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oq0u8"]
-properties/0/path = NodePath(".:position")
+properties/0/path = NodePath(".:_position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("RotationRoot:rotation")
+properties/1/path = NodePath(".:_rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="AI Base" type="CharacterBody3D" groups=["NPCS"]]
 script = ExtResource("1_yo80c")
 creature_resource = ExtResource("2_qtj8b")
+start_interpolate = true
 
 [node name="RotationRoot" type="Node3D" parent="."]
 
@@ -65,3 +68,4 @@ replication_config = SubResource("SceneReplicationConfig_oq0u8")
 
 [connection signal="body_entered" from="attack range" to="." method="_on_attack_range_body_entered"]
 [connection signal="timeout" from="Move" to="." method="_on_move_timeout"]
+[connection signal="synchronized" from="MultiplayerSynchronizer" to="." method="_on_multiplayer_synchronizer_synchronized"]
