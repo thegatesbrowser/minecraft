@@ -6,6 +6,7 @@ render_mode blend_mix;
 uniform vec2 sun_position = vec2(0.0);
 uniform vec3 tint = vec3(1.4,1.2,1.0);
 uniform sampler2D noise_texture;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
 float noise_float(float t, vec2 texResolution)
 {
