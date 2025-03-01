@@ -187,10 +187,4 @@ script = ExtResource("36_j5lsn")
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
 
-[node name="VoxelTerrain" parent="Game" index="6"]
-material_override = null
-
-[node name="Inventory holder" parent="Game/Player UI" index="0"]
-visible = true
-
 [editable path="Game"]
