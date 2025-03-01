@@ -22,5 +22,8 @@ func _process(_delta: float) -> void:
 
 func fire():
 	if inventory.check_amount_of_item(weapon_resource.ammo_name) >= 1:
+		
+		## sends to player to get the direction of the camera
 		Globals.spawn_bullet.emit()
+		
 		inventory.remove_item(weapon_resource.ammo_name,1)

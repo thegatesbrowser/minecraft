@@ -69,26 +69,27 @@ func _ready() -> void:
 func change_state(state):
 	match state:
 		"idle":
-			if ani.current_animation != creature_resource.idle_ani_name:
-				ani.play(creature_resource.idle_ani_name)
+			#if ani.current_animation != creature_resource.idle_ani_name:
+				#ani.play(creature_resource.idle_ani_name)
 			current_state = states.IDLE
 			speed = 0.000000001
 		"walking":
-			if ani.current_animation != creature_resource.walk_ani_name:
-				ani.play(creature_resource.walk_ani_name)
+			#if ani.current_animation != creature_resource.walk_ani_name:
+				#ani.play(creature_resource.walk_ani_name)
 			current_state = states.WALKING
 			speed = creature_resource.speed
 			
 		"attack":
-			if ani.current_animation != creature_resource.walk_ani_name:
-				ani.play(creature_resource.walk_ani_name)
+			#if ani.current_animation != creature_resource.walk_ani_name:
+				#ani.play(creature_resource.walk_ani_name)
 			current_state = 3
 			speed = creature_resource.speed
 
 
 func _physics_process(delta):
-	if not is_multiplayer_authority(): return
-	## check if reached target
+	if not multiplayer.is_server(): 
+		interpolate_client(delta)
+		return
 	if global_position.distance_to(target_position) < 5:
 		if target_reached == false:
 			change_state("idle")
@@ -136,6 +137,8 @@ func _physics_process(delta):
 			velocity.y += 10
 	
 	move_and_slide()
+	_position = position
+	_rotation = $RotationRoot.rotation
 			
 func get_random_pos_in_sphere(radius : float) -> Vector3:
 	var x1= randi_range(-1,1)
@@ -221,23 +224,22 @@ func set_sync_properties() -> void:
 
 func interpolate_client(delta: float) -> void:
 	if not start_interpolate: return
-	
+	#print("inter")
 	# Interpolate rotation
 	rotation_root.rotation = _rotation.slerp(rotation_root.rotation, delta)
 	
 	# Don't interpolate to avoid small jitter when stopping
-	if (_position - position).length() > 1.0 and _velocity.is_zero_approx():
-		position = _position # Fix misplacement
+	if (_position - position).length() > 1 and _velocity.is_zero_approx():
+		position = _position.slerp(_position,delta) # Fix misplacement
 
 		# Interpolate between position_before_sync and _position
 		# and add to ongoing movement to compensate misplacement
-	var t = 1.0 if is_zero_approx(sync_delta) else delta / sync_delta
+	var t = 2 if is_zero_approx(sync_delta) else delta / sync_delta
 	sync_delta = clampf(sync_delta - delta, 0, sync_delta_max)
 	
 	var less_misplacement = position_before_sync.move_toward(_position, t)
 	position += less_misplacement - position_before_sync
 	position_before_sync = less_misplacement
-		
 	
 	velocity.y -= gravity * delta
 	move_and_slide()
@@ -245,3 +247,9 @@ func interpolate_client(delta: float) -> void:
 
 func _exit_tree():
 	pass
+
+
+func _on_multiplayer_synchronizer_synchronized() -> void:
+	#start_interpolate = truek
+	pass
+	#print("sync")

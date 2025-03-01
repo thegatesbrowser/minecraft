@@ -9,12 +9,16 @@ size = Vector3(0.285156, 0.395752, 0.785471)
 [sub_resource type="BoxShape3D" id="BoxShape3D_14nko"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_wyi4v"]
+radius = 2.0
+height = 4.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_akaej"]
 transparency = 1
 no_depth_test = true
 shading_mode = 0
-albedo_color = Color(1, 1, 1, 0.113725)
+disable_ambient_light = true
+disable_fog = true
+albedo_color = Color(1, 0, 0, 0.431373)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oq0u8"]
 properties/0/path = NodePath(".:position")

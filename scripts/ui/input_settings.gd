@@ -17,7 +17,9 @@ var input_actions = {
 	"Build": "Build",
 	"Start": "Pause",
 	"Sprint": "Run",
-	"Inventory": "Inventory"
+	"Inventory": "Inventory",
+	"console_toggle": "Console",
+	"chat": "Text Chat",
 }
 
 
