@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=32 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -24,9 +24,9 @@
 [ext_resource type="Resource" uid="uid://ddnn87htgsb3u" path="res://resources/items/craftables/axe.tres" id="17_72vki"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
 [ext_resource type="Resource" uid="uid://cdgc65lkfgvyq" path="res://resources/items/craftables/shovel.tres" id="18_6q4po"]
-[ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="19_nv6q3"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
 [ext_resource type="PackedScene" uid="uid://byjn5yc1m1okl" path="res://addons/SunshineVolumetricClouds/CloudsPrefab.tscn" id="26_gjks3"]
+[ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="27_yvp68"]
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
@@ -350,5 +350,42 @@ text = "reset to default"
 [node name="Selection_Buttons" parent="UI" instance=ExtResource("12_qvgc7")]
 process_mode = 3
 
+[node name="Text Chat" type="PanelContainer" parent="UI"]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -523.0
+offset_top = -279.0
+offset_right = -7.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("3_v2bsq")
+script = ExtResource("27_yvp68")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Text Chat"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Text Chat/MarginContainer"]
+layout_mode = 2
+
+[node name="message display" type="TextEdit" parent="UI/Text Chat/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1.45519e-11, 200)
+layout_mode = 2
+editable = false
+
+[node name="message_edit" type="LineEdit" parent="UI/Text Chat/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "MESSAGE"
+clear_button_enabled = true
+
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]
+[connection signal="text_submitted" from="UI/Text Chat/MarginContainer/VBoxContainer/message_edit" to="UI/Text Chat" method="_on_line_edit_text_submitted"]

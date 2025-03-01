@@ -13,8 +13,13 @@ func kill(body: Node3D) -> void:
 	if "health" in body:
 		body.hit()
 	else:
-		queue_free()
+		server_kill.rpc()
 
 
 func destory() -> void:
+	server_kill.rpc()
+
+@rpc("any_peer","call_local")
+func server_kill():
+	#if not multiplayer.is_server(): return
 	queue_free()

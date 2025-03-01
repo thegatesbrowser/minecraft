@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://buqtfcxnwjjid"
-path="res://.godot/imported/Sand_dig1.ogg-06f1f1dc9c824c843d57cfdbe5ceb2fc.oggvorbisstr"
+path="res://.godot/imported/sand_dig1.ogg-f7d9ead5e5667877371ade57edea08a0.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/sounds/block/Sand_dig1.ogg"
-dest_files=["res://.godot/imported/Sand_dig1.ogg-06f1f1dc9c824c843d57cfdbe5ceb2fc.oggvorbisstr"]
+source_file="res://assets/sounds/block/sand_dig1.ogg"
+dest_files=["res://.godot/imported/sand_dig1.ogg-f7d9ead5e5667877371ade57edea08a0.oggvorbisstr"]
 
 [params]
 

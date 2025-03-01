@@ -146,8 +146,11 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 					#
 						if relative_height < block_size and rng.randf() < 0.2:
 							if rng.randf() < creature_odds:
-								Globals.call_deferred("Spawn_creature",Vector3(x,relative_height + 80,z),possible_creatures.pick_random())
-								
+								var pos := Vector3(rng.randi() % block_size, 0, rng.randi() % block_size)
+								var ncpos : Vector3 = (chunk_pos).round()
+								pos += ncpos * block_size
+								Globals.call_deferred("Spawn_creature",Vector3(pos.x,_get_height_at(x,z) + 10,pos.z),possible_creatures.pick_random())
+								#buffer.set_voxel(DIRT, x, relative_height + 2 , z, _CHANNEL)
 							if rng.randf() < grass_odds:
 								var foliage = TALL_GRASS
 								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
