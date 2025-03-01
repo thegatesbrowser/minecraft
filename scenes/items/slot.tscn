@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dp3vw6ecck05s"]
+[gd_scene load_steps=6 format=3 uid="uid://dp3vw6ecck05s"]
 
 [ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_g0jy7"]
 [ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_nbp6w"]
@@ -31,6 +31,8 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 anti_aliasing = false
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tyv45"]
 
 [node name="Slot" type="TextureButton"]
 custom_minimum_size = Vector2(80, 80)
@@ -97,5 +99,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bokx8")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_tyv45")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

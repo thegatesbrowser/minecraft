@@ -38,6 +38,7 @@ signal spawn_creature(pos,creature)
 # Inventory
 signal open_inventory(Owner)
 signal add_subinventory(Owner)
+
 signal remove_item_from_hotbar
 signal spawn_item_inventory(item)
 signal check_amount_of_item(item)
@@ -50,6 +51,7 @@ signal craftable_hovered(craftable,node)
 signal craftable_unhovered
 var last_clicked_slot:Node
 
+var known_storage = []
 #signal add_item_to_hand(item)
 #signal remove_item_in_hand
 #signal craftable_hovered(craftable,node)
@@ -76,6 +78,7 @@ func slot_clicked(slot):
 		if slot.Item_resource == null:
 			#print("move ")
 			slot.Item_resource = Globals.last_clicked_slot.Item_resource
+			#slot.add_item.rpc(Globals.last_clicked_slot.Item_resource)
 			slot.amount = Globals.last_clicked_slot.amount
 			Globals.last_clicked_slot.Item_resource = null
 			slot.update_slot()
@@ -100,10 +103,13 @@ func slot_clicked(slot):
 						var hold_slot_amount = slot.amount
 						var hold_slot_resource = slot.Item_resource
 						
-						slot.Item_resource =  Globals.last_clicked_slot.Item_resource
+						slot.Item_resource = Globals.last_clicked_slot.Item_resource
+						#slot.Item_resource =  Globals.last_clicked_slot.Item_resource
 						slot.amount = Globals.last_clicked_slot.amount
 						
+						#Globals.last_clicked_slot.Item_resource = hold_slot_resource
 						Globals.last_clicked_slot.Item_resource = hold_slot_resource
+						
 						Globals.last_clicked_slot.amount = hold_slot_amount
 						Globals.last_clicked_slot.update_slot()
 						Globals.last_clicked_slot = null

@@ -1,16 +1,18 @@
 extends ScrollContainer
 class_name Inventory
 
-#@export var drop_item_scene:PackedScene
+var server_info: Dictionary
+
+@export var sync:bool = true ## FALSE for the player main inventory
+
 @export var slot_s: PackedScene
 @export var test_2: PackedScene
 @export var items_collection: GridContainer
 @export var amount_of_slots:int = 10
 @export var inventroy_name: Label
 
-@export var Owner: Node
+@export var Owner: Vector3
 
-var owner_id:int
 var times:int = 0
 var items = []
 var slots = []
@@ -19,32 +21,20 @@ var inventory = []
 
 @export var items_library: ItemsLibrary
 
-
 func _ready() -> void:
-	if Owner != null:
-		inventroy_name.text = str(Owner.resource.Name, " Inventory")
+	for i in items_collection.get_children():
+		i.item_changed.connect(change)
 		
 	Globals.spawn_item_inventory.connect(spawn_item)
 	Globals.remove_item.connect(remove_item)
 	Globals.check_amount_of_item.connect(check_amount_of_item)
-	#Globals.slot_clicked.connect(slot_clicked)
-	make_slots()
+
 
 
 func _process(_delta: float) -> void:
+	
 	check_slots()
 	check_if_full()
-	
-	#if Input.is_action_just_pressed("Drop"):
-		#if Globals.last_clicked_slot != null:
-			#if Globals.last_clicked_slot.Item_resource != null:
-				#var drop_item = drop_item_scene.instantiate()
-				#drop_item.Item = Globals.last_clicked_slot.Item_resource
-				#for i in get_tree().get_nodes_in_group("Player"):
-					#if i.your_id == owner_id:
-						#drop_item.global_position = get_node(i.get_drop_node()).global_position
-						#get_parent().add_child(drop_item)
-						#remove_item(Globals.last_clicked_slot.Item_resource.unique_name,1)
 					
 	if Input.is_action_just_pressed("Build"):
 		## split
@@ -80,6 +70,7 @@ func spawn_item(item_resource, amount:int = 1):
 func make_slots():
 	for i in amount_of_slots:
 		var slot = slot_s.instantiate()
+		slot.set_multiplayer_authority(1,true)
 		items_collection.add_child(slot)
 
 
@@ -133,7 +124,7 @@ func check_amount_of_item(item:StringName):
 
 
 func remove_item(unique_name:StringName,amount:int):
-	if Owner != null: return ## Owner mean its not the players inventory
+	if Owner != Vector3.ZERO: return ## Owner mean its not the players inventory
 	
 	for i in amount:
 		for slot in items_collection.get_children():
@@ -179,8 +170,42 @@ func check_slots():
 			for amount in i.amount:
 				inventory.append(i.Item_resource.unique_name)
 
-
 func _on_close_pressed() -> void:
-	#Globals.paused = false
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	pass
+
+func open():
+	show()
+	if sync:
+		server_check.rpc_id(1)
+
+func change(index: int, item_path: String, amount: int):
+	if sync:
+		send_to_server.rpc_id(1,index,item_path,amount)
+	
+@rpc("any_peer","call_local")
+func send_to_server(slot_index: int, item_path: String, amount: int):
+	if multiplayer.is_server():
+		server_info[slot_index] = {
+			"item_path":item_path,
+			"amount":amount,
+		}
+		#print(server_info)
+		
+@rpc("any_peer","call_local")
+func server_check():
+	if not multiplayer.is_server(): return
+	update_client.rpc(server_info)
+	
+@rpc("any_peer","call_local")
+func update_client(info):
+	for i in info:
+		var slot = items_collection.get_child(i)
+		slot.Item_resource = load(info[i].item_path)
+		slot.amount = info[i].amount
+		slot.update_slot()
+
+func _on_update_tick_timeout() -> void:
+	## updates the inventory to the server version
+	if visible:
+		if sync:
+			server_check.rpc()

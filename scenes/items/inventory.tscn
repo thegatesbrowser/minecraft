@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxe66yexhl7t1"]
+[gd_scene load_steps=7 format=3 uid="uid://bxe66yexhl7t1"]
 
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_e6rhx"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory.gd" id="1_vh6pj"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="3_v400e"]
 [ext_resource type="Resource" uid="uid://cytxicahdwqm7" path="res://resources/items_library.tres" id="4_2bd2u"]
+[ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="5_b5psd"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_n2m6g"]
 color = Color(1, 1, 1, 1)
@@ -78,6 +79,172 @@ text = "add random item *debug*"
 layout_mode = 2
 columns = 9
 
+[node name="Slot" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+Item_resource = ExtResource("5_b5psd")
+
+[node name="Slot2" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot3" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot4" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot5" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot6" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot7" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot8" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot9" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot10" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot11" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot12" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot13" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot14" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot15" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot16" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot17" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot18" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot19" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot20" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot21" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot22" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot23" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot24" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot25" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot26" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot27" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot28" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot29" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot30" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot31" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot32" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot33" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot34" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot35" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot36" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot37" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot38" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot39" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot40" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot41" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot42" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot43" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot44" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot45" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot46" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot47" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot48" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot49" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot50" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot51" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot52" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot53" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Slot54" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
+layout_mode = 2
+
+[node name="Update Tick" type="Timer" parent="."]
+
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Sort" to="." method="_on_sort_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/AddRandomItem" to="." method="_on_add_random_item_pressed"]
+[connection signal="timeout" from="Update Tick" to="." method="_on_update_tick_timeout"]

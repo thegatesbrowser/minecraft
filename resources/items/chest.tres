@@ -1,12 +1,17 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bxei0e32tol02"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=5 format=3 uid="uid://lxq2aq82pa5e"]
 
-[ext_resource type="Texture2D" uid="uid://hl47wgp2cc8n" path="res://assets/atlas/chest.tres" id="1_bud5q"]
-[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_cu3bf"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_25f0t"]
+[ext_resource type="Texture2D" uid="uid://hl47wgp2cc8n" path="res://assets/atlas/chest.tres" id="2_r07l0"]
+[ext_resource type="Script" path="res://scripts/other/utilities.gd" id="3_7rw1i"]
+
+[sub_resource type="Resource" id="Resource_v7ur5"]
+script = ExtResource("3_7rw1i")
+has_inventory = true
 
 [resource]
-script = ExtResource("1_cu3bf")
+script = ExtResource("1_25f0t")
 break_time = 0.4
 unique_name = &"chest"
-texture = ExtResource("1_bud5q")
+texture = ExtResource("2_r07l0")
 max_stack = 64
-breaking_efficiency = 0.0
+utility = SubResource("Resource_v7ur5")
