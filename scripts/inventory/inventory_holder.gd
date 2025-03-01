@@ -6,9 +6,7 @@ class_name Inventory_Holder
 
 
 func _ready() -> void:
-	Globals.add_subinventory.connect(add_subinventory)
 	Globals.open_inventory.connect(open_inventory)
-
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Inventory"):
@@ -16,7 +14,7 @@ func _physics_process(delta: float) -> void:
 		
 		for i in h_box_container.get_children():
 			if "Owner" in i:
-				if i.Owner != null:
+				if i.Owner != Vector3.ZERO:
 					i.hide()
 		
 		if visible:
@@ -28,22 +26,12 @@ func _physics_process(delta: float) -> void:
 			Globals.paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-
-func add_subinventory(Owner:Node):
-	var inventory = inventory_s.instantiate()
-	inventory.Owner = Owner
-	h_box_container.add_child(inventory)
-	inventory.visible = false
-
-
-func open_inventory(Owner:Node):
+func open_inventory(id:Vector3):
 	for i in h_box_container.get_children():
 		if "Owner" in i:
-			if i.Owner == Owner:
-				print("opne")
-				i.show()
-	
-	show()
+			if i.Owner == id:
+				i.open() ## opens the subinventory that has the same id
+	show() ## opens the inventory holder
 	
 	if visible:
 		GlobalAnimation._tween(self,"bounce_in",.2)

@@ -7,6 +7,7 @@ signal block_broken(type: StringName)
 @export var camera: Camera3D
 @export var block: Node3D
 @export var voxel_blocky_type_library: VoxelBlockyTypeLibrary
+@export var item_library:ItemsLibrary
 @export var break_particle_scene:PackedScene
 
 const VOXEL_TERRAIN_GROUP = "VoxelTerrain"
@@ -57,17 +58,20 @@ func can_place() -> bool:
 
 
 func can_break() -> bool:
+	
 	return last_hit != null
 
 
 func get_type() -> StringName:
 	var voxel: int = voxel_tool.get_voxel(last_hit.position)
+	
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
 	return array[0]
 
 
 ## Places a block with the given type
 func place_block(type: StringName) -> void:
+		
 	_place_block_server.rpc_id(1, type, last_hit.previous_position)
 
 
@@ -76,12 +80,18 @@ func break_block() -> void:
 	#var break_particle = break_particle_scene.instantiate()
 	#break_particle.global_position = last_hit.position
 	#get_tree().root.add_child(break_particle)
-	
 	_break_block_server.rpc_id(1, last_hit.position)
 
 
 @rpc("reliable", "authority")
 func _place_block_server(type: StringName, position: Vector3) -> void:
+	var item = item_library.get_item(type)
+	
+	if item.utility != null:
+		Globals.add_subinventory.emit(position)
+		Globals.known_storage.append(position)
+	
+		
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
 	voxel_tool.do_point(position)

@@ -41,6 +41,9 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath(".:_rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath(".:health")
+properties/4/spawn = true
+properties/4/replication_mode = 2
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI") groups=["Player"]]
 collision_layer = 134217731
@@ -61,6 +64,7 @@ distance = 5.0
 camera = NodePath("../../RotationRoot/Head/Camera3D")
 block = NodePath("BlockOutline")
 voxel_blocky_type_library = ExtResource("5_5801w")
+item_library = ExtResource("5_qnsii")
 break_particle_scene = ExtResource("8_8k80t")
 
 [node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
@@ -235,6 +239,17 @@ theme_override_font_sizes/font_size = 25
 text = "pos"
 horizontal_alignment = 1
 uppercase = true
+
+[node name="health" type="Label" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "health:79741"
 
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_exited"]

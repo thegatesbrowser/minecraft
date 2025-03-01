@@ -16,7 +16,7 @@ func generate() -> Structure:
 	var tree_key = possible_types.keys()[randi() % possible_tree_type_size]
 	var tree_type:Array = possible_types[tree_key]
 	
-	print(possible_types[tree_key])
+	#print(possible_types[tree_key])
 	
 	log_type = tree_type.front()
 	leaves_type = tree_type.back()

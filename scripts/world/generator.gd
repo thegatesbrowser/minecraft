@@ -5,7 +5,7 @@ const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
 const TreeGenerator = preload("./tree_generator.gd")
 
-
+@export var generate_trees:bool = true
 @export var HeightmapCurve = preload("res://resources/heightmap_curve.tres")
 @export var _heightmap_noise:FastNoiseLite
 @export var grass_odds:float = 0.1
@@ -86,6 +86,9 @@ func _get_used_channels_mask() -> int:
 
 
 func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
+	var voxel_tool := buffer.get_voxel_tool()
+	#print(voxel_tool.do_box(origin_in_voxels, origin_in_voxels+Vector3i(100,100,100)))
+	#buffer.fill_area()
 	# TODO There is an issue doing this, need to investigate why because it should be supported
 	# Saves from this demo used 8-bit, which is no longer the default
 	# buffer.set_channel_depth(_CHANNEL, VoxelBuffer.DEPTH_8_BIT)
@@ -165,31 +168,31 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			gz += 1
 
 	# Trees
+	if generate_trees:
+		if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
 
-	if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
-		var voxel_tool := buffer.get_voxel_tool()
-		var structure_instances := []
-			
-		_get_tree_instances_in_chunk(chunk_pos, origin_in_voxels, block_size, structure_instances)
-	
-		# Relative to current block
-		var block_aabb := AABB(Vector3(), buffer.get_size() + Vector3i(1, 1, 1))
+			var structure_instances := []
+				
+			_get_tree_instances_in_chunk(chunk_pos, origin_in_voxels, block_size, structure_instances)
+		
+			# Relative to current block
+			var block_aabb := AABB(Vector3(), buffer.get_size() + Vector3i(1, 1, 1))
 
-		for dir in _moore_dirs:
-			var ncpos : Vector3 = (chunk_pos + dir).round()
-			_get_tree_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
+			for dir in _moore_dirs:
+				var ncpos : Vector3 = (chunk_pos + dir).round()
+				_get_tree_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
 
-		for structure_instance in structure_instances:
-			var pos : Vector3 = structure_instance[0]
-			var structure : Structure = structure_instance[1]
-			var lower_corner_pos := pos - structure.offset
-			var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
+			for structure_instance in structure_instances:
+				var pos : Vector3 = structure_instance[0]
+				var structure : Structure = structure_instance[1]
+				var lower_corner_pos := pos - structure.offset
+				var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
 
-			if aabb.intersects(block_aabb):
-				voxel_tool.paste_masked(lower_corner_pos, 
-					structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
-					# Masking
-					VoxelBuffer.CHANNEL_TYPE, AIR)
+				if aabb.intersects(block_aabb):
+					voxel_tool.paste_masked(lower_corner_pos, 
+						structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
+						# Masking
+						VoxelBuffer.CHANNEL_TYPE, AIR)
 
 	buffer.compress_uniform_channels()
 	

@@ -104,17 +104,18 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
+	$health.text = str("health:  ",health)
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
-	
+	$health.show()
 	if Globals.paused: return
+	
 	$Pos.text = str("pos   ", global_position)
 	Globals.player_health = health
 	
 	if your_id != get_multiplayer_authority():
 		var inventory = get_tree().get_first_node_in_group("Main Inventory")
 		your_id = get_multiplayer_authority()
-		inventory.owner_id = your_id
 	
 		
 	if !is_flying:
@@ -185,7 +186,7 @@ func _physics_process(delta):
 						rpc_id(coll.get_multiplayer_authority(),"hit")
 				else:
 					rpc_id(coll.get_multiplayer_authority(),"hit")
-				
+			
 	## Flying Controls
 	if is_flying:
 		if camera.rotation.x > max_flying_margin:
@@ -324,7 +325,6 @@ func remove_item_in_hand():
 @rpc("any_peer","call_local")
 func hit(damage:int = 1):
 	health -= damage
-	
 	if health <= 0:
 		print("player death")
 		#position = spawn_position

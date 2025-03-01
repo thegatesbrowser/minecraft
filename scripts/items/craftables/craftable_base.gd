@@ -21,12 +21,12 @@ func craft() -> void:
 				steps -= 1
 				#print("is the same")
 				
-		print(steps)
+		#print(steps)
 		
 		if steps == 0:
 			if inventory.full == false:
 				GlobalAnimation._tween(self,"bounce",.3)
-				print("crafted")
+				#print("crafted")
 				var soundmanager = get_node("/root/Main").find_child("SoundManager")
 				soundmanager.play_UI_sound()
 				inventory.spawn_item(craftable.output_item,craftable.output_amount)
@@ -47,12 +47,12 @@ func can_craft():
 		var steps = craftable.items_needed.duplicate().size()
 		for i in craftable.items_needed:
 			#print(craftable.items_needed[i].name)
-			print(inventory.check_amount_of_item(craftable.items_needed[i].name))
+			#print(inventory.check_amount_of_item(craftable.items_needed[i].name))
 			if inventory.check_amount_of_item(craftable.items_needed[i].name) >= craftable.items_needed[i].amount:
 				steps -= 1
 				#print("is the same")
 				
-		print(steps)
+		#print(steps)
 		
 		if steps == 0:
 			return true
