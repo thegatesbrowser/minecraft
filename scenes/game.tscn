@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=31 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -70,7 +70,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128
 one_shot = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
-material_override = ExtResource("19_nv6q3")
 use_gpu_generation = true
 generator = ExtResource("4_tpxqt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
