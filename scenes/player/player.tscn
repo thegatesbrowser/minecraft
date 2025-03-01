@@ -22,7 +22,7 @@ albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="8"]
 material = SubResource("StandardMaterial3D_kwqlu")
-size = Vector3(0.01, 1.005, 0.01)
+size = Vector3(0.01, 1, 0.01)
 
 [sub_resource type="CylinderShape3D" id="10"]
 height = 1.8
@@ -68,7 +68,7 @@ item_library = ExtResource("5_qnsii")
 break_particle_scene = ExtResource("8_8k80t")
 
 [node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Area3D" type="Area3D" parent="Hands/TerrainInteraction/BlockOutline"]
 collision_layer = 0
@@ -81,7 +81,7 @@ shape = SubResource("6")
 shape = SubResource("7")
 
 [node name="Visible_Block" type="Node3D" parent="Hands/TerrainInteraction/BlockOutline"]
-transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005, 0.02, -0.005)
 
 [node name="Edge" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)

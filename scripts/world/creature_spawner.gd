@@ -77,17 +77,9 @@ func create_viewer(id: int, creature: CreatureBase) -> void:
 		var viewer := VoxelViewer.new()
 
 		viewer.view_distance = view_distance
-		viewer.requires_visuals = true
+		viewer.requires_visuals = false
 		viewer.requires_collisions = true
 		
 		viewer.set_network_peer_id(id)
 		viewer.set_requires_data_block_notifications(true)
-		creature.add_child(viewer)
-	
-	elif id == multiplayer.get_unique_id():
-		var viewer := VoxelViewer.new()
-		
-		# larger so blocks don't get unloaded too soon
-		viewer.view_distance = view_distance + 16
-		
 		creature.add_child(viewer)

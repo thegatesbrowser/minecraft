@@ -55,7 +55,7 @@ func create_viewer(id: int, player: Player) -> void:
 
 		viewer.view_distance = view_distance
 		viewer.requires_visuals = false
-		viewer.requires_collisions = true
+		viewer.requires_collisions = false
 		
 		viewer.set_network_peer_id(id)
 		viewer.set_requires_data_block_notifications(true)
