@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://bj13adgon6is"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://bj13adgon6is"]
 
+[ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_8p5pp"]
 [ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="1_j7fru"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_ygcww"]
 
@@ -18,6 +19,7 @@ output_amount = 4
 items_needed = {
 1: {
 "amount": 2,
-"name": "STONE"
+"name": "stone",
+"texture": ExtResource("1_8p5pp")
 }
 }

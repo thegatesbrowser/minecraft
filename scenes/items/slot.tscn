@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dp3vw6ecck05s"]
+[gd_scene load_steps=7 format=3 uid="uid://dp3vw6ecck05s"]
 
 [ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_g0jy7"]
 [ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_nbp6w"]
+[ext_resource type="FontFile" uid="uid://bcyn2himieq3h" path="res://assets/menu/mc_menu.ttf" id="3_s7go4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]
 bg_color = Color(0, 0, 0, 0.572549)
@@ -85,6 +86,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_s7go4")
 text = "1"
 horizontal_alignment = 2
 

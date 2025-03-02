@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=4 format=3 uid="uid://cn74d63vbktv"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://cn74d63vbktv"]
 
+[ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_rud4d"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_ypykj"]
 
 [sub_resource type="Gradient" id="Gradient_rmwa7"]
@@ -16,6 +17,7 @@ output_amount = 1
 items_needed = {
 1: {
 "amount": 4,
-"name": "stone"
+"name": "stone",
+"texture": ExtResource("1_rud4d")
 }
 }

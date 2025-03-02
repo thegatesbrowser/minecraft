@@ -33,9 +33,9 @@ func destroy_creature(Name: String) -> void:
 
 func toggle_AI_debug():
 	#debug = !debug
-	for i in get_tree().get_nodes_in_group("NPCS"):
-		i.toggle_debug()
-		
+	#for i in get_tree().get_nodes_in_group("NPCS"):
+		#i.toggle_debug()
+	pass
 
 func custom_spawn(data: Array) -> Node:
 	var id: int = data[0]

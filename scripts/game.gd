@@ -13,7 +13,7 @@ var is_fullscreen = false
 
 func _process(_delta):
 	if Connection.is_server() or player == null: return
-	
+	multiplayer.get_unique_id()
 	if Input.is_action_just_pressed("Start"):
 		Globals.paused = !Globals.paused
 		if Globals.paused:

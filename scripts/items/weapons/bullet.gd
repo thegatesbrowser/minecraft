@@ -5,7 +5,7 @@ var spawner:Node
 
 
 func _physics_process(_delta: float) -> void:
-	var forward_dir = -global_transform.basis.z.normalized()
+	var forward_dir = - global_transform.basis.z.normalized()
 	global_translate(forward_dir)
 
 

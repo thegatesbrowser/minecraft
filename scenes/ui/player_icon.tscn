@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://v14sddscpl5t"]
+
+[node name="Player" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="icon" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_top = 10.0
+offset_right = 20.0
+offset_bottom = 30.0
