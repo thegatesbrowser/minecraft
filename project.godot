@@ -27,6 +27,7 @@ Print="*res://addons/sdg-print/Print.tscn"
 Globals="*res://scenes/globals.tscn"
 FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"
 GlobalAnimation="*res://scripts/common/animation.gd"
+TerrainHelper="*res://scripts/common/terrain_helper.gd"
 
 [debug]
 

@@ -76,6 +76,9 @@ func _ready():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
 		return
+	else:
+		$health.show()
+	
 	Console.add_command("pos", self, 'show_pos')\
 		.set_description("shows the position of the player).")\
 		.register()
@@ -103,21 +106,23 @@ func _unhandled_input(event):
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 
-func _physics_process(delta):
+func _process(_delta: float) -> void:
+	if not is_multiplayer_authority(): return
+
 	$health.text = str("health:  ",health)
+	$Pos.text = str("pos   ", global_position)
+
+	Globals.player_health = health
+
+
+func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
-	$health.show()
-	if Globals.paused: return
-	
-	$Pos.text = str("pos   ", global_position)
-	Globals.player_health = health
 	
 	if your_id != get_multiplayer_authority():
 		var inventory = get_tree().get_first_node_in_group("Main Inventory")
 		your_id = get_multiplayer_authority()
 	
-		
 	if !is_flying:
 		# Add the gravity.
 		if not is_on_floor():
@@ -243,6 +248,9 @@ func on_synchronized() -> void:
 		start_interpolate = true
 		position = _position
 		rotation_root.rotation = _rotation
+	
+	if Connection.is_server():
+		position = _position
 
 
 func interpolate_client(delta: float) -> void:

@@ -1,9 +1,8 @@
 extends CharacterBody3D
 class_name CreatureBase
 
-@export var creature_resource:Creature
+@export var creature_resource: Creature
 
-var creature_spawner:MultiplayerSpawner
 var health
 
 @export_group("Sync Properties")
@@ -12,7 +11,6 @@ var health
 @export var _rotation: Vector3 = Vector3.ZERO
 @export var _direction: Vector3 = Vector3.ZERO
 
-@onready var _synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
 @export var sync_delta_max := 0.2
@@ -28,6 +26,8 @@ var last_sync_time_ms: int = 0
 
 @onready var guide: Node3D = $guide
 
+@onready var player_view_distance: float = 128 * sqrt(2)
+
 @export var target_reached: bool = false
 var speed : float
 var vel : Vector3
@@ -39,10 +39,15 @@ var gravity:float = 30
 
 var ani: AnimationPlayer
 var mesh: MeshInstance3D
+var terrain: VoxelTerrain
+
+var is_despawning: bool = false
 
 
 func _ready() -> void:
-	creature_spawner = get_node("/root/Main").find_child("CreatureSpawner")
+	if Connection.is_server():
+		terrain = TerrainHelper.get_terrain_tool()
+	
 	health = creature_resource.max_health
 	
 	#if not is_multiplayer_authority():
@@ -87,49 +92,30 @@ func change_state(state):
 
 
 func _physics_process(delta):
-	if not multiplayer.is_server(): 
+	if not multiplayer.is_server():
 		interpolate_client(delta)
 		return
-	if global_position.distance_to(target_position) < 5:
-		if target_reached == false:
-			change_state("idle")
-			target_reached = true
 	
-	if creature_resource.attacks:
-		var look_at = get_cloest_player()
-	
-		if look_at != null:
-			eyes.look_at(look_at.global_position)
-		
-		if eyes.is_colliding():
-			var coll = eyes.get_collider()
-			if coll != null:
-				if coll.is_in_group("Player"):
-					change_state("attack")
-					target_position = coll.global_position
-					
 	if not is_on_floor():
 		velocity.y -= 30 * delta
-		
-	if target_position != null: 
-		var new_velocity
-		if !target_reached:
-			$target.global_position = target_position
-			var current_pos = global_position
-			var new_velocity_x = (target_position.x - current_pos.x)
-			var new_velocity_z = (target_position.z - current_pos.z)
-			new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
-		else:
-			new_velocity = Vector3(0,0,0)
-			
-		velocity = velocity.move_toward(new_velocity, .25)
-		
+	
+	var new_velocity: Vector3
+	if !target_reached:
+		$target.global_position = target_position
+		var current_pos = global_position
+		var new_velocity_x = (target_position.x - current_pos.x)
+		var new_velocity_z = (target_position.z - current_pos.z)
+		new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
+	else:
+		new_velocity = Vector3(0,0,0)
+	
+	velocity = velocity.move_toward(new_velocity, .25)
 	
 	if target_position != null:
 		if !target_reached:
 			if guide.global_position != target_position:
 				guide.look_at(target_position)
-			
+	
 	rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
 	
 	if !target_reached:
@@ -139,7 +125,51 @@ func _physics_process(delta):
 	move_and_slide()
 	_position = position
 	_rotation = $RotationRoot.rotation
-			
+
+
+func _process(_delta: float) -> void:
+	if not Connection.is_server(): return
+	
+	if global_position.distance_to(target_position) < 5:
+		if target_reached == false:
+			change_state("idle")
+			target_reached = true
+	
+	if creature_resource.attacks:
+		var closest_player = get_cloest_player()
+	
+		if closest_player != null:
+			eyes.look_at(closest_player.global_position)
+		
+		if eyes.is_colliding():
+			var coll = eyes.get_collider()
+			if coll != null:
+				if coll.is_in_group("Player"):
+					change_state("attack")
+					target_position = coll.global_position
+	
+	try_despawn()
+
+
+func try_despawn() -> void:
+	if is_despawning: return
+	
+	var creature_pos = global_position
+	creature_pos.y = 0
+
+	var players = get_tree().get_nodes_in_group("Player")
+	for player in players:
+		var player_pos = player.global_position
+		player_pos.y = 0
+
+		if player_pos.distance_to(creature_pos) < player_view_distance:
+			return
+	
+	is_despawning = true
+	await get_tree().create_timer(1.0).timeout
+	queue_free()
+
+
 func get_random_pos_in_sphere(radius : float) -> Vector3:
 	var x1= randi_range(-1,1)
 	var x2= randi_range(-1,1)
@@ -164,7 +194,8 @@ func _on_move_timeout() -> void:
 	target_position = sphere_point + global_position
 	target_reached = false
 	change_state("walking")
-	
+
+
 func hit(damage:int = 1):
 	#print("hit")
 	health -= damage
@@ -173,14 +204,9 @@ func hit(damage:int = 1):
 		if creature_resource.drop_items.size() != 0:
 			var drop_item = creature_resource.drop_items.pick_random()
 			Globals.spawn_item_inventory.emit(drop_item)
-		#creature_spawner.destroy_creature(name)
-		destory.rpc()
-		
-		
-@rpc("any_peer","call_local")
-func destory():
-	queue_free()
-	
+		queue_free()
+
+
 func get_cloest_player():
 	var last_distance
 	var closest_player:Node
@@ -201,9 +227,7 @@ func _on_attack_range_body_entered(body: Node3D) -> void:
 			if body.has_method("hit"):
 				body.hit(creature_resource.damage)
 
-func toggle_debug():
-	$target.visible = !$target.visible
-	
+
 func on_synchronized() -> void:
 	velocity = _velocity
 	position_before_sync = position
@@ -217,10 +241,12 @@ func on_synchronized() -> void:
 		position = _position
 		rotation_root.rotation = _rotation
 
+
 func set_sync_properties() -> void:
 	_position = position
 	_velocity = velocity
 	_rotation = rotation_root.rotation
+
 
 func interpolate_client(delta: float) -> void:
 	if not start_interpolate: return
@@ -243,13 +269,7 @@ func interpolate_client(delta: float) -> void:
 	
 	velocity.y -= gravity * delta
 	move_and_slide()
-	
+
 
 func _exit_tree():
-	pass
-
-
-func _on_multiplayer_synchronizer_synchronized() -> void:
-	#start_interpolate = truek
-	pass
-	#print("sync")
+	print("creature despawned ", position)

@@ -168,12 +168,14 @@ pitch_scale = 4.0
 bus = &"UI"
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawn_points")]
+_spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
 script = ExtResource("6_l50oc")
 player_scene = ExtResource("7_n7355")
 spawn_points = NodePath("../Game/SpawnPoints")
 
 [node name="CreatureSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/creatures/creature_base.tscn")
 spawn_path = NodePath("../Creatures")
 script = ExtResource("35_06sqe")
 

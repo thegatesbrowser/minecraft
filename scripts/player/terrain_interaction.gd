@@ -10,7 +10,6 @@ signal block_broken(type: StringName)
 @export var item_library:ItemsLibrary
 @export var break_particle_scene:PackedScene
 
-const VOXEL_TERRAIN_GROUP = "VoxelTerrain"
 const AIR_TYPE = 0
 
 var terrain: VoxelTerrain
@@ -23,7 +22,7 @@ var last_hit: VoxelRaycastResult
 
 func _ready():
 	if is_multiplayer_authority() or Connection.is_server():
-		terrain = get_tree().get_first_node_in_group(VOXEL_TERRAIN_GROUP)
+		terrain = TerrainHelper.get_terrain_tool()
 		voxel_tool = terrain.get_voxel_tool()
 	else:
 		block.visible = false

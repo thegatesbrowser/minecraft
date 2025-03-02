@@ -1,11 +1,11 @@
 extends MultiplayerSpawner
 
-signal player_spawned(id: int, creature)
+signal creature_spawned(id: int, creature)
 signal creature_despawned(id: int)
 
 var debug:bool
 var creature_base = preload("res://scenes/creatures/creature_base.tscn")
-@export var view_distance: int = 128
+@export var view_distance: int = 20
 
 
 func _ready() -> void:
@@ -13,9 +13,10 @@ func _ready() -> void:
 	Console.add_command("AI_debug",self,'toggle_AI_debug')\
 		.set_description("toggles the npc debug).")\
 		.register()
-		
-	Globals.spawn_creature.connect(spawn_creature)
 	
+	Globals.spawn_creature.connect(spawn_creature)
+
+
 func spawn_creature(pos: Vector3, creature:Creature) -> void:
 	if not multiplayer.is_server(): return
 		
@@ -24,28 +25,11 @@ func spawn_creature(pos: Vector3, creature:Creature) -> void:
 	spawn([1, spawn_position,creature.get_path()])
 	#print("creature spawn")
 
+
 func destroy_creature(Name: String) -> void:
 	if not multiplayer.is_server(): return
 	get_node(spawn_path).get_node(Name).queue_free()
 
-	
-func _process(delta: float) -> void:
-	if debug:
-		for i in get_tree().get_nodes_in_group("NPCS"):
-			i.toggle_debug()
-
-func get_cloest_player(pos):
-	var last_distance
-	var closest_player:Node
-	for i in get_tree().get_nodes_in_group("Player"):
-		if last_distance == null:
-			last_distance = pos.distance_to(i.global_position)
-			closest_player = i
-		else:
-			if last_distance > pos.distance_to(i.global_position):
-				last_distance = pos.distance_to(i.global_position)
-				closest_player = i
-		return closest_player
 
 func toggle_AI_debug():
 	#debug = !debug
@@ -68,7 +52,7 @@ func custom_spawn(data: Array) -> Node:
 	
 	create_viewer(id, creature)
 	
-	player_spawned.emit(id, creature)
+	creature_spawned.emit(id, creature)
 	return creature
 
 
@@ -79,7 +63,6 @@ func create_viewer(id: int, creature: CreatureBase) -> void:
 		viewer.view_distance = view_distance
 		viewer.requires_visuals = false
 		viewer.requires_collisions = true
-		
-		viewer.set_network_peer_id(id)
-		viewer.set_requires_data_block_notifications(true)
+		viewer.set_network_peer_id(1)
+
 		creature.add_child(viewer)
