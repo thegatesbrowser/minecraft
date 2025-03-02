@@ -59,6 +59,7 @@ func spawn_item(item_resource, amount:int = 1):
 			if i.Item_resource == null:
 				i.Item_resource = item_resource
 				i.amount = amount
+				#print(item_resource)
 				i.update_slot()
 				for num in amount:
 					inventory.append(item_resource.unique_name)

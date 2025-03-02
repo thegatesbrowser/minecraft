@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxe66yexhl7t1"]
+[gd_scene load_steps=6 format=3 uid="uid://bxe66yexhl7t1"]
 
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_e6rhx"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory.gd" id="1_vh6pj"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="3_v400e"]
 [ext_resource type="Resource" uid="uid://cytxicahdwqm7" path="res://resources/items_library.tres" id="4_2bd2u"]
-[ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="5_b5psd"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_n2m6g"]
 color = Color(1, 1, 1, 1)
@@ -81,7 +80,6 @@ columns = 9
 
 [node name="Slot" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
 layout_mode = 2
-Item_resource = ExtResource("5_b5psd")
 
 [node name="Slot2" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
 layout_mode = 2

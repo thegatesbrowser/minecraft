@@ -1,6 +1,7 @@
 extends TextureButton
+class_name CraftableButton
 
-@export var inventory:Node = null
+@export var inventory:Node
 
 @export var craftable: Craftable
 @onready var image: TextureRect = $CenterContainer/Image

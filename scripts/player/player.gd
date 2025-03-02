@@ -51,7 +51,7 @@ var is_flying: bool
 @onready var _synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var _move_direction := Vector3.ZERO
 
-@onready var left_hand: BoneAttachment3D = $"RotationRoot/minecraft_player/Model/Skeleton3D/Left Hand"
+@onready var left_hand: BoneAttachment3D = $"RotationRoot/Head/Camera3D/fp/Model/Skeleton3D/Left Hand"
 @onready var right_hand: BoneAttachment3D = $"RotationRoot/minecraft_player/Model/Skeleton3D/Right Hand"
 
 ## Weapons
@@ -66,6 +66,9 @@ var is_flying: bool
 
 var health
 
+@onready var minecraft_player: Node3D = $RotationRoot/minecraft_player ## TP
+@onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp ## FP
+
 
 func _ready():
 	Globals.spawn_bullet.connect(spawn_bullet)
@@ -75,8 +78,12 @@ func _ready():
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
+		fp.hide()
+		minecraft_player.show()
 		return
 	else:
+		fp.show()
+		minecraft_player.hide()
 		$health.show()
 	
 	Console.add_command("pos", self, 'show_pos')\
@@ -316,14 +323,18 @@ func add_item_to_hand(item: ItemBase):
 		for i in left_hand.get_children():
 			i.queue_free()
 			
-		if not item is ItemWeapon:
-			var mesh_instance = MeshInstance3D.new()
-			mesh_instance.mesh = item.holdable_mesh
-			left_hand.add_child(mesh_instance)
-		else:
+		if item is ItemWeapon:
 			var weapon = weapon_base.instantiate()
 			weapon.weapon_resource = item
 			left_hand.add_child(weapon)
+			
+		elif item is ItemTool:
+			var tool = item.holdable_mesh.instantiate()
+			left_hand.add_child(tool)
+		else:
+			var mesh_instance = MeshInstance3D.new()
+			mesh_instance.mesh = item.holdable_mesh
+			left_hand.add_child(mesh_instance)
 
 
 func remove_item_in_hand():

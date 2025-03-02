@@ -9,5 +9,5 @@ class_name Craftable
 
 @export var items_needed := {
 	1: {"name": "wood",
-	"amount": 1},
+	"amount": 1,}
 }

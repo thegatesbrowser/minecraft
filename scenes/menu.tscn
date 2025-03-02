@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvh8mc8ybmio1"]
+[gd_scene load_steps=11 format=3 uid="uid://cvh8mc8ybmio1"]
 
 [ext_resource type="Script" path="res://scripts/ui/menu.gd" id="1_v1vki"]
 [ext_resource type="PackedScene" uid="uid://mqnlrs6hn6g6" path="res://scenes/multiplayer.tscn" id="2_koh5b"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://ctxaquevonft0" path="res://assets/menu/mine_mark.png" id="3_snl8p"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="4_1o25k"]
 [ext_resource type="Texture2D" uid="uid://p1nx8wd1roqu" path="res://assets/textures/gui/title/background/panorama_0.png" id="6_8pyqi"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_vpgct"]
+color = Color(0, 0, 0, 0)
 
 [sub_resource type="Animation" id="4"]
 length = 0.001
@@ -133,7 +136,7 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 20
 theme_override_constants/shadow_outline_size = 105
 theme_override_font_sizes/font_size = 176
-text = "PORTAL WARS"
+text = "RUNESTONE"
 
 [node name="Splash" type="Label" parent="CenterContainer/Label"]
 layout_mode = 1
@@ -182,10 +185,12 @@ text = "Singleplayer"
 [node name="Multiplayer" type="Button" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1o25k")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.286275)
 theme_override_constants/outline_size = 60
 theme_override_font_sizes/font_size = 124
-text = "Multiplayer"
+theme_override_styles/focus = SubResource("StyleBoxLine_vpgct")
+text = "MULTIPLAYER"
 flat = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

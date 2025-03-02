@@ -5,6 +5,6 @@ class_name ItemBase
 @export var texture: Texture
 @export_range(1, 65535) var max_stack: int = 64
 
-@export var holdable_mesh: Mesh
+@export var holdable_mesh:PackedScene
 
 @export var utility: Utilities

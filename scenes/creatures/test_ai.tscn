@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bsw2vv06fg51u"]
+[gd_scene load_steps=12 format=3 uid="uid://bsw2vv06fg51u"]
 
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="1_fai3w"]
+[ext_resource type="Script" path="res://scripts/other/compass.gd" id="2_kewmy"]
+[ext_resource type="PackedScene" uid="uid://d0wjuyypch6ge" path="res://scenes/other/playerArrow.tscn" id="3_v7ypu"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_y4ib4"]
 geometry_parsed_geometry_type = 1
@@ -19,6 +21,16 @@ sky_material = SubResource("ProceduralSkyMaterial_gwndf")
 [sub_resource type="Environment" id="Environment_5xxen"]
 background_mode = 2
 sky = SubResource("Sky_rx1d6")
+
+[sub_resource type="BoxMesh" id="BoxMesh_f4xkx"]
+size = Vector3(0.2, 0.1, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3h26u"]
+albedo_color = Color(0.15, 0.15, 0.15, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ueatf"]
+material = SubResource("StandardMaterial3D_3h26u")
+size = Vector3(0.00725, 0.1364, 0.1956)
 
 [node name="test ai" type="Node3D"]
 
@@ -54,3 +66,32 @@ environment = SubResource("Environment_5xxen")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21.045, 10.9402, 0)
+
+[node name="Compass" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.498125, 0.42007, 0)
+script = ExtResource("2_kewmy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Compass"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_f4xkx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Compass"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.094094, 0, 0)
+mesh = SubResource("BoxMesh_ueatf")
+
+[node name="Player" parent="Compass" instance=ExtResource("3_v7ypu")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Timer" type="Timer" parent="Compass"]
+autostart = true
+
+[node name="SubViewport" type="SubViewport" parent="Compass"]
+transparent_bg = true
+
+[node name="Node3D" type="Node3D" parent="Compass/SubViewport"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.406607, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Compass/SubViewport/Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.300974, 0)
+
+[connection signal="timeout" from="Compass/Timer" to="Compass" method="_on_timer_timeout"]

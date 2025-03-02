@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://cqmhwea1gfd5r"]
+
+[ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_p37o7"]
+[ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="2_tfpbo"]
+[ext_resource type="Resource" uid="uid://db8a31q1w04nw" path="res://resources/items/axe_stone.tres" id="3_qlpc3"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_orl38"]
+
+[sub_resource type="Gradient" id="Gradient_sc10i"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_stekl"]
+gradient = SubResource("Gradient_sc10i")
+
+[resource]
+script = ExtResource("4_orl38")
+Name = "Axe Stone"
+texture = SubResource("GradientTexture2D_stekl")
+output_item = ExtResource("3_qlpc3")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 2,
+"name": "stick",
+"texture": ExtResource("1_p37o7")
+},
+2: {
+"amount": 3,
+"name": "stone",
+"texture": ExtResource("2_tfpbo")
+}
+}

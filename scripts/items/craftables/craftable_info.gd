@@ -2,9 +2,10 @@ extends PanelContainer
 
 @export var step_text_s: PackedScene
 @export var name_label: Label
-
+@export var item_library:ItemsLibrary
 
 func _ready() -> void:
+	item_library.init_items()
 	hide()
 	Globals.craftable_hovered.connect(craftable_hovered)
 	Globals.craftable_unhovered.connect(craftable_unhovered)
@@ -16,13 +17,14 @@ func _process(_delta: float) -> void:
 
 func craftable_hovered(craftable:Craftable,node):
 	if node.can_craft() == true:
-		modulate = Color.GREEN
+		self_modulate = Color.GREEN
 	else:
-		modulate = Color.RED
+		self_modulate = Color.RED
 	name_label.text = craftable.Name
 	for i in craftable.items_needed:
 		var step = step_text_s.instantiate()
-		step.text = str(craftable.items_needed[i].name," X ",craftable.items_needed[i].amount)
+		step.get_child(0).text = str(craftable.items_needed[i].name," X ",craftable.items_needed[i].amount)
+		step.get_child(1).texture = craftable.items_needed[i].texture
 		$MarginContainer/VBoxContainer/VBoxContainer.add_child(step)
 	show()
 

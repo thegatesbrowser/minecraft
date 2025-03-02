@@ -1,3 +1,14 @@
 [gd_scene format=3 uid="uid://btbywkj3dg3nr"]
 
-[node name="step" type="Label"]
+[node name="step" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="step" type="Label" parent="."]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
