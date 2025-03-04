@@ -86,6 +86,8 @@ func _get_used_channels_mask() -> int:
 
 
 func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
+	
+	#print(buffer.get_size())
 	var voxel_tool := buffer.get_voxel_tool()
 	#print(voxel_tool.do_box(origin_in_voxels, origin_in_voxels+Vector3i(100,100,100)))
 	#buffer.fill_area()
@@ -196,7 +198,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 						structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
 						# Masking
 						VoxelBuffer.CHANNEL_TYPE, AIR)
-
+					
 	buffer.compress_uniform_channels()
 	
 
@@ -215,6 +217,8 @@ func _get_tree_instances_in_chunk(
 			var si := rng.randi() % len(_tree_structures)
 			var structure : Structure = _tree_structures[si]
 			tree_instances.append([pos.round(), structure])
+			
+	
 
 
 #static func get_chunk_seed(cpos: Vector3) -> int:

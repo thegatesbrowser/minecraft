@@ -12,6 +12,7 @@ const SPLASH_ANIMATION_NAME = "Splash"
 @export var splash: Label
 @export var animation_player: AnimationPlayer
 
+@export var loading_scene_packedscene = preload("res://scenes/ui/loading_scene.tscn")
 
 func _ready():
 	if Connection.is_server():
@@ -33,3 +34,8 @@ func setup_splash_screen():
 
 func start_scene(scene: PackedScene):
 	get_tree().call_deferred("change_scene_to_packed", scene)
+	
+
+func loaded(scene):
+	print("loaded")
+	

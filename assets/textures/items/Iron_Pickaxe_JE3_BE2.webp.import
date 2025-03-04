@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fh8u5jomtdc2"
-path="res://.godot/imported/panorama_1.png-479f3464b96d0a3d1af83ea22b1a1846.ctex"
+uid="uid://bsq18vrl2i0bw"
+path="res://.godot/imported/Iron_Pickaxe_JE3_BE2.webp-7b06aaa82be851a7d14f7b3a484c1002.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/gui/title/background/panorama_1.png"
-dest_files=["res://.godot/imported/panorama_1.png-479f3464b96d0a3d1af83ea22b1a1846.ctex"]
+source_file="res://assets/textures/items/Iron_Pickaxe_JE3_BE2.webp"
+dest_files=["res://.godot/imported/Iron_Pickaxe_JE3_BE2.webp-7b06aaa82be851a7d14f7b3a484c1002.ctex"]
 
 [params]
 

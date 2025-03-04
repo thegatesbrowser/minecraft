@@ -1,15 +1,11 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=8 format=3 uid="uid://b201rvmpv2nq1"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=7 format=3 uid="uid://b201rvmpv2nq1"]
 
 [ext_resource type="PackedScene" uid="uid://dgo6163ram0c2" path="res://assets/models/Tools/Stone/shovel_stone.tscn" id="1_naicv"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_va8yg"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="3_fkbal"]
 [ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="4_qswqj"]
 [ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="5_v0lvd"]
-
-[sub_resource type="Gradient" id="Gradient_ympnl"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_asp8t"]
-gradient = SubResource("Gradient_ympnl")
+[ext_resource type="Texture2D" uid="uid://2yiul541lipj" path="res://assets/textures/items/Stone_Shovel_JE2_BE2.webp" id="6_frkg2"]
 
 [resource]
 script = ExtResource("2_va8yg")
@@ -17,6 +13,6 @@ suitable_objects = Array[ExtResource("3_fkbal")]([ExtResource("4_qswqj"), ExtRes
 breaking_efficiency = 0.2
 damage = 2
 unique_name = &""
-texture = SubResource("GradientTexture2D_asp8t")
+texture = ExtResource("6_frkg2")
 max_stack = 64
 holdable_mesh = ExtResource("1_naicv")

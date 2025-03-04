@@ -9,7 +9,12 @@ var inventory:Node
 
 func _ready() -> void:
 	inventory = get_tree().get_first_node_in_group("Main Inventory")
-	model.mesh = weapon_resource.weapon_model
+	
+	if weapon_resource.weapon_model is Mesh:
+		model.mesh = weapon_resource.weapon_model
+	elif weapon_resource.weapon_model is PackedScene:
+		add_child(weapon_resource.weapon_model.instantiate())
+		
 	fire_rate.wait_time = weapon_resource.fire_rate
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://ql4u3t5lhtyt"]
+[gd_scene load_steps=25 format=4 uid="uid://ql4u3t5lhtyt"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://wwqa6ta7xtgq" path="res://scenes/other/breakparticle.tscn" id="8_8k80t"]
 [ext_resource type="Texture2D" uid="uid://dfc11sipwrhrk" path="res://assets/models/fp_Image_0.png" id="10_cegvp"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
+[ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="12_7rcqp"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -292,26 +293,23 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 bones/0/rotation = Quaternion(-8.55713e-09, 2.96428e-08, -5.07315e-16, 1)
 bones/1/rotation = Quaternion(-0.00473571, 0.00139203, 0.00170838, 0.999986)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/rotation = Quaternion(0.00473803, 4.52507e-08, -0.00170179, 0.999987)
-bones/3/rotation = Quaternion(0.708082, 0.00214074, -0.706113, -0.00455664)
+bones/2/rotation = Quaternion(0.00473803, 4.51374e-08, -0.00170179, 0.999987)
+bones/3/rotation = Quaternion(0.708082, 0.00214071, -0.706113, -0.00455664)
 bones/3/scale = Vector3(1, 1, 1)
-bones/4/position = Vector3(-8.02735e-09, 0.436824, 3.79688e-09)
 bones/4/rotation = Quaternion(0.00386998, -1.26575e-07, -4.57264e-08, 0.999992)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/rotation = Quaternion(0.708082, 0.00214067, -0.706113, -0.00455668)
 bones/5/scale = Vector3(1, 1, 1)
-bones/6/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214065)
-bones/7/position = Vector3(0.000474975, 0.436475, 0.000474975)
 bones/8/rotation = Quaternion(0.706113, -0.00455665, 0.708081, -0.00214059)
 bones/8/scale = Vector3(1, 1, 1)
 
 [node name="Left Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="1"]
-transform = Transform3D(6.71149e-08, -0.00773975, -0.99997, 1.85564e-07, -0.99997, 0.00773975, -1, -1.86501e-07, -1.2039e-07, 0.339821, 0.804392, -0.0148718)
+transform = Transform3D(3.05999e-07, -0.00773978, -0.99997, 1.31547e-07, -0.99997, 0.00773978, -1, -1.33414e-07, -2.40713e-07, 0.339821, 1.03312, -0.0148718)
 bone_name = "arm.L_3.001"
 bone_idx = 4
 
 [node name="Right Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D" index="2"]
-transform = Transform3D(3.73769e-07, -0.0155335, 0.999879, -9.47141e-08, -0.999879, -0.0155335, 1, -8.88389e-08, -3.7892e-07, -0.335904, 0.804741, -0.0143968)
+transform = Transform3D(-4.60463e-07, -0.0155336, 0.999879, -1.38486e-07, -0.999879, -0.0155336, 1, -1.45572e-07, 4.54998e-07, -0.336379, 1.03312, -0.0148718)
 bone_name = "arm.R_5.001"
 bone_idx = 7
 
@@ -348,7 +346,7 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(1, 5.85796e-16, 6.84571e-08, -1.75739e-15, 1, 1.71143e-08, -6.84571e-08, -1.71143e-08, 1, 0, 0.903454, 0)
 bones/0/enabled = true
 bones/0/position = Vector3(0, 0.903454, 0)
-bones/0/rotation = Quaternion(-8.55713e-09, 3.42285e-08, -5.85796e-16, 1)
+bones/0/rotation = Quaternion(-8.55715e-09, 3.42285e-08, -5.85796e-16, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "body_7"
 bones/1/parent = 0
@@ -362,7 +360,7 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(0.999994, 0.00340353, -1.60362e-05, -0.00340353, 0.999949, -0.00947594, -1.62162e-05, 0.00947594, 0.999955, -5.4564e-11, 0.501849, -9.32934e-10)
 bones/2/enabled = true
 bones/2/position = Vector3(-5.4564e-11, 0.501849, -9.32934e-10)
-bones/2/rotation = Quaternion(0.00473803, 4.50165e-08, -0.00170178, 0.999987)
+bones/2/rotation = Quaternion(0.00473803, 4.49815e-08, -0.00170179, 0.999987)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "arm.L_3"
 bones/3/parent = 1
@@ -375,8 +373,8 @@ bones/4/name = "arm.L_3.001"
 bones/4/parent = 3
 bones/4/rest = Transform3D(1, 8.83132e-08, -3.54079e-07, -9.10511e-08, 0.99997, -0.00773997, 3.53385e-07, 0.00773997, 0.99997, -1.58915e-09, 0.2081, 3.67172e-09)
 bones/4/enabled = true
-bones/4/position = Vector3(-9.06362e-09, 0.510095, 3.84923e-08)
-bones/4/rotation = Quaternion(0.00333816, -0.00195789, -0.505871, 0.862601)
+bones/4/position = Vector3(0.0678731, 0.400526, 1.09081e-07)
+bones/4/rotation = Quaternion(0.00387001, -1.76864e-07, -4.40193e-08, 0.999992)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "leg.L_4"
 bones/5/parent = 1
@@ -412,7 +410,7 @@ mesh = SubResource("ArrayMesh_irur0")
 skin = SubResource("Skin_ttuvd")
 
 [node name="Left Hand" type="BoneAttachment3D" parent="RotationRoot/Head/Camera3D/fp/Model/Skeleton3D"]
-transform = Transform3D(-4.50606e-07, -0.00773995, -0.99997, 0.750689, 0.660636, -0.00511379, 0.660656, -0.750666, 0.00580997, 0.339821, 1.07154, -0.495919)
+transform = Transform3D(1.45513e-07, -0.00773975, -0.99997, 0.943055, -0.332627, 0.00257464, -0.332637, -0.943027, 0.00729896, 0.339821, 1.17199, -0.415167)
 bone_name = "arm.L_3.001"
 bone_idx = 4
 
@@ -442,27 +440,58 @@ replication_config = SubResource("SceneReplicationConfig_2gamh")
 [node name="hit" type="AudioStreamPlayer3D" parent="."]
 
 [node name="Pos" type="Label" parent="."]
-visible = false
-offset_right = 81.0
-offset_bottom = 63.0
+offset_left = 14.0
+offset_top = 13.0
+offset_right = 142.0
+offset_bottom = 57.0
 theme = ExtResource("10_fsqbe")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 25
-text = "pos"
-horizontal_alignment = 1
-uppercase = true
+text = "hfgugug"
 
-[node name="health" type="Label" parent="."]
+[node name="loading_check" type="Node3D" parent="."]
+script = ExtResource("12_7rcqp")
+
+[node name="ground" type="RayCast3D" parent="loading_check"]
+target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
+
+[node name="loading" type="Control" parent="loading_check"]
 visible = false
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -50.0
-offset_right = 50.0
-offset_bottom = 23.0
+z_index = 25
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-text = "health:79741"
+grow_vertical = 2
+theme = ExtResource("10_fsqbe")
+
+[node name="ColorRect" type="ColorRect" parent="loading_check/loading"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="loading_check/loading"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "loading
+"
 
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_exited"]

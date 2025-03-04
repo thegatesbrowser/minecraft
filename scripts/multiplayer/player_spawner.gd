@@ -6,8 +6,10 @@ signal player_despawned(id: int)
 
 @export var view_distance: int = 128
 @export var player_scene: PackedScene
+@export var stats_ui_updater:Control
 @export var spawn_points: SpawnPoints
 
+var players := {}
 
 func _ready() -> void:
 	spawn_function = custom_spawn
@@ -45,7 +47,12 @@ func custom_spawn(data: Array) -> Node:
 	
 	create_viewer(id, player)
 	
+	players[id] = {
+		"player": player
+	}
+	
 	player_spawned.emit(id, player)
+	stats_ui_updater.find_player()
 	return player
 
 

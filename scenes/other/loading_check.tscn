@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://brvfnxap5iawf"]
+
+[ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="1_n8c26"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="2_gwbju"]
+
+[node name="loading_check" type="Node3D"]
+script = ExtResource("1_n8c26")
+
+[node name="ground" type="RayCast3D" parent="."]
+target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
+
+[node name="loading" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_gwbju")
+
+[node name="ColorRect" type="ColorRect" parent="loading"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="loading"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "loading
+"

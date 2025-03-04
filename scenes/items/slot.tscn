@@ -60,6 +60,8 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("2_nbp6w")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 show_behind_parent = true
