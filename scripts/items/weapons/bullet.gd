@@ -11,9 +11,14 @@ func _physics_process(_delta: float) -> void:
 
 func kill(body: Node3D) -> void:
 	if "health" in body:
-		body.hit()
-	else:
-		server_kill.rpc()
+		if body is Player:
+			body.rpc_id(body.get_multiplayer_authority(),"hit",damage)
+			destory()
+		else:
+			body.hit()
+			destory()
+	#else:
+		#destory()
 
 
 func destory() -> void:

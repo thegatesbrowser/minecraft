@@ -52,6 +52,7 @@ signal craftable_unhovered
 var last_clicked_slot:Node
 
 var known_storage = []
+signal hunger_points_gained(amount)
 #signal add_item_to_hand(item)
 #signal remove_item_in_hand
 #signal craftable_hovered(craftable,node)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=61 format=3 uid="uid://mqnlrs6hn6g6"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -38,6 +38,20 @@
 [ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="35_06sqe"]
 [ext_resource type="Script" path="res://scripts/multiplayer/inventory_spawner.gd" id="36_j5lsn"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="39_nk3ov"]
+[ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://resources/items/craftables/wood_1.tres" id="40_ku41k"]
+[ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://resources/items/craftables/wood_2.tres" id="41_vq2lt"]
+[ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="42_shc7n"]
+[ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="43_vnga1"]
+[ext_resource type="Resource" uid="uid://ddnn87htgsb3u" path="res://resources/items/craftables/axe_wood.tres" id="44_12cfp"]
+[ext_resource type="Resource" uid="uid://c1c7ynjb33hsk" path="res://resources/items/craftables/pickaxe_wood.tres" id="45_fo51h"]
+[ext_resource type="Resource" uid="uid://cdgc65lkfgvyq" path="res://resources/items/craftables/shovel_wood.tres" id="46_nps6c"]
+[ext_resource type="Resource" uid="uid://cqmhwea1gfd5r" path="res://resources/items/craftables/axe_stone.tres" id="47_rakto"]
+[ext_resource type="Resource" uid="uid://d0aeff3omljv3" path="res://resources/items/craftables/pickaxe_stone.tres" id="48_ef4wo"]
+[ext_resource type="Resource" uid="uid://q0wwywxds52w" path="res://resources/items/craftables/shovel_stone.tres" id="49_vedny"]
+[ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/pistol.tres" id="50_hbn4o"]
+[ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://resources/items/craftables/ammo.tres" id="51_5fwdq"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable_library.gd" id="52_h553y"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6qgro"]
 streams_count = 4
@@ -96,6 +110,10 @@ stream_0/stream = ExtResource("29_gmxig")
 stream_1/stream = ExtResource("30_1ny5t")
 stream_2/stream = ExtResource("31_ot16s")
 stream_3/stream = ExtResource("32_ik8i6")
+
+[sub_resource type="Resource" id="Resource_u5f5y"]
+script = ExtResource("52_h553y")
+craftable_array = Array[ExtResource("39_nk3ov")]([ExtResource("40_ku41k"), ExtResource("41_vq2lt"), ExtResource("42_shc7n"), ExtResource("43_vnga1"), ExtResource("44_12cfp"), ExtResource("45_fo51h"), ExtResource("46_nps6c"), ExtResource("47_rakto"), ExtResource("48_ef4wo"), ExtResource("49_vedny"), ExtResource("50_hbn4o"), ExtResource("51_5fwdq")])
 
 [node name="Main" type="Node"]
 
@@ -194,6 +212,12 @@ script = ExtResource("37_5iseo")
 [node name="Creatures" type="Node3D" parent="."]
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
+
+[node name="CloudsSystem" parent="Game" index="2"]
+ambientColorDefault = Color(0.602482, 0.602482, 0.602482, 3.1)
+
+[node name="Crafting" parent="Game/Player UI/Inventory holder/Inventory" index="0"]
+crafting_library = SubResource("Resource_u5f5y")
 
 [node name="stats_ui_update" parent="Game/Player UI" index="1" node_paths=PackedStringArray("player_spawner")]
 player_spawner = NodePath("../../../PlayerSpawner")

@@ -40,6 +40,6 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ftwd2")
 
 [node name="Minecraft__0018_HR" type="MeshInstance3D"]
-transform = Transform3D(0.367415, 0, 0, 0, -0.367415, 1.19719e-07, 0, -1.19719e-07, -0.367415, 0, 0, 0)
+transform = Transform3D(0.0763899, -0.359386, 3.21204e-08, -0.359386, -0.0763899, 0, 6.67822e-09, -3.14185e-08, -0.367415, 0, 0, 0)
 mesh = SubResource("ArrayMesh_nqrwa")
 skeleton = NodePath("")
