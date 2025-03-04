@@ -8,14 +8,15 @@ const TreeGenerator = preload("./tree_generator.gd")
 @export var generate_trees:bool = true
 @export var HeightmapCurve = preload("res://resources/heightmap_curve.tres")
 @export var _heightmap_noise:FastNoiseLite
-@export var grass_odds:float = 0.1
+@export var plant_odds:float = 0.1
 @export var creature_odds:float =  0.0001
 @export var possible_creatures: Array[Creature]
 
 @export var possible_tree_types:Dictionary = {
-	"oak": [VoxelLibrary.get_model_index_default("log_oak"),VoxelLibrary.get_model_index_default("leaf_oak")],
-	"birch": [VoxelLibrary.get_model_index_default("log_birch"),VoxelLibrary.get_model_index_default("leaf_oak")]
+	"oak": ["log_oak","leaf_oak"],
+	"birch": ["log_birch","leaf_oak"]
 }
+@export var possible_plants: Array[StringName]
 
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
@@ -153,8 +154,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 								pos += ncpos * block_size
 								Globals.call_deferred("Spawn_creature",Vector3(pos.x,_get_height_at(x,z) + 10,pos.z),possible_creatures.pick_random())
 								#buffer.set_voxel(DIRT, x, relative_height + 2 , z, _CHANNEL)
-							if rng.randf() < grass_odds:
-								var foliage = TALL_GRASS
+							if rng.randf() < plant_odds:
+								var plant = possible_plants.pick_random()
+								var foliage = VoxelLibrary.get_model_index_default(plant)
 								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
 								
 				# Water
