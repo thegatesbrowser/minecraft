@@ -85,6 +85,7 @@ var health
 
 
 func _ready():
+	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
 	hunger = base_hunger
@@ -406,5 +407,16 @@ func hunger_update(_delta:float) -> void:
 func death():
 	health = max_health
 	hunger = base_hunger
-	position = spawn_position
+	respawn.rpc(spawn_position)
 	set_sync_properties()
+
+@rpc("any_peer", "call_remote", "reliable")
+func respawn(spawn_position: Vector3) -> void:
+	global_position = spawn_position
+	velocity = Vector3.ZERO
+
+func hunger_points_gained(amount):
+	if hunger + amount < base_hunger:
+		hunger += amount
+	else:
+		hunger = base_hunger

@@ -56,6 +56,7 @@ func _input(_event):
 				
 				if Input.is_action_pressed("Mine"):
 					remove()
+					Globals.hunger_points_gained.emit(selected_item.food_points)
 					print("ate ", selected_item.unique_name, " gained ", selected_item.food_points," food points")
 	
 	
