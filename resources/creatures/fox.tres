@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bknf4aa4fmqsg" path="res://assets/models/fox.glb" id="1_ohjhc"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_sffgm"]
-[ext_resource type="Resource" uid="uid://jja3ve6j76yl" path="res://resources/items/Meat.tres" id="3_g1f5t"]
+[ext_resource type="Resource" uid="uid://jja3ve6j76yl" path="res://resources/items/meat.tres" id="3_g1f5t"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ldbmh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e0a6d"]

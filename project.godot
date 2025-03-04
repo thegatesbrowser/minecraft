@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Runestone"
-config/tags=PackedStringArray("20_games")
+config/tags=PackedStringArray("thegates")
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.3")
 run/flush_stdout_on_print=true

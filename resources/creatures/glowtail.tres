@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Creature" load_steps=5 format=3 uid="uid://cylxg4ja44lhh"]
+
+[ext_resource type="PackedScene" uid="uid://bm84k63fubxes" path="res://assets/models/glowtail.glb" id="1_oitx8"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_25jlh"]
+[ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ub3wt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3pi47"]
+size = Vector3(0.285156, 0.395752, 0.785471)
+
+[resource]
+script = ExtResource("3_ub3wt")
+body_scene = ExtResource("1_oitx8")
+max_health = 2
+attacks = false
+run_away_after_attack = false
+damage = 0
+speed = 7.0
+coll_shape = SubResource("BoxShape3D_3pi47")
+walk_ani_name = "walk"
+idle_ani_name = "idle"
+mesh_name = "Cube"
+creature_name = "Glowtail"
+drop_items = Array[ExtResource("2_25jlh")]([])

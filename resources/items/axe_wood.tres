@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="ItemTool" load_steps=9 format=3 uid="uid://w07v8ic6w05j"]
 
-[ext_resource type="PackedScene" uid="uid://c47doikncrvmt" path="res://assets/models/Tools/Wood/axe_wood.tscn" id="1_ki4i5"]
+[ext_resource type="PackedScene" uid="uid://c47doikncrvmt" path="res://assets/models/tools/Wood/axe_wood.tscn" id="1_ki4i5"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_wfc3b"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="3_q1uog"]
-[ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="4_vll5h"]
-[ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="5_vfcjb"]
-[ext_resource type="Resource" uid="uid://cogc5ac14y0ad" path="res://resources/items/log_birch.tres" id="6_gsk5u"]
-[ext_resource type="Resource" uid="uid://d26i62gur1o23" path="res://resources/items/log_oak.tres" id="7_5xj0c"]
+[ext_resource type="Resource" path="res://resources/items/wood_birch.tres" id="4_vll5h"]
+[ext_resource type="Resource" path="res://resources/items/wood_oak.tres" id="5_vfcjb"]
+[ext_resource type="Resource" uid="uid://b7aelu7igg66" path="res://resources/items/log_birch.tres" id="6_gsk5u"]
+[ext_resource type="Resource" uid="uid://dcqe6xotftpto" path="res://resources/items/log_oak.tres" id="7_5xj0c"]
 [ext_resource type="Texture2D" uid="uid://caashrfppr8tw" path="res://assets/textures/items/Wooden_Axe_JE2_BE2.webp" id="8_hwggw"]
 
 [resource]
