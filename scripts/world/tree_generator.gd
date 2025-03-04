@@ -18,8 +18,8 @@ func generate() -> Structure:
 	
 	#print(possible_types[tree_key])
 	
-	log_type = tree_type.front()
-	leaves_type = tree_type.back()
+	log_type = VoxelLibrary.get_model_index_default(tree_type.front())
+	leaves_type = VoxelLibrary.get_model_index_default(tree_type.back())
 	
 	var voxels := {}
 	# Let's make crappy trees
