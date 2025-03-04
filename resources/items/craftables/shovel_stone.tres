@@ -1,19 +1,15 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://q0wwywxds52w"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://q0wwywxds52w"]
 
 [ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_kqxhm"]
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="2_uiny5"]
 [ext_resource type="Resource" uid="uid://b201rvmpv2nq1" path="res://resources/items/shovel_stone.tres" id="3_wpi83"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_yv36w"]
-
-[sub_resource type="Gradient" id="Gradient_8nsgu"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_cq7t8"]
-gradient = SubResource("Gradient_8nsgu")
+[ext_resource type="Texture2D" uid="uid://2yiul541lipj" path="res://assets/textures/items/Stone_Shovel_JE2_BE2.webp" id="5_uldvy"]
 
 [resource]
 script = ExtResource("4_yv36w")
 Name = "Shovel Stone"
-texture = SubResource("GradientTexture2D_cq7t8")
+texture = ExtResource("5_uldvy")
 output_item = ExtResource("3_wpi83")
 output_amount = 1
 items_needed = {

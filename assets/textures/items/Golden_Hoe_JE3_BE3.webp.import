@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://p1nx8wd1roqu"
-path="res://.godot/imported/panorama_0.png-b9035c55b64f0f68d7d71c979ce47965.ctex"
+uid="uid://bi3c6g7pa0eae"
+path="res://.godot/imported/Golden_Hoe_JE3_BE3.webp-bea30df7462bacabe3bedfd5d57a810f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/gui/title/background/panorama_0.png"
-dest_files=["res://.godot/imported/panorama_0.png-b9035c55b64f0f68d7d71c979ce47965.ctex"]
+source_file="res://assets/textures/items/Golden_Hoe_JE3_BE3.webp"
+dest_files=["res://.godot/imported/Golden_Hoe_JE3_BE3.webp-bea30df7462bacabe3bedfd5d57a810f.ctex"]
 
 [params]
 

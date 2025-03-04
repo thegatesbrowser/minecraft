@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=27 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -14,7 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
 [ext_resource type="PackedScene" uid="uid://dwwv5ywawdbba" path="res://scenes/ui/crafting_ui.tscn" id="12_151fq"]
 [ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://scenes/player/selection_buttons.tscn" id="12_qvgc7"]
+[ext_resource type="Script" path="res://scripts/ui/stats_ui_update.gd" id="14_ho63k"]
+[ext_resource type="Texture2D" uid="uid://8pjqg2q1q1ea" path="res://assets/gui/Healthbar.webp" id="15_7hqkq"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
+[ext_resource type="Texture2D" uid="uid://bhh6ygqgmcb04" path="res://assets/gui/Hunger_JE2_BE2.webp" id="16_fjtoi"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
 [ext_resource type="PackedScene" uid="uid://byjn5yc1m1okl" path="res://addons/SunshineVolumetricClouds/CloudsPrefab.tscn" id="26_gjks3"]
@@ -145,6 +148,50 @@ sync = false
 layout_mode = 0
 offset_bottom = 47.0
 mouse_filter = 2
+
+[node name="stats_ui_update" type="Control" parent="Player UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("14_ho63k")
+
+[node name="healthbar" type="TextureProgressBar" parent="Player UI/stats_ui_update"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 524.0
+offset_top = 912.0
+offset_right = 1356.0
+offset_bottom = 952.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 60.0
+texture_under = ExtResource("15_7hqkq")
+texture_progress = ExtResource("15_7hqkq")
+tint_under = Color(0, 0, 0, 1)
+
+[node name="hungerbar" type="TextureProgressBar" parent="Player UI/stats_ui_update"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 772.0
+offset_top = 896.0
+offset_right = 828.0
+offset_bottom = 952.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 60.0
+nine_patch_stretch = true
+texture_under = ExtResource("16_fjtoi")
+texture_progress = ExtResource("16_fjtoi")
+tint_under = Color(0, 0, 0, 1)
 
 [node name="UI" type="CanvasLayer" parent="."]
 

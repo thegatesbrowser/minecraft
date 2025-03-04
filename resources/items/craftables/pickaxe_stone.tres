@@ -1,19 +1,15 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://d0aeff3omljv3"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://d0aeff3omljv3"]
 
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_bfgg8"]
 [ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="2_euni2"]
 [ext_resource type="Resource" uid="uid://dtchkab23joj6" path="res://resources/items/pickaxe_stone.tres" id="3_qi6e3"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_6p30j"]
-
-[sub_resource type="Gradient" id="Gradient_op1ds"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_esejj"]
-gradient = SubResource("Gradient_op1ds")
+[ext_resource type="Texture2D" uid="uid://clil063h5db5k" path="res://assets/textures/items/Stone_Pickaxe_JE2_BE2.webp" id="5_xfwlj"]
 
 [resource]
 script = ExtResource("4_6p30j")
 Name = "Pickaxe Stone"
-texture = SubResource("GradientTexture2D_esejj")
+texture = ExtResource("5_xfwlj")
 output_item = ExtResource("3_qi6e3")
 output_amount = 1
 items_needed = {

@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="ItemWeapon" load_steps=5 format=3 uid="uid://c2c8qekfermsb"]
 
 [ext_resource type="Script" path="res://scripts/items/item_weapon.gd" id="1_momyn"]
+[ext_resource type="PackedScene" uid="uid://dkh5iruli7ash" path="res://assets/models/gun.glb" id="2_pypw4"]
 
 [sub_resource type="Gradient" id="Gradient_a0q1i"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 0, 1, 1)
@@ -8,13 +9,10 @@ colors = PackedColorArray(0, 0, 0, 1, 1, 0, 1, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_43pwu"]
 gradient = SubResource("Gradient_a0q1i")
 
-[sub_resource type="BoxMesh" id="BoxMesh_omu6u"]
-size = Vector3(1, 0.2, 0.2)
-
 [resource]
 script = ExtResource("1_momyn")
 damage = 1
-weapon_model = SubResource("BoxMesh_omu6u")
+weapon_model = ExtResource("2_pypw4")
 needs_ammo = true
 ammo_name = &"ammo"
 shoots = true

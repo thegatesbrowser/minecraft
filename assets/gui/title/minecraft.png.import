@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://s6wrf1asnsm8"
-path="res://.godot/imported/mojang.png-4f79daaadaa431ed4e074f2da768cd49.ctex"
+uid="uid://bst5a2auba10g"
+path="res://.godot/imported/minecraft.png-60bfed8524052e7c845dba3240336615.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/gui/title/mojang.png"
-dest_files=["res://.godot/imported/mojang.png-4f79daaadaa431ed4e074f2da768cd49.ctex"]
+source_file="res://assets/gui/title/minecraft.png"
+dest_files=["res://.godot/imported/minecraft.png-60bfed8524052e7c845dba3240336615.ctex"]
 
 [params]
 

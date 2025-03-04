@@ -1,9 +1,13 @@
 extends CharacterBody3D
 class_name Player
 
-var spawn_position:Vector3
-var your_id:int = 1
+signal hunger_updated(hunger)
+signal health_updated(health)
 
+var spawn_position:Vector3
+var your_id
+
+@export_group("MOVEMENT")
 @export_range(0.1,1.1,.1) var max_flying_margin = 0.2
 @export_range(-1.1,-0.1,.1) var min_flying_margin = -0.2
 
@@ -12,16 +16,18 @@ var your_id:int = 1
 @export var JUMP_VELOCITY = 7.0
 
 @export var can_autojump: bool = true
-@export var max_health: int = 3
+
 
 ## Player model rotation speed
 @export var rotation_speed := 12.0
 
+@export_subgroup("MULTIPLAYER")
 ## Clamp sync delta for faster interpolation
 @export var sync_delta_max := 0.2
 @export var sync_delta := 0.0
 @export var start_interpolate := false
 
+@export_group("NODES")
 @export var rotation_root: Node3D
 @export var ANI: AnimationPlayer
 
@@ -58,12 +64,20 @@ var is_flying: bool
 @export var bullet_scene: PackedScene
 @export var weapon_base: PackedScene
 
-@export_group("Sync Properties")
+@export_group("SYNC PROPERTIES")
 @export var _position: Vector3
 @export var _velocity: Vector3
 @export var _rotation: Vector3 = Vector3.ZERO
 @export var _direction: Vector3 = Vector3.ZERO
 
+@export_group("STATS")
+@export var base_hunger:float = 5.0
+var hunger:float = 0
+@export var hunger_update_time := 10.0
+@export var moving_hunger_times_debuff := 2.0
+@export var hunger_step:float = 0.1
+
+@export var max_health: int = 3
 var health
 
 @onready var minecraft_player: Node3D = $RotationRoot/minecraft_player ## TP
@@ -73,6 +87,7 @@ var health
 func _ready():
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
+	hunger = base_hunger
 	health = max_health
 
 	if not is_multiplayer_authority():
@@ -84,7 +99,10 @@ func _ready():
 	else:
 		fp.show()
 		minecraft_player.hide()
-		$health.show()
+	
+	Console.add_command("respawn", self, 'death')\
+		.set_description("makes the player position the spawn position).")\
+		.register()
 	
 	Console.add_command("pos", self, 'show_pos')\
 		.set_description("shows the position of the player).")\
@@ -116,15 +134,21 @@ func _unhandled_input(event):
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 
-	$health.text = str("health:  ",health)
 	$Pos.text = str("pos   ", global_position)
-
+	
+	if health <= 0:
+		death()
+		
+	hunger_update(_delta)
+		
 	Globals.player_health = health
 
 
 func _physics_process(delta):
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
+		
+	if Globals.paused: return
 	
 	if your_id != get_multiplayer_authority():
 		var inventory = get_tree().get_first_node_in_group("Main Inventory")
@@ -344,9 +368,8 @@ func remove_item_in_hand():
 @rpc("any_peer","call_local")
 func hit(damage:int = 1):
 	health -= damage
-	if health <= 0:
-		print("player death")
-		#position = spawn_position
+	#health_updated.emit(health)
+	print("hit")
 
 func spawn_bullet():
 	if is_multiplayer_authority():
@@ -357,3 +380,31 @@ func spawn_bullet():
 func sync_bullet(transform_):
 	Globals.add_object.emit(1,transform_,"res://scenes/items/weapons/bullet.tscn")
 	
+func hunger_update(_delta:float) -> void:
+	if _move_direction:
+		hunger_update_time -= _delta * moving_hunger_times_debuff
+	else:
+		hunger_update_time -= _delta
+		
+	if hunger_update_time <= 0:
+		
+		if hunger <= 0:
+			print("dying of hunger")
+			health -= 1
+			health_updated.emit(health)
+			
+		if _move_direction:
+			hunger -= hunger_step * moving_hunger_times_debuff
+		else:
+			hunger -= hunger_step
+		
+		hunger_updated.emit(hunger)
+			
+		print("hunger")
+		hunger_update_time = 10
+
+func death():
+	health = max_health
+	hunger = base_hunger
+	position = spawn_position
+	set_sync_properties()

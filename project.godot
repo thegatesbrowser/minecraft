@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="MineMark"
+config/name="Runestone"
 config/tags=PackedStringArray("20_games")
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.3")
@@ -18,7 +18,7 @@ run/flush_stdout_on_print=true
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 boot_splash/image="res://assets/splash.png"
 boot_splash/fullsize=false
-config/icon="res://icon.png"
+config/icon="res://assets/textures/items/logo.webp"
 
 [autoload]
 
