@@ -19,11 +19,10 @@ func _ready() -> void:
 
 func spawn_creature(pos: Vector3, creature:Creature) -> void:
 	if not multiplayer.is_server(): return
-		
+	
 	var spawn_position = pos
-	print("creature spawn pos ", spawn_position)
+	# print("creature spawn pos ", spawn_position)
 	spawn([1, spawn_position,creature.get_path()])
-	#print("creature spawn")
 
 
 func destroy_creature(Name: String) -> void:

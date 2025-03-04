@@ -271,5 +271,5 @@ func interpolate_client(delta: float) -> void:
 	move_and_slide()
 
 
-func _exit_tree():
-	print("creature despawned ", position)
+# func _exit_tree():
+# 	print("creature despawned ", position)

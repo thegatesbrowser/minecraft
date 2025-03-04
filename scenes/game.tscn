@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=24 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -8,6 +8,7 @@
 [ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/Generator.tres" id="4_tpxqt"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
+[ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
 [ext_resource type="Script" path="res://scripts/world/building_check.gd" id="8_na7qa"]
 [ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://scenes/items/inventory.tscn" id="10_hxw3b"]
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
@@ -18,6 +19,10 @@
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
 [ext_resource type="PackedScene" uid="uid://byjn5yc1m1okl" path="res://addons/SunshineVolumetricClouds/CloudsPrefab.tscn" id="26_gjks3"]
 [ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="27_yvp68"]
+
+[sub_resource type="VoxelStreamSQLite" id="VoxelStreamSQLite_g3jlb"]
+database_path = "minecraft_db.sqlite3"
+preferred_coordinate_format = "minecraft_db.sqlite3"
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
@@ -60,9 +65,11 @@ one_shot = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 use_gpu_generation = true
+stream = SubResource("VoxelStreamSQLite_g3jlb")
 generator = ExtResource("4_tpxqt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00867271, 0.0195246, -0.00582218)
+script = ExtResource("7_dy7rt")
 
 [node name="VoxelTerrainMultiplayerSynchronizer" type="VoxelTerrainMultiplayerSynchronizer" parent="VoxelTerrain"]
 
