@@ -6,6 +6,8 @@
 [resource]
 script = ExtResource("1_odbow")
 break_time = 0.4
+spawn_chance = 0.01
+spawn_size = 2
 unique_name = &"glowstone"
 texture = ExtResource("2_1eefx")
 max_stack = 64

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://c4g4nofmjg2jg"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_rrmcs"]
+[ext_resource type="Texture2D" uid="uid://bsl0nqpw5vopk" path="res://assets/textures/blocks/diamond.tres" id="2_k6djr"]
+
+[resource]
+script = ExtResource("1_rrmcs")
+break_time = 0.4
+spawn_chance = 0.01
+spawn_size = 1
+unique_name = &"diamond"
+texture = ExtResource("2_k6djr")
+max_stack = 64

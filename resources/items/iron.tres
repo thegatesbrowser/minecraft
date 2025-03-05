@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://dvlxseu7sf1d4"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_53u60"]
+[ext_resource type="Texture2D" uid="uid://cy2c50wb274af" path="res://assets/textures/blocks/iron.tres" id="2_uumi1"]
+
+[resource]
+script = ExtResource("1_53u60")
+break_time = 0.4
+spawn_chance = 0.1
+spawn_size = 1
+unique_name = &"iron"
+texture = ExtResource("2_uumi1")
+max_stack = 64

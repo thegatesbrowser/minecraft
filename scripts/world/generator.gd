@@ -12,11 +12,15 @@ const TreeGenerator = preload("./tree_generator.gd")
 @export var creature_odds:float =  0.0001
 @export var possible_creatures: Array[Creature]
 
+var stone_block := []
+
 @export var possible_tree_types:Dictionary = {
 	"oak": ["log_oak","leaf_oak"],
 	"birch": ["log_birch","leaf_oak"]
 }
 @export var possible_plants: Array[StringName]
+
+@export var possible_ore: Array[ItemBlock]
 
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
@@ -56,7 +60,6 @@ var _trees_max_y := 0
 
 
 func _init():
-	
 	
 	# TODO Even this must be based on a seed, but I'm lazy
 	var tree_generator = TreeGenerator.new()
@@ -129,20 +132,32 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			for x in block_size:
 				var height := _get_height_at(gx, gz)
 				var relative_height := height - oy
-				
 				# Dirt and grass
 				if relative_height > block_size:
-					buffer.fill_area(STONE,
-						Vector3(x, 0, z), Vector3(x + 1, block_size, z + 1), _CHANNEL)
+					#buffer.fill_area(STONE,
+						#Vector3(x, 0, z), Vector3(x + 1, block_size, z + 1), _CHANNEL)
+					
+					var ore = possible_ore.pick_random()
+					if rng.randf() < ore.spawn_chance:
+						var pos = Vector3(randi_range(x,x+ore.spawn_size),randi_range(0,block_size),randi_range(z,z+ore.spawn_size))
+						if pos.y >= 0:
+							if pos.x >= 0:
+								if pos.z >= 0:
+									buffer.fill_area(VoxelLibrary.get_model_index_default(ore.unique_name),Vector3(pos.x,pos.y,pos.z),Vector3(pos.x +1,pos.y + 1,pos.z+ 1),_CHANNEL)
 					
 					buffer.fill_area(DIRT,
 						Vector3(x, 0, z), Vector3(x , block_size, z ), _CHANNEL)
 				
 				elif relative_height > 0:
+					
 					buffer.fill_area(STONE,
 						Vector3(x, 0, z), Vector3(x + 1, relative_height, z + 1), _CHANNEL)
-						
+							
+					#print(height, " ", relative_height)
 					if height >= 0:
+						
+						
+							
 						buffer.set_voxel(GRASS, x, relative_height - 1, z, _CHANNEL)
 						if relative_height - 2 >= 0:
 							buffer.set_voxel(DIRT,x, relative_height - 2, z, _CHANNEL)
@@ -158,18 +173,22 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 								var plant = possible_plants.pick_random()
 								var foliage = VoxelLibrary.get_model_index_default(plant)
 								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
-								
+					
+					
+				#if height < 0 and oy < 0:
+					#buffer.set_voxel(OAK_LEAVES, x, block_size - 1, z, _CHANNEL)
+					#print("ore")
 				# Water
-				if height < 0 and oy < 0:
-					var start_relative_height := 0
-					if relative_height > 0:
-						start_relative_height = relative_height
-					buffer.fill_area(WATER_FULL,
-						Vector3(x, start_relative_height, z), 
-						Vector3(x + 1, block_size, z + 1), _CHANNEL)
-					if oy + block_size == 0:
-						# Surface block
-						buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
+				#if height < 0 and oy < 0:
+					#var start_relative_height := 0
+					#if relative_height > 0:
+						#start_relative_height = relative_height
+					#buffer.fill_area(WATER_FULL,
+						#Vector3(x, start_relative_height, z), 
+						#Vector3(x + 1, block_size, z + 1), _CHANNEL)
+					#if oy + block_size == 0:
+						## Surface block
+						#buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
 				gx += 1
 
 			gz += 1
@@ -234,3 +253,11 @@ static func _get_chunk_seed_2d(cpos: Vector3) -> int:
 func _get_height_at(x: int, z: int) -> int:
 	var t = 0.5 + 0.5 * _heightmap_noise.get_noise_2d(x, z)
 	return int(HeightmapCurve.sample_baked(t))
+
+func ore(start:Vector3,end:Vector3,channel,chunk_pos,buffer:VoxelBuffer):
+	var rng := RandomNumberGenerator.new()
+	rng.seed = _get_chunk_seed_2d(chunk_pos)
+	
+	if rng.randf() <= 1:
+		var random_pos = Vector3(randi_range(start.x,end.x),randi_range(start.y,end.y),randi_range(start.z,end.z))
+		buffer.set_voxel(random_pos.x,random_pos.y,random_pos.z, _CHANNEL)
