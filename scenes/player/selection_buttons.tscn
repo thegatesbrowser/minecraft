@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://5jw15x2l8lvw"]
+[gd_scene load_steps=9 format=3 uid="uid://5jw15x2l8lvw"]
 
 [ext_resource type="Script" path="res://scripts/ui/selection_buttons.gd" id="1_favd0"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_og1jy"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://lxq2aq82pa5e" path="res://resources/items/chest.tres" id="4_4h651"]
 [ext_resource type="Resource" uid="uid://blqe3qx1cpq57" path="res://resources/items/shovel_wood.tres" id="5_ndctu"]
 [ext_resource type="Resource" uid="uid://c2c8qekfermsb" path="res://resources/items/pistol.tres" id="6_neie7"]
+[ext_resource type="Resource" uid="uid://dlboikqlvjswi" path="res://resources/items/glowstone.tres" id="6_t7t6f"]
 [ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="7_h67uv"]
 
 [node name="Selection_Buttons" type="ScrollContainer"]
@@ -56,6 +57,8 @@ Item_resource = ExtResource("5_ndctu")
 [node name="Slot4" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
+amount = 36
+Item_resource = ExtResource("6_t7t6f")
 
 [node name="Slot5" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://dlboikqlvjswi"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_odbow"]
+[ext_resource type="Texture2D" uid="uid://dkg41c46p1dku" path="res://assets/textures/blocks/glowstone.png" id="2_1eefx"]
+
+[resource]
+script = ExtResource("1_odbow")
+break_time = 0.4
+unique_name = &"glowstone"
+texture = ExtResource("2_1eefx")
+max_stack = 64

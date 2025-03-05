@@ -1,19 +1,14 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://bj13adgon6is"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://bj13adgon6is"]
 
 [ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_8p5pp"]
 [ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="1_j7fru"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_ygcww"]
-
-[sub_resource type="Gradient" id="Gradient_gfrv1"]
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_hadsa"]
-gradient = SubResource("Gradient_gfrv1")
+[ext_resource type="Texture2D" uid="uid://ea67abfva84w" path="res://assets/textures/items/ammo.png" id="4_pbl4m"]
 
 [resource]
 script = ExtResource("1_ygcww")
 Name = "Ammo"
-texture = SubResource("GradientTexture2D_hadsa")
+texture = ExtResource("4_pbl4m")
 output_item = ExtResource("1_j7fru")
 output_amount = 4
 items_needed = {

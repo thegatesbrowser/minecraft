@@ -46,6 +46,7 @@ func _process(_delta: float) -> void:
 					spawn_item(Globals.last_clicked_slot.Item_resource,amount)
 					Globals.last_clicked_slot.update_slot()
 					Globals.last_clicked_slot = null
+					
 
 
 func is_even(x: int):
