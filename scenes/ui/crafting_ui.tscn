@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwwv5ywawdbba"]
+[gd_scene load_steps=4 format=3 uid="uid://dwwv5ywawdbba"]
 
 [ext_resource type="Script" path="res://scripts/ui/crafting_station_ui.gd" id="1_wotjt"]
 [ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="2_od5gg"]
-[ext_resource type="Resource" uid="uid://dgswqwr4e80oy" path="res://scripts/items/craftables/craftable_library.tres" id="3_ygpkd"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_2g6cg"]
 color = Color(1, 1, 1, 1)
@@ -15,7 +14,6 @@ size_flags_vertical = 4
 horizontal_scroll_mode = 0
 script = ExtResource("1_wotjt")
 craftable_button_scene = ExtResource("2_od5gg")
-crafting_library = ExtResource("3_ygpkd")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]

@@ -1,7 +1,7 @@
 extends TextureButton
+class_name Slot
+var index:int
 
-
-var index
 signal item_changed(index:int,item_path:String,amount:int)
 
 var played_ani:bool = false
@@ -11,16 +11,20 @@ var focused:bool = false
 @export var amount:int = 1
 
 @export var Item_resource: ItemBase
-@export var can_sync:bool = false
+
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
 
+
 func _process(_delta: float) -> void:
+	
 	if Item_resource != null:
 		image.texture = Item_resource.texture
 	else:
 		image.texture = null
 		
+	amount_label.text = str(amount)
+	
 	if focused:
 		if !played_ani:
 			GlobalAnimation._tween(self,"bounce",.3)
@@ -29,7 +33,11 @@ func _process(_delta: float) -> void:
 	else:
 		played_ani = false
 		$pressed.hide()
-
+	
+	if amount <= 0:
+		Item_resource = null
+		amount_label.hide()
+		amount = 1
 
 func _ready() -> void:
 	index = get_index()

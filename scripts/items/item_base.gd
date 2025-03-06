@@ -8,3 +8,8 @@ class_name ItemBase
 @export var holdable_mesh:PackedScene
 
 @export var utility: Utilities
+
+@export_category('forging')
+@export var forgable:bool = false
+@export var forge_time:float = 2.0
+@export var output_item:ItemBase

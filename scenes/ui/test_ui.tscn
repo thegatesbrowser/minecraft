@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://kj4kuea76j71"]
+
+[ext_resource type="PackedScene" uid="uid://dnqhxtkp8jhnd" path="res://scenes/ui/furnace_ui.tscn" id="1_6nc8g"]
+[ext_resource type="PackedScene" uid="uid://bxe66yexhl7t1" path="res://scenes/items/inventory.tscn" id="2_dhf2j"]
+[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="3_r85ut"]
+[ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="4_jju1w"]
+
+[node name="test ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="furnace_ui" parent="." instance=ExtResource("1_6nc8g")]
+layout_mode = 1
+
+[node name="Inventory" parent="." instance=ExtResource("2_dhf2j")]
+layout_mode = 1
+offset_left = -974.0
+offset_top = -415.0
+offset_right = -174.0
+offset_bottom = 385.0
+sync = false
+
+[node name="Slot" parent="Inventory/PanelContainer/MarginContainer/VBoxContainer/Items" index="0"]
+amount = 16
+Item_resource = ExtResource("3_r85ut")
+
+[node name="Slot2" parent="Inventory/PanelContainer/MarginContainer/VBoxContainer/Items" index="1"]
+amount = 21
+Item_resource = ExtResource("4_jju1w")
+
+[editable path="Inventory"]

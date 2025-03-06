@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnqhxtkp8jhnd"]
+
+[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_3e275"]
+[ext_resource type="Script" path="res://scripts/ui/furnace_ui.gd" id="2_nr2i6"]
+
+[node name="furnace_ui" type="PanelContainer" node_paths=PackedStringArray("cooking_slot", "fuel_slot", "output_container", "input_container")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.0
+offset_top = -100.5
+offset_right = 171.0
+offset_bottom = 100.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_nr2i6")
+cooking_slot = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot")
+fuel_slot = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot2")
+output_container = NodePath("MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer")
+input_container = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Inputs" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Inputs"]
+layout_mode = 2
+
+[node name="title" type="Label" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2"]
+layout_mode = 2
+text = "inputs"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Slot" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer" instance=ExtResource("2_3e275")]
+layout_mode = 2
+
+[node name="Slot2" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer" instance=ExtResource("2_3e275")]
+layout_mode = 2
+
+[node name="output" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/output"]
+layout_mode = 2
+
+[node name="title" type="Label" parent="MarginContainer/HBoxContainer/output/VBoxContainer"]
+layout_mode = 2
+text = "outputs
+"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/output/VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="Slot" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+layout_mode = 2
+
+[node name="Slot5" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+layout_mode = 2
+
+[node name="Slot6" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+layout_mode = 2
+
+[node name="Slot2" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+layout_mode = 2
+
+[node name="Slot3" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+layout_mode = 2
+
+[node name="Slot4" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+layout_mode = 2
+
+[connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot" to="." method="change"]
+[connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot2" to="." method="fuel"]
+[connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot2" to="." method="change"]

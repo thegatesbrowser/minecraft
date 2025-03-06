@@ -31,6 +31,8 @@ func open_inventory(id:Vector3):
 		if "Owner" in i:
 			if i.Owner == id:
 				i.open() ## opens the subinventory that has the same id
+			elif i.Owner != Vector3.ZERO:
+				i.hide() 
 	show() ## opens the inventory holder
 	
 	if visible:
