@@ -6,8 +6,8 @@
 [ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/Glowtail.tres" id="3_yvx72"]
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="4_8wfm7"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="5_a8n2h"]
-[ext_resource type="Resource" uid="uid://dvlxseu7sf1d4" path="res://resources/items/iron.tres" id="6_p3hgb"]
-[ext_resource type="Resource" uid="uid://c4g4nofmjg2jg" path="res://resources/items/diamond.tres" id="7_mypw0"]
+[ext_resource type="Resource" uid="uid://dvlxseu7sf1d4" path="res://resources/items/iron_block.tres" id="6_1e2se"]
+[ext_resource type="Resource" uid="uid://c4g4nofmjg2jg" path="res://resources/items/diamond_block.tres" id="7_y6uke"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_sv834"]
 
@@ -24,4 +24,4 @@ possible_tree_types = {
 "oak": ["log_oak", "leaf_oak"]
 }
 possible_plants = Array[StringName]([&"tall_grass"])
-possible_ore = Array[ExtResource("5_a8n2h")]([ExtResource("6_p3hgb"), ExtResource("7_mypw0")])
+possible_ore = Array[ExtResource("5_a8n2h")]([ExtResource("6_1e2se"), ExtResource("7_y6uke")])

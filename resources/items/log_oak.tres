@@ -1,12 +1,17 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://d26i62gur1o23"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=4 format=3 uid="uid://d26i62gur1o23"]
 
+[ext_resource type="Resource" uid="uid://c8jpafhd3cmxl" path="res://resources/items/charcoal.tres" id="1_1xnot"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_dqy48"]
 [ext_resource type="Texture2D" path="res://assets/atlas/log.tres" id="2_jhvp6"]
 
 [resource]
 script = ExtResource("1_dqy48")
 break_time = 0.8
+spawn_chance = 0.1
+spawn_size = 1
 unique_name = &"log_oak"
 texture = ExtResource("2_jhvp6")
 max_stack = 64
-breaking_efficiency = 0.0
+forgable = false
+forge_time = 2.0
+output_item = ExtResource("1_1xnot")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://c8jpafhd3cmxl"]
+
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_mxpyi"]
+[ext_resource type="Texture2D" uid="uid://em5kbswgwfi8" path="res://assets/textures/items/charcoal.png" id="2_ev6q1"]
+
+[resource]
+script = ExtResource("1_mxpyi")
+unique_name = &"charcoal"
+texture = ExtResource("2_ev6q1")
+max_stack = 64
+forgable = false
+forge_time = 2.0
