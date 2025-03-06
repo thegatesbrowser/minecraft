@@ -134,8 +134,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 				var relative_height := height - oy
 				# Dirt and grass
 				if relative_height > block_size:
-					#buffer.fill_area(STONE,
-						#Vector3(x, 0, z), Vector3(x + 1, block_size, z + 1), _CHANNEL)
+					
+					buffer.fill_area(STONE,
+						Vector3(x, 0, z), Vector3(x + 1, block_size, z + 1), _CHANNEL)
 					
 					var ore = possible_ore.pick_random()
 					if rng.randf() < ore.spawn_chance:

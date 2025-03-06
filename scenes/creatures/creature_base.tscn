@@ -67,5 +67,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_akaej")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_oq0u8")
 
+[node name="hurt" type="AudioStreamPlayer3D" parent="."]
+
+[node name="death" type="AudioStreamPlayer3D" parent="."]
+
 [connection signal="body_entered" from="attack range" to="." method="_on_attack_range_body_entered"]
 [connection signal="timeout" from="Move" to="." method="_on_move_timeout"]

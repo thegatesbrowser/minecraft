@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://ql4u3t5lhtyt"]
+[gd_scene load_steps=29 format=4 uid="uid://ql4u3t5lhtyt"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -11,7 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://wwqa6ta7xtgq" path="res://scenes/other/breakparticle.tscn" id="8_8k80t"]
 [ext_resource type="Texture2D" uid="uid://dfc11sipwrhrk" path="res://assets/models/fp_Image_0.png" id="10_cegvp"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
+[ext_resource type="AudioStream" uid="uid://sn5gwkdparti" path="res://assets/sounds/other/Player_hurt1.ogg" id="11_1skow"]
 [ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="12_7rcqp"]
+[ext_resource type="AudioStream" uid="uid://bdoobkrlhbbdx" path="res://assets/sounds/other/Player_hurt2.ogg" id="12_lotnu"]
+[ext_resource type="AudioStream" uid="uid://bkep405p361he" path="res://assets/sounds/other/Player_hurt3.ogg" id="13_djou0"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -173,6 +176,12 @@ properties/3/replication_mode = 1
 properties/4/path = NodePath(".:health")
 properties/4/spawn = true
 properties/4/replication_mode = 2
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_c0y12"]
+streams_count = 3
+stream_0/stream = ExtResource("11_1skow")
+stream_1/stream = ExtResource("12_lotnu")
+stream_2/stream = ExtResource("13_djou0")
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI") groups=["Player"]]
 collision_layer = 134217731
@@ -438,6 +447,7 @@ shape = SubResource("10")
 replication_config = SubResource("SceneReplicationConfig_2gamh")
 
 [node name="hit" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_c0y12")
 
 [node name="Pos" type="Label" parent="."]
 offset_left = 14.0

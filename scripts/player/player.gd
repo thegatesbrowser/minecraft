@@ -369,6 +369,7 @@ func remove_item_in_hand():
 @rpc("any_peer","call_local")
 func hit(damage:int = 1):
 	health -= damage
+	$hit.play()
 	#health_updated.emit(health)
 	print("hit")
 
@@ -392,6 +393,7 @@ func hunger_update(_delta:float) -> void:
 		if hunger <= 0:
 			print("dying of hunger")
 			health -= 1
+			$hit.play()
 			health_updated.emit(health)
 			
 		if _move_direction:
@@ -408,7 +410,7 @@ func death():
 	health = max_health
 	hunger = base_hunger
 	respawn.rpc(spawn_position)
-	set_sync_properties()
+	global_position = spawn_position
 
 @rpc("any_peer", "call_remote", "reliable")
 func respawn(spawn_position: Vector3) -> void:
