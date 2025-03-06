@@ -1,11 +1,29 @@
-[gd_resource type="Resource" script_class="Creature" load_steps=5 format=3 uid="uid://cylxg4ja44lhh"]
+[gd_resource type="Resource" script_class="Creature" load_steps=13 format=3 uid="uid://cylxg4ja44lhh"]
 
 [ext_resource type="PackedScene" uid="uid://bm84k63fubxes" path="res://assets/models/glowtail.glb" id="1_oitx8"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_25jlh"]
+[ext_resource type="AudioStream" uid="uid://b2kddj78qu34s" path="res://assets/sounds/other/Fox_death1.ogg" id="2_yf1rt"]
+[ext_resource type="AudioStream" uid="uid://dbr3jim8fdk0q" path="res://assets/sounds/other/Fox_death2.ogg" id="3_jisxu"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ub3wt"]
+[ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="5_s4hjm"]
+[ext_resource type="AudioStream" uid="uid://bvw3dv5xk1sm2" path="res://assets/sounds/other/Fox_hurt2.ogg" id="6_oyhmh"]
+[ext_resource type="AudioStream" uid="uid://dxd8kf1git7iw" path="res://assets/sounds/other/Fox_hurt3.ogg" id="7_5qakb"]
+[ext_resource type="AudioStream" uid="uid://bj3cpbjncj2hs" path="res://assets/sounds/other/Fox_hurt4.ogg" id="8_xtcw0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3pi47"]
 size = Vector3(0.285156, 0.395752, 0.785471)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bdycu"]
+streams_count = 2
+stream_0/stream = ExtResource("2_yf1rt")
+stream_1/stream = ExtResource("3_jisxu")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_g8xuk"]
+streams_count = 4
+stream_0/stream = ExtResource("5_s4hjm")
+stream_1/stream = ExtResource("6_oyhmh")
+stream_2/stream = ExtResource("7_5qakb")
+stream_3/stream = ExtResource("8_xtcw0")
 
 [resource]
 script = ExtResource("3_ub3wt")
@@ -19,5 +37,7 @@ coll_shape = SubResource("BoxShape3D_3pi47")
 walk_ani_name = "walk"
 idle_ani_name = "idle"
 mesh_name = "Cube"
+hurt_sound = SubResource("AudioStreamRandomizer_g8xuk")
+death_sound = SubResource("AudioStreamRandomizer_bdycu")
 creature_name = "Glowtail"
 drop_items = Array[ExtResource("2_25jlh")]([])

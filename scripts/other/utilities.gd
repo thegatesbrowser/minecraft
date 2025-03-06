@@ -3,3 +3,6 @@ class_name Utilities
 
 @export var has_inventory:bool
 @export var inventory_scene:PackedScene
+
+
+@export var spawn_point:bool

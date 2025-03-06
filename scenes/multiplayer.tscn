@@ -213,9 +213,6 @@ script = ExtResource("37_5iseo")
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
 
-[node name="CloudsSystem" parent="Game" index="2"]
-ambientColorDefault = Color(0.602482, 0.602482, 0.602482, 3.1)
-
 [node name="Crafting" parent="Game/Player UI/Inventory holder/Inventory" index="0"]
 crafting_library = SubResource("Resource_u5f5y")
 

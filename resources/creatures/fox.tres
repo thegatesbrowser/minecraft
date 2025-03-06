@@ -1,12 +1,30 @@
-[gd_resource type="Resource" script_class="Creature" load_steps=6 format=3 uid="uid://dwphi1dev865q"]
+[gd_resource type="Resource" script_class="Creature" load_steps=14 format=3 uid="uid://dwphi1dev865q"]
 
 [ext_resource type="PackedScene" uid="uid://bknf4aa4fmqsg" path="res://assets/models/fox.glb" id="1_ohjhc"]
+[ext_resource type="AudioStream" uid="uid://b2kddj78qu34s" path="res://assets/sounds/other/Fox_death1.ogg" id="2_pi4oh"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_sffgm"]
 [ext_resource type="Resource" uid="uid://jja3ve6j76yl" path="res://resources/items/Meat.tres" id="3_g1f5t"]
+[ext_resource type="AudioStream" uid="uid://dbr3jim8fdk0q" path="res://assets/sounds/other/Fox_death2.ogg" id="3_j5gx8"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ldbmh"]
+[ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="6_h4vq4"]
+[ext_resource type="AudioStream" uid="uid://bvw3dv5xk1sm2" path="res://assets/sounds/other/Fox_hurt2.ogg" id="7_v6jf2"]
+[ext_resource type="AudioStream" uid="uid://dxd8kf1git7iw" path="res://assets/sounds/other/Fox_hurt3.ogg" id="8_u06be"]
+[ext_resource type="AudioStream" uid="uid://bj3cpbjncj2hs" path="res://assets/sounds/other/Fox_hurt4.ogg" id="9_1nupn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e0a6d"]
 size = Vector3(0.285156, 0.395752, 0.614319)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1uf8p"]
+streams_count = 2
+stream_0/stream = ExtResource("2_pi4oh")
+stream_1/stream = ExtResource("3_j5gx8")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fmu2i"]
+streams_count = 4
+stream_0/stream = ExtResource("6_h4vq4")
+stream_1/stream = ExtResource("7_v6jf2")
+stream_2/stream = ExtResource("8_u06be")
+stream_3/stream = ExtResource("9_1nupn")
 
 [resource]
 script = ExtResource("3_ldbmh")
@@ -20,5 +38,7 @@ coll_shape = SubResource("BoxShape3D_e0a6d")
 walk_ani_name = "ArmatureAction"
 idle_ani_name = "idle"
 mesh_name = "Object_7"
+hurt_sound = SubResource("AudioStreamRandomizer_fmu2i")
+death_sound = SubResource("AudioStreamRandomizer_1uf8p")
 creature_name = "Fox"
 drop_items = Array[ExtResource("2_sffgm")]([ExtResource("3_g1f5t")])

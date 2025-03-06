@@ -24,6 +24,10 @@ var last_sync_time_ms: int = 0
 @onready var eyes: RayCast3D = $eyes
 @onready var attack_coll: CollisionShape3D = $"attack range/CollisionShape3D"
 
+@onready var hurt_sfx: AudioStreamPlayer3D = $hurt
+@onready var death_sfx: AudioStreamPlayer3D = $death
+
+
 @onready var guide: Node3D = $guide
 
 @onready var player_view_distance: float = 128 * sqrt(2)
@@ -50,9 +54,8 @@ func _ready() -> void:
 	
 	health = creature_resource.max_health
 	
-	#if not is_multiplayer_authority():
-		#_synchronizer.delta_synchronized.connect(on_synchronized)
-		#_synchronizer.synchronized.connect(on_synchronized)
+	hurt_sfx.stream = creature_resource.hurt_sound
+	death_sfx.stream = creature_resource.death_sound
 	#
 	var body = creature_resource.body_scene.instantiate()
 	rotation_root.add_child(body)
@@ -198,9 +201,11 @@ func _on_move_timeout() -> void:
 
 func hit(damage:int = 1):
 	#print("hit")
+	hurt_sfx.play()
 	health -= damage
 	if health <= 0:
 		print("creature killed")
+		death_sfx.play()
 		if creature_resource.drop_items.size() != 0:
 			var drop_item = creature_resource.drop_items.pick_random()
 			Globals.spawn_item_inventory.emit(drop_item)

@@ -1,13 +1,8 @@
-[gd_resource type="Resource" script_class="ItemWeapon" load_steps=5 format=3 uid="uid://c2c8qekfermsb"]
+[gd_resource type="Resource" script_class="ItemWeapon" load_steps=4 format=3 uid="uid://c2c8qekfermsb"]
 
 [ext_resource type="Script" path="res://scripts/items/item_weapon.gd" id="1_momyn"]
+[ext_resource type="Texture2D" uid="uid://d2wb2eygnb33v" path="res://assets/textures/items/gun.png" id="2_k1ail"]
 [ext_resource type="PackedScene" uid="uid://dkh5iruli7ash" path="res://assets/models/gun.glb" id="2_pypw4"]
-
-[sub_resource type="Gradient" id="Gradient_a0q1i"]
-colors = PackedColorArray(0, 0, 0, 1, 1, 0, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_43pwu"]
-gradient = SubResource("Gradient_a0q1i")
 
 [resource]
 script = ExtResource("1_momyn")
@@ -18,5 +13,5 @@ ammo_name = &"ammo"
 shoots = true
 fire_rate = 0.1
 unique_name = &"pistol"
-texture = SubResource("GradientTexture2D_43pwu")
+texture = ExtResource("2_k1ail")
 max_stack = 1

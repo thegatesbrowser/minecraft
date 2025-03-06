@@ -17,4 +17,4 @@
 
 [resource]
 script = ExtResource("2_ftexq")
-craftable_array = Array[ExtResource("1_dyrdd")]([ExtResource("2_d2xrh"), ExtResource("3_nw8am"), ExtResource("4_5j57i"), ExtResource("5_7wva0"), ExtResource("6_eas5x"), ExtResource("7_u0ha7"), ExtResource("8_pily6"), ExtResource("9_x73ge"), ExtResource("10_omi4l"), ExtResource("11_wqru0"), ExtResource("12_w3myd"), ExtResource("13_74g6r")])
+craftable_array = Array[ExtResource("1_dyrdd")]([ExtResource("5_7wva0"), ExtResource("6_eas5x"), ExtResource("4_5j57i"), ExtResource("7_u0ha7"), ExtResource("3_nw8am"), ExtResource("8_pily6"), ExtResource("10_omi4l"), ExtResource("11_wqru0"), ExtResource("12_w3myd"), ExtResource("13_74g6r"), ExtResource("9_x73ge"), ExtResource("2_d2xrh")])

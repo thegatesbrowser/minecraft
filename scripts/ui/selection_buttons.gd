@@ -3,6 +3,8 @@ class_name HotBar
 
 var selected_item: ItemBase 
 
+@onready var eat_sfx: AudioStreamPlayer = $eat
+
 @onready var slots: HBoxContainer = $MarginContainer/VBoxContainer/Slots
 
 #
@@ -56,6 +58,7 @@ func _input(_event):
 				
 				if Input.is_action_pressed("Mine"):
 					remove()
+					eat_sfx.play()
 					Globals.hunger_points_gained.emit(selected_item.food_points)
 					print("ate ", selected_item.unique_name, " gained ", selected_item.food_points," food points")
 	
