@@ -64,8 +64,8 @@ func _ready():
 
 
 func slot_clicked(slot):
-	#var soundmanager = get_node("/root/Main").find_child("SoundManager")
-	#soundmanager.play_UI_sound()
+	var soundmanager = get_node("/root/Main").find_child("SoundManager")
+	soundmanager.play_UI_sound()
 			
 	if Globals.last_clicked_slot == null:
 		Globals.last_clicked_slot = slot

@@ -1,13 +1,12 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://dvlxseu7sf1d4"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://m4j2psp0aswb"]
 
-[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_53u60"]
-[ext_resource type="Texture2D" uid="uid://cy2c50wb274af" path="res://assets/textures/blocks/iron.tres" id="2_uumi1"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_nc0j2"]
+[ext_resource type="Texture2D" uid="uid://dt263alrd18sy" path="res://assets/textures/items/iron_ingot.png" id="2_ck0h4"]
 
 [resource]
-script = ExtResource("1_53u60")
-break_time = 0.4
-spawn_chance = 0.1
-spawn_size = 1
+script = ExtResource("1_nc0j2")
 unique_name = &"iron"
-texture = ExtResource("2_uumi1")
+texture = ExtResource("2_ck0h4")
 max_stack = 64
+forgable = false
+forge_time = 2.0

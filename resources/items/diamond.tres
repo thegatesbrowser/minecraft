@@ -1,13 +1,12 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://c4g4nofmjg2jg"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://bedai8b83g1cw"]
 
-[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_rrmcs"]
-[ext_resource type="Texture2D" uid="uid://bsl0nqpw5vopk" path="res://assets/textures/blocks/diamond.tres" id="2_k6djr"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_2e5ep"]
+[ext_resource type="Texture2D" uid="uid://k45100npl032" path="res://assets/textures/items/diamond.png" id="2_mvjvq"]
 
 [resource]
-script = ExtResource("1_rrmcs")
-break_time = 0.4
-spawn_chance = 0.01
-spawn_size = 1
+script = ExtResource("1_2e5ep")
 unique_name = &"diamond"
-texture = ExtResource("2_k6djr")
+texture = ExtResource("2_mvjvq")
 max_stack = 64
+forgable = false
+forge_time = 2.0
