@@ -6,12 +6,18 @@
 
 [sub_resource type="Resource" id="Resource_v7ur5"]
 script = ExtResource("3_7rw1i")
-has_inventory = true
+has_ui = true
+ui_scene_path = "res://scenes/items/inventory.tscn"
+spawn_point = false
 
 [resource]
 script = ExtResource("1_25f0t")
 break_time = 0.4
+spawn_chance = 0.1
+spawn_size = 1
 unique_name = &"chest"
 texture = ExtResource("2_r07l0")
 max_stack = 64
 utility = SubResource("Resource_v7ur5")
+forgable = false
+forge_time = 2.0

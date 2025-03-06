@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CraftableLibrary" load_steps=15 format=3 uid="uid://dgswqwr4e80oy"]
+[gd_resource type="Resource" script_class="CraftableLibrary" load_steps=16 format=3 uid="uid://dgswqwr4e80oy"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_dyrdd"]
 [ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://resources/items/craftables/ammo.tres" id="2_d2xrh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://ddnn87htgsb3u" path="res://resources/items/craftables/axe_wood.tres" id="3_nw8am"]
 [ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="4_5j57i"]
 [ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://resources/items/craftables/wood_2.tres" id="5_7wva0"]
+[ext_resource type="Resource" uid="uid://dwyevxsjqljjl" path="res://resources/items/craftables/forge.tres" id="5_y2rag"]
 [ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://resources/items/craftables/wood_1.tres" id="6_eas5x"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="7_u0ha7"]
 [ext_resource type="Resource" uid="uid://cdgc65lkfgvyq" path="res://resources/items/craftables/shovel_wood.tres" id="8_pily6"]
@@ -17,4 +18,4 @@
 
 [resource]
 script = ExtResource("2_ftexq")
-craftable_array = Array[ExtResource("1_dyrdd")]([ExtResource("5_7wva0"), ExtResource("6_eas5x"), ExtResource("4_5j57i"), ExtResource("7_u0ha7"), ExtResource("3_nw8am"), ExtResource("8_pily6"), ExtResource("10_omi4l"), ExtResource("11_wqru0"), ExtResource("12_w3myd"), ExtResource("13_74g6r"), ExtResource("9_x73ge"), ExtResource("2_d2xrh")])
+craftable_array = Array[ExtResource("1_dyrdd")]([ExtResource("5_7wva0"), ExtResource("6_eas5x"), ExtResource("4_5j57i"), ExtResource("5_y2rag"), ExtResource("7_u0ha7"), ExtResource("3_nw8am"), ExtResource("8_pily6"), ExtResource("10_omi4l"), ExtResource("11_wqru0"), ExtResource("12_w3myd"), ExtResource("13_74g6r"), ExtResource("9_x73ge"), ExtResource("2_d2xrh")])

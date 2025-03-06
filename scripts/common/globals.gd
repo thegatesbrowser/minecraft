@@ -53,12 +53,9 @@ var last_clicked_slot:Node
 
 var known_storage = []
 signal hunger_points_gained(amount)
-#signal add_item_to_hand(item)
-#signal remove_item_in_hand
-#signal craftable_hovered(craftable,node)
-#signal craftable_unhovered
 
-# Weapons
+signal spawn_ui(id:Vector3,ui_path:String)
+
 signal spawn_bullet
 signal add_object(id:int,position,instance_path:String)
 
@@ -67,8 +64,8 @@ func _ready():
 
 
 func slot_clicked(slot):
-	var soundmanager = get_node("/root/Main").find_child("SoundManager")
-	soundmanager.play_UI_sound()
+	#var soundmanager = get_node("/root/Main").find_child("SoundManager")
+	#soundmanager.play_UI_sound()
 			
 	if Globals.last_clicked_slot == null:
 		Globals.last_clicked_slot = slot

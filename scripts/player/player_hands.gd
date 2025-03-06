@@ -36,7 +36,7 @@ func _process(_delta: float) -> void:
 			var item = items_library.get_item(type)
 			
 			if item.utility != null:
-				if item.utility.has_inventory:
+				if item.utility.has_ui:
 					Globals.open_inventory.emit(terrain_interaction.last_hit.position)
 				if item.utility.spawn_point:
 					

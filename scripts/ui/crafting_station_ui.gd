@@ -8,6 +8,7 @@ extends ScrollContainer
 
 
 func _ready() -> void:
+	crafting_library.init_craftable()
 	for craftable in crafting_library.craftable_array:
 		var button = craftable_button_scene.instantiate()
 		button.craftable = craftable

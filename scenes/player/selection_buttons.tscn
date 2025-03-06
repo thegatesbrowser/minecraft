@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://5jw15x2l8lvw"]
+[gd_scene load_steps=16 format=3 uid="uid://5jw15x2l8lvw"]
 
 [ext_resource type="Script" path="res://scripts/ui/selection_buttons.gd" id="1_favd0"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_og1jy"]
@@ -8,9 +8,11 @@
 [ext_resource type="Resource" uid="uid://c2c8qekfermsb" path="res://resources/items/pistol.tres" id="6_neie7"]
 [ext_resource type="Resource" uid="uid://dlboikqlvjswi" path="res://resources/items/glowstone.tres" id="6_t7t6f"]
 [ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="7_h67uv"]
-[ext_resource type="Resource" uid="uid://2cgpe8xf3dkh" path="res://resources/items/bed.tres" id="7_xiie4"]
+[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="7_t4abp"]
+[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/forge.tres" id="9_3a1mj"]
 [ext_resource type="AudioStream" uid="uid://brsc44tm3my31" path="res://assets/sounds/other/Eat1.ogg" id="10_4f7le"]
 [ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="11_cqmpa"]
+[ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="11_kxy24"]
 [ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="12_w0oy7"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a1iif"]
@@ -77,6 +79,8 @@ type = "hotbar"
 [node name="Slot6" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
+amount = 20
+Item_resource = ExtResource("7_t4abp")
 
 [node name="Slot7" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
@@ -93,11 +97,13 @@ Item_resource = ExtResource("7_h67uv")
 layout_mode = 2
 type = "hotbar"
 amount = 32
-Item_resource = ExtResource("7_xiie4")
+Item_resource = ExtResource("9_3a1mj")
 
 [node name="Slot10" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
+amount = 40
+Item_resource = ExtResource("11_kxy24")
 
 [node name="eat" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_a1iif")

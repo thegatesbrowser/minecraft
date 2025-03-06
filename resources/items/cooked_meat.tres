@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemFood" load_steps=3 format=3 uid="uid://cmt66qn8cepqr"]
+
+[ext_resource type="Script" path="res://scripts/items/item_food.gd" id="1_q81vl"]
+[ext_resource type="Texture2D" uid="uid://buns8vivyttn2" path="res://assets/textures/items/beef_cooked.png" id="2_ystle"]
+
+[resource]
+script = ExtResource("1_q81vl")
+food_points = 4
+eat_time = 0.4
+unique_name = &"cooked_meat"
+texture = ExtResource("2_ystle")
+max_stack = 64
+forgable = false
+forge_time = 2.0

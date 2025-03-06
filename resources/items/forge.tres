@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=5 format=3 uid="uid://b1r2gkiv3wqnm"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_go7hb"]
+[ext_resource type="Texture2D" uid="uid://rbrqt8yjuvpt" path="res://assets/textures/items/furnace_front_off.png" id="2_d0bja"]
+[ext_resource type="Script" path="res://scripts/other/utilities.gd" id="2_gcq7b"]
+
+[sub_resource type="Resource" id="Resource_xr3qy"]
+script = ExtResource("2_gcq7b")
+has_ui = true
+ui_scene_path = "res://scenes/ui/furnace_ui.tscn"
+spawn_point = false
+
+[resource]
+script = ExtResource("1_go7hb")
+break_time = 0.4
+spawn_chance = 0.1
+spawn_size = 1
+unique_name = &"forge"
+texture = ExtResource("2_d0bja")
+max_stack = 64
+utility = SubResource("Resource_xr3qy")
+forgable = false
+forge_time = 2.0

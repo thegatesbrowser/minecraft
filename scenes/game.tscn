@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=42 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -14,13 +14,27 @@
 [ext_resource type="PackedScene" uid="uid://u77kmx5l843p" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
 [ext_resource type="PackedScene" uid="uid://dwwv5ywawdbba" path="res://scenes/ui/crafting_ui.tscn" id="12_151fq"]
 [ext_resource type="PackedScene" uid="uid://5jw15x2l8lvw" path="res://scenes/player/selection_buttons.tscn" id="12_qvgc7"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="13_362d0"]
 [ext_resource type="Script" path="res://scripts/ui/stats_ui_update.gd" id="14_ho63k"]
+[ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://resources/items/craftables/wood_2.tres" id="14_ym7d3"]
 [ext_resource type="Texture2D" uid="uid://8pjqg2q1q1ea" path="res://assets/gui/Healthbar.webp" id="15_7hqkq"]
+[ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://resources/items/craftables/wood_1.tres" id="15_qq8qm"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
 [ext_resource type="Texture2D" uid="uid://bhh6ygqgmcb04" path="res://assets/gui/Hunger_JE2_BE2.webp" id="16_fjtoi"]
+[ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="16_r02js"]
+[ext_resource type="Resource" uid="uid://dwyevxsjqljjl" path="res://resources/items/craftables/forge.tres" id="17_g8hrl"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
+[ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="18_xay1w"]
+[ext_resource type="Resource" uid="uid://ddnn87htgsb3u" path="res://resources/items/craftables/axe_wood.tres" id="19_f4tdi"]
+[ext_resource type="Resource" uid="uid://cdgc65lkfgvyq" path="res://resources/items/craftables/shovel_wood.tres" id="20_voboa"]
+[ext_resource type="Resource" uid="uid://c1c7ynjb33hsk" path="res://resources/items/craftables/pickaxe_wood.tres" id="21_fm6yx"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
-[ext_resource type="PackedScene" uid="uid://byjn5yc1m1okl" path="res://addons/SunshineVolumetricClouds/CloudsPrefab.tscn" id="26_gjks3"]
+[ext_resource type="Resource" uid="uid://d0aeff3omljv3" path="res://resources/items/craftables/pickaxe_stone.tres" id="22_d1d8b"]
+[ext_resource type="Resource" uid="uid://cqmhwea1gfd5r" path="res://resources/items/craftables/axe_stone.tres" id="23_temtx"]
+[ext_resource type="Resource" uid="uid://q0wwywxds52w" path="res://resources/items/craftables/shovel_stone.tres" id="24_nghp7"]
+[ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/pistol.tres" id="25_qkp2k"]
+[ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://resources/items/craftables/ammo.tres" id="26_suqtf"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable_library.gd" id="27_as284"]
 [ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="27_yvp68"]
 
 [sub_resource type="VoxelStreamSQLite" id="VoxelStreamSQLite_g3jlb"]
@@ -29,6 +43,10 @@ preferred_coordinate_format = "minecraft_db.sqlite3"
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
+
+[sub_resource type="Resource" id="Resource_x65xe"]
+script = ExtResource("27_as284")
+craftable_array = Array[ExtResource("13_362d0")]([ExtResource("14_ym7d3"), ExtResource("15_qq8qm"), ExtResource("16_r02js"), ExtResource("17_g8hrl"), ExtResource("18_xay1w"), ExtResource("19_f4tdi"), ExtResource("20_voboa"), ExtResource("21_fm6yx"), ExtResource("22_d1d8b"), ExtResource("23_temtx"), ExtResource("24_nghp7"), ExtResource("25_qkp2k"), ExtResource("26_suqtf")])
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
@@ -48,15 +66,6 @@ light_energy = 1.3
 shadow_enabled = true
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("3_jfwkf")]
-
-[node name="CloudsSystem" parent="." node_paths=PackedStringArray("sunLight", "worldEnvironment") instance=ExtResource("26_gjks3")]
-sunLight = NodePath("../DirectionalLight3D")
-worldEnvironment = NodePath("../WorldEnvironment")
-cloudsFloor = 100.0
-sunColorDefault = Color(1.3, 1.3, 1.3, 1.3)
-ambientColorDefault = Color(0.602482, 0.602482, 0.602482, 3.1)
-useFogDefault = false
-fogColorDefault = Color(0.815686, 0.843137, 0.866667, 1)
 
 [node name="InventoryManager" type="Node" parent="."]
 
@@ -139,6 +148,7 @@ grow_vertical = 2
 [node name="Crafting" parent="Player UI/Inventory holder/Inventory" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
 layout_mode = 2
 send_to_inventory = NodePath("../Inventory")
+crafting_library = SubResource("Resource_x65xe")
 
 [node name="Inventory" parent="Player UI/Inventory holder/Inventory" groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2

@@ -460,13 +460,17 @@ theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 25
 text = "hfgugug"
 
-[node name="loading_check" type="Node3D" parent="."]
+[node name="loading_check" type="Node3D" parent="." node_paths=PackedStringArray("exclude")]
 script = ExtResource("12_7rcqp")
+exclude = NodePath("..")
 
 [node name="ground" type="RayCast3D" parent="loading_check"]
 target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
 
-[node name="loading" type="Control" parent="loading_check"]
+[node name="CanvasLayer" type="CanvasLayer" parent="loading_check"]
+layer = 23
+
+[node name="loading" type="Control" parent="loading_check/CanvasLayer"]
 visible = false
 z_index = 25
 layout_mode = 3
@@ -477,7 +481,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("10_fsqbe")
 
-[node name="ColorRect" type="ColorRect" parent="loading_check/loading"]
+[node name="ColorRect" type="ColorRect" parent="loading_check/CanvasLayer/loading"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -486,7 +490,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="loading_check/loading"]
+[node name="Label" type="Label" parent="loading_check/CanvasLayer/loading"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

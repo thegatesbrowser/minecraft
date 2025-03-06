@@ -2,8 +2,7 @@ extends Node3D
 
 @export var exclude:Node
 @onready var ground: RayCast3D = $ground
-@onready var loading: Control = $loading
-
+@onready var loading: Control = $CanvasLayer/loading
 
 func _ready() -> void:
 	if is_multiplayer_authority():
