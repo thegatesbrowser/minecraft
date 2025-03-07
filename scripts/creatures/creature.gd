@@ -14,6 +14,7 @@ class_name Creature
 @export var mesh_name:String
 @export var hurt_sound:AudioStream
 @export var death_sound:AudioStream
+@export var idle_sound:AudioStream
 
 @export_category("Optional")
 @export var creature_name: String

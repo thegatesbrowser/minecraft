@@ -4,18 +4,8 @@ extends Node
 
 var server_ui_info:Dictionary = {}
 
-#var server_ui_info:Dictionary = {
-	#"pos": {
-		#"scene":scene_path,
-		#1: {
-			#"item_path",
-			#"amount"
-		#}
-		#
-	#}
-#}
 
-var opened_ui:Vector3
+var opened_ui:Vector3 ## tells the server which ui is opened
 
 func _ready() -> void:
 	Globals.open_inventory.connect(open_ui)
@@ -66,4 +56,5 @@ func give_clients(server_data):
 				
 @rpc("any_peer","call_local")
 func Opened_ui(position):
+	## gives the position/id to the server to use
 	opened_ui = position
