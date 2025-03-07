@@ -390,6 +390,12 @@ func hunger_update(_delta:float) -> void:
 		
 	if hunger_update_time <= 0:
 		
+		if hunger == base_hunger:
+			if health + 1 <= base_hunger:
+				health += 1
+			else:
+				health = max_health
+				
 		if hunger <= 0:
 			print("dying of hunger")
 			health -= 1

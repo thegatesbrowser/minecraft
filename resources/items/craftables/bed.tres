@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://bhvdh5jd8e1jh"]
+
+[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="1_6ol14"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_tke2w"]
+[ext_resource type="Texture2D" uid="uid://re2ygg8kfxdt" path="res://assets/textures/blocks/leaves_birch.png" id="2_dw1ax"]
+[ext_resource type="Resource" uid="uid://2cgpe8xf3dkh" path="res://resources/items/bed.tres" id="3_affro"]
+[ext_resource type="Texture2D" uid="uid://dnbfnu7j80amw" path="res://assets/textures/items/White_Bed_29.webp" id="5_3ed6i"]
+
+[resource]
+script = ExtResource("1_tke2w")
+Name = "Bed"
+texture = ExtResource("5_3ed6i")
+output_item = ExtResource("3_affro")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 3,
+"name": "wood",
+"texture": ExtResource("1_6ol14")
+},
+2: {
+"amount": 3,
+"name": "leaf",
+"texture": ExtResource("2_dw1ax")
+}
+}

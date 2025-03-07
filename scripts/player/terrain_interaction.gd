@@ -31,7 +31,7 @@ func _ready():
 func _physics_process(_delta):
 	if not is_multiplayer_authority() or not is_enabled:
 		return
-
+	
 	var origin = camera.get_global_transform().origin
 	var forward = -camera.get_global_transform().basis.z.normalized()
 	last_hit = voxel_tool.raycast(origin, forward, distance)
@@ -91,7 +91,7 @@ func _place_block_server(type: StringName, position: Vector3) -> void:
 			Globals.new_ui.emit(position,item.utility.ui_scene_path)
 			#Globals.spawn_ui.emit(position,item.utility.ui_scene_path)
 	
-		
+	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
 	voxel_tool.do_point(position)
@@ -112,6 +112,10 @@ func _break_block_server(position: Vector3) -> void:
 
 @rpc("reliable", "any_peer")
 func _block_broken_local(type: StringName) -> void:
+	var soundmanager = get_node("/root/Main").find_child("SoundManager")
+	if last_hit != null:
+		soundmanager.play_sound(type,last_hit.position)
+				
 	block_broken.emit(type)
 
 

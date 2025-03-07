@@ -86,13 +86,12 @@ func open(server_details:= {}):
 	show()
 	if sync:
 		if !server_details.is_empty():
-			print(server_details)
+			#print(server_details)
 			update_client.rpc(server_details)
 
-#region syncing the input slots
 func change(index: int, item_path: String, amount: int, parent:String):
 	if sync:
-		print(index,"item ", item_path, parent)
+		#print(index,"item ", item_path, parent)
 		Globals.sync_ui_change.emit(index,item_path,amount,parent)
 	
 
@@ -106,7 +105,3 @@ func update_client(info):
 				slot.Item_resource = load(info[i].item_path)
 				slot.amount = info[i].amount
 				slot.update_slot()
-	#endregion
-
-func remove():
-	pass

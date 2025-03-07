@@ -178,6 +178,7 @@ properties/4/spawn = true
 properties/4/replication_mode = 2
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_c0y12"]
+random_volume_offset_db = 2.45
 streams_count = 3
 stream_0/stream = ExtResource("11_1skow")
 stream_1/stream = ExtResource("12_lotnu")
@@ -335,7 +336,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 cull_mask = 1048543
 fov = 90.0
 near = 0.01
-far = 160.0
+far = 800.0
 
 [node name="RayCast3D" type="RayCast3D" parent="RotationRoot/Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.05)

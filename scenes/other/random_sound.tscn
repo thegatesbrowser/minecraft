@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://7bxiyo4hesal"]
+
+[ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="1_qvfua"]
+[ext_resource type="AudioStream" uid="uid://sx4737eqqk7h" path="res://assets/sounds/ambient/Soulsand_valley_wind3.ogg" id="2_2uevk"]
+[ext_resource type="Script" path="res://scripts/other/random_sound.gd" id="3_ulgsf"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_eqq05"]
+random_pitch = 1.51
+random_volume_offset_db = 2.45
+streams_count = 2
+stream_0/stream = ExtResource("1_qvfua")
+stream_1/stream = ExtResource("2_2uevk")
+
+[node name="Random Sound" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_eqq05")
+volume_db = -3.44371
+script = ExtResource("3_ulgsf")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -57,9 +57,8 @@ func _process(_delta: float) -> void:
 				await timer.timeout
 				
 				if Input.is_action_pressed("Mine"):
-					var soundmanager = get_node("/root/Main").find_child("SoundManager")
+					
 					if terrain_interaction.last_hit != null:
-						soundmanager.play_sound(item.unique_name,terrain_interaction.last_hit.position)
-						
+					
 						terrain_interaction.break_block()
 						Globals.spawn_item_inventory.emit(item)
