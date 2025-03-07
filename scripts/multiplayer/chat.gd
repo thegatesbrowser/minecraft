@@ -6,7 +6,6 @@ var server_messages = []
 @onready var message_edit: LineEdit = $MarginContainer/VBoxContainer/message_edit
 @onready var message_display: TextEdit = $"MarginContainer/VBoxContainer/message display"
 
-
 func open_messages():
 	check_server.rpc_id(1)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=48 format=3 uid="uid://mqnlrs6hn6g6"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -38,6 +38,8 @@
 [ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="35_06sqe"]
 [ext_resource type="Script" path="res://scripts/multiplayer/inventory_spawner.gd" id="36_j5lsn"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
+[ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
+[ext_resource type="VoxelStreamSQLite" uid="uid://8p3tmy5f1mh8" path="res://resources/save.tres" id="40_oxw0r"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6qgro"]
 streams_count = 4
@@ -168,6 +170,10 @@ volume_db = -11.555
 pitch_scale = 4.0
 bus = &"UI"
 
+[node name="UISyncer" type="Node" parent="." node_paths=PackedStringArray("inventory_holder")]
+script = ExtResource("38_ig7nw")
+inventory_holder = NodePath("../Game/Player UI/Inventory holder/Inventory")
+
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "spawn_points")]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
@@ -194,6 +200,9 @@ script = ExtResource("37_5iseo")
 [node name="Creatures" type="Node3D" parent="."]
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
+
+[node name="VoxelTerrain" parent="Game" index="5"]
+stream = ExtResource("40_oxw0r")
 
 [node name="stats_ui_update" parent="Game/Player UI" index="1" node_paths=PackedStringArray("player_spawner")]
 player_spawner = NodePath("../../../PlayerSpawner")

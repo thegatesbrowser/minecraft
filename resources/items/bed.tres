@@ -10,7 +10,8 @@ gradient = SubResource("Gradient_5v52j")
 
 [sub_resource type="Resource" id="Resource_8u72f"]
 script = ExtResource("2_k0s54")
-has_inventory = false
+has_ui = false
+ui_scene_path = ""
 spawn_point = true
 
 [resource]
@@ -22,3 +23,5 @@ unique_name = &"bed"
 texture = SubResource("GradientTexture2D_fx4it")
 max_stack = 64
 utility = SubResource("Resource_8u72f")
+forgable = false
+forge_time = 2.0

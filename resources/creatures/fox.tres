@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bknf4aa4fmqsg" path="res://assets/models/fox.glb" id="1_ohjhc"]
 [ext_resource type="AudioStream" uid="uid://b2kddj78qu34s" path="res://assets/sounds/other/Fox_death1.ogg" id="2_pi4oh"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_sffgm"]
-[ext_resource type="Resource" uid="uid://jja3ve6j76yl" path="res://resources/items/meat.tres" id="3_g1f5t"]
+[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="3_g1f5t"]
 [ext_resource type="AudioStream" uid="uid://dbr3jim8fdk0q" path="res://assets/sounds/other/Fox_death2.ogg" id="3_j5gx8"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ldbmh"]
 [ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="6_h4vq4"]

@@ -13,9 +13,9 @@ func _physics_process(delta: float) -> void:
 		visible = !visible
 		
 		for i in h_box_container.get_children():
-			if "Owner" in i:
-				if i.Owner != Vector3.ZERO:
-					i.hide()
+			if "sync" in i:
+				if i.sync:
+					i.queue_free()
 		
 		if visible:
 			GlobalAnimation._tween(self,"bounce_in",.2)

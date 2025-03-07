@@ -59,6 +59,10 @@ signal spawn_ui(id:Vector3,ui_path:String)
 signal spawn_bullet
 signal add_object(id:int,position,instance_path:String)
 
+
+signal new_ui(position:Vector3,instance_path:String)
+signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
+
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
 

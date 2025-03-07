@@ -88,8 +88,8 @@ func _place_block_server(type: StringName, position: Vector3) -> void:
 	
 	if item.utility != null:
 		if item.utility.has_ui:
-			Globals.spawn_ui.emit(position,item.utility.ui_scene_path)
-			Globals.known_storage.append(position)
+			Globals.new_ui.emit(position,item.utility.ui_scene_path)
+			#Globals.spawn_ui.emit(position,item.utility.ui_scene_path)
 	
 		
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
