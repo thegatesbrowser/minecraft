@@ -3,6 +3,7 @@ class_name Inventory
 
 var server_info: Dictionary
 
+
 @export var sync:bool = true ## FALSE for the player main inventory
 
 @export var slot_s: PackedScene
@@ -12,6 +13,7 @@ var server_info: Dictionary
 @export var inventroy_name: Label
 
 @export var Owner: Vector3
+
 
 var times:int = 0
 var items = []
@@ -175,39 +177,24 @@ func check_slots():
 func _on_close_pressed() -> void:
 	pass
 
-func open():
+func open(server_details:= {}):
 	show()
 	if sync:
-		server_check.rpc_id(1)
+		for i in items_collection.get_children():
+			i.Item_resource = null
+			i.update_slot()
+		if !server_details.is_empty():
+			update_client.rpc(server_details)
 
-func change(index: int, item_path: String, amount: int):
+func change(index: int, item_path: String, amount: int,parent:String):
 	if sync:
-		send_to_server.rpc_id(1,index,item_path,amount)
-	
-@rpc("any_peer","call_local")
-func send_to_server(slot_index: int, item_path: String, amount: int):
-	if multiplayer.is_server():
-		server_info[slot_index] = {
-			"item_path":item_path,
-			"amount":amount,
-		}
-		#print(server_info)
-		
-@rpc("any_peer","call_local")
-func server_check():
-	if not multiplayer.is_server(): return
-	update_client.rpc(server_info)
-	
+		Globals.sync_ui_change.emit(index,item_path,amount,parent)
+
 @rpc("any_peer","call_local")
 func update_client(info):
 	for i in info:
-		var slot = items_collection.get_child(i)
+		
+		var slot = find_child(info[i].parent).get_child(i)
 		slot.Item_resource = load(info[i].item_path)
 		slot.amount = info[i].amount
 		slot.update_slot()
-
-func _on_update_tick_timeout() -> void:
-	## updates the inventory to the server version
-	if visible:
-		if sync:
-			server_check.rpc()
