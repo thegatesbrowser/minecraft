@@ -89,8 +89,8 @@ func _place_block_server(type: StringName, position: Vector3) -> void:
 	if item.utility != null:
 		if item.utility.has_ui:
 			Globals.new_ui.emit(position,item.utility.ui_scene_path)
-			#Globals.spawn_ui.emit(position,item.utility.ui_scene_path)
-	
+		elif item.utility.portal:
+			Globals.create_portal.emit(position)
 	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)

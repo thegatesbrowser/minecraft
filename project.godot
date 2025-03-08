@@ -15,7 +15,10 @@ config/tags=PackedStringArray("thegates")
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.3")
 run/flush_stdout_on_print=true
-config/icon="res://logo.webp"
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+boot_splash/image="res://assets/splash.png"
+boot_splash/fullsize=false
+config/icon="res://assets/textures/items/logo.webp"
 
 [autoload]
 

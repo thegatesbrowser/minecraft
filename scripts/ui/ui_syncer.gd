@@ -5,6 +5,7 @@ extends Node
 var server_ui_info:Dictionary = {}
 
 
+
 var opened_ui:Vector3 ## tells the server which ui is opened
 
 func _ready() -> void:

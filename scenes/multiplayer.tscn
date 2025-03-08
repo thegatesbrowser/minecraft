@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=48 format=3 uid="uid://mqnlrs6hn6g6"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -35,10 +35,11 @@
 [ext_resource type="AudioStream" uid="uid://dkmhotcmyyo1" path="res://assets/sounds/block/item_frame_add_item2.ogg" id="30_1ny5t"]
 [ext_resource type="AudioStream" uid="uid://cftecgxiqhol6" path="res://assets/sounds/block/item_frame_add_item3.ogg" id="31_ot16s"]
 [ext_resource type="AudioStream" uid="uid://d4mieippat2vk" path="res://assets/sounds/block/item_frame_add_item4.ogg" id="32_ik8i6"]
+[ext_resource type="Script" path="res://scripts/other/portal_manager.gd" id="34_oj152"]
 [ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="35_06sqe"]
+[ext_resource type="PackedScene" uid="uid://8oym32y4vfye" path="res://scenes/ui/portal_url.tscn" id="35_fu1ca"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
 [ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
-[ext_resource type="VoxelStreamSQLite" uid="uid://8p3tmy5f1mh8" path="res://resources/save.tres" id="40_oxw0r"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6qgro"]
 streams_count = 4
@@ -143,7 +144,32 @@ stream = SubResource("AudioStreamRandomizer_hbxe3")
 max_distance = 52.51
 panning_strength = 3.0
 
+[node name="forge" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = SubResource("AudioStreamRandomizer_hbxe3")
+max_distance = 52.51
+panning_strength = 3.0
+
+[node name="glowstone" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = SubResource("AudioStreamRandomizer_hbxe3")
+max_distance = 52.51
+panning_strength = 3.0
+
+[node name="iron" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = SubResource("AudioStreamRandomizer_hbxe3")
+max_distance = 52.51
+panning_strength = 3.0
+
+[node name="diamond" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = SubResource("AudioStreamRandomizer_hbxe3")
+max_distance = 52.51
+panning_strength = 3.0
+
 [node name="wood_oak" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = SubResource("AudioStreamRandomizer_k1v6a")
+max_distance = 52.51
+panning_strength = 3.0
+
+[node name="chest" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_k1v6a")
 max_distance = 52.51
 panning_strength = 3.0
@@ -173,6 +199,13 @@ bus = &"UI"
 script = ExtResource("38_ig7nw")
 inventory_holder = NodePath("../Game/Player UI/Inventory holder/Inventory")
 
+[node name="PortalManager" type="Node" parent="." node_paths=PackedStringArray("UI")]
+script = ExtResource("34_oj152")
+UI = NodePath("portal_url")
+
+[node name="portal_url" parent="PortalManager" instance=ExtResource("35_fu1ca")]
+visible = false
+
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "spawn_points")]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
@@ -195,9 +228,6 @@ script = ExtResource("37_5iseo")
 [node name="Creatures" type="Node3D" parent="."]
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
-
-[node name="VoxelTerrain" parent="Game" index="4"]
-stream = ExtResource("40_oxw0r")
 
 [node name="stats_ui_update" parent="Game/Player UI" index="1" node_paths=PackedStringArray("player_spawner")]
 player_spawner = NodePath("../../../PlayerSpawner")

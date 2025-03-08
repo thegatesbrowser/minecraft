@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=49 format=3 uid="uid://cgpku20ap67qm"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=60 format=3 uid="uid://cgpku20ap67qm"]
 
 [ext_resource type="Texture2D" uid="uid://bj6lta8stj7xg" path="res://assets/textures_mesh.png" id="1_dufrr"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
@@ -7,6 +7,8 @@
 [ext_resource type="ArrayMesh" uid="uid://bj6dxjaih1d51" path="res://assets/models/grass.obj" id="4_vwypi"]
 [ext_resource type="Texture2D" uid="uid://cjnpnhygkgq2m" path="res://assets/models/bed_Image_0.png" id="6_c8n1j"]
 [ext_resource type="ArrayMesh" uid="uid://c0esj2hmhatg5" path="res://assets/models/bed.obj" id="7_0r18u"]
+[ext_resource type="Texture2D" uid="uid://d10fsk4wa54su" path="res://assets/textures/blocks/flower_rose.png" id="8_es8ej"]
+[ext_resource type="Texture2D" uid="uid://gamdwyj2ov1x" path="res://assets/textures/blocks/double_plant_fern_top.png" id="9_ixyq0"]
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_54jvr"]
 
@@ -307,6 +309,62 @@ unique_name = &"forge"
 base_model = SubResource("VoxelBlockyModelCube_wt3vs")
 resource_name = "forge"
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nueih"]
+resource_name = "Material.001"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("8_es8ej")
+metallic = 0.5
+texture_filter = 0
+
+[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_lt0yd"]
+mesh = ExtResource("4_vwypi")
+culls_neighbors = false
+material_override_0 = SubResource("StandardMaterial3D_nueih")
+material_override_1 = SubResource("StandardMaterial3D_nueih")
+collision_enabled_0 = false
+collision_enabled_1 = false
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_jqf1y"]
+unique_name = &"flower"
+base_model = SubResource("VoxelBlockyModelMesh_lt0yd")
+resource_name = "flower"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai6m3"]
+resource_name = "Material.001"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("9_ixyq0")
+metallic = 0.5
+texture_filter = 0
+
+[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_22ywj"]
+mesh = ExtResource("4_vwypi")
+material_override_0 = SubResource("StandardMaterial3D_ai6m3")
+material_override_1 = SubResource("StandardMaterial3D_ai6m3")
+collision_enabled_0 = false
+collision_enabled_1 = false
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_k01kp"]
+unique_name = &"fern"
+base_model = SubResource("VoxelBlockyModelMesh_22ywj")
+resource_name = "fern"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_usu2k"]
+albedo_color = Color(0.676, 0.19, 1, 1)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_jvmn8"]
+material_override_0 = SubResource("StandardMaterial3D_usu2k")
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_3bomk"]
+unique_name = &"portal"
+base_model = SubResource("VoxelBlockyModelCube_jvmn8")
+resource_name = "portal"
+
 [resource]
-types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp")])
-_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge")
+types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk")])
+_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern")

@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://8oym32y4vfye"]
+
+[ext_resource type="Script" path="res://scripts/ui/portal_url.gd" id="1_5l1xl"]
+[ext_resource type="Shader" path="res://scripts/shaders/portal.gdshader" id="2_md07p"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5uf3j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwvyy"]
+render_priority = 0
+shader = ExtResource("2_md07p")
+
+[node name="portal_url" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_5l1xl")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.5
+offset_top = -39.0
+offset_right = 51.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "portal_url
+"
+
+[node name="url" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "url"
+alignment = 1
+clear_button_enabled = true
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "close"
+
+[node name="Portal" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.329895, 0, -1.09208)
+mesh = SubResource("BoxMesh_5uf3j")
+surface_material_override/0 = SubResource("ShaderMaterial_xwvyy")
+
+[connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/url" to="." method="_on_url_text_submitted"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
