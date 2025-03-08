@@ -39,10 +39,13 @@ func _process(_delta: float) -> void:
 					if item.utility.has_ui:
 						Globals.open_inventory.emit(terrain_interaction.last_hit.position)
 					if item.utility.spawn_point:
-						
 						get_parent().spawn_position = terrain_interaction.last_hit.position + Vector3i(0,1,0)
 						print_debug("spawn point set ",get_parent().spawn_position)
-				
+					
+					if item.utility.portal:
+						Globals.enter_portal.emit(terrain_interaction.last_hit.position)
+						Globals.open_portal_url.emit(terrain_interaction.last_hit.position)
+						
 				if Globals.custom_block.is_empty():
 					timer.wait_time = item.break_time
 					

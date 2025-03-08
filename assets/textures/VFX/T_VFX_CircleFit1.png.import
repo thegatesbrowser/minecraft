@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d10fsk4wa54su"
-path="res://.godot/imported/flower_rose.png-3667b83fb8afd44807d7de13ee5ae04a.ctex"
+uid="uid://barql8koj30pk"
+path.s3tc="res://.godot/imported/T_VFX_CircleFit1.png-aa2b4e589b34e0aac6aed8ade9a98773.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://assets/textures/blocks/flower_rose.png"
-dest_files=["res://.godot/imported/flower_rose.png-3667b83fb8afd44807d7de13ee5ae04a.ctex"]
+source_file="res://assets/textures/VFX/T_VFX_CircleFit1.png"
+dest_files=["res://.godot/imported/T_VFX_CircleFit1.png-aa2b4e589b34e0aac6aed8ade9a98773.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

@@ -23,5 +23,5 @@ possible_tree_types = {
 "birch": ["log_birch", "leaf_oak"],
 "oak": ["log_oak", "leaf_oak"]
 }
-possible_plants = Array[StringName]([&"tall_grass"])
+possible_plants = Array[StringName]([&"tall_grass", &"flower", &"fern"])
 possible_ore = Array[ExtResource("5_a8n2h")]([ExtResource("6_1e2se"), ExtResource("7_y6uke")])

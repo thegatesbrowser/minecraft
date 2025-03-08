@@ -59,6 +59,10 @@ signal spawn_ui(id:Vector3,ui_path:String)
 signal spawn_bullet
 signal add_object(id:int,position,instance_path:String)
 
+signal open_portal_url(id:Vector3)
+signal create_portal(id:Vector3)
+signal enter_portal(id:Vector3)
+signal add_portal_url(id:Vector3,url:String)
 
 signal new_ui(position:Vector3,instance_path:String)
 signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
