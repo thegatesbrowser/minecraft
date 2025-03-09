@@ -206,13 +206,12 @@ UI = NodePath("portal_url")
 [node name="portal_url" parent="PortalManager" instance=ExtResource("35_fu1ca")]
 visible = false
 
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "spawn_points")]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater")]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
 script = ExtResource("6_l50oc")
 player_scene = ExtResource("7_n7355")
 stats_ui_updater = NodePath("../Game/Player UI/stats_ui_update")
-spawn_points = NodePath("../Game/SpawnPoints")
 
 [node name="CreatureSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/creatures/creature_base.tscn")
@@ -229,9 +228,4 @@ script = ExtResource("37_5iseo")
 
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
 
-[node name="stats_ui_update" parent="Game/Player UI" index="1" node_paths=PackedStringArray("player_spawner")]
-player_spawner = NodePath("../../../PlayerSpawner")
-
 [node name="Objects" type="Node3D" parent="."]
-
-[editable path="Game"]

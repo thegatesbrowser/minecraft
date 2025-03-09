@@ -1,11 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=29 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="PackedScene" uid="uid://bai247yhexqwe" path="res://scenes/sky.tscn" id="3_jfwkf"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
-[ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/Generator.tres" id="4_tpxqt"]
+[ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/generator.tres" id="4_tpxqt"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
@@ -24,6 +24,10 @@
 [ext_resource type="AudioStream" uid="uid://c625ntyc2nlhe" path="res://assets/sounds/ambient/Soulsand_valley_ambience.ogg" id="23_fu53x"]
 [ext_resource type="PackedScene" uid="uid://7bxiyo4hesal" path="res://scenes/other/random_sound.tscn" id="24_r824s"]
 [ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="27_yvp68"]
+
+[sub_resource type="VoxelStreamSQLite" id="VoxelStreamSQLite_3fff2"]
+database_path = "minecraft_db.sqlite3"
+preferred_coordinate_format = "minecraft_db.sqlite3"
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
@@ -52,6 +56,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 use_gpu_generation = true
+stream = SubResource("VoxelStreamSQLite_3fff2")
 generator = ExtResource("4_tpxqt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00867271, 0.0195246, -0.00582218)

@@ -7,11 +7,14 @@ signal player_despawned(id: int)
 @export var view_distance: int = 128
 @export var player_scene: PackedScene
 @export var stats_ui_updater:Control
-@export var spawn_points: SpawnPoints
+
+@onready var spawn_points: SpawnPoints = $"../Game/SpawnPoints"
 
 var players := {}
 
 func _ready() -> void:
+	assert(is_instance_valid(spawn_points), "Fix the path to spawn points")
+	
 	spawn_function = custom_spawn
 	multiplayer.peer_connected.connect(create_player)
 	multiplayer.peer_disconnected.connect(destroy_player)
