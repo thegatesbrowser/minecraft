@@ -206,7 +206,7 @@ UI = NodePath("portal_url")
 [node name="portal_url" parent="PortalManager" instance=ExtResource("35_fu1ca")]
 visible = false
 
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater")]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater") groups=["PlayerSpawner"]]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
 script = ExtResource("6_l50oc")
