@@ -4,22 +4,23 @@ extends Node
 
 var server_ui_info:Dictionary = {}
 
-
-
 var opened_ui:Vector3 ## tells the server which ui is opened
+
 
 func _ready() -> void:
 	Globals.open_inventory.connect(open_ui)
 	Globals.new_ui.connect(new_ui)
 	Globals.sync_ui_change.connect(ui_updated)
-	
+
+
 func new_ui(position,scene_path):
 	server_make_ui.rpc_id(1,position,scene_path)
-	
+
+
 func open_ui(position:Vector3):
 	check_server.rpc_id(1,position)
 	Opened_ui.rpc_id(1,position)
-				
+
 
 func ui_updated(index: int, item_path: String, amount: int,parent:String):
 	send_to_server.rpc(index,item_path,amount,parent)

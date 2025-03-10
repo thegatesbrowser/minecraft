@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dxuox7ucaets8"]
 
-[ext_resource type="Script" path="res://scenes/player/debug_top_down_view.gd" id="1_lmn32"]
+[ext_resource type="Script" path="res://scripts/player/debug_top_down_view.gd" id="1_lmn32"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h3yv3"]
 resource_local_to_scene = true

@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_qtj8b"]
 [ext_resource type="AudioStream" uid="uid://dpjq0v4ih2wn6" path="res://assets/sounds/other/Fox_idle1.ogg" id="3_yg616"]
 [ext_resource type="AudioStream" uid="uid://0hib4sdr5vnx" path="res://assets/sounds/other/Fox_idle6.ogg" id="4_4tu1u"]
-[ext_resource type="Script" path="res://scenes/creatures/random_sound_3d.gd" id="5_ayjnj"]
+[ext_resource type="Script" path="res://scripts/creatures/random_sound_3d.gd" id="5_ayjnj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3pi47"]
 size = Vector3(0.285156, 0.395752, 0.785471)

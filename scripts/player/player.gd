@@ -4,12 +4,12 @@ class_name Player
 signal hunger_updated(hunger)
 signal health_updated(health)
 
-var spawn_position:Vector3
+var spawn_position: Vector3
 var your_id
 
 @export_group("MOVEMENT")
-@export_range(0.1,1.1,.1) var max_flying_margin = 0.2
-@export_range(-1.1,-0.1,.1) var min_flying_margin = -0.2
+@export_range(0.1, 1.1, 0.1) var max_flying_margin = 0.2
+@export_range(-1.1, -0.1, 0.1) var min_flying_margin = -0.2
 
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
@@ -17,12 +17,11 @@ var your_id
 
 @export var can_autojump: bool = true
 
-
-## Player model rotation speed
+# Player model rotation speed
 @export var rotation_speed := 12.0
 
 @export_subgroup("MULTIPLAYER")
-## Clamp sync delta for faster interpolation
+# Clamp sync delta for faster interpolation
 @export var sync_delta_max := 0.2
 @export var sync_delta := 0.0
 @export var start_interpolate := false
@@ -33,12 +32,12 @@ var your_id
 
 const SENSITIVITY = 0.004
 
-#bob variables
+# Bob variables
 const BOB_FREQ = 2.4
 const BOB_AMP = 0.08
 var t_bob = 0.0
 
-#fov variables
+# FOV variables
 const BASE_FOV = 90.0
 const FOV_CHANGE = 1.5
 
@@ -60,7 +59,7 @@ var is_flying: bool
 @onready var left_hand: BoneAttachment3D = $"RotationRoot/Head/Camera3D/fp/Model/Skeleton3D/Left Hand"
 @onready var right_hand: BoneAttachment3D = $"RotationRoot/minecraft_player/Model/Skeleton3D/Right Hand"
 
-## Weapons
+# Weapons
 @export var bullet_scene: PackedScene
 @export var weapon_base: PackedScene
 
@@ -71,18 +70,17 @@ var is_flying: bool
 @export var _direction: Vector3 = Vector3.ZERO
 
 @export_group("STATS")
-@export var base_hunger:float = 5.0
-var hunger:float = 0
+@export var base_hunger: float = 5.0
+var hunger: float = 0
 @export var hunger_update_time := 10.0
 @export var moving_hunger_times_debuff := 2.0
-@export var hunger_step:float = 0.1
+@export var hunger_step: float = 0.1
 
 @export var max_health: int = 3
 var health
 
-@onready var minecraft_player: Node3D = $RotationRoot/minecraft_player ## TP
-@onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp ## FP
-
+@onready var minecraft_player: Node3D = $RotationRoot/minecraft_player # TP
+@onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp # FP
 
 func _ready():
 	
