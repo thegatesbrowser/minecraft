@@ -67,6 +67,9 @@ signal add_portal_url(id:Vector3,url:String)
 signal new_ui(position:Vector3,instance_path:String)
 signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
 
+var view_range:int = 128
+signal view_range_changed
+
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
 
@@ -77,6 +80,7 @@ func slot_clicked(slot):
 			
 	if Globals.last_clicked_slot == null:
 		Globals.last_clicked_slot = slot
+		Globals.last_clicked_slot.focused = true
 
 	if slot == Globals.last_clicked_slot: return
 	else:
@@ -89,6 +93,7 @@ func slot_clicked(slot):
 			Globals.last_clicked_slot.Item_resource = null
 			slot.update_slot()
 			Globals.last_clicked_slot.update_slot()
+			Globals.last_clicked_slot.focused = false
 			Globals.last_clicked_slot = null
 		else:
 			## stack
@@ -98,6 +103,7 @@ func slot_clicked(slot):
 					slot.amount += Globals.last_clicked_slot.amount
 					Globals.last_clicked_slot.Item_resource = null
 					Globals.last_clicked_slot.update_slot()
+					Globals.last_clicked_slot.focused = false
 					Globals.last_clicked_slot = null
 					slot.update_slot()
 				
@@ -118,6 +124,7 @@ func slot_clicked(slot):
 						
 						Globals.last_clicked_slot.amount = hold_slot_amount
 						Globals.last_clicked_slot.update_slot()
+						Globals.last_clicked_slot.focused = false
 						Globals.last_clicked_slot = null
 						
 						slot.update_slot()

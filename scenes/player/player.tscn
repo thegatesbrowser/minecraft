@@ -475,6 +475,7 @@ replication_config = SubResource("SceneReplicationConfig_2gamh")
 stream = SubResource("AudioStreamRandomizer_c0y12")
 
 [node name="Pos" type="Label" parent="."]
+visible = false
 offset_left = 14.0
 offset_top = 13.0
 offset_right = 142.0
@@ -484,6 +485,10 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 25
 text = "hfgugug"
+
+[node name="Ping" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="loading_check" type="Node3D" parent="." node_paths=PackedStringArray("exclude")]
 script = ExtResource("12_7rcqp")
@@ -527,7 +532,12 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_entered"]
-[connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="." method="_on_Area_body_exited"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_exited"]
+[connection signal="timeout" from="Timer" to="Hands/TerrainInteraction" method="tick"]
 
 [editable path="RotationRoot/minecraft_player"]

@@ -21,10 +21,12 @@ var last_hit: VoxelRaycastResult
 
 
 func _ready():
+	
 	if is_multiplayer_authority() or Connection.is_server():
 		terrain = TerrainHelper.get_terrain_tool()
 		voxel_tool = terrain.get_voxel_tool()
 	else:
+		#ping.rpc_id(1,multiplayer.get_unique_id(),true)
 		block.visible = false
 
 
@@ -70,12 +72,13 @@ func get_type() -> StringName:
 
 ## Places a block with the given type
 func place_block(type: StringName) -> void:
-		
+	call_server.rpc_id(1)
 	_place_block_server.rpc_id(1, type, last_hit.previous_position)
 
 
 ## Breaks the block and returns the type name
 func break_block() -> void:
+	call_server.rpc_id(1)
 	#var break_particle = break_particle_scene.instantiate()
 	#break_particle.global_position = last_hit.position
 	#get_tree().root.add_child(break_particle)
@@ -105,8 +108,11 @@ func _break_block_server(position: Vector3) -> void:
 	var voxel: int = voxel_tool.get_voxel(position)
 	
 	voxel_tool.do_point(position)
-
+	
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
+	
+	send_item.rpc_id(multiplayer.get_remote_sender_id(),array[0])
+
 	_block_broken_local.rpc_id(get_multiplayer_authority(), array[0])
 
 
@@ -118,10 +124,38 @@ func _block_broken_local(type: StringName) -> void:
 				
 	block_broken.emit(type)
 
-
 func _on_Area_body_entered(_body):
 	block_is_inside_character = true
 
-
 func _on_Area_body_exited(_body):
 	block_is_inside_character = false
+
+@rpc("any_peer","call_remote")
+func send_item(type:String):
+	var item = item_library.get_item(type)
+	Globals.spawn_item_inventory.emit(item)
+
+var last_time:float 
+
+@rpc("any_peer","reliable")
+func call_server():
+	send_client.rpc_id(multiplayer.get_remote_sender_id(),true)
+	
+	
+@rpc("any_peer","reliable")
+func send_client(getting:bool = false):
+	if multiplayer.is_server(): return
+	if getting:
+		var time = Time.get_unix_time_from_system() - last_time 
+		$"../../Ping".text = str("Ping ",roundf(time))
+		print(multiplayer.get_unique_id(), " time ", roundf(time))
+		
+	else:
+		call_server.rpc_id(1)
+		
+	last_time = Time.get_unix_time_from_system()
+
+
+func tick() -> void:
+	if $"../../Ping".visible:
+		send_client()

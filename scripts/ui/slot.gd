@@ -54,15 +54,17 @@ func _ready() -> void:
 
 
 func _on_pressed() -> void:
-	if type == "hotbar":
+	if Globals.paused:
+		if type == "hotbar":
+			if Item_resource != null:
+				Globals.hotbar_slot_clicked.emit(self)
+				
+		
 		if Item_resource != null:
-			Globals.hotbar_slot_clicked.emit(self)
-			
-	if Item_resource != null:
-		Globals.slot_clicked(self)
-	else:
-		if Globals.last_clicked_slot != null:
 			Globals.slot_clicked(self)
+		else:
+			if Globals.last_clicked_slot != null:
+				Globals.slot_clicked(self)
 
 func update_slot():
 	amount_label.text = str(amount)
