@@ -85,6 +85,7 @@ var health
 
 
 func _ready():
+	
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
@@ -105,6 +106,10 @@ func _ready():
 		.set_description("makes the player position the spawn position).")\
 		.register()
 	
+	Console.add_command("ping", self, 'show_ping')\
+		.set_description("shows the ping).")\
+		.register()
+		
 	Console.add_command("pos", self, 'show_pos')\
 		.set_description("shows the position of the player).")\
 		.register()
@@ -324,6 +329,9 @@ func toggle_clipping():
 
 func show_pos():
 	$Pos.visible = !$Pos.visible
+	
+func show_ping():
+	$Ping.visible = !$Ping.visible
 	
 func _headbob(time) -> Vector3:
 	var pos = Vector3.ZERO

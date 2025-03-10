@@ -1,6 +1,6 @@
 extends Node
 
-@export var terrain_interaction: TerrainInteraction
+@export var terrain_interaction:Node
 @export var items_library: ItemsLibrary
 
 var timer: Timer
@@ -9,7 +9,6 @@ var timer: Timer
 func _ready():
 	items_library.init_items()
 	terrain_interaction.enable()
-
 	timer = Timer.new()
 	timer.one_shot = true
 	add_child(timer)
@@ -64,4 +63,4 @@ func _process(_delta: float) -> void:
 					if terrain_interaction.last_hit != null:
 					
 						terrain_interaction.break_block()
-						Globals.spawn_item_inventory.emit(item)
+						#Globals.spawn_item_inventory.emit(item)

@@ -7,7 +7,7 @@ uniform vec4 MainColor : source_color;
 uniform vec4 BackColor1 : source_color;
 uniform vec4 BackColor2 : source_color;
 uniform float Brightness;
-uniform 
+uniform
 
 
 void vertex() {

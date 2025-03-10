@@ -9,6 +9,7 @@ script = ExtResource("2_gcq7b")
 has_ui = true
 ui_scene_path = "res://scenes/ui/furnace_ui.tscn"
 spawn_point = false
+portal = false
 
 [resource]
 script = ExtResource("1_go7hb")

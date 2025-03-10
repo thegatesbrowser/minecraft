@@ -9,6 +9,7 @@ script = ExtResource("2_k0s54")
 has_ui = false
 ui_scene_path = ""
 spawn_point = true
+portal = false
 
 [resource]
 script = ExtResource("1_kvhy5")

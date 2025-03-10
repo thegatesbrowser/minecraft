@@ -1,13 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://8oym32y4vfye"]
+[gd_scene load_steps=2 format=3 uid="uid://8oym32y4vfye"]
 
 [ext_resource type="Script" path="res://scripts/ui/portal_url.gd" id="1_5l1xl"]
-[ext_resource type="Shader" path="res://scripts/shaders/portal.gdshader" id="2_md07p"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_5uf3j"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwvyy"]
-render_priority = 0
-shader = ExtResource("2_md07p")
 
 [node name="portal_url" type="Control"]
 layout_mode = 3
@@ -57,11 +50,6 @@ clear_button_enabled = true
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "close"
-
-[node name="Portal" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.329895, 0, -1.09208)
-mesh = SubResource("BoxMesh_5uf3j")
-surface_material_override/0 = SubResource("ShaderMaterial_xwvyy")
 
 [connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/url" to="." method="_on_url_text_submitted"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
