@@ -89,8 +89,10 @@ func _place_block_server(type: StringName, position: Vector3) -> void:
 	if item.utility != null:
 		if item.utility.has_ui:
 			Globals.new_ui.emit(position,item.utility.ui_scene_path)
+			
 		elif item.utility.portal:
 			Globals.create_portal.emit(position)
+			open_portal_ui.rpc_id(multiplayer.get_remote_sender_id(),position)
 	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
@@ -132,6 +134,10 @@ func send_item(type:String) -> void:
 	var item = item_library.get_item(type)
 	Globals.spawn_item_inventory.emit(item)
 
+@rpc("any_peer","call_local")
+func open_portal_ui(id: Vector3) -> void:
+	Globals.open_portal_url.emit(id)
+	pass
 
 @rpc("any_peer","reliable")
 func ping_server() -> void:

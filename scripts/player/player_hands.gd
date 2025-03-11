@@ -91,4 +91,4 @@ func interaction() -> void:
 		
 		if item.utility.portal:
 			Globals.enter_portal.emit(terrain_interaction.last_hit.position)
-			Globals.open_portal_url.emit(terrain_interaction.last_hit.position)
+			

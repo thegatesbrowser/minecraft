@@ -25,7 +25,7 @@ func send_to_server(id:Vector3,url := "https://thegates.io/worlds/world.gate") -
 		"url": url
 	}
 	
-	print(server_info[id])
+	#print(server_info[id])
 
 
 func add_portal_url(id:Vector3,url:String) -> void:
@@ -42,7 +42,7 @@ func server_check_portal(id:Vector3) -> void:
 @rpc("any_peer","call_local")
 func give_client(info:Dictionary) -> void:
 	
-	print("client ",multiplayer.get_unique_id()," ", info)
+	print("taken client ",multiplayer.get_unique_id()," ", info)
 	
 	if get_tree().has_method("send_command"):
 		get_tree().send_command("open_gate", [info.url])

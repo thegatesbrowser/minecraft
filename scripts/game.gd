@@ -3,12 +3,10 @@ class_name Game
 
 signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 
-
 @export var creature_s: PackedScene
 
 var player: Player
 var is_fullscreen = false
-
 
 func _process(_delta):
 	if Connection.is_server() or player == null: return
@@ -32,7 +30,6 @@ func _process(_delta):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
-
 
 func spawn_creature(pos:Vector3):
 	var creature = creature_s.instantiate()
