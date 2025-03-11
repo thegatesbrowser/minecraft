@@ -32,7 +32,7 @@ var your_id
 @export var ANI: AnimationPlayer
 @export var hit_sfx: AudioStreamPlayer3D
 @export var pos_label: Label
-@export var ping_label : Label
+@export var ping_label: Label
 @export var collision: CollisionShape3D
 
 const SENSITIVITY = 0.004

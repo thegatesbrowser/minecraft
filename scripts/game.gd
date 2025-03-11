@@ -6,6 +6,7 @@ signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 @export var creature_s: PackedScene
 
 var player: Player
+
 var is_fullscreen = false
 
 func _process(_delta):

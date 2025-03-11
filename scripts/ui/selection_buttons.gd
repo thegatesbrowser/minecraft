@@ -7,7 +7,6 @@ var selected_item: ItemBase
 
 @onready var slots: HBoxContainer = $MarginContainer/VBoxContainer/Slots
 
-
 var current_key = 1
 var buttons
 var keys
