@@ -15,15 +15,11 @@ var server_info_output: Dictionary
 
 @export var fueled:bool = false
 
-
-#@onready var time_bar: ProgressBar = $PanelContainer/MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot/time
-
 var slots:Array
-var Owner:Vector3
+var id:Vector3
 var last_cooking_amount:int
 
 func _ready() -> void:
-	
 	for output in output_container.get_children():
 		if output is Slot:
 			output.item_changed.connect(change)
@@ -42,7 +38,7 @@ func _process(delta: float) -> void:
 					add_child(timer)
 					timer.start()
 					
-					await timer.timeout
+					await timer.timeout # wait untill the cook time has fnished
 					
 					cooking_slot.amount -= 1
 					cooking_slot.update_slot()
@@ -50,14 +46,7 @@ func _process(delta: float) -> void:
 					cook(forge_item)
 					timer.queue_free()
 					
-					
-			
-
-func fuel(index: int, item_path: String, amount: int, parent:String) -> void:
-	#cooking_slot.update_slot()
-	pass
-
-func cook(Item:ItemBase):
+func cook(Item: ItemBase) -> void:
 	for i in output_container.get_children():
 		if i is Slot:
 			if i.Item_resource == null:
@@ -69,7 +58,7 @@ func cook(Item:ItemBase):
 				i.update_slot()
 				break
 
-func _fuel():
+func _fuel() -> void:
 	if fuel_slot.Item_resource != null:
 		if fuel_types.has(fuel_slot.Item_resource.unique_name):
 			fueled = true
@@ -82,21 +71,21 @@ func _fuel():
 		fueled = false
 
 
-func open(server_details:= {}):
+func open(server_details: Dictionary = {}) -> void:
 	show()
 	if sync:
 		if !server_details.is_empty():
 			#print(server_details)
 			update_client.rpc(server_details)
 
-func change(index: int, item_path: String, amount: int, parent:String):
+func change(index: int, item_path: String, amount: int, parent:String) -> void:
 	if sync:
 		#print(index,"item ", item_path, parent)
 		Globals.sync_ui_change.emit(index,item_path,amount,parent)
 	
 
 @rpc("any_peer","call_local")
-func update_client(info):
+func update_client(info) -> void:
 	for i in info:
 		var parent = find_child(info[i].parent)
 		if parent != null:

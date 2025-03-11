@@ -17,8 +17,8 @@ func kill(body: Node3D) -> void:
 		else:
 			body.hit()
 			destory()
-	#else:
-		#destory()
+	else:
+		destory()
 
 
 func destory() -> void:

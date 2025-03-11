@@ -14,6 +14,7 @@ var your_id
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
 @export var JUMP_VELOCITY = 7.0
+@export var CROUCH_SPEED = 3.0
 
 @export var can_autojump: bool = true
 
@@ -29,6 +30,10 @@ var your_id
 @export_group("NODES")
 @export var rotation_root: Node3D
 @export var ANI: AnimationPlayer
+@export var hit_sfx: AudioStreamPlayer3D
+@export var pos_label: Label
+@export var ping_label : Label
+@export var collision: CollisionShape3D
 
 const SENSITIVITY = 0.004
 
@@ -41,6 +46,7 @@ var t_bob = 0.0
 const BASE_FOV = 90.0
 const FOV_CHANGE = 1.5
 
+var crouching:bool = false
 var speed
 var gravity = 16.5
 var position_before_sync: Vector3 = Vector3.ZERO
@@ -129,6 +135,7 @@ func _ready():
 func _unhandled_input(event):
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
 	if Globals.paused: return
+	
 	if event is InputEventMouseMotion:
 		rotation_root.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
@@ -138,7 +145,7 @@ func _unhandled_input(event):
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 
-	$Pos.text = str("pos   ", global_position)
+	pos_label.text = str("pos   ", global_position)
 	
 	if health <= 0:
 		death()
@@ -173,6 +180,14 @@ func _physics_process(delta):
 		speed = SPRINT_SPEED
 	else:
 		speed = WALK_SPEED
+		
+	# Crouch
+	if Input.is_action_pressed("Crouch"):
+		crouching = true
+		speed = CROUCH_SPEED
+	else:
+		speed = WALK_SPEED
+		crouching = false
 	
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
@@ -316,20 +331,20 @@ func interpolate_client(delta: float) -> void:
 	move_and_slide()
 
 
-func toggle_flying():
+func toggle_flying() -> void:
 	is_flying = !is_flying
 
 
-func toggle_clipping():
-	$CollisionShape3D.disabled = !$CollisionShape3D.disabled
-	if $CollisionShape3D.disabled:
+func toggle_clipping() -> void:
+	collision.disabled = !collision.disabled
+	if collision.disabled:
 		is_flying = true
 
-func show_pos():
-	$Pos.visible = !$Pos.visible
+func show_pos() -> void:
+	pos_label.visible = !pos_label.visible
 	
-func show_ping():
-	$Ping.visible = !$Ping.visible
+func show_ping() -> void:
+	ping_label.visible = !ping_label.visible
 	
 func _headbob(time) -> Vector3:
 	var pos = Vector3.ZERO
@@ -348,7 +363,7 @@ func _exit_tree():
 	Console.remove_command("player_clipping")
 
 
-func add_item_to_hand(item: ItemBase):
+func add_item_to_hand(item: ItemBase) -> void:
 	if item != null:
 		
 		for i in left_hand.get_children():
@@ -368,24 +383,23 @@ func add_item_to_hand(item: ItemBase):
 			left_hand.add_child(mesh_instance)
 
 
-func remove_item_in_hand():
+func remove_item_in_hand() -> void:
 	for i in left_hand.get_children():
 		i.queue_free()
 
 @rpc("any_peer","call_local")
-func hit(damage:int = 1):
+func hit(damage:int = 1) -> void: 
 	health -= damage
-	$hit.play()
-	#health_updated.emit(health)
+	hit_sfx.play()
 	print("hit")
 
-func spawn_bullet():
+func spawn_bullet() -> void:
 	if is_multiplayer_authority():
 		sync_bullet.rpc(camera.global_transform)
 
 
 @rpc("any_peer","call_local")
-func sync_bullet(transform_):
+func sync_bullet(transform_) -> void:
 	Globals.add_object.emit(1,transform_,"res://scenes/items/weapons/bullet.tscn")
 	
 func hunger_update(_delta:float) -> void:
@@ -405,7 +419,7 @@ func hunger_update(_delta:float) -> void:
 		if hunger <= 0:
 			print("dying of hunger")
 			health -= 1
-			$hit.play()
+			hit_sfx.play()
 			health_updated.emit(health)
 			
 		if _move_direction:
@@ -418,7 +432,7 @@ func hunger_update(_delta:float) -> void:
 		print("hunger")
 		hunger_update_time = 10
 
-func death():
+func death() -> void:
 	health = max_health
 	hunger = base_hunger
 	respawn.rpc(spawn_position)
@@ -429,7 +443,7 @@ func respawn(spawn_position: Vector3) -> void:
 	global_position = spawn_position
 	velocity = Vector3.ZERO
 
-func hunger_points_gained(amount):
+func hunger_points_gained(amount) -> void:
 	if hunger + amount < base_hunger:
 		hunger += amount
 	else:

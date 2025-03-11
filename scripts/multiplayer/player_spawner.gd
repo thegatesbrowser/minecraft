@@ -55,7 +55,7 @@ func custom_spawn(data: Array) -> Node:
 	}
 	
 	player_spawned.emit(id, player)
-	stats_ui_updater.find_player()
+	stats_ui_updater.your_player = player
 	return player
 
 

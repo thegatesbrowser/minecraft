@@ -12,7 +12,9 @@ var is_fullscreen = false
 
 func _process(_delta):
 	if Connection.is_server() or player == null: return
+	
 	multiplayer.get_unique_id()
+	
 	if Input.is_action_just_pressed("Start"):
 		Globals.paused = !Globals.paused
 		if Globals.paused:
@@ -30,51 +32,6 @@ func _process(_delta):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
-
-
-func _on_Player_break_block(_pos: Vector3):
-	# var chunk_id = _player_pos_to_chunk_pos(pos)
-	
-	# if chunk_resource != null:
-	# 	if breaktime.is_stopped():
-	# 		if chunk_resource.break_time - Globals.breaking_efficiency == 0:
-	# 			breaktime.wait_time = 0
-	# 		else:
-	# 			breaktime.wait_time = chunk_resource.break_time - Globals.breaking_efficiency
-	# 		breaktime.start()
-			
-	# 		await breaktime.timeout
-			
-	# 		if Input.is_action_pressed("Mine"):
-	# 			change_block.emit(pos, chunk_id, 0)
-	# 		else:
-	# 			breaktime.stop()
-	pass
-
-
-func _on_Player_place_block(_pos: Vector3):
-	# Globals.remove_item_from_hotbar.emit()
-	# if Globals.custom_block != null:
-	# 	var object = Globals.custom_block.place_object.instantiate()
-	# 	object.resource = Globals.custom_block.utility
-		
-	# 	var X = snappedf(pos.x,0.5)
-	# 	var Z = snappedf(pos.z,0.5)
-		
-	# 	if step_decimals(X) == 0:
-	# 		X += 0.5
-	# 	if step_decimals(Z) == 0:
-	# 		Z += 0.5
-			
-	# 	var new_pos = Vector3(X,pos.y,Z)
-	# 	print("new_pos ", new_pos)
-	# 	object.position = new_pos
-	# 	add_child(object)
-		
-	# else:
-	# 	var chunk_id = _player_pos_to_chunk_pos(pos)
-	# 	change_block.emit(pos, chunk_id, Globals.current_block)
-	pass
 
 
 func spawn_creature(pos:Vector3):

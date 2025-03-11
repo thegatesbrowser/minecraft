@@ -5,14 +5,15 @@ class_name CreatureBase
 
 var health
 
+var position_before_sync: Vector3 = Vector3.ZERO
+var last_sync_time_ms: int = 0
+
 @export_group("Sync Properties")
 @export var _position: Vector3
 @export var _velocity: Vector3
 @export var _rotation: Vector3 = Vector3.ZERO
 @export var _direction: Vector3 = Vector3.ZERO
 
-var position_before_sync: Vector3 = Vector3.ZERO
-var last_sync_time_ms: int = 0
 @export var sync_delta_max := 0.2
 @export var sync_delta := 0.0
 @export var start_interpolate := false
@@ -27,12 +28,12 @@ var last_sync_time_ms: int = 0
 @onready var hurt_sfx: AudioStreamPlayer3D = $hurt
 @onready var death_sfx: AudioStreamPlayer3D = $death
 
-
 @onready var guide: Node3D = $guide
 
 @onready var player_view_distance: float = 128 * sqrt(2)
 
 @export var target_reached: bool = false
+
 var speed : float
 var vel : Vector3
 var state_machine
@@ -127,7 +128,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	_position = position
-	_rotation = $RotationRoot.rotation
+	_rotation = rotation_root.rotation
 
 
 func _process(_delta: float) -> void:

@@ -1,5 +1,6 @@
 extends Node
 
+#region variables
 # Debugging.
 enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var print_level := Logger.LogLevel.WARNING
@@ -16,7 +17,6 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var chunk_loading_threads := 7
 
 # Player Settings.
-
 var breaking_efficiency:float = 0.0
 ## these are copys for ui puepose
 var max_health:int = 3
@@ -31,6 +31,10 @@ var player_health:int = 3
 var current_block:StringName ## unique_name
 var custom_block:StringName ## unique_name
 var can_build:bool = false
+var view_range:int = 128
+#endregion
+
+#region signals
 
 # AI
 signal spawn_creature(pos,creature)
@@ -67,8 +71,11 @@ signal add_portal_url(id:Vector3,url:String)
 signal new_ui(position:Vector3,instance_path:String)
 signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
 
-var view_range:int = 128
+
 signal view_range_changed
+#endregion
+
+#region functions
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
@@ -131,3 +138,4 @@ func slot_clicked(slot):
 
 func Spawn_creature(pos,creature):
 	spawn_creature.emit(pos,creature)
+#endregion

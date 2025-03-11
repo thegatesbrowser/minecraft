@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="PackedScene" uid="uid://bai247yhexqwe" path="res://scenes/sky.tscn" id="3_jfwkf"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
-[ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/generator.tres" id="4_tpxqt"]
+[ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/Generator.tres" id="4_tpxqt"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
@@ -198,7 +198,7 @@ tint_under = Color(0, 0, 0, 1)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Pause Menu" type="Control" parent="UI"]
+[node name="Pause Menu" type="Control" parent="UI" node_paths=PackedStringArray("settings")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -207,6 +207,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("15_uiy3n")
+settings = NodePath("Settings")
 
 [node name="Pause Menu" type="PanelContainer" parent="UI/Pause Menu"]
 layout_mode = 1

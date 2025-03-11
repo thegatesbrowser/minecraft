@@ -10,10 +10,7 @@ func _ready() -> void:
 	
 func spawn_inventroy(id:int,position,instance_path:String) -> void:
 	if not multiplayer.is_server(): return
-	#print("spawn")
 	spawn([id, position, instance_path])
-
-
 
 func custom_spawn(data: Array) -> Node:
 	var id: int = data[0]
@@ -23,11 +20,7 @@ func custom_spawn(data: Array) -> Node:
 	
 	var object = load(instance_scene_path).instantiate()
 	
-	#if type_pos == TYPE_VECTOR3:
-		#object.position = spawn_position
-	#elif type_pos == TYPE_TRANSFORM3D:
 	object.global_transform = spawn_position
-	#print("object ",spawn_position)
 	object.set_multiplayer_authority(id,true)
 	
 	spawned_object.emit(id, object)

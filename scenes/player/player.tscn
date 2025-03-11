@@ -207,11 +207,15 @@ shader_parameter/icon_rotation_speed = 1.0
 shader_parameter/show_icon = false
 shader_parameter/icon_texture = ExtResource("17_0pggf")
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision") groups=["Player"]]
 collision_layer = 134217731
 script = ExtResource("1")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
+hit_sfx = NodePath("hit")
+pos_label = NodePath("Pos")
+ping_label = NodePath("Ping")
+collision = NodePath("CollisionShape3D")
 bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
 
@@ -220,7 +224,7 @@ script = ExtResource("4_064gd")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
 
-[node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block")]
+[node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block", "ping_label")]
 script = ExtResource("2_5q13p")
 distance = 5.0
 camera = NodePath("../../RotationRoot/Head/Camera3D")
@@ -228,6 +232,7 @@ block = NodePath("BlockOutline")
 voxel_blocky_type_library = ExtResource("5_5801w")
 item_library = ExtResource("5_qnsii")
 break_particle_scene = ExtResource("8_8k80t")
+ping_label = NodePath("../../Ping")
 
 [node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
