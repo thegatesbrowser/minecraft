@@ -9,7 +9,7 @@ func _ready() -> void:
 	Globals.create_portal.connect(add_new_portal)
 	Globals.add_portal_url.connect(add_portal_url)
 	Globals.enter_portal.connect(check_portal)
-
+	Globals.remove_portal_data.connect(remove_portal_data)
 
 func add_new_portal(id:Vector3) -> void:
 	send_to_server.rpc_id(1,id)
@@ -46,3 +46,8 @@ func give_client(info:Dictionary) -> void:
 	
 	if get_tree().has_method("send_command"):
 		get_tree().send_command("open_gate", [info.url])
+
+@rpc("any_peer","call_local")
+func remove_portal_data(id: Vector3) -> void:
+	if server_info.has(id):
+		server_info.erase(id)

@@ -36,13 +36,33 @@ var view_range:int = 128
 
 #region signals
 
-# AI
 signal spawn_creature(pos,creature)
 
-# Inventory
-signal open_inventory(Owner)
-signal add_subinventory(Owner)
+signal hunger_points_gained(amount)
 
+signal spawn_bullet
+
+signal add_object(id:int,position,instance_path:String)
+
+signal removed_spawnpoint(id:Vector3)
+
+#region portals
+signal open_portal_url(id:Vector3)
+signal create_portal(id:Vector3)
+signal enter_portal(id:Vector3)
+signal add_portal_url(id:Vector3,url:String)
+signal remove_portal_data(id:Vector3)
+#endregion
+
+#region ui
+signal new_ui(position:Vector3,instance_path:String)
+signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
+signal remove_ui(position:Vector3)
+var last_clicked_slot:Node
+
+#region inventory
+signal open_inventory(id)
+signal add_subinventory(id)
 signal remove_item_from_hotbar
 signal spawn_item_inventory(item)
 signal check_amount_of_item(item)
@@ -50,29 +70,11 @@ signal remove_item(item,amount)
 signal hotbar_slot_clicked(slot)
 signal add_item_to_hand(item)
 signal remove_item_in_hand
-#signal slot_clicked(slot)
 signal craftable_hovered(craftable,node)
 signal craftable_unhovered
-var last_clicked_slot:Node
+#endregion
+#endregion
 
-var known_storage = []
-signal hunger_points_gained(amount)
-
-signal spawn_ui(id:Vector3,ui_path:String)
-
-signal spawn_bullet
-signal add_object(id:int,position,instance_path:String)
-
-signal open_portal_url(id:Vector3)
-signal create_portal(id:Vector3)
-signal enter_portal(id:Vector3)
-signal add_portal_url(id:Vector3,url:String)
-
-signal new_ui(position:Vector3,instance_path:String)
-signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
-
-
-signal view_range_changed
 #endregion
 
 #region functions

@@ -89,7 +89,6 @@ var health
 @onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp # FP
 
 func _ready():
-	
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health

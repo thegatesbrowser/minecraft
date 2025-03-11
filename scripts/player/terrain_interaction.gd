@@ -110,16 +110,29 @@ func _break_block_server(position: Vector3) -> void:
 	
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
 	
+	var item = item_library.get_item(array[0])
+	
 	send_item.rpc_id(multiplayer.get_remote_sender_id(),array[0])
-
+	
+	if item.utility != null:
+		if item.utility.has_ui:
+			Globals.remove_ui.emit(position)
+			
+		elif item.utility.portal:
+			Globals.remove_portal_data.emit(position)
+			
+		elif item.utility.spawn_point:
+			Globals.removed_spawnpoint.emit(position)
+	
 	_block_broken_local.rpc_id(get_multiplayer_authority(), array[0])
 
 
 @rpc("reliable", "any_peer")
 func _block_broken_local(type: StringName) -> void:
 	var soundmanager = get_node("/root/Main").find_child("SoundManager")
+	
 	if last_hit != null:
-		soundmanager.play_sound(type,last_hit.position)
+		soundmanager.play_sound(type,last_hit.previous_position)
 				
 	block_broken.emit(type)
 
@@ -138,6 +151,7 @@ func send_item(type:String) -> void:
 func open_portal_ui(id: Vector3) -> void:
 	Globals.open_portal_url.emit(id)
 	pass
+
 
 @rpc("any_peer","reliable")
 func ping_server() -> void:

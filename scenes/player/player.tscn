@@ -422,6 +422,7 @@ bones/8/rotation = Quaternion(0.677153, -0.2002, 0.679714, -0.198424)
 bones/8/scale = Vector3(1, 1, 1)
 
 [node name="Object_7" type="MeshInstance3D" parent="RotationRoot/Head/Camera3D/fp/Model/Skeleton3D"]
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_irur0")
 skin = SubResource("Skin_ttuvd")
 
@@ -524,6 +525,7 @@ uppercase = true
 wait_time = 4.0
 autostart = true
 
+[connection signal="block_broken" from="Hands/TerrainInteraction" to="." method="_on_terrain_interaction_block_broken"]
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_exited"]
 [connection signal="timeout" from="Timer" to="Hands/TerrainInteraction" method="tick"]
