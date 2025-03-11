@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=60 format=3 uid="uid://cgpku20ap67qm"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=61 format=3 uid="uid://cgpku20ap67qm"]
 
 [ext_resource type="Texture2D" uid="uid://bj6lta8stj7xg" path="res://assets/textures_mesh.png" id="1_dufrr"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
@@ -9,6 +9,7 @@
 [ext_resource type="ArrayMesh" uid="uid://c0esj2hmhatg5" path="res://assets/models/bed.obj" id="7_0r18u"]
 [ext_resource type="Texture2D" uid="uid://d10fsk4wa54su" path="res://assets/textures/blocks/flower_rose.png" id="8_es8ej"]
 [ext_resource type="Texture2D" uid="uid://gamdwyj2ov1x" path="res://assets/textures/blocks/double_plant_fern_top.png" id="9_ixyq0"]
+[ext_resource type="Texture2D" uid="uid://bj0k37nqmn31y" path="res://assets/textures/blocks/lapis_block.png" id="10_yc1ft"]
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_54jvr"]
 
@@ -354,11 +355,17 @@ unique_name = &"fern"
 base_model = SubResource("VoxelBlockyModelMesh_22ywj")
 resource_name = "fern"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_usu2k"]
-albedo_color = Color(0.676, 0.19, 1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ms3ed"]
+albedo_texture = ExtResource("10_yc1ft")
+emission_enabled = true
+emission_energy_multiplier = 6.18
+emission_texture = ExtResource("10_yc1ft")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_jvmn8"]
-material_override_0 = SubResource("StandardMaterial3D_usu2k")
+material_override_0 = SubResource("StandardMaterial3D_ms3ed")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_3bomk"]
 unique_name = &"portal"

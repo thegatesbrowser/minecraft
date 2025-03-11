@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://ql4u3t5lhtyt"]
+[gd_scene load_steps=29 format=4 uid="uid://ql4u3t5lhtyt"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -15,8 +15,6 @@
 [ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="12_7rcqp"]
 [ext_resource type="AudioStream" uid="uid://bdoobkrlhbbdx" path="res://assets/sounds/other/Player_hurt2.ogg" id="12_lotnu"]
 [ext_resource type="AudioStream" uid="uid://bkep405p361he" path="res://assets/sounds/other/Player_hurt3.ogg" id="13_djou0"]
-[ext_resource type="Shader" path="res://scripts/shaders/loading.gdshader" id="16_x2uie"]
-[ext_resource type="Texture2D" uid="uid://cqcwq4o11hfhp" path="res://logo.webp" id="17_0pggf"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -186,32 +184,15 @@ stream_0/stream = ExtResource("11_1skow")
 stream_1/stream = ExtResource("12_lotnu")
 stream_2/stream = ExtResource("13_djou0")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7gt1b"]
-shader = ExtResource("16_x2uie")
-shader_parameter/dot_scale = 0.458
-shader_parameter/ring_radius = 0.451
-shader_parameter/num_points = 200
-shader_parameter/gap_ratio = 0.2
-shader_parameter/all_dots_same_size = true
-shader_parameter/dot_color_start = Color(1, 1, 1, 1)
-shader_parameter/dot_color_end = Color(1, 1, 1, 1)
-shader_parameter/enable_shadow = false
-shader_parameter/shadow_color = Color(0.82, 0.82, 0.82, 0)
-shader_parameter/shadow_offset = Vector2(0.05, -0.05)
-shader_parameter/rotation_speed = 2.733
-shader_parameter/reverse_rotation = false
-shader_parameter/icon_size = 0.3
-shader_parameter/enable_icon_rotation = false
-shader_parameter/reverse_icon_rotation = false
-shader_parameter/icon_rotation_speed = 1.0
-shader_parameter/show_icon = false
-shader_parameter/icon_texture = ExtResource("17_0pggf")
-
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision") groups=["Player"]]
 collision_layer = 134217731
 script = ExtResource("1")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
+hit_sfx = NodePath("hit")
+pos_label = NodePath("Pos")
+ping_label = NodePath("Ping")
+collision = NodePath("CollisionShape3D")
 bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
 
@@ -220,7 +201,7 @@ script = ExtResource("4_064gd")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
 
-[node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block")]
+[node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block", "ping_label")]
 script = ExtResource("2_5q13p")
 distance = 5.0
 camera = NodePath("../../RotationRoot/Head/Camera3D")
@@ -228,6 +209,7 @@ block = NodePath("BlockOutline")
 voxel_blocky_type_library = ExtResource("5_5801w")
 item_library = ExtResource("5_qnsii")
 break_particle_scene = ExtResource("8_8k80t")
+ping_label = NodePath("../../Ping")
 
 [node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -440,6 +422,7 @@ bones/8/rotation = Quaternion(0.677153, -0.2002, 0.679714, -0.198424)
 bones/8/scale = Vector3(1, 1, 1)
 
 [node name="Object_7" type="MeshInstance3D" parent="RotationRoot/Head/Camera3D/fp/Model/Skeleton3D"]
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_irur0")
 skin = SubResource("Skin_ttuvd")
 
@@ -487,8 +470,10 @@ theme_override_font_sizes/font_size = 25
 text = "hfgugug"
 
 [node name="Ping" type="Label" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
+theme = ExtResource("10_fsqbe")
 
 [node name="loading_check" type="Node3D" parent="." node_paths=PackedStringArray("exclude")]
 script = ExtResource("12_7rcqp")
@@ -519,23 +504,28 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="loading" type="ColorRect" parent="loading_check/CanvasLayer/loading"]
-material = SubResource("ShaderMaterial_7gt1b")
-custom_minimum_size = Vector2(823, 645)
+[node name="loading" type="Label" parent="loading_check/CanvasLayer/loading"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.285677
-anchor_top = 0.201389
-anchor_right = 0.714323
-anchor_bottom = 0.798611
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.0
+offset_top = -14.0
+offset_right = 82.0
+offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+theme_override_font_sizes/font_size = 61
+text = "loading the world"
+uppercase = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.0
 autostart = true
 
+[connection signal="block_broken" from="Hands/TerrainInteraction" to="." method="_on_terrain_interaction_block_broken"]
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_exited"]
 [connection signal="timeout" from="Timer" to="Hands/TerrainInteraction" method="tick"]

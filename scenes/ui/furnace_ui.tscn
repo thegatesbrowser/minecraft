@@ -79,28 +79,21 @@ layout_mode = 2
 
 [node name="Slot" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
-custom_index = 3
 
 [node name="Slot5" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
-custom_index = 4
 
 [node name="Slot6" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
-custom_index = 5
 
 [node name="Slot2" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
-custom_index = 6
 
 [node name="Slot3" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
-custom_index = 7
 
 [node name="Slot4" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
-custom_index = 8
 
 [connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot" to="." method="change"]
-[connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot2" to="." method="fuel"]
 [connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot2" to="." method="change"]

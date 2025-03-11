@@ -1,5 +1,6 @@
 extends Node
 
+#region variables
 # Debugging.
 enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var print_level := Logger.LogLevel.WARNING
@@ -16,7 +17,6 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var chunk_loading_threads := 7
 
 # Player Settings.
-
 var breaking_efficiency:float = 0.0
 ## these are copys for ui puepose
 var max_health:int = 3
@@ -31,14 +31,38 @@ var player_health:int = 3
 var current_block:StringName ## unique_name
 var custom_block:StringName ## unique_name
 var can_build:bool = false
+var view_range:int = 128
+#endregion
 
-# AI
+#region signals
+
 signal spawn_creature(pos,creature)
 
-# Inventory
-signal open_inventory(Owner)
-signal add_subinventory(Owner)
+signal hunger_points_gained(amount)
 
+signal spawn_bullet
+
+signal add_object(id:int,position,instance_path:String)
+
+signal removed_spawnpoint(id:Vector3)
+
+#region portals
+signal open_portal_url(id:Vector3)
+signal create_portal(id:Vector3)
+signal enter_portal(id:Vector3)
+signal add_portal_url(id:Vector3,url:String)
+signal remove_portal_data(id:Vector3)
+#endregion
+
+#region ui
+signal new_ui(position:Vector3,instance_path:String)
+signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
+signal remove_ui(position:Vector3)
+var last_clicked_slot:Node
+
+#region inventory
+signal open_inventory(id)
+signal add_subinventory(id)
 signal remove_item_from_hotbar
 signal spawn_item_inventory(item)
 signal check_amount_of_item(item)
@@ -46,29 +70,14 @@ signal remove_item(item,amount)
 signal hotbar_slot_clicked(slot)
 signal add_item_to_hand(item)
 signal remove_item_in_hand
-#signal slot_clicked(slot)
 signal craftable_hovered(craftable,node)
 signal craftable_unhovered
-var last_clicked_slot:Node
+#endregion
+#endregion
 
-var known_storage = []
-signal hunger_points_gained(amount)
+#endregion
 
-signal spawn_ui(id:Vector3,ui_path:String)
-
-signal spawn_bullet
-signal add_object(id:int,position,instance_path:String)
-
-signal open_portal_url(id:Vector3)
-signal create_portal(id:Vector3)
-signal enter_portal(id:Vector3)
-signal add_portal_url(id:Vector3,url:String)
-
-signal new_ui(position:Vector3,instance_path:String)
-signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
-
-var view_range:int = 128
-signal view_range_changed
+#region functions
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
@@ -131,3 +140,4 @@ func slot_clicked(slot):
 
 func Spawn_creature(pos,creature):
 	spawn_creature.emit(pos,creature)
+#endregion

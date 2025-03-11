@@ -12,7 +12,7 @@ var server_info: Dictionary
 @export var amount_of_slots:int = 10
 @export var inventroy_name: Label
 
-@export var Owner: Vector3
+@export var id: Vector3
 
 
 var times:int = 0
@@ -128,7 +128,7 @@ func check_amount_of_item(item:StringName):
 
 
 func remove_item(unique_name:StringName,amount:int):
-	if Owner != Vector3.ZERO: return ## Owner mean its not the players inventory
+	if id != Vector3.ZERO: return ## id mean its not the players inventory
 	
 	for i in amount:
 		for slot in items_collection.get_children():
@@ -195,6 +195,11 @@ func update_client(info):
 	for i in info:
 		
 		var slot = find_child(info[i].parent).get_child(i)
-		slot.Item_resource = load(info[i].item_path)
+		
+		if info[i].item_path != "":
+			slot.Item_resource = load(info[i].item_path)
+		else:
+			slot.Item_resource = null
+			
 		slot.amount = info[i].amount
 		slot.update_slot()

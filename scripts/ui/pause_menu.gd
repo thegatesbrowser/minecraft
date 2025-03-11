@@ -1,6 +1,7 @@
 extends Control
 
-@onready var menu_scene: PackedScene = preload("res://scenes/menu.tscn")
+@export var settings:Control
+@export var menu_scene: PackedScene = preload("res://scenes/menu.tscn")
 var played_ani: bool
 
 
@@ -22,7 +23,7 @@ func _process(_delta: float) -> void:
 			show()
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			$Settings.hide()
+			settings.hide()
 			played_ani = false
 			hide()
 
@@ -34,4 +35,4 @@ func _on_main_menu_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	$Settings.visible = !$Settings.visible
+	settings.visible = !settings.visible

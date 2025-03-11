@@ -8,6 +8,7 @@ var opened_ui:Vector3 ## tells the server which ui is opened
 
 
 func _ready() -> void:
+	Globals.remove_ui.connect(remove_ui)
 	Globals.open_inventory.connect(open_ui)
 	Globals.new_ui.connect(new_ui)
 	Globals.sync_ui_change.connect(ui_updated)
@@ -57,6 +58,10 @@ func give_clients(server_data):
 	ui.open(server_data.inventory)
 				
 @rpc("any_peer","call_local")
-func Opened_ui(position):
-	## gives the position/id to the server to use
-	opened_ui = position
+func Opened_ui(id: Vector3):
+	## gives the id to the server to use
+	opened_ui = id
+
+@rpc("any_peer","call_local")
+func remove_ui(id: Vector3) -> void:
+	server_ui_info.erase(id)

@@ -30,7 +30,7 @@ func destroy_creature(Name: String) -> void:
 	get_node(spawn_path).get_node(Name).queue_free()
 
 
-func toggle_AI_debug():
+func toggle_AI_debug() -> void:
 	#debug = !debug
 	#for i in get_tree().get_nodes_in_group("NPCS"):
 		#i.toggle_debug()

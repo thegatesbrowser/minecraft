@@ -7,31 +7,15 @@ var selected_item: ItemBase
 
 @onready var slots: HBoxContainer = $MarginContainer/VBoxContainer/Slots
 
-#
-#@onready var grass = $HBoxContainer/Grass
-#@onready var dirt = $HBoxContainer/Dirt
-#@onready var stone = $HBoxContainer/Stone
-#@onready var glass = $HBoxContainer/Glass
-#@onready var log1 = $HBoxContainer/Log1
-#@onready var log2 = $HBoxContainer/Log2
-#@onready var wood1 = $HBoxContainer/Wood
-#@onready var wood2 = $HBoxContainer/Wood2
-#@onready var leaf1 = $HBoxContainer/Leaf1
-#@onready var leaf2 = $HBoxContainer/Leaf2
-
-enum {GRASS, DIRT, STONE, GLASS, LOG1, WOOD1, LOG2, WOOD2, LEAF1, LEAF2}
-
-var current_key = WOOD1
+var current_key = 1
 var buttons
 var keys
 
-
-func _ready():
+func _ready() -> void:
 	Globals.remove_item_from_hotbar.connect(remove)
-	#Globals.hotbar_slot_clicked.connect(hotbar_slot_clicked)
 	buttons = slots.get_children()
 
-func _input(_event):
+func _input(_event) -> void:
 	if Input.is_action_just_released("Scroll_Up"):
 		current_key -= 1
 	
@@ -61,28 +45,27 @@ func _input(_event):
 					eat_sfx.play()
 					Globals.hunger_points_gained.emit(selected_item.food_points)
 					print("ate ", selected_item.unique_name, " gained ", selected_item.food_points," food points")
-	
+					
 	
 	current_key %= 10
 	_unpress_all()
-	#print(buttons[current_key])
 	buttons[current_key].focused = true
-	#if buttons[current_key].Item_resource != null:
 	_press_key(current_key)
-	#_press_key(current_key)
 
 
-func _unpress_all():
+func _unpress_all() -> void:
 	for i in slots.get_children():
 		i.button_pressed = false
 		i.focused = false
 
-func get_current():
+func get_current() -> Slot:
 	return buttons[current_key]
 
-func _press_key(i):
+func _press_key(i) -> void:
+	selected_item = null
 	buttons[i].button_pressed = true
 	Globals.remove_item_in_hand.emit()
+	
 	if buttons[current_key].Item_resource != null:
 		selected_item = buttons[current_key].Item_resource
 		## add holdable if has one
@@ -115,7 +98,7 @@ func _press_key(i):
 		
 	current_key = i
 
-func remove(unique_name:String = "", amount:int = 1):
+func remove(unique_name:String = "", amount:int = 1) -> void:
 	if unique_name == "":
 		var slot = get_current()
 		slot.amount -= 1

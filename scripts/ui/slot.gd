@@ -1,11 +1,14 @@
 extends TextureButton
 class_name Slot
-var index:int
 
 signal item_changed(index:int,item_path:String,amount:int,parent:String)
 
+var index:int
+
 var played_ani:bool = false
 var focused:bool = false
+
+@export var pressed_panel:Panel
 
 @export var type:String = 'inventory'
 @export var amount:int = 1
@@ -14,11 +17,8 @@ var focused:bool = false
 
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
-@export var custom_index:int = 100
-@export var can_custom_index:bool = false
 
 func _process(_delta: float) -> void:
-	
 	if Item_resource != null:
 		image.texture = Item_resource.texture
 	else:
@@ -30,28 +30,18 @@ func _process(_delta: float) -> void:
 		if !played_ani:
 			GlobalAnimation._tween(self,"bounce",.3)
 			played_ani = true
-		$pressed.show()
+		pressed_panel.show()
 	else:
 		played_ani = false
-		$pressed.hide()
-	##
-	#if amount <= 0:
-		#Item_resource = null
-		#amount_label.hide()
-		#amount = 1
-		#update_slot()
+		pressed_panel.hide()
 
 func _ready() -> void:
-	if !can_custom_index:
-		index = get_index()
-	else:
-		index = custom_index
+	index = get_index()
 	
 	if Item_resource != null:
 		image.texture = Item_resource.texture
 		
 	update_slot()
-
 
 func _on_pressed() -> void:
 	if Globals.paused:

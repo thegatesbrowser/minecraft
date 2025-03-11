@@ -35,13 +35,14 @@ anti_aliasing = false
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tyv45"]
 
-[node name="Slot" type="TextureButton"]
+[node name="Slot" type="TextureButton" node_paths=PackedStringArray("pressed_panel")]
 custom_minimum_size = Vector2(80, 80)
 offset_right = 80.0
 offset_bottom = 80.0
 pivot_offset = Vector2(40, 40)
 stretch_mode = 4
 script = ExtResource("1_g0jy7")
+pressed_panel = NodePath("pressed")
 
 [node name="CenterContainer" type="MarginContainer" parent="."]
 layout_mode = 1

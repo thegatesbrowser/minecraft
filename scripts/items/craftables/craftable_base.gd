@@ -8,7 +8,6 @@ class_name CraftableButton
 
 
 func _ready() -> void:
-	#inventory = get_tree().get_root().find_child("Inventory", true, false)
 	if craftable != null:
 		image.texture = craftable.texture
 
@@ -38,7 +37,6 @@ func craft() -> void:
 func _on_mouse_entered() -> void:
 	GlobalAnimation._tween(self,"bounce",.3)
 	Globals.craftable_hovered.emit(craftable,self)
-
 
 func _on_mouse_exited() -> void:
 	Globals.craftable_unhovered.emit()
