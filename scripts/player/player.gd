@@ -180,13 +180,13 @@ func _physics_process(delta):
 	else:
 		speed = WALK_SPEED
 		
-	# Crouch
-	if Input.is_action_pressed("Crouch"):
-		crouching = true
-		speed = CROUCH_SPEED
-	else:
-		speed = WALK_SPEED
-		crouching = false
+		# Crouch
+		if Input.is_action_pressed("Crouch"):
+			crouching = true
+			speed = CROUCH_SPEED
+		else:
+			speed = WALK_SPEED
+			crouching = false
 	
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
