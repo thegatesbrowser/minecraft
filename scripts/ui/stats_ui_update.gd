@@ -5,7 +5,8 @@ extends Control
 
 var your_player: Player
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	if your_player == null: return
 	
 	healthbar.max_value = your_player.max_health

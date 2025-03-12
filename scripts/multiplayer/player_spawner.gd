@@ -6,11 +6,12 @@ signal player_despawned(id: int)
 
 @export var view_distance: int = 128
 @export var player_scene: PackedScene
-@export var stats_ui_updater:Control
+@export var stats_ui_updater: Control
 
 @onready var spawn_points: SpawnPoints = $"../Game/SpawnPoints"
 
-var players := {}
+var players: Dictionary = {}
+
 
 func _ready() -> void:
 	assert(is_instance_valid(spawn_points), "Fix the path to spawn points")

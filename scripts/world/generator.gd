@@ -59,20 +59,19 @@ var _trees_min_y := 0
 var _trees_max_y := 0
 
 
-func _init():
-	
+func _init() -> void:
 	# TODO Even this must be based on a seed, but I'm lazy
-	var tree_generator = TreeGenerator.new()
+	var tree_generator: TreeGenerator = TreeGenerator.new()
 	
 	tree_generator.possible_types = possible_tree_types
-	
+
 	for i in 16:
-		var s = tree_generator.generate()
+		var s: Structure = tree_generator.generate()
 		_tree_structures.append(s)
 
 	var tallest_tree_height = 0
 	for structure in _tree_structures:
-		var h = int(structure.voxels.get_size().y)
+		var h: int = int(structure.voxels.get_size().y)
 		if tallest_tree_height < h:
 			tallest_tree_height = h
 	_trees_min_y = _heightmap_min_y
@@ -89,12 +88,9 @@ func _get_used_channels_mask() -> int:
 	return 1 << _CHANNEL
 
 
-func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
-	
-	#print(buffer.get_size())
-	var voxel_tool := buffer.get_voxel_tool()
-	#print(voxel_tool.do_box(origin_in_voxels, origin_in_voxels+Vector3i(100,100,100)))
-	#buffer.fill_area()
+func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int) -> void:
+	var voxel_tool: VoxelTool = buffer.get_voxel_tool()
+
 	# TODO There is an issue doing this, need to investigate why because it should be supported
 	# Saves from this demo used 8-bit, which is no longer the default
 	# buffer.set_channel_depth(_CHANNEL, VoxelBuffer.DEPTH_8_BIT)
@@ -225,8 +221,8 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 	
 
 func _get_tree_instances_in_chunk(
-	cpos: Vector3, offset: Vector3, chunk_size: int, tree_instances: Array):
-	var rng := RandomNumberGenerator.new()
+	cpos: Vector3, offset: Vector3, chunk_size: int, tree_instances: Array) -> void:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	rng.seed = _get_chunk_seed_2d(cpos)
 
 	for i in 4:
@@ -239,12 +235,6 @@ func _get_tree_instances_in_chunk(
 			var si := rng.randi() % len(_tree_structures)
 			var structure : Structure = _tree_structures[si]
 			tree_instances.append([pos.round(), structure])
-			
-	
-
-
-#static func get_chunk_seed(cpos: Vector3) -> int:
-#	return cpos.x ^ (13 * int(cpos.y)) ^ (31 * int(cpos.z))
 
 
 static func _get_chunk_seed_2d(cpos: Vector3) -> int:
@@ -252,11 +242,12 @@ static func _get_chunk_seed_2d(cpos: Vector3) -> int:
 
 
 func _get_height_at(x: int, z: int) -> int:
-	var t = 0.5 + 0.5 * _heightmap_noise.get_noise_2d(x, z)
+	var t: float = 0.5 + 0.5 * _heightmap_noise.get_noise_2d(x, z)
 	return int(HeightmapCurve.sample_baked(t))
 
-func ore(start:Vector3,end:Vector3,channel,chunk_pos,buffer:VoxelBuffer):
-	var rng := RandomNumberGenerator.new()
+
+func ore(start: Vector3, end: Vector3, channel: int, chunk_pos: Vector3, buffer: VoxelBuffer) -> void:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	rng.seed = _get_chunk_seed_2d(chunk_pos)
 	
 	if rng.randf() <= 1:

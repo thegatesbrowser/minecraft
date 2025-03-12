@@ -1,11 +1,12 @@
 extends Control
 class_name Inventory_Holder
 
-@export var inventory_s: PackedScene
 @export var h_box_container: HBoxContainer
+
 
 func _ready() -> void:
 	Globals.open_inventory.connect(open_inventory)
+
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Inventory"):
@@ -24,6 +25,7 @@ func _physics_process(delta: float) -> void:
 			GlobalAnimation._tween(self,"bounce_out",.4)
 			Globals.paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 
 func open_inventory(id:Vector3) -> void:
 	for i in h_box_container.get_children():

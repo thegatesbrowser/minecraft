@@ -3,20 +3,21 @@ class_name Slot
 
 signal item_changed(index:int,item_path:String,amount:int,parent:String)
 
-var index:int
+@export var pressed_panel: Panel
 
-var played_ani:bool = false
-var focused:bool = false
-
-@export var pressed_panel:Panel
-
-@export var type:String = 'inventory'
-@export var amount:int = 1
+@export var type: String = "inventory"
+@export var amount: int = 1
 
 @export var Item_resource: ItemBase
 
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
+
+var index:int
+
+var played_ani:bool = false
+var focused:bool = false
+
 
 func _process(_delta: float) -> void:
 	if Item_resource != null:
@@ -35,6 +36,7 @@ func _process(_delta: float) -> void:
 		played_ani = false
 		pressed_panel.hide()
 
+
 func _ready() -> void:
 	index = get_index()
 	
@@ -42,6 +44,7 @@ func _ready() -> void:
 		image.texture = Item_resource.texture
 		
 	update_slot()
+
 
 func _on_pressed() -> void:
 	if Globals.paused:
@@ -56,7 +59,8 @@ func _on_pressed() -> void:
 			if Globals.last_clicked_slot != null:
 				Globals.slot_clicked(self)
 
-func update_slot():
+
+func update_slot() -> void:
 	amount_label.text = str(amount)
 	if Item_resource != null:
 		if amount >= 2:
@@ -68,9 +72,9 @@ func update_slot():
 		amount = 1
 		image.texture = null
 		item_changed.emit(index,"",amount,get_parent().name)
-	
-	
-func update_non_sync():
+
+
+func update_non_sync() -> void:
 	amount_label.text = str(amount)
 	if Item_resource != null:
 		if amount >= 2:

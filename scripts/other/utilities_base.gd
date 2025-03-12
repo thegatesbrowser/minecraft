@@ -18,6 +18,6 @@ func _ready() -> void:
 			Globals.add_subinventory.emit(self)
 
 
-func interact():
+func interact() -> void:
 	if resource.has_inventory:
 		Globals.open_inventory.emit(self)

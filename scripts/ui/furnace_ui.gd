@@ -15,17 +15,19 @@ var server_info_output: Dictionary
 
 @export var fueled:bool = false
 
-var slots:Array
-var id:Vector3
-var last_cooking_amount:int
+var slots: Array[Slot]
+var id: Vector3
+var last_cooking_amount: int
+
 
 func _ready() -> void:
 	for output in output_container.get_children():
 		if output is Slot:
 			output.item_changed.connect(change)
 
-func _process(delta: float) -> void:
-	var forge_item = cooking_slot.Item_resource
+
+func _process(_delta: float) -> void:
+	var forge_item: ItemBase = cooking_slot.Item_resource
 	if forge_item != null:
 		if forge_item.forgable:
 			if last_cooking_amount != cooking_slot.amount:
@@ -45,7 +47,8 @@ func _process(delta: float) -> void:
 					
 					cook(forge_item)
 					timer.queue_free()
-					
+
+
 func cook(Item: ItemBase) -> void:
 	for i in output_container.get_children():
 		if i is Slot:
@@ -57,6 +60,7 @@ func cook(Item: ItemBase) -> void:
 				i.amount += 1
 				i.update_slot()
 				break
+
 
 func _fuel() -> void:
 	if fuel_slot.Item_resource != null:
@@ -78,11 +82,12 @@ func open(server_details: Dictionary = {}) -> void:
 			#print(server_details)
 			update_client.rpc(server_details)
 
+
 func change(index: int, item_path: String, amount: int, parent:String) -> void:
 	if sync:
 		#print(index,"item ", item_path, parent)
 		Globals.sync_ui_change.emit(index,item_path,amount,parent)
-	
+
 
 @rpc("any_peer","call_local")
 func update_client(info) -> void:

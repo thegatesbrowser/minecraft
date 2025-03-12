@@ -1,7 +1,8 @@
 extends AudioStreamPlayer
 
-var rng = RandomNumberGenerator.new()
-@export var chance:float = .4
+@export var chance: float = 0.4
+
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
 func _on_timer_timeout() -> void:

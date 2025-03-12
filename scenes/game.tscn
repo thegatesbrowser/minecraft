@@ -107,7 +107,6 @@ grow_vertical = 2
 pivot_offset = Vector2(960, 540)
 mouse_filter = 2
 script = ExtResource("3_fe1qo")
-inventory_s = ExtResource("10_hxw3b")
 h_box_container = NodePath("Inventory")
 
 [node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder"]

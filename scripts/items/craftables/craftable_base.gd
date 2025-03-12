@@ -32,16 +32,18 @@ func craft() -> void:
 				inventory.spawn_item(craftable.output_item,craftable.output_amount)
 				for i in craftable.items_needed:
 					Globals.remove_item.emit(craftable.items_needed[i].name, craftable.items_needed[i].amount)
-				
+
 
 func _on_mouse_entered() -> void:
 	GlobalAnimation._tween(self,"bounce",.3)
 	Globals.craftable_hovered.emit(craftable,self)
 
+
 func _on_mouse_exited() -> void:
 	Globals.craftable_unhovered.emit()
 
-func can_craft():
+
+func can_craft() -> bool:
 	if inventory != null:
 		var steps = craftable.items_needed.duplicate().size()
 		for i in craftable.items_needed:
@@ -57,3 +59,5 @@ func can_craft():
 			return true
 		else:
 			return false
+	
+	return false

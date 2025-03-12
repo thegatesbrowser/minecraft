@@ -24,6 +24,7 @@ func kill(body: Node3D) -> void:
 func destory() -> void:
 	server_kill.rpc()
 
+
 @rpc("any_peer","call_local")
 func server_kill():
 	#if not multiplayer.is_server(): return

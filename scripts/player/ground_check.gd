@@ -1,8 +1,9 @@
 extends Node3D
 
-@export var exclude:Node
+@export var exclude: Node
 @onready var ground: RayCast3D = $ground
 @onready var loading: Control = $CanvasLayer/loading
+
 
 func _ready() -> void:
 	if is_multiplayer_authority():
@@ -11,8 +12,9 @@ func _ready() -> void:
 		Globals.paused = true
 	else:
 		loading.hide()
-	
-func _process(delta: float) -> void:
+
+
+func _process(_delta: float) -> void:
 	if is_multiplayer_authority():
 		if ground.is_colliding():
 			Globals.paused = false

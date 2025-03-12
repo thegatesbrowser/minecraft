@@ -1,9 +1,6 @@
 extends ScrollContainer
 class_name Inventory
 
-var server_info: Dictionary
-
-
 @export var sync:bool = true ## FALSE for the player main inventory
 
 @export var slot_s: PackedScene
@@ -13,7 +10,9 @@ var server_info: Dictionary
 @export var inventroy_name: Label
 
 @export var id: Vector3
+@export var items_library: ItemsLibrary
 
+var server_info: Dictionary
 
 var times:int = 0
 var items = []
@@ -21,7 +20,6 @@ var slots = []
 var full:bool = false
 var inventory = []
 
-@export var items_library: ItemsLibrary
 
 func _ready() -> void:
 	for i in items_collection.get_children():
@@ -30,7 +28,6 @@ func _ready() -> void:
 	Globals.spawn_item_inventory.connect(spawn_item)
 	Globals.remove_item.connect(remove_item)
 	Globals.check_amount_of_item.connect(check_amount_of_item)
-
 
 
 func _process(_delta: float) -> void:
@@ -48,7 +45,6 @@ func _process(_delta: float) -> void:
 					spawn_item(Globals.last_clicked_slot.Item_resource,amount)
 					Globals.last_clicked_slot.update_slot()
 					Globals.last_clicked_slot = null
-					
 
 
 func is_even(x: int):
@@ -174,8 +170,6 @@ func check_slots():
 			for amount in i.amount:
 				inventory.append(i.Item_resource.unique_name)
 
-func _on_close_pressed() -> void:
-	pass
 
 func open(server_details:= {}):
 	show()
@@ -186,9 +180,11 @@ func open(server_details:= {}):
 		if !server_details.is_empty():
 			update_client.rpc(server_details)
 
+
 func change(index: int, item_path: String, amount: int,parent:String):
 	if sync:
 		Globals.sync_ui_change.emit(index,item_path,amount,parent)
+
 
 @rpc("any_peer","call_local")
 func update_client(info):

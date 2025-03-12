@@ -12,9 +12,10 @@ const SPLASH_ANIMATION_NAME = "Splash"
 @export var splash: Label
 @export var animation_player: AnimationPlayer
 
-@export var loading_scene_packedscene = preload("res://scenes/ui/loading_scene.tscn")
+@export var loading_scene_packedscene: PackedScene = preload("res://scenes/ui/loading_scene.tscn")
 
-func _ready():
+
+func _ready() -> void:
 	if Connection.is_server():
 		start_scene(multiplayer_scene)
 		return
@@ -25,17 +26,16 @@ func _ready():
 	setup_splash_screen()
 
 
-func setup_splash_screen():
+func setup_splash_screen() -> void:
 	var saying = splash_sayings[randi() % splash_sayings.size()]
 	splash.text = saying
 	
 	animation_player.play(SPLASH_ANIMATION_NAME)
 
 
-func start_scene(scene: PackedScene):
+func start_scene(scene: PackedScene) -> void:
 	get_tree().call_deferred("change_scene_to_packed", scene)
-	
 
-func loaded(scene):
+
+func loaded(_scene: PackedScene) -> void:
 	print("loaded")
-	

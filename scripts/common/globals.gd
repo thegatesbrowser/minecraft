@@ -1,6 +1,5 @@
 extends Node
 
-#region variables
 # Debugging.
 enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var print_level := Logger.LogLevel.WARNING
@@ -32,35 +31,27 @@ var current_block:StringName ## unique_name
 var custom_block:StringName ## unique_name
 var can_build:bool = false
 var view_range:int = 128
-#endregion
-
-#region signals
 
 signal spawn_creature(pos,creature)
-
 signal hunger_points_gained(amount)
-
 signal spawn_bullet
-
 signal add_object(id:int,position,instance_path:String)
-
 signal removed_spawnpoint(id:Vector3)
 
-#region portals
+# portals
 signal open_portal_url(id:Vector3)
 signal create_portal(id:Vector3)
 signal enter_portal(id:Vector3)
 signal add_portal_url(id:Vector3,url:String)
 signal remove_portal_data(id:Vector3)
-#endregion
 
-#region ui
+# ui
 signal new_ui(position:Vector3,instance_path:String)
 signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
 signal remove_ui(position:Vector3)
 var last_clicked_slot:Node
 
-#region inventory
+# inventory
 signal open_inventory(id)
 signal add_subinventory(id)
 signal remove_item_from_hotbar
@@ -72,12 +63,7 @@ signal add_item_to_hand(item)
 signal remove_item_in_hand
 signal craftable_hovered(craftable,node)
 signal craftable_unhovered
-#endregion
-#endregion
 
-#endregion
-
-#region functions
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
@@ -138,6 +124,6 @@ func slot_clicked(slot):
 						
 						slot.update_slot()
 
+
 func Spawn_creature(pos,creature):
 	spawn_creature.emit(pos,creature)
-#endregion

@@ -4,6 +4,7 @@ extends PanelContainer
 @export var name_label: Label
 @export var item_library:ItemsLibrary
 
+
 func _ready() -> void:
 	item_library.init_items()
 	hide()
@@ -15,7 +16,7 @@ func _process(_delta: float) -> void:
 	global_position = get_global_mouse_position()
 
 
-func craftable_hovered(craftable:Craftable,node):
+func craftable_hovered(craftable: Craftable, node: Node) -> void:
 	if node.can_craft() == true:
 		self_modulate = Color.GREEN
 	else:
@@ -29,7 +30,7 @@ func craftable_hovered(craftable:Craftable,node):
 	show()
 
 
-func craftable_unhovered():
+func craftable_unhovered() -> void:
 	for i in $MarginContainer/VBoxContainer/VBoxContainer.get_children():
 		i.queue_free()
 	hide()

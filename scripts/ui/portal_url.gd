@@ -14,7 +14,7 @@ func _on_url_text_submitted(new_text: String) -> void:
 	Globals.paused = false
 
 
-func open(_id):
+func open(_id: Vector3) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Globals.paused = true
 	id = _id

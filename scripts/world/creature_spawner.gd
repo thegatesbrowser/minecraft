@@ -36,6 +36,7 @@ func toggle_AI_debug() -> void:
 		#i.toggle_debug()
 	pass
 
+
 func custom_spawn(data: Array) -> Node:
 	var id: int = data[0]
 	var spawn_position: Vector3 = data[1]
@@ -55,9 +56,9 @@ func custom_spawn(data: Array) -> Node:
 	return creature
 
 
-func create_viewer(id: int, creature: CreatureBase) -> void:
+func create_viewer(_id: int, creature: CreatureBase) -> void:
 	if Connection.is_server():
-		var viewer := VoxelViewer.new()
+		var viewer: VoxelViewer = VoxelViewer.new()
 
 		viewer.view_distance = view_distance
 		viewer.requires_visuals = false

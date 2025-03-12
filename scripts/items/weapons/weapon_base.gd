@@ -6,6 +6,7 @@ var inventory:Node
 
 @export var weapon_resource: ItemBase
 
+
 func _ready() -> void:
 	inventory = get_tree().get_first_node_in_group("Main Inventory")
 	
@@ -25,7 +26,7 @@ func _process(_delta: float) -> void:
 		fire_rate.stop()
 
 
-func fire():
+func fire() -> void:
 	if inventory.check_amount_of_item(weapon_resource.ammo_name) >= 1:
 		
 		## sends to player to get the direction of the camera

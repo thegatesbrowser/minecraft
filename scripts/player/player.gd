@@ -88,7 +88,8 @@ var health
 @onready var minecraft_player: Node3D = $RotationRoot/minecraft_player # TP
 @onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp # FP
 
-func _ready():
+
+func _ready() -> void:
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
@@ -131,7 +132,7 @@ func _ready():
 	camera.current = true
 
 
-func _unhandled_input(event):
+func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
 	if Globals.paused: return
 	
@@ -154,7 +155,7 @@ func _process(_delta: float) -> void:
 	Globals.player_health = health
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
 		
@@ -173,7 +174,6 @@ func _physics_process(delta):
 		if Input.is_action_pressed("Jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
 	
-			
 	# Handle Sprint.
 	if Input.is_action_pressed("Sprint"):
 		speed = SPRINT_SPEED
@@ -240,7 +240,7 @@ func _physics_process(delta):
 						rpc_id(coll.get_multiplayer_authority(),"hit")
 				else:
 					rpc_id(coll.get_multiplayer_authority(),"hit")
-			
+	
 	## Flying Controls
 	if is_flying:
 		if camera.rotation.x > max_flying_margin:
@@ -339,14 +339,17 @@ func toggle_clipping() -> void:
 	if collision.disabled:
 		is_flying = true
 
+
 func show_pos() -> void:
 	pos_label.visible = !pos_label.visible
-	
+
+
 func show_ping() -> void:
 	ping_label.visible = !ping_label.visible
-	
-func _headbob(time) -> Vector3:
-	var pos = Vector3.ZERO
+
+
+func _headbob(time: float) -> Vector3:
+	var pos: Vector3 = Vector3.ZERO
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
@@ -386,23 +389,27 @@ func remove_item_in_hand() -> void:
 	for i in left_hand.get_children():
 		i.queue_free()
 
+
 @rpc("any_peer","call_local")
-func hit(damage:int = 1) -> void: 
+func hit(damage: int = 1) -> void: 
 	health -= damage
 	hit_sfx.play()
 	if health <= 0:
 		death()
 	print("hit")
 
+
 func spawn_bullet() -> void:
 	if is_multiplayer_authority():
 		sync_bullet.rpc(camera.global_transform)
 
+
 @rpc("any_peer","call_local")
-func sync_bullet(transform_) -> void:
+func sync_bullet(transform_: Transform3D) -> void:
 	Globals.add_object.emit(1,transform_,"res://scenes/items/weapons/bullet.tscn")
-	
-func hunger_update(_delta:float) -> void:
+
+
+func hunger_update(_delta: float) -> void:
 	if _move_direction:
 		hunger_update_time -= _delta * moving_hunger_times_debuff
 	else:
@@ -429,8 +436,8 @@ func hunger_update(_delta:float) -> void:
 		
 		hunger_updated.emit(hunger)
 			
-		print("hunger")
 		hunger_update_time = 10
+
 
 func death() -> void:
 	health = max_health
@@ -439,13 +446,15 @@ func death() -> void:
 	respawn.rpc(spawn_position)
 	global_position = spawn_position
 
+
 @rpc("any_peer", "call_local", "reliable")
-func respawn(spawn_position: Vector3) -> void:
+func respawn(pos: Vector3) -> void:
 	print("respawn")
-	global_position = spawn_position
+	global_position = pos
 	velocity = Vector3.ZERO
 
-func hunger_points_gained(amount) -> void:
+
+func hunger_points_gained(amount: int) -> void:
 	if hunger + amount < base_hunger:
 		hunger += amount
 	else:

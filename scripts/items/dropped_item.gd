@@ -1,6 +1,7 @@
 extends RigidBody3D
 
-var Item:ItemBase
+var Item: ItemBase
+
 
 func _ready() -> void:
 	pass

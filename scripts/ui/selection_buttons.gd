@@ -1,21 +1,22 @@
 extends ScrollContainer
 class_name HotBar
 
-var selected_item: ItemBase 
-
 @onready var eat_sfx: AudioStreamPlayer = $eat
-
 @onready var slots: HBoxContainer = $MarginContainer/VBoxContainer/Slots
+
+var selected_item: ItemBase 
 
 var current_key = 1
 var buttons
 var keys
 
+
 func _ready() -> void:
 	Globals.remove_item_from_hotbar.connect(remove)
 	buttons = slots.get_children()
 
-func _input(_event) -> void:
+
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_released("Scroll_Up"):
 		current_key -= 1
 	
@@ -58,10 +59,12 @@ func _unpress_all() -> void:
 		i.button_pressed = false
 		i.focused = false
 
+
 func get_current() -> Slot:
 	return buttons[current_key]
 
-func _press_key(i) -> void:
+
+func _press_key(i: int) -> void:
 	selected_item = null
 	buttons[i].button_pressed = true
 	Globals.remove_item_in_hand.emit()
@@ -98,9 +101,10 @@ func _press_key(i) -> void:
 		
 	current_key = i
 
-func remove(unique_name:String = "", amount:int = 1) -> void:
+
+func remove(unique_name: String = "", amount: int = 1) -> void:
 	if unique_name == "":
-		var slot = get_current()
+		var slot: Slot = get_current()
 		slot.amount -= 1
 		if slot.amount <= 0:
 			slot.Item_resource = null

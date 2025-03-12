@@ -3,11 +3,6 @@ class_name CreatureBase
 
 @export var creature_resource: Creature
 
-var health
-
-var position_before_sync: Vector3 = Vector3.ZERO
-var last_sync_time_ms: int = 0
-
 @export_group("Sync Properties")
 @export var _position: Vector3
 @export var _velocity: Vector3
@@ -33,6 +28,11 @@ var last_sync_time_ms: int = 0
 @onready var player_view_distance: float = 128 * sqrt(2)
 
 @export var target_reached: bool = false
+
+var health
+
+var position_before_sync: Vector3 = Vector3.ZERO
+var last_sync_time_ms: int = 0
 
 var speed : float
 var vel : Vector3
@@ -75,7 +75,7 @@ func _ready() -> void:
 	change_state("idle")
 
 
-func change_state(state):
+func change_state(state: String) -> void:
 	match state:
 		"idle":
 			#if ani.current_animation != creature_resource.idle_ani_name:
@@ -95,7 +95,7 @@ func change_state(state):
 			speed = creature_resource.speed
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	if not multiplayer.is_server():
 		interpolate_client(delta)
 		return
@@ -213,9 +213,10 @@ func hit(damage:int = 1):
 		queue_free()
 
 
-func get_cloest_player():
-	var last_distance
-	var closest_player:Node
+func get_cloest_player() -> Node:
+	var last_distance: float
+	var closest_player: Node
+	
 	for i in get_tree().get_nodes_in_group("Player"):
 		if last_distance == null:
 			last_distance = global_position.distance_to(i .global_position)
@@ -224,7 +225,8 @@ func get_cloest_player():
 			if last_distance > global_position.distance_to(i .global_position):
 				last_distance = global_position.distance_to(i .global_position)
 				closest_player = i
-		return closest_player
+
+	return closest_player
 
 
 func _on_attack_range_body_entered(body: Node3D) -> void:
@@ -263,9 +265,9 @@ func interpolate_client(delta: float) -> void:
 	# Don't interpolate to avoid small jitter when stopping
 	if (_position - position).length() > 1 and _velocity.is_zero_approx():
 		position = _position.slerp(_position,delta) # Fix misplacement
-
-		# Interpolate between position_before_sync and _position
-		# and add to ongoing movement to compensate misplacement
+	
+	# Interpolate between position_before_sync and _position
+	# and add to ongoing movement to compensate misplacement
 	var t = 2 if is_zero_approx(sync_delta) else delta / sync_delta
 	sync_delta = clampf(sync_delta - delta, 0, sync_delta_max)
 	

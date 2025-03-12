@@ -20,10 +20,10 @@ var is_enabled: bool
 var block_is_inside_character: bool
 var last_hit: VoxelRaycastResult
 
-var last_ping_time:float 
+var last_ping_time: float
 
-func _ready():
-	
+
+func _ready() -> void:
 	if is_multiplayer_authority() or Connection.is_server():
 		terrain = TerrainHelper.get_terrain_tool()
 		voxel_tool = terrain.get_voxel_tool()
@@ -31,7 +31,7 @@ func _ready():
 		block.visible = false
 
 
-func _physics_process(_delta) -> void:
+func _physics_process(_delta: float) -> void:
 	if not is_multiplayer_authority() or not is_enabled:
 		return
 	
@@ -60,15 +60,12 @@ func can_place() -> bool:
 
 
 func can_break() -> bool:
-	
 	return last_hit != null
 
 
 func get_type() -> StringName:
-	
 	var voxel: int = voxel_tool.get_voxel(last_hit.position)
-	
-	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
+	var array: Array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
 	return array[0]
 
 
@@ -136,16 +133,20 @@ func _block_broken_local(type: StringName) -> void:
 				
 	block_broken.emit(type)
 
-func _on_Area_body_entered(_body) -> void:
+
+func _on_Area_body_entered(_body: Node3D) -> void:
 	block_is_inside_character = true
 
-func _on_Area_body_exited(_body) -> void:
+
+func _on_Area_body_exited(_body: Node3D) -> void:
 	block_is_inside_character = false
 
+
 @rpc("any_peer","call_remote")
-func send_item(type:String) -> void:
+func send_item(type: StringName) -> void:
 	var item = item_library.get_item(type)
 	Globals.spawn_item_inventory.emit(item)
+
 
 @rpc("any_peer","call_local")
 func open_portal_ui(id: Vector3) -> void:
@@ -156,16 +157,16 @@ func open_portal_ui(id: Vector3) -> void:
 @rpc("any_peer","reliable")
 func ping_server() -> void:
 	ping_client.rpc_id(multiplayer.get_remote_sender_id(),true)
-	
-	
+
+
 @rpc("any_peer","reliable")
-func ping_client(getting:bool = false) -> void:
+func ping_client(getting: bool = false) -> void:
 	if multiplayer.is_server(): return
 	if getting:
-		var time = Time.get_unix_time_from_system() - last_ping_time 
-		ping_label.text = str("Ping ",roundf(time))
+		var time: float = Time.get_unix_time_from_system() - last_ping_time
+		ping_label.text = str("Ping ", roundf(time))
 		print(multiplayer.get_unique_id(), " time ", roundf(time))
-		
+
 	else:
 		ping_server.rpc_id(1)
 		

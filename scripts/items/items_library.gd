@@ -5,9 +5,11 @@ class_name ItemsLibrary
 
 var items: Dictionary = {}
 
+
 func init_items():
 	for item in items_array:
 		items[item.unique_name] = item
 
-func get_item(unique_name: StringName) -> ItemBase:	
+
+func get_item(unique_name: StringName) -> ItemBase:
 	return items[unique_name]

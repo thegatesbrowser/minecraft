@@ -58,6 +58,7 @@ func _process(_delta: float) -> void:
 					
 						terrain_interaction.break_block()
 
+
 func is_interactable() -> bool:
 	if terrain_interaction.last_hit == null: return false
 	
@@ -71,6 +72,7 @@ func is_interactable() -> bool:
 		return true
 	else:
 		return false
+
 
 func interaction() -> void:
 	if terrain_interaction.last_hit == null: return
@@ -91,4 +93,3 @@ func interaction() -> void:
 		
 		if item.utility.portal:
 			Globals.enter_portal.emit(terrain_interaction.last_hit.position)
-			

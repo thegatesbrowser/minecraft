@@ -2,6 +2,7 @@ extends Control
 
 @export var settings:Control
 @export var menu_scene: PackedScene = preload("res://scenes/menu.tscn")
+
 var played_ani: bool
 
 
@@ -11,7 +12,6 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	
 	if Input.is_action_just_pressed("Start"):
 		visible = !visible
 		

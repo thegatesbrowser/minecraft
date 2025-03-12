@@ -11,21 +11,18 @@ var channel := VoxelBuffer.CHANNEL_TYPE
 
 
 func generate() -> Structure:
-	
-	var possible_tree_type_size = possible_types.size()
-	var tree_key = possible_types.keys()[randi() % possible_tree_type_size]
-	var tree_type:Array = possible_types[tree_key]
-	
-	#print(possible_types[tree_key])
-	
+	var possible_tree_type_size: int = possible_types.size()
+	var tree_key: String = possible_types.keys()[randi() % possible_tree_type_size]
+	var tree_type: Array = possible_types[tree_key]
+
 	log_type = VoxelLibrary.get_model_index_default(tree_type.front())
 	leaves_type = VoxelLibrary.get_model_index_default(tree_type.back())
 	
-	var voxels := {}
+	var voxels: Dictionary = {}
 	# Let's make crappy trees
 	
 	# Trunk
-	var trunk_len := int(randf_range(trunk_len_min, trunk_len_max))
+	var trunk_len: int = int(randf_range(trunk_len_min, trunk_len_max))
 	for y in trunk_len:
 		voxels[Vector3(0, y, 0)] = log_type
 
@@ -67,19 +64,19 @@ func generate() -> Structure:
 				voxels[npos] = leaves_type
 
 	# Make structure
-	var aabb := AABB()
+	var aabb: AABB = AABB()
 	for pos in voxels:
 		aabb = aabb.expand(pos)
-
-	var structure := Structure.new()
+	
+	var structure: Structure = Structure.new()
 	structure.offset = -aabb.position
 
-	var buffer := structure.voxels
+	var buffer: VoxelBuffer = structure.voxels
 	buffer.create(int(aabb.size.x) + 1, int(aabb.size.y) + 1, int(aabb.size.z) + 1)
 
 	for pos in voxels:
-		var rpos = pos + structure.offset
-		var v = voxels[pos]
+		var rpos: Vector3 = pos + structure.offset
+		var v: int = voxels[pos]
 		buffer.set_voxel(v, rpos.x, rpos.y, rpos.z, channel)
 
 	return structure

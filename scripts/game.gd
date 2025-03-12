@@ -6,10 +6,10 @@ signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 @export var creature_s: PackedScene
 
 var player: Player
+var is_fullscreen: bool = false
 
-var is_fullscreen = false
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	if Connection.is_server() or player == null: return
 	
 	multiplayer.get_unique_id()
@@ -32,7 +32,8 @@ func _process(_delta):
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
 
-func spawn_creature(pos:Vector3):
-	var creature = creature_s.instantiate()
+
+func spawn_creature(pos: Vector3) -> void:
+	var creature: Node3D = creature_s.instantiate()
 	creature.position = pos + Vector3(0,1,0)
 	add_child(creature)
