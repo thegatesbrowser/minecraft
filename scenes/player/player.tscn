@@ -173,9 +173,6 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath(".:_rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:health")
-properties/4/spawn = true
-properties/4/replication_mode = 2
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_c0y12"]
 random_volume_offset_db = 2.45
@@ -195,6 +192,7 @@ ping_label = NodePath("Ping")
 collision = NodePath("CollisionShape3D")
 bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
+max_health = 20
 
 [node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction")]
 script = ExtResource("4_064gd")

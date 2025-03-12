@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemTool" load_steps=3 format=3 uid="uid://b0uqkn1uxv3a8"]
+
+[ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="1_26bdr"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_56aca"]
+
+[resource]
+script = ExtResource("1_26bdr")
+suitable_objects = Array[ExtResource("2_56aca")]([])
+breaking_efficiency = 0.0
+damage = 2
+unique_name = &""
+max_stack = 64
+forgable = false
+forge_time = 2.0
