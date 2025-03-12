@@ -145,9 +145,9 @@ func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 
 	pos_label.text = str("pos   ", global_position)
-	
-	if health <= 0:
-		death()
+	camera.far = Globals.view_range
+	#if health <= 0:
+		#death()
 		
 	hunger_update(_delta)
 		
@@ -390,12 +390,13 @@ func remove_item_in_hand() -> void:
 func hit(damage:int = 1) -> void: 
 	health -= damage
 	hit_sfx.play()
+	if health <= 0:
+		death()
 	print("hit")
 
 func spawn_bullet() -> void:
 	if is_multiplayer_authority():
 		sync_bullet.rpc(camera.global_transform)
-
 
 @rpc("any_peer","call_local")
 func sync_bullet(transform_) -> void:
@@ -434,11 +435,13 @@ func hunger_update(_delta:float) -> void:
 func death() -> void:
 	health = max_health
 	hunger = base_hunger
+	print("death")
 	respawn.rpc(spawn_position)
 	global_position = spawn_position
 
-@rpc("any_peer", "call_remote", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func respawn(spawn_position: Vector3) -> void:
+	print("respawn")
 	global_position = spawn_position
 	velocity = Vector3.ZERO
 

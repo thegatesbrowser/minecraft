@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=30 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
 [ext_resource type="Texture2D" uid="uid://bhh6ygqgmcb04" path="res://assets/gui/Hunger_JE2_BE2.webp" id="16_fjtoi"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
+[ext_resource type="Script" path="res://scripts/ui/grapthic_settings.gd" id="21_8u2nj"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
 [ext_resource type="AudioStream" uid="uid://c625ntyc2nlhe" path="res://assets/sounds/ambient/Soulsand_valley_ambience.ogg" id="23_fu53x"]
 [ext_resource type="PackedScene" uid="uid://7bxiyo4hesal" path="res://scenes/other/random_sound.tscn" id="24_r824s"]
@@ -279,9 +280,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_v2bsq")
-current_tab = 0
+current_tab = 1
 
 [node name="InputSettings" type="PanelContainer" parent="UI/Pause Menu/Settings"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_q5s33")
 script = ExtResource("18_1gacs")
@@ -311,6 +313,52 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 text = "reset to default"
+
+[node name="Grapthic Settings" type="PanelContainer" parent="UI/Pause Menu/Settings" node_paths=PackedStringArray("enviorment")]
+layout_mode = 2
+script = ExtResource("21_8u2nj")
+enviorment = NodePath("../../../../WorldEnvironment")
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Pause Menu/Settings/Grapthic Settings"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Glow" type="CheckButton" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Glow"
+
+[node name="Fog" type="CheckButton" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Fog
+"
+
+[node name="Ssao" type="CheckButton" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Ssao
+"
+
+[node name="view_range" type="LineEdit" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "View Range : 800"
 
 [node name="Selection_Buttons" parent="UI" instance=ExtResource("12_qvgc7")]
 process_mode = 3
@@ -361,4 +409,8 @@ parameters/looping = true
 
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]
+[connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]
+[connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Fog" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_fog_toggled"]
+[connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Ssao" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_ssao_toggled"]
+[connection signal="text_submitted" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/view_range" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_view_range_text_submitted"]
 [connection signal="text_submitted" from="UI/Text Chat/MarginContainer/VBoxContainer/message_edit" to="UI/Text Chat" method="_on_line_edit_text_submitted"]
