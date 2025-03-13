@@ -35,8 +35,13 @@ func _process(_delta: float) -> void:
 	else:
 		played_ani = false
 		pressed_panel.hide()
-
-
+	
+	if amount <= 0:
+		amount = 1
+		Item_resource = null
+		image.texture = null
+		amount_label.hide()
+		
 func _ready() -> void:
 	index = get_index()
 	

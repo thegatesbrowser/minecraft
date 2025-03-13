@@ -57,7 +57,6 @@ type = "hotbar"
 [node name="Slot4" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
-amount = 36
 
 [node name="Slot5" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2

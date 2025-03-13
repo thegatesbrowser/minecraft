@@ -1,7 +1,6 @@
 [gd_resource type="Resource" script_class="CraftableLibrary" load_steps=17 format=3 uid="uid://dgswqwr4e80oy"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_dyrdd"]
-[ext_resource type="Resource" uid="uid://bj13adgon6is" path="res://resources/items/craftables/ammo.tres" id="2_d2xrh"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable_library.gd" id="2_ftexq"]
 [ext_resource type="Resource" uid="uid://ddnn87htgsb3u" path="res://resources/items/craftables/axe_wood.tres" id="3_nw8am"]
 [ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="4_5j57i"]
@@ -11,12 +10,13 @@
 [ext_resource type="Resource" uid="uid://bhvdh5jd8e1jh" path="res://resources/items/craftables/bed.tres" id="6_qmcdp"]
 [ext_resource type="Resource" uid="uid://bujjlvms3amk4" path="res://resources/items/craftables/sticks.tres" id="7_u0ha7"]
 [ext_resource type="Resource" uid="uid://cdgc65lkfgvyq" path="res://resources/items/craftables/shovel_wood.tres" id="8_pily6"]
-[ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/pistol.tres" id="9_x73ge"]
 [ext_resource type="Resource" uid="uid://c1c7ynjb33hsk" path="res://resources/items/craftables/pickaxe_wood.tres" id="10_omi4l"]
 [ext_resource type="Resource" uid="uid://d0aeff3omljv3" path="res://resources/items/craftables/pickaxe_stone.tres" id="11_wqru0"]
 [ext_resource type="Resource" uid="uid://cqmhwea1gfd5r" path="res://resources/items/craftables/axe_stone.tres" id="12_w3myd"]
 [ext_resource type="Resource" uid="uid://q0wwywxds52w" path="res://resources/items/craftables/shovel_stone.tres" id="13_74g6r"]
+[ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/bow.tres" id="14_apca7"]
+[ext_resource type="Resource" uid="uid://bmkvd4u27kgp1" path="res://resources/items/craftables/arrow.tres" id="15_os0h5"]
 
 [resource]
 script = ExtResource("2_ftexq")
-craftable_array = Array[ExtResource("1_dyrdd")]([ExtResource("5_7wva0"), ExtResource("6_eas5x"), ExtResource("4_5j57i"), ExtResource("5_y2rag"), ExtResource("6_qmcdp"), ExtResource("7_u0ha7"), ExtResource("3_nw8am"), ExtResource("8_pily6"), ExtResource("10_omi4l"), ExtResource("11_wqru0"), ExtResource("12_w3myd"), ExtResource("13_74g6r"), ExtResource("9_x73ge"), ExtResource("2_d2xrh")])
+craftable_array = Array[ExtResource("1_dyrdd")]([ExtResource("5_7wva0"), ExtResource("6_eas5x"), ExtResource("4_5j57i"), ExtResource("5_y2rag"), ExtResource("6_qmcdp"), ExtResource("7_u0ha7"), ExtResource("3_nw8am"), ExtResource("8_pily6"), ExtResource("10_omi4l"), ExtResource("11_wqru0"), ExtResource("12_w3myd"), ExtResource("13_74g6r"), ExtResource("14_apca7"), ExtResource("15_os0h5")])

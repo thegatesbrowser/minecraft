@@ -56,7 +56,7 @@ func check_server(position: Vector3) -> void:
 
 @rpc("any_peer", "call_local")
 func give_clients(server_data: Dictionary) -> void:
-	var ui: Node3D = load(server_data.scene).instantiate()
+	var ui: Control = load(server_data.scene).instantiate()
 	inventory_holder.add_child(ui)
 	ui.open(server_data.inventory)
 

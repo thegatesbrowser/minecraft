@@ -7,20 +7,14 @@ size = Vector3(0.1, 0.1, 0.1)
 
 [node name="Breakparticle" type="CPUParticles3D"]
 emitting = false
-amount = 10
+amount = 30
 one_shot = true
+speed_scale = 4.0
 mesh = SubResource("BoxMesh_a6e82")
-gravity = Vector3(0, 1, 0)
-angular_velocity_min = 1.2
-angular_velocity_max = 450.56
-linear_accel_min = 4.85
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.5, 0.5)
+gravity = Vector3(1.45519e-11, -90, 1.45519e-11)
 linear_accel_max = 81.9
-radial_accel_min = 25.53
-radial_accel_max = 25.53
-tangential_accel_min = 3.0
-tangential_accel_max = 79.6
-angle_min = 10.5
-angle_max = 32.0
 script = ExtResource("1_fqvbg")
 
 [connection signal="finished" from="." to="." method="_on_finished"]

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://bmkvd4u27kgp1"]
+
+[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="1_8vxkr"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_iwsia"]
+[ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="2_hxsmd"]
+[ext_resource type="Texture2D" uid="uid://dp00nanlqv0e3" path="res://assets/textures/items/Arrow_JE2_BE1.webp" id="4_pqo7e"]
+
+[resource]
+script = ExtResource("1_iwsia")
+Name = "arrow"
+texture = ExtResource("4_pqo7e")
+output_item = ExtResource("2_hxsmd")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 1,
+"name": "wood",
+"texture": ExtResource("1_8vxkr")
+}
+}
