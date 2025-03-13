@@ -9,14 +9,14 @@ func _ready() -> void:
 	Globals.add_object.connect(spawn_inventroy)
 
 
-func spawn_inventroy(id: int, position: Vector3, instance_path: String) -> void:
+func spawn_inventroy(id: int, position, instance_path: String) -> void:
 	if not multiplayer.is_server(): return
 	spawn([id, position, instance_path])
 
 
 func custom_spawn(data: Array) -> Node:
 	var id: int = data[0]
-	var spawn_position: Vector3 = data[1]
+	var spawn_position = data[1]
 	var instance_scene_path: String = data[2]
 	var type_pos = typeof(spawn_position)
 	

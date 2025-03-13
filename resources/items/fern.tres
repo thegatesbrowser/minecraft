@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://dmfnsgf0lvbhh"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_pnhg1"]
+[ext_resource type="Texture2D" uid="uid://chxp4g16nw3lm" path="res://assets/textures/blocks/fern.png" id="2_mkcbe"]
+
+[resource]
+script = ExtResource("1_pnhg1")
+break_time = 0.2
+spawn_chance = 0.1
+spawn_size = 1
+unique_name = &"fern"
+texture = ExtResource("2_mkcbe")
+max_stack = 64
+forgable = false
+forge_time = 2.0

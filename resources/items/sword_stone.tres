@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemTool" load_steps=5 format=3 uid="uid://2ffbymwl8rid"]
 
-[ext_resource type="PackedScene" uid="uid://c8315ui4gke66" path="res://assets/models/tools/Stone/sword_stone.tscn" id="1_1feko"]
+[ext_resource type="PackedScene" uid="uid://c8315ui4gke66" path="res://assets/models/Tools/Stone/sword_stone.tscn" id="1_1feko"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="1_oyasi"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_0ypvo"]
 [ext_resource type="Texture2D" uid="uid://dkudekudfd0dg" path="res://assets/textures/items/Stone_Sword_JE2_BE2.webp" id="3_swbkt"]

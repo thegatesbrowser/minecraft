@@ -3,6 +3,7 @@ class_name TerrainInteraction
 
 signal block_broken(type: StringName)
 
+@export var broken_part:PackedScene
 @export var distance: float = 10
 @export var camera: Camera3D
 @export var block: Node3D
@@ -107,19 +108,20 @@ func _break_block_server(position: Vector3) -> void:
 	
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
 	
-	var item = item_library.get_item(array[0])
+	if array[0] != "air":
+		var item = item_library.get_item(array[0])
 	
-	send_item.rpc_id(multiplayer.get_remote_sender_id(),array[0])
-	
-	if item.utility != null:
-		if item.utility.has_ui:
-			Globals.remove_ui.emit(position)
-			
-		elif item.utility.portal:
-			Globals.remove_portal_data.emit(position)
-			
-		elif item.utility.spawn_point:
-			Globals.removed_spawnpoint.emit(position)
+		send_item.rpc_id(multiplayer.get_remote_sender_id(),array[0])
+		
+		if item.utility != null:
+			if item.utility.has_ui:
+				Globals.remove_ui.emit(position)
+				
+			elif item.utility.portal:
+				Globals.remove_portal_data.emit(position)
+				
+			elif item.utility.spawn_point:
+				Globals.removed_spawnpoint.emit(position)
 	
 	_block_broken_local.rpc_id(get_multiplayer_authority(), array[0])
 
@@ -130,7 +132,10 @@ func _block_broken_local(type: StringName) -> void:
 	
 	if last_hit != null:
 		soundmanager.play_sound(type,last_hit.previous_position)
-				
+		var part = broken_part.instantiate()
+		part.position = last_hit.previous_position
+		get_node("/root/Main").add_child(part)
+		
 	block_broken.emit(type)
 
 
@@ -176,3 +181,7 @@ func ping_client(getting: bool = false) -> void:
 func tick() -> void:
 	if ping_label.visible:
 		ping_client()
+
+
+func _on_block_broken(type: StringName) -> void:
+	pass # Replace with function body.

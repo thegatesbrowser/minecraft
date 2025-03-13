@@ -34,6 +34,7 @@ var your_id
 @export var pos_label: Label
 @export var ping_label: Label
 @export var collision: CollisionShape3D
+@export var hand_ani: AnimationPlayer
 
 const SENSITIVITY = 0.004
 
@@ -214,6 +215,13 @@ func _physics_process(delta: float) -> void:
 			if auto_jump.is_colliding() and !can_auto_jump_check.is_colliding():
 				velocity.y = JUMP_VELOCITY
 	
+	if Input.is_action_pressed("Mine"):
+		if hand_ani.current_animation != "attack":
+			hand_ani.play("attack")
+	else:
+		if hand_ani.current_animation != "RESET":
+			hand_ani.play("RESET")
+
 	if Input.is_action_just_pressed("Mine"):
 		var hotbar = get_node("/root/Main").find_child("Selection_Buttons") as HotBar
 		var hotbar_item = hotbar.get_current().Item_resource
