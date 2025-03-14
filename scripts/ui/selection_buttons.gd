@@ -42,11 +42,11 @@ func _input(_event: InputEvent) -> void:
 				await timer.timeout
 				
 				if Input.is_action_pressed("Mine"):
-					remove()
 					eat_sfx.play()
-					Globals.hunger_points_gained.emit(selected_item.food_points)
-					print("ate ", selected_item.unique_name, " gained ", selected_item.food_points," food points")
-					
+					if selected_item != null:
+						Globals.hunger_points_gained.emit(selected_item.food_points)
+						print("ate ", selected_item.unique_name, " gained ", selected_item.food_points," food points")
+						remove()
 	
 	current_key %= 10
 	_unpress_all()

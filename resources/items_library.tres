@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemsLibrary" load_steps=34 format=3 uid="uid://cytxicahdwqm7"]
+[gd_resource type="Resource" script_class="ItemsLibrary" load_steps=34 format=3 uid="uid://cse24pfrkhxwq"]
 
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="1_n30f3"]
 [ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="1_udeus"]
@@ -19,7 +19,7 @@
 [ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="16_wuxvt"]
 [ext_resource type="Resource" uid="uid://bkg02u1wtw0q3" path="res://resources/items/grass_tall.tres" id="17_yewko"]
 [ext_resource type="Resource" uid="uid://lxq2aq82pa5e" path="res://resources/items/chest.tres" id="18_ui7of"]
-[ext_resource type="Resource" uid="uid://c2c8qekfermsb" path="res://resources/items/bow.tres" id="19_ugc28"]
+[ext_resource type="Resource" path="res://resources/items/bow.tres" id="19_ugc28"]
 [ext_resource type="Resource" uid="uid://dtchkab23joj6" path="res://resources/items/pickaxe_stone.tres" id="20_rqmp1"]
 [ext_resource type="Resource" uid="uid://db8a31q1w04nw" path="res://resources/items/axe_stone.tres" id="21_y1rwn"]
 [ext_resource type="Resource" uid="uid://b201rvmpv2nq1" path="res://resources/items/shovel_stone.tres" id="22_kco8g"]
@@ -30,9 +30,9 @@
 [ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/forge.tres" id="27_jk2ju"]
 [ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="28_to4we"]
 [ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="29_mv412"]
-[ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="30_src1s"]
-[ext_resource type="Resource" uid="uid://dmfnsgf0lvbhh" path="res://resources/items/fern.tres" id="31_23i81"]
-[ext_resource type="Resource" uid="uid://br88ujwpeqpe6" path="res://resources/items/flower.tres" id="32_r0vl2"]
+[ext_resource type="Resource" path="res://resources/items/arrow.tres" id="30_src1s"]
+[ext_resource type="Resource" path="res://resources/items/fern.tres" id="31_23i81"]
+[ext_resource type="Resource" uid="uid://0wihiiojdq8w" path="res://resources/items/flower.tres" id="32_r0vl2"]
 
 [resource]
 script = ExtResource("1_n30f3")

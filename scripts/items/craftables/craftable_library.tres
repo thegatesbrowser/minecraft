@@ -15,7 +15,7 @@
 [ext_resource type="Resource" uid="uid://cqmhwea1gfd5r" path="res://resources/items/craftables/axe_stone.tres" id="12_w3myd"]
 [ext_resource type="Resource" uid="uid://q0wwywxds52w" path="res://resources/items/craftables/shovel_stone.tres" id="13_74g6r"]
 [ext_resource type="Resource" uid="uid://cn74d63vbktv" path="res://resources/items/craftables/bow.tres" id="14_apca7"]
-[ext_resource type="Resource" uid="uid://bmkvd4u27kgp1" path="res://resources/items/craftables/arrow.tres" id="15_os0h5"]
+[ext_resource type="Resource" path="res://resources/items/craftables/arrow.tres" id="15_os0h5"]
 
 [resource]
 script = ExtResource("2_ftexq")

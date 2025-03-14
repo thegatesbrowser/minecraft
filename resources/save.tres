@@ -1,5 +1,0 @@
-[gd_resource type="VoxelStreamSQLite" format=3 uid="uid://8p3tmy5f1mh8"]
-
-[resource]
-database_path = "minecraft_db.sqlite3"
-preferred_coordinate_format = "minecraft_db.sqlite3"

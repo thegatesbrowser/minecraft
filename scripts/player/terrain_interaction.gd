@@ -132,9 +132,9 @@ func _block_broken_local(type: StringName) -> void:
 	
 	if last_hit != null:
 		soundmanager.play_sound(type,last_hit.previous_position)
-		var part = broken_part.instantiate()
-		part.position = last_hit.previous_position
-		get_node("/root/Main").add_child(part)
+		#var part = broken_part.instantiate()
+		#part.position = last_hit.previous_position
+		#get_node("/root/Main").add_child(part)
 		
 	block_broken.emit(type)
 
