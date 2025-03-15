@@ -12,6 +12,6 @@ spawn_size = 1
 unique_name = &"log_oak"
 texture = ExtResource("2_jhvp6")
 max_stack = 64
-forgable = false
+forgable = true
 forge_time = 2.0
 output_item = ExtResource("1_1xnot")

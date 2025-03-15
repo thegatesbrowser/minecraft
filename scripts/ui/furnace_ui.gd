@@ -11,7 +11,7 @@ var server_info_output: Dictionary
 @export var sync:bool = true
 
 @export var output_container: GridContainer 
-@export var input_container:VBoxContainer
+@export var input_container:GridContainer
 
 @export var fueled:bool = false
 
@@ -30,9 +30,11 @@ func _process(_delta: float) -> void:
 	var forge_item: ItemBase = cooking_slot.Item_resource
 	if forge_item != null:
 		if forge_item.forgable:
+			#print(forge_item.unique_name)
 			if last_cooking_amount != cooking_slot.amount:
 				_fuel()
 				if fueled:
+					#print(cook_time)
 					var cook_time = forge_item.forge_time
 					
 					var timer = Timer.new()
@@ -69,6 +71,7 @@ func _fuel() -> void:
 			fuel_slot.amount -= 1
 			last_cooking_amount = cooking_slot.amount
 			fuel_slot.update_slot()
+			return
 		else:
 			fueled = false
 	else:

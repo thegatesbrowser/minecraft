@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://brvfnxap5iawf"]
 
 [ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="1_n8c26"]
-[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="2_gwbju"]
+[ext_resource type="Theme" path="res://assets/menu/main_menu_theme.tres" id="2_gwbju"]
 
 [node name="loading_check" type="Node3D"]
 script = ExtResource("1_n8c26")

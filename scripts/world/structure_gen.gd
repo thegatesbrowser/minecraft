@@ -1,14 +1,14 @@
 
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
-var structure:String
+var possible_structures = []
 
 var channel := VoxelBuffer.CHANNEL_TYPE
 
 func generate() -> Structure:
 	var voxels: Dictionary = {}
 	
-	var structure_data = load(structure).instantiate()
+	var structure_data = possible_structures.pick_random().instantiate()
 	
 	for i in structure_data.get_children():
 		var type = i.name.rstrip(".0123456789") as String
@@ -21,6 +21,7 @@ func generate() -> Structure:
 
 	# Make structure
 	var aabb: AABB = AABB()
+	
 	for pos in voxels:
 		aabb = aabb.expand(pos)
 	

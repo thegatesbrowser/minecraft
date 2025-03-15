@@ -8,13 +8,17 @@ const StructureGenerator = preload("res://scripts/world/structure_gen.gd")
 
 @export var generate_custom_structures:bool = false
 @export var generate_trees:bool = true
+
 @export var HeightmapCurve = preload("res://resources/heightmap_curve.tres")
 @export var _heightmap_noise:FastNoiseLite
-@export var plant_odds:float = 0.1
-@export var creature_odds:float =  0.0001
-@export var possible_creatures: Array[Creature]
 
-var stone_block := []
+@export_group("odds")
+@export var plant_odds:float = 0.1
+@export var custom_structure_odds:float = .1
+@export var creature_odds:float =  0.0001
+
+@export_group("spawn")
+@export var possible_creatures: Array[Creature]
 
 @export var possible_tree_types:Dictionary = {
 	"oak": ["log_oak","leaf_oak"],
@@ -23,7 +27,11 @@ var stone_block := []
 @export var possible_plants: Array[StringName]
 
 @export var possible_ore: Array[ItemBlock]
-var custom_stucture:String = "res://assets/models/tree house.glb"
+
+@export var possible_structures: Array[PackedScene]
+
+var structure: String
+
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
 var DIRT := VoxelLibrary.get_model_index_default("dirt")
@@ -52,6 +60,7 @@ const _moore_dirs = [
 ]
 
 var _structures := []
+var _structure_pos := []
 var _tree_structures := []
 
 var _heightmap_min_y := int(HeightmapCurve.min_value)
@@ -60,13 +69,20 @@ var _heightmap_range := 0
 var _trees_min_y := 0
 var _trees_max_y := 0
 
+var _structure_min_y := 0
+var _structure_max_y := 0
+
 func _init() -> void:
+	call_deferred("_ready")
 	# TODO Even this must be based on a seed, but I'm lazy
+	pass
+
+func _ready() -> void:
 	var tree_generator: TreeGenerator = TreeGenerator.new()
 	var structure_generator: StructureGenerator = StructureGenerator.new()
 	
 	#structure_generator.structure = custom_stucture
-	structure_generator.structure = custom_stucture
+	structure_generator.possible_structures = possible_structures
 	tree_generator.possible_types = possible_tree_types
 
 	for i in 16:
@@ -78,20 +94,29 @@ func _init() -> void:
 		_structures.append(s)
 		
 	var tallest_tree_height = 0
+	var tallest_stucture_height = 0
+	
 	for structure in _tree_structures:
 		var h: int = int(structure.voxels.get_size().y)
 		if tallest_tree_height < h:
 			tallest_tree_height = h
 			
+	for structure in _structures:
+		var h: int = int(structure.voxels.get_size().y)
+		if tallest_stucture_height < h:
+			tallest_stucture_height = h
+			
 	_trees_min_y = _heightmap_min_y
 	_trees_max_y = _heightmap_max_y + tallest_tree_height
+	
+	_structure_max_y = _heightmap_max_y + tallest_stucture_height
+	_structure_min_y  = _heightmap_min_y
 	#_heightmap_noise.fractal_octaves = 4
 
 	# IMPORTANT
 	# If we don't do this `Curve` could bake itself when interpolated,
 	# and this causes crashes when used in multiple threads
 	HeightmapCurve.bake()
-
 
 func _get_used_channels_mask() -> int:
 	return 1 << _CHANNEL
@@ -233,9 +258,10 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int)
 	
 	var rng := RandomNumberGenerator.new()
 	rng.seed = _get_chunk_seed_2d(chunk_pos)
+	
 	if generate_custom_structures:
-		if rng.randf() < 1:
-			if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
+		if rng.randf() < custom_structure_odds:
+			if origin_in_voxels.y <= _structure_max_y and origin_in_voxels.y + block_size >= _structure_min_y:
 
 				var structure_instances := []
 					
@@ -247,20 +273,18 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int)
 				for dir in _moore_dirs:
 					var ncpos : Vector3 = (chunk_pos + dir).round()
 					_get_stucture_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
-
 				for structure_instance in structure_instances:
 					var pos : Vector3 = structure_instance[0]
+					_structure_pos.append(pos)
 					var structure : Structure = structure_instance[1]
 					var lower_corner_pos := pos - structure.offset
 					var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
-
 					if aabb.intersects(block_aabb):
 						voxel_tool.paste_masked(lower_corner_pos, 
 							structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
 							# Masking
 							VoxelBuffer.CHANNEL_TYPE, AIR)
-						
-					
+								
 	buffer.compress_uniform_channels()
 		
 
@@ -304,12 +328,3 @@ static func _get_chunk_seed_2d(cpos: Vector3) -> int:
 func _get_height_at(x: int, z: int) -> int:
 	var t: float = 0.5 + 0.5 * _heightmap_noise.get_noise_2d(x, z)
 	return int(HeightmapCurve.sample_baked(t))
-
-
-func ore(start: Vector3, end: Vector3, channel: int, chunk_pos: Vector3, buffer: VoxelBuffer) -> void:
-	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	rng.seed = _get_chunk_seed_2d(chunk_pos)
-	
-	if rng.randf() <= 1:
-		var random_pos = Vector3(randi_range(start.x,end.x),randi_range(start.y,end.y),randi_range(start.z,end.z))
-		buffer.set_voxel(random_pos.x,random_pos.y,random_pos.z, _CHANNEL)
