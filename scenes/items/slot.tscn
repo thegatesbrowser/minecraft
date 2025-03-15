@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_g0jy7"]
 [ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_nbp6w"]
-[ext_resource type="FontFile" uid="uid://bcyn2himieq3h" path="res://assets/menu/mc_menu.ttf" id="3_s7go4"]
+[ext_resource type="Theme" path="res://assets/menu/main_menu_theme.tres" id="3_dn7xo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]
 bg_color = Color(0, 0, 0, 0.572549)
@@ -82,16 +82,18 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -23.0
+offset_left = -23.0
+offset_top = -44.0
 offset_right = -2.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("3_dn7xo")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("3_s7go4")
+theme_override_font_sizes/font_size = 15
 text = "1"
-horizontal_alignment = 2
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="pressed" type="Panel" parent="."]
 visible = false

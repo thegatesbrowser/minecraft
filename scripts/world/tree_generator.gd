@@ -78,5 +78,6 @@ func generate() -> Structure:
 		var rpos: Vector3 = pos + structure.offset
 		var v: int = voxels[pos]
 		buffer.set_voxel(v, rpos.x, rpos.y, rpos.z, channel)
-
+	
+	print(voxels)
 	return structure

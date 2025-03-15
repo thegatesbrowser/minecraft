@@ -1,10 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=31 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="PackedScene" uid="uid://bai247yhexqwe" path="res://scenes/sky.tscn" id="3_jfwkf"]
-[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
+[ext_resource type="Theme" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/generator.tres" id="4_tpxqt"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
@@ -25,6 +25,9 @@
 [ext_resource type="AudioStream" uid="uid://c625ntyc2nlhe" path="res://assets/sounds/ambient/Soulsand_valley_ambience.ogg" id="23_fu53x"]
 [ext_resource type="PackedScene" uid="uid://7bxiyo4hesal" path="res://scenes/other/random_sound.tscn" id="24_r824s"]
 [ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="27_yvp68"]
+
+[sub_resource type="Environment" id="Environment_dhksy"]
+background_mode = 1
 
 [sub_resource type="VoxelStreamSQLite" id="VoxelStreamSQLite_3fff2"]
 database_path = "minecraft_db.sqlite3"
@@ -54,6 +57,8 @@ shadow_bias = 0.01
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128, 0)
+cull_mask = 0
+environment = SubResource("Environment_dhksy")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 use_gpu_generation = true

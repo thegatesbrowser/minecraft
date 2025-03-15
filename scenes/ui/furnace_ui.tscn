@@ -1,7 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnqhxtkp8jhnd"]
+[gd_scene load_steps=11 format=3 uid="uid://dnqhxtkp8jhnd"]
 
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_3e275"]
+[ext_resource type="Script" path="res://scripts/ui/slot.gd" id="2_bt8a5"]
 [ext_resource type="Script" path="res://scripts/ui/furnace_ui.gd" id="2_nr2i6"]
+[ext_resource type="Texture2D" uid="uid://mrnfj8o68k53" path="res://assets/textures/restaurant_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg" id="3_eiqei"]
+[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="4_kpgu4"]
+[ext_resource type="Theme" path="res://assets/menu/main_menu_theme.tres" id="5_6welf"]
+[ext_resource type="Texture2D" uid="uid://dcxtajuk5du84" path="res://assets/textures/local_fire_department_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg" id="6_2rprn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]
+bg_color = Color(0, 0, 0, 0.572549)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.176419, 0.176419, 0.176419, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0, 0, 0, 0.152941)
+shadow_size = 2
+shadow_offset = Vector2(3, 3)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bokx8"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tyv45"]
 
 [node name="furnace_ui" type="PanelContainer" node_paths=PackedStringArray("cooking_slot", "fuel_slot", "output_container", "input_container")]
 anchors_preset = 8
@@ -9,24 +45,24 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -171.0
-offset_top = -100.5
-offset_right = 171.0
-offset_bottom = 100.5
+offset_left = -175.0
+offset_top = -106.0
+offset_right = 176.0
+offset_bottom = 107.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_nr2i6")
-cooking_slot = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot")
-fuel_slot = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot2")
-output_container = NodePath("MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer")
-input_container = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer")
+cooking_slot = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot")
+fuel_slot = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2")
+output_container = NodePath("MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer")
+input_container = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -36,64 +72,228 @@ layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Inputs"]
 layout_mode = 2
+alignment = 1
 
 [node name="title" type="Label" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
 text = "inputs"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="input" type="GridContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 
-[node name="Slot" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer" instance=ExtResource("2_3e275")]
+[node name="Slot" type="TextureButton" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input" node_paths=PackedStringArray("pressed_panel")]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+stretch_mode = 4
+script = ExtResource("2_bt8a5")
+pressed_panel = NodePath("pressed")
 
-[node name="Slot2" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer" instance=ExtResource("2_3e275")]
+[node name="CenterContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot/CenterContainer"]
+texture_filter = 1
 layout_mode = 2
+texture = ExtResource("3_eiqei")
+
+[node name="Image" type="TextureRect" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_kpgu4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ecmii")
+
+[node name="amount" type="Label" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -44.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("5_6welf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 15
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="pressed" type="Panel" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot"]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bokx8")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot"]
+replication_config = SubResource("SceneReplicationConfig_tyv45")
+
+[node name="Slot2" type="TextureButton" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input" node_paths=PackedStringArray("pressed_panel")]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+stretch_mode = 4
+script = ExtResource("2_bt8a5")
+pressed_panel = NodePath("pressed")
+
+[node name="CenterContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2/CenterContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_2rprn")
+
+[node name="Image" type="TextureRect" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_kpgu4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ecmii")
+
+[node name="amount" type="Label" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -44.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("5_6welf")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 15
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="pressed" type="Panel" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2"]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bokx8")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2"]
+replication_config = SubResource("SceneReplicationConfig_tyv45")
 
 [node name="output" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/output"]
 layout_mode = 2
+alignment = 1
 
 [node name="title" type="Label" parent="MarginContainer/HBoxContainer/output/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
 text = "outputs
 "
 horizontal_alignment = 1
 uppercase = true
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/output/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/output/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 columns = 3
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer"]
 visible = false
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer"]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Slot" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot5" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot5" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot6" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot6" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot2" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot2" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot3" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot3" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot4" parent="MarginContainer/HBoxContainer/output/VBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot4" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot" to="." method="change"]
-[connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/VBoxContainer/Slot2" to="." method="change"]
+[connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot" to="." method="change"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot" to="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot" method="_on_pressed"]
+[connection signal="item_changed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2" to="." method="change"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2" to="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2" method="_on_pressed"]

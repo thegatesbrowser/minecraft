@@ -242,11 +242,11 @@ func _physics_process(delta: float) -> void:
 			if coll is Player:
 				if hotbar_item != null:
 					if "damage" in hotbar_item:
-						rpc_id(coll.get_multiplayer_authority(),"hit",hotbar_item.damage)
+						coll.hit.rpc_id(coll.get_multiplayer_authority(),hotbar_item.damage)
 					else:
-						rpc_id(coll.get_multiplayer_authority(),"hit")
+						coll.hit.rpc_id(coll.get_multiplayer_authority())
 				else:
-					rpc_id(coll.get_multiplayer_authority(),"hit")
+					coll.hit.rpc_id(coll.get_multiplayer_authority())
 	
 	## Flying Controls
 	if is_flying:

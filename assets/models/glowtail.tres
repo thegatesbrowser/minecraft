@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ca4o57wnh7d8v"]
+
+[ext_resource type="Texture2D" uid="uid://cfcrntyxjfat1" path="res://assets/models/glowtail_New Piskel (1).png" id="1_sr2dh"]
+
+[resource]
+resource_name = "Material.001"
+cull_mode = 2
+albedo_texture = ExtResource("1_sr2dh")
+texture_filter = 2

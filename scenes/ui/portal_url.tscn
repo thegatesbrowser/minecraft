@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://8oym32y4vfye"]
 
-[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_1en16"]
+[ext_resource type="Theme" path="res://assets/menu/main_menu_theme.tres" id="1_1en16"]
 [ext_resource type="Script" path="res://scripts/ui/portal_url.gd" id="1_5l1xl"]
 
 [node name="portal_url" type="Control"]
