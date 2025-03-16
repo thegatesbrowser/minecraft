@@ -9,7 +9,7 @@
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_5801w"]
 [ext_resource type="Resource" uid="uid://cse24pfrkhxwq" path="res://resources/items_library.tres" id="5_qnsii"]
 [ext_resource type="PackedScene" uid="uid://wwqa6ta7xtgq" path="res://scenes/other/breakparticle.tscn" id="8_8k80t"]
-[ext_resource type="Theme" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
 [ext_resource type="AudioStream" uid="uid://sn5gwkdparti" path="res://assets/sounds/other/Player_hurt1.ogg" id="11_1skow"]
 [ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="12_7rcqp"]
 [ext_resource type="AudioStream" uid="uid://bdoobkrlhbbdx" path="res://assets/sounds/other/Player_hurt2.ogg" id="12_lotnu"]
@@ -148,7 +148,7 @@ random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("13_xnj4e")
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation") groups=["Player"]]
 script = ExtResource("1")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
@@ -157,6 +157,7 @@ pos_label = NodePath("Pos")
 ping_label = NodePath("Ping")
 collision = NodePath("CollisionShape3D")
 hand_ani = NodePath("RotationRoot/Head/HandAni")
+terrain_interation = NodePath("Hands/TerrainInteraction")
 bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
 max_health = 20

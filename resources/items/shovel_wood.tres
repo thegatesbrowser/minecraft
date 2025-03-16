@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemTool" load_steps=7 format=3 uid="uid://blqe3qx1cpq57"]
 
-[ext_resource type="PackedScene" uid="uid://c3w4y20ibrrii" path="res://assets/models/Tools/Wood/shovel_wood.tscn" id="1_oikl5"]
+[ext_resource type="PackedScene" uid="uid://c3w4y20ibrrii" path="res://assets/models/tools/Wood/shovel_wood.tscn" id="1_oikl5"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_u4dta"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="3_3f2jh"]
 [ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="4_kfhlk"]
@@ -12,7 +12,11 @@ script = ExtResource("2_u4dta")
 suitable_objects = Array[ExtResource("3_3f2jh")]([ExtResource("4_kfhlk"), ExtResource("5_gyuis")])
 breaking_efficiency = 0.2
 damage = 2
+max_health = 5.0
+degrade_rate = 0.1
 unique_name = &""
 texture = ExtResource("6_wd516")
-max_stack = 64
+max_stack = 1
 holdable_mesh = ExtResource("1_oikl5")
+forgable = false
+forge_time = 2.0

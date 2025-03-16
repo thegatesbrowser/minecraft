@@ -29,7 +29,10 @@ func craft() -> void:
 				#print("crafted")
 				var soundmanager = get_node("/root/Main").find_child("SoundManager")
 				soundmanager.play_UI_sound()
-				inventory.spawn_item(craftable.output_item,craftable.output_amount)
+				if "health" in craftable.output_item:
+					inventory.spawn_item(craftable.output_item,craftable.output_amount, craftable.output_item.health)
+				else:
+					inventory.spawn_item(craftable.output_item,craftable.output_amount)
 				for i in craftable.items_needed:
 					Globals.remove_item.emit(craftable.items_needed[i].name, craftable.items_needed[i].amount)
 

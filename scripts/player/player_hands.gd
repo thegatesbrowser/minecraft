@@ -54,8 +54,9 @@ func _process(_delta: float) -> void:
 				
 				if Input.is_action_pressed("Mine"):
 					
+				
+						
 					if terrain_interaction.last_hit != null:
-					
 						terrain_interaction.break_block()
 
 

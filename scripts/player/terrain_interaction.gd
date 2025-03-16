@@ -121,7 +121,7 @@ func _break_block_server(position: Vector3) -> void:
 				Globals.remove_portal_data.emit(position)
 				
 			elif item.utility.spawn_point:
-				Globals.removed_spawnpoint.emit(position)
+				remove_spawn_point.rpc(position)
 	
 	_block_broken_local.rpc_id(get_multiplayer_authority(), array[0])
 
@@ -149,6 +149,13 @@ func _on_Area_body_exited(_body: Node3D) -> void:
 
 @rpc("any_peer","call_remote")
 func send_item(type: StringName) -> void:
+	## if the player is holding a tool it will be damaged
+	if Globals.selected_slot != null:
+		if Globals.selected_slot.Item_resource != null:
+			if Globals.selected_slot.Item_resource is ItemTool:
+				Globals.selected_slot.used()
+						
+	## gives the broken item to the player
 	var item = item_library.get_item(type)
 	Globals.spawn_item_inventory.emit(item)
 
@@ -185,3 +192,9 @@ func tick() -> void:
 
 func _on_block_broken(type: StringName) -> void:
 	pass # Replace with function body.
+
+@rpc("any_peer","call_local")
+func remove_spawn_point(pos:Vector3) -> void:
+	var player = get_parent().get_parent() as Player
+	if player.spawn_position == pos + Vector3(0,1,0):
+		player.spawn_position = player.start_position

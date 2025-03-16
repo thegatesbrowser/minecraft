@@ -86,19 +86,22 @@ func open(server_details: Dictionary = {}) -> void:
 			update_client.rpc(server_details)
 
 
-func change(index: int, item_path: String, amount: int, parent:String) -> void:
+func change(index: int, item_path: String, amount: int, parent:String,health:float) -> void:
 	if sync:
 		#print(index,"item ", item_path, parent)
-		Globals.sync_ui_change.emit(index,item_path,amount,parent)
+		Globals.sync_ui_change.emit(index,item_path,amount,parent,health)
 
 
 @rpc("any_peer","call_local")
 func update_client(info) -> void:
 	for i in info:
 		var parent = find_child(info[i].parent)
+		
 		if parent != null:
 			var slot = parent.get_child(i)
+			
 			if slot != null:
 				slot.Item_resource = load(info[i].item_path)
+				slot.health = info[i].health
 				slot.amount = info[i].amount
 				slot.update_slot()

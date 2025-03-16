@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="PackedScene" uid="uid://bai247yhexqwe" path="res://scenes/sky.tscn" id="3_jfwkf"]
-[ext_resource type="Theme" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="VoxelGeneratorScript" uid="uid://dprd06y5qsr36" path="res://resources/generator.tres" id="4_tpxqt"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://cgpku20ap67qm" path="res://resources/voxel_block_library.tres" id="5_td8xe"]

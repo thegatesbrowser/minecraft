@@ -47,9 +47,10 @@ signal remove_portal_data(id:Vector3)
 
 # ui
 signal new_ui(position:Vector3,instance_path:String)
-signal sync_ui_change(index: int, item_path: String, amount: int,parent:String)
+signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,health: int)
 signal remove_ui(position:Vector3)
 var last_clicked_slot:Node
+var selected_slot:Slot ## the slot that is selected in the hotbar
 
 # inventory
 signal open_inventory(id)
@@ -84,6 +85,7 @@ func slot_clicked(slot):
 			#print("move ")
 			slot.Item_resource = Globals.last_clicked_slot.Item_resource
 			#slot.add_item.rpc(Globals.last_clicked_slot.Item_resource)
+			slot.health = Globals.last_clicked_slot.health
 			slot.amount = Globals.last_clicked_slot.amount
 			Globals.last_clicked_slot.Item_resource = null
 			slot.update_slot()
@@ -107,17 +109,20 @@ func slot_clicked(slot):
 				if slot.Item_resource != null:
 					if slot.Item_resource != Globals.last_clicked_slot.Item_resource:
 						#print("swap " )
+						var hold_slot_health = slot.health
 						var hold_slot_amount = slot.amount
 						var hold_slot_resource = slot.Item_resource
 						
 						slot.Item_resource = Globals.last_clicked_slot.Item_resource
+						
 						#slot.Item_resource =  Globals.last_clicked_slot.Item_resource
 						slot.amount = Globals.last_clicked_slot.amount
-						
+						slot.health = Globals.last_clicked_slot.health
 						#Globals.last_clicked_slot.Item_resource = hold_slot_resource
 						Globals.last_clicked_slot.Item_resource = hold_slot_resource
-						
+
 						Globals.last_clicked_slot.amount = hold_slot_amount
+						Globals.last_clicked_slot.health = hold_slot_health
 						Globals.last_clicked_slot.update_slot()
 						Globals.last_clicked_slot.focused = false
 						Globals.last_clicked_slot = null

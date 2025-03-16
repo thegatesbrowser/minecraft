@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemTool" load_steps=6 format=3 uid="uid://dtchkab23joj6"]
 
-[ext_resource type="PackedScene" uid="uid://dvinjq4u58ol5" path="res://assets/models/Tools/Stone/pickaxe_stone.tscn" id="1_s8hha"]
+[ext_resource type="PackedScene" uid="uid://dvinjq4u58ol5" path="res://assets/models/tools/Stone/pickaxe_stone.tscn" id="1_s8hha"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_11r0r"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="3_0qy1n"]
 [ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="4_7m135"]
@@ -11,7 +11,11 @@ script = ExtResource("2_11r0r")
 suitable_objects = Array[ExtResource("3_0qy1n")]([ExtResource("4_7m135")])
 breaking_efficiency = 0.7
 damage = 2
+max_health = 5.0
+degrade_rate = 0.1
 unique_name = &""
 texture = ExtResource("5_twsml")
-max_stack = 64
+max_stack = 1
 holdable_mesh = ExtResource("1_s8hha")
+forgable = false
+forge_time = 2.0

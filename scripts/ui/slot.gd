@@ -1,7 +1,7 @@
 extends TextureButton
 class_name Slot
 
-signal item_changed(index:int,item_path:String,amount:int,parent:String)
+signal item_changed(index:int,item_path:String,amount:int,parent:String,health:float)
 
 @export var pressed_panel: Panel
 
@@ -12,15 +12,22 @@ signal item_changed(index:int,item_path:String,amount:int,parent:String)
 
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
+@onready var health_label: Label = $health
+@onready var health_bar: ProgressBar = $CenterContainer/health
+
 
 var index:int
+var health:float
 
 var played_ani:bool = false
 var focused:bool = false
 
 
 func _process(_delta: float) -> void:
+	
 	if Item_resource != null:
+		health_label.text = str(health)
+		health_bar.value = health
 		image.texture = Item_resource.texture
 	else:
 		image.texture = null
@@ -36,6 +43,7 @@ func _process(_delta: float) -> void:
 		played_ani = false
 		pressed_panel.hide()
 	
+	# destorys the item is the amount is 0 (mainly for the furnace)
 	if amount <= 0:
 		amount = 1
 		Item_resource = null
@@ -68,24 +76,29 @@ func _on_pressed() -> void:
 func update_slot() -> void:
 	amount_label.text = str(amount)
 	if Item_resource != null:
+		
 		if amount >= 2:
 			amount_label.show()
+			
 		image.texture = Item_resource.texture
-		item_changed.emit(index,Item_resource.get_path(),amount,get_parent().name)
+
+		item_changed.emit(index,Item_resource.get_path(),amount,get_parent().name,health)
+		
+		if not Item_resource is ItemTool:
+			health_bar.hide()
+		else:
+			health_bar.show()
+
 	else:
 		amount_label.hide()
 		amount = 1
 		image.texture = null
-		item_changed.emit(index,"",amount,get_parent().name)
+		item_changed.emit(index,"",amount,get_parent().name,health)
+		health = 0
+		health_bar.hide()
 
-
-func update_non_sync() -> void:
-	amount_label.text = str(amount)
-	if Item_resource != null:
-		if amount >= 2:
-			amount_label.show()
-		image.texture = Item_resource.texture
-	else:
-		amount_label.hide()
-		amount = 1
-		image.texture = null
+func used() -> void:
+	health -= Item_resource.degrade_rate
+	if health <= 0:
+		Item_resource = null
+	update_slot()
