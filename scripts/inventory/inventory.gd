@@ -47,17 +47,20 @@ func _process(_delta: float) -> void:
 					Globals.last_clicked_slot = null
 
 
-func is_even(x: int):
+func is_even(x: int) -> bool:
 	return x % 2 == 0
 
 
-func spawn_item(item_resource, amount:int = 1):
+func spawn_item(item_resource, amount:int = 1,health:int = 0) -> void:
 	if !visible: return
 	if !full:
 		for i in items_collection.get_children():
 			if i.Item_resource == null:
 				i.Item_resource = item_resource
 				i.amount = amount
+				
+				if health != 0:
+					i.health = health
 				#print(item_resource)
 				i.update_slot()
 				for num in amount:
@@ -66,15 +69,7 @@ func spawn_item(item_resource, amount:int = 1):
 				sort()
 				break
 
-
-func make_slots():
-	for i in amount_of_slots:
-		var slot = slot_s.instantiate()
-		slot.set_multiplayer_authority(1,true)
-		items_collection.add_child(slot)
-
-
-func sort():
+func sort() -> void:
 	items.clear()
 	slots.clear()
 	for i in items_collection.get_children():
@@ -111,7 +106,7 @@ func _on_add_random_item_pressed() -> void:
 	spawn_item(item)
 
 
-func check_amount_of_item(item:StringName):
+func check_amount_of_item(item:StringName) -> int:
 	var amount = 0
 	for i in inventory:
 		#print(i)
@@ -123,7 +118,7 @@ func check_amount_of_item(item:StringName):
 	return amount
 
 
-func remove_item(unique_name:StringName,amount:int):
+func remove_item(unique_name:StringName,amount:int) -> void:
 	if id != Vector3.ZERO: return ## id mean its not the players inventory
 	
 	for i in amount:
@@ -151,7 +146,7 @@ func remove_item(unique_name:StringName,amount:int):
 					break
 
 
-func check_if_full():
+func check_if_full() -> void:
 	var free_space:int = 0
 	for i in items_collection.get_children():
 		if i.Item_resource == null:
@@ -181,9 +176,9 @@ func open(server_details:= {}):
 			update_client.rpc(server_details)
 
 
-func change(index: int, item_path: String, amount: int,parent:String):
+func change(index: int, item_path: String, amount: int,parent:String,health:float):
 	if sync:
-		Globals.sync_ui_change.emit(index,item_path,amount,parent)
+		Globals.sync_ui_change.emit(index,item_path,amount,parent,health)
 
 
 @rpc("any_peer","call_local")
@@ -197,5 +192,6 @@ func update_client(info):
 		else:
 			slot.Item_resource = null
 			
+		slot.health = info[i].health
 		slot.amount = info[i].amount
 		slot.update_slot()

@@ -4,6 +4,7 @@ class_name Player
 signal hunger_updated(hunger)
 signal health_updated(health)
 
+var start_position:Vector3
 var spawn_position: Vector3
 var your_id
 
@@ -35,6 +36,7 @@ var your_id
 @export var ping_label: Label
 @export var collision: CollisionShape3D
 @export var hand_ani: AnimationPlayer
+@export var terrain_interation:TerrainInteraction
 
 const SENSITIVITY = 0.004
 
@@ -88,11 +90,13 @@ var health
 @onready var minecraft_player: Node3D = $RotationRoot/minecraft_player # TP
 #@onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp # FP
 
+var spawn_point_set := {}
 
 func _ready() -> void:
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
+	spawn_position = start_position
 	hunger = base_hunger
 	health = max_health
 
@@ -447,6 +451,7 @@ func hunger_update(_delta: float) -> void:
 
 
 func death() -> void:
+	#terrain_interation.place_block(&"gravestone")
 	health = max_health
 	hunger = base_hunger
 	print("death")

@@ -7,6 +7,7 @@ signal player_despawned(id: int)
 @export var view_distance: int = 128
 @export var player_scene: PackedScene
 @export var stats_ui_updater: Control
+@export var loading:CanvasLayer
 
 @onready var spawn_points: SpawnPoints = $"../Game/SpawnPoints"
 
@@ -47,7 +48,7 @@ func custom_spawn(data: Array) -> Node:
 	player.set_multiplayer_authority(id)
 	player.name = str(id)
 	player.position = spawn_position
-	player.spawn_position = spawn_position
+	player.start_position = spawn_position
 	
 	create_viewer(id, player)
 	
@@ -55,6 +56,7 @@ func custom_spawn(data: Array) -> Node:
 		"player": player
 	}
 	
+	loading.hide()
 	player_spawned.emit(id, player)
 	stats_ui_updater.your_player = player
 	return player

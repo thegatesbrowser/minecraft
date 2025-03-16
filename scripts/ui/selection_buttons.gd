@@ -71,6 +71,7 @@ func _press_key(i: int) -> void:
 	
 	if buttons[current_key].Item_resource != null:
 		selected_item = buttons[current_key].Item_resource
+		Globals.selected_slot = buttons[current_key]
 		## add holdable if has one
 		
 		## general holdables
