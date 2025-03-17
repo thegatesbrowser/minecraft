@@ -71,8 +71,8 @@ func get_type() -> StringName:
 
 
 ## Places a block with the given type
-func place_block(type: StringName) -> void:
-	_place_block_server.rpc_id(1, type, last_hit.previous_position)
+func place_block(type: StringName, player_pos: Vector3) -> void:
+	_place_block_server.rpc_id(1, type, last_hit.previous_position, player_pos)
 
 
 ## Breaks the block and returns the type name
@@ -81,9 +81,10 @@ func break_block() -> void:
 
 
 @rpc("reliable", "authority")
-func _place_block_server(type: StringName, position: Vector3) -> void:
+func _place_block_server(type: StringName, position: Vector3, player_pos: Vector3) -> void:
 	var item = item_library.get_item(type)
 	
+	#print("player pos ", player_pos)
 	if item.utility != null:
 		if item.utility.has_ui:
 			Globals.new_ui.emit(position,item.utility.ui_scene_path)
@@ -93,7 +94,13 @@ func _place_block_server(type: StringName, position: Vector3) -> void:
 			open_portal_ui.rpc_id(multiplayer.get_remote_sender_id(),position)
 	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
-	voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
+	
+	if item.rotatable:
+		## make the block rotation towards the player when placed
+		voxel_tool.value = voxel_blocky_type_library.get_model_index_single_attribute(type,get_direction(player_pos,position))
+	else:
+		voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
+	
 	voxel_tool.do_point(position)
 
 
@@ -198,3 +205,21 @@ func remove_spawn_point(pos:Vector3) -> void:
 	var player = get_parent().get_parent() as Player
 	if player.spawn_position == pos + Vector3(0,1,0):
 		player.spawn_position = player.start_position
+
+	
+
+func get_direction(player_pos, place_pos):
+	var dir = place_pos.direction_to(player_pos)
+	print(dir)
+	
+	if round(dir).x != 0:
+		if round(dir).x == 1:
+			return VoxelBlockyAttributeDirection.DIR_NEGATIVE_X
+		else:
+			return VoxelBlockyAttributeDirection.DIR_POSITIVE_X
+			
+	elif round(dir).z != 0:
+		if round(dir).z == 1:
+			return VoxelBlockyAttributeDirection.DIR_NEGATIVE_Z
+		else:
+			return VoxelBlockyAttributeDirection.DIR_POSITIVE_Z

@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=69 format=3 uid="uid://cgpku20ap67qm"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=70 format=3 uid="uid://cgpku20ap67qm"]
 
 [ext_resource type="Texture2D" uid="uid://bj6lta8stj7xg" path="res://assets/textures_mesh.png" id="1_dufrr"]
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
@@ -220,6 +220,8 @@ unique_name = &"tall_grass"
 base_model = SubResource("VoxelBlockyModelMesh_ot456")
 resource_name = "tall_grass"
 
+[sub_resource type="VoxelBlockyAttributeDirection" id="VoxelBlockyAttributeDirection_ics12"]
+
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_p3ml1"]
 atlas_size_in_tiles = Vector2i(12, 4)
 tile_left = Vector2i(9, 1)
@@ -233,6 +235,7 @@ material_override_0 = ExtResource("1_v2tgt")
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_l4xyh"]
 unique_name = &"chest"
 base_model = SubResource("VoxelBlockyModelCube_p3ml1")
+attributes = Array[VoxelBlockyAttribute]([SubResource("VoxelBlockyAttributeDirection_ics12")])
 resource_name = "chest"
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_hjums"]
@@ -424,4 +427,4 @@ resource_name = "gravestone"
 
 [resource]
 types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_8qo0e")])
-_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone")
+_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]")

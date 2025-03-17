@@ -8,6 +8,7 @@ class_name ItemBase
 @export var holdable_mesh:PackedScene
 
 @export var utility: Utilities
+@export var rotatable:bool = false
 
 @export_category('forging')
 @export var forgable:bool = false

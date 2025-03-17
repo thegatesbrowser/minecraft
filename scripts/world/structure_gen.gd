@@ -11,12 +11,15 @@ func generate() -> Structure:
 	var structure_data = possible_structures.pick_random().instantiate()
 	
 	for i in structure_data.get_children():
-		var type = i.name.rstrip(".0123456789") as String
+		var type = i.name.rstrip("_.0123456789") as String
 		var type_length = type.length()
-		type = type.left(type_length - 1)
 		#print("structure block type ",type)
+		
+		if VoxelLibrary.get_model_index_default(type) == -1:
+			push_error("object ", i.name, " as ", type, " is not a vaild block in VoxelLibrary")
 		voxels[Vector3(i.position.x, i.position.y, i.position.z)] =  VoxelLibrary.get_model_index_default(type)
-	#structure_data.hide()
+		#voxels[Vector3(i.position.x, i.position.y, i.position.z)] = VoxelLibrary.get_model_index_default("stone")
+
 	# Let's make crappy trees
 
 	# Make structure
