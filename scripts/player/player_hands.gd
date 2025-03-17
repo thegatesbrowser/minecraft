@@ -4,7 +4,7 @@ extends Node
 @export var items_library: ItemsLibrary
 
 var timer: Timer
-
+@export var camera: Camera3D
 
 func _ready():
 	items_library.init_items()
@@ -23,8 +23,8 @@ func _process(_delta: float) -> void:
 				
 				var soundmanager = get_node("/root/Main").find_child("SoundManager")
 				soundmanager.play_sound(Globals.current_block,terrain_interaction.last_hit.position)
-				
-				terrain_interaction.place_block(Globals.current_block)
+				var player_pos = get_parent().global_position
+				terrain_interaction.place_block(Globals.current_block,player_pos)
 				Globals.remove_item_from_hotbar.emit()
 	
 	if Input.is_action_pressed("Mine"):

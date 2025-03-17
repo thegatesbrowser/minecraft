@@ -20,5 +20,6 @@ unique_name = &"chest"
 texture = ExtResource("2_r07l0")
 max_stack = 64
 utility = SubResource("Resource_v7ur5")
+rotatable = true
 forgable = false
 forge_time = 2.0

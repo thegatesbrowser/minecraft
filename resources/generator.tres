@@ -1,4 +1,4 @@
-[gd_resource type="VoxelGeneratorScript" load_steps=11 format=3 uid="uid://dprd06y5qsr36"]
+[gd_resource type="VoxelGeneratorScript" load_steps=12 format=3 uid="uid://dprd06y5qsr36"]
 
 [ext_resource type="Curve" uid="uid://cvrt8qtqhadv1" path="res://resources/heightmap_curve.tres" id="1_buuae"]
 [ext_resource type="Script" path="res://scripts/world/generator.gd" id="1_gocow"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/Glowtail.tres" id="3_yvx72"]
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="4_8wfm7"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="5_a8n2h"]
+[ext_resource type="Resource" uid="uid://dlo4g7vetwnq7" path="res://resources/creatures/rabbit.tres" id="5_ujeax"]
 [ext_resource type="Resource" uid="uid://dvlxseu7sf1d4" path="res://resources/items/iron_block.tres" id="6_1e2se"]
 [ext_resource type="Resource" uid="uid://c4g4nofmjg2jg" path="res://resources/items/diamond_block.tres" id="7_y6uke"]
 [ext_resource type="PackedScene" uid="uid://d2u1w5uupfjfx" path="res://assets/models/floating island.glb" id="8_1kv1b"]
@@ -21,7 +22,7 @@ _heightmap_noise = SubResource("FastNoiseLite_sv834")
 plant_odds = 100.0
 custom_structure_odds = 0.1
 creature_odds = 0.001
-possible_creatures = Array[ExtResource("2_blhgi")]([ExtResource("3_yvx72"), ExtResource("4_8wfm7")])
+possible_creatures = Array[ExtResource("2_blhgi")]([ExtResource("3_yvx72"), ExtResource("4_8wfm7"), ExtResource("5_ujeax")])
 possible_tree_types = {
 "birch": ["log_birch", "leaf_oak"],
 "oak": ["log_oak", "leaf_oak"]

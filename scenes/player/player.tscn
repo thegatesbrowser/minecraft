@@ -162,10 +162,11 @@ bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
 max_health = 20
 
-[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction")]
+[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction", "camera")]
 script = ExtResource("4_064gd")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
+camera = NodePath("../RotationRoot/Head/Camera3D")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block", "ping_label")]
 script = ExtResource("2_5q13p")
