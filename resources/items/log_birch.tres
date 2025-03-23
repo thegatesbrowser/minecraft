@@ -12,6 +12,7 @@ spawn_size = 1
 unique_name = &"log_birch"
 texture = ExtResource("2_x6jtw")
 max_stack = 64
+rotatable = false
 forgable = true
 forge_time = 2.0
 output_item = ExtResource("1_toy7d")

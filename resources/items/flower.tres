@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://0wihiiojdq8w"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://d0ns05o7rlxa5"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_nyr5f"]
 [ext_resource type="Texture2D" uid="uid://d10fsk4wa54su" path="res://assets/textures/blocks/flower_rose.png" id="2_yhypl"]
@@ -11,5 +11,6 @@ spawn_size = 1
 unique_name = &"flower"
 texture = ExtResource("2_yhypl")
 max_stack = 64
+rotatable = false
 forgable = false
 forge_time = 2.0

@@ -20,5 +20,6 @@ unique_name = &"bed"
 texture = ExtResource("2_ctumy")
 max_stack = 64
 utility = SubResource("Resource_8u72f")
+rotatable = false
 forgable = false
 forge_time = 2.0

@@ -46,5 +46,4 @@ mesh = SubResource("QuadMesh_ixqxx")
 
 [node name="CreaturePoint" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
-visible = false
 mesh = SubResource("QuadMesh_1x27q")

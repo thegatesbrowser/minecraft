@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Creature" load_steps=9 format=3 uid="uid://dlo4g7vetwnq7"]
 
-[ext_resource type="PackedScene" uid="uid://h0et7ajcqsnv" path="res://assets/models/rabbit_3.tscn" id="1_c3h7y"]
+[ext_resource type="PackedScene" uid="uid://dktdt0miyjuqc" path="res://assets/models/rabbit_3.tscn" id="1_c3h7y"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_fksyk"]
 [ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="2_nwdqp"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="2_qtout"]

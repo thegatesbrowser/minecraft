@@ -2,6 +2,7 @@ extends Node
 
 @export var inventory_holder:HBoxContainer
 
+
 var server_ui_info:Dictionary = {}
 var opened_ui:Vector3 ## tells the server which ui is opened
 
@@ -30,8 +31,8 @@ func ui_updated(index: int, item_path: String, amount: int, parent: String, heal
 func send_to_server(index: int, item_path: String, amount: int, parent: String, health:float) -> void:
 	if multiplayer.is_server():
 		if opened_ui == Vector3.ZERO: return
-		if !server_ui_info.has(opened_ui): return
-		server_ui_info[opened_ui].inventory[index] = {
+		if !server_ui_info.has(str(opened_ui)): return
+		server_ui_info[str(opened_ui)].inventory[str(index)] = {
 			"item_path":item_path,
 			"amount":amount,
 			"parent":parent,
@@ -42,7 +43,7 @@ func send_to_server(index: int, item_path: String, amount: int, parent: String, 
 
 @rpc("any_peer", "call_local")
 func server_make_ui(position: Vector3, scene_path: String) -> void:
-	server_ui_info[position] = {
+	server_ui_info[str(position)] = {
 		"scene": scene_path,
 		"inventory": {}
 	}
@@ -50,8 +51,9 @@ func server_make_ui(position: Vector3, scene_path: String) -> void:
 
 @rpc("any_peer", "call_local")
 func check_server(position: Vector3) -> void:
-	if !server_ui_info.has(position): return
-	var server_data: Dictionary = server_ui_info[position]
+	#print(server_ui_info.has(position)," ", str(position),"  ", server_ui_info)
+	if !server_ui_info.has(str(position)): return
+	var server_data: Dictionary = server_ui_info[str(position)]
 	give_clients.rpc_id(multiplayer.get_remote_sender_id(), server_data)
 
 
@@ -60,6 +62,7 @@ func give_clients(server_data: Dictionary) -> void:
 	var ui: Control = load(server_data.scene).instantiate()
 	inventory_holder.add_child(ui)
 	ui.open(server_data.inventory)
+	print(server_data.inventory)
 
 
 @rpc("any_peer", "call_local")
@@ -70,4 +73,11 @@ func Opened_ui(id: Vector3) -> void:
 
 @rpc("any_peer","call_local")
 func remove_ui(id: Vector3) -> void:
-	server_ui_info.erase(id)
+	server_ui_info.erase(str(id))
+
+func save():
+	if multiplayer.is_server():
+		var save_dict = {
+			"server_ui_info":server_ui_info
+		}
+		return save_dict

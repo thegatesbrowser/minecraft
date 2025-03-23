@@ -25,6 +25,7 @@ Globals="*res://scenes/globals.tscn"
 FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"
 GlobalAnimation="*res://scripts/common/animation.gd"
 TerrainHelper="*res://scripts/common/terrain_helper.gd"
+SaveGlobal="*res://SaveGlobal.gd"
 
 [debug]
 
@@ -54,6 +55,7 @@ Player=""
 "Main Inventory"=""
 VoxelTerrain=""
 PlayerSpawner=""
+UISyncer="saves the ui data"
 
 [input]
 
@@ -255,6 +257,7 @@ Crouch={
 
 textures/canvas_textures/default_texture_filter=0
 environment/volumetric_fog/volume_size=128
+anti_aliasing/quality/msaa_2d=3
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 environment/default_environment="res://Assets/default_env.tres"

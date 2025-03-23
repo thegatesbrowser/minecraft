@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_bfgg8"]
 [ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="2_euni2"]
-[ext_resource type="Resource" uid="uid://dtchkab23joj6" path="res://resources/items/pickaxe_stone.tres" id="3_qi6e3"]
+[ext_resource type="Resource" uid="uid://dah3r6qldt8la" path="res://resources/items/pickaxe_stone.tres" id="3_qi6e3"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_6p30j"]
 [ext_resource type="Texture2D" uid="uid://clil063h5db5k" path="res://assets/textures/items/Stone_Pickaxe_JE2_BE2.webp" id="5_xfwlj"]
 

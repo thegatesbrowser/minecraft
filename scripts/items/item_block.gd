@@ -6,3 +6,4 @@ class_name ItemBlock
 @export_category("ore?")
 @export var spawn_chance: float = 0.1
 @export var spawn_size: int = 1
+@export var spawn_height:float

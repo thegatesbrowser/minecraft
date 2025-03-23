@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=9 format=3 uid="uid://db8a31q1w04nw"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=9 format=3 uid="uid://dg2gha7cp48ki"]
 
-[ext_resource type="PackedScene" uid="uid://dsjh1sn3y3flk" path="res://assets/models/tools/Stone/axe_stone.tscn" id="1_rnakm"]
+[ext_resource type="PackedScene" uid="uid://dsjh1sn3y3flk" path="res://assets/models/Tools/Stone/axe_stone.tscn" id="1_rnakm"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_cqyaj"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="3_pc2pr"]
 [ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="4_se7tg"]
@@ -20,5 +20,6 @@ unique_name = &""
 texture = ExtResource("8_5nofn")
 max_stack = 1
 holdable_mesh = ExtResource("1_rnakm")
+rotatable = false
 forgable = false
 forge_time = 2.0

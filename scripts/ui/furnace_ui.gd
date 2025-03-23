@@ -95,10 +95,11 @@ func change(index: int, item_path: String, amount: int, parent:String,health:flo
 @rpc("any_peer","call_local")
 func update_client(info) -> void:
 	for i in info:
-		var parent = find_child(info[i].parent)
 		
+		var parent = find_child(info[i].parent)
+			
 		if parent != null:
-			var slot = parent.get_child(i)
+			var slot = parent.get_child(i.to_int())
 			
 			if slot != null:
 				slot.Item_resource = load(info[i].item_path)

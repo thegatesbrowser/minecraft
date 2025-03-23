@@ -185,7 +185,7 @@ func change(index: int, item_path: String, amount: int,parent:String,health:floa
 func update_client(info):
 	for i in info:
 		
-		var slot = find_child(info[i].parent).get_child(i)
+		var slot = find_child(info[i].parent).get_child(i.to_int())
 		
 		if info[i].item_path != "":
 			slot.Item_resource = load(info[i].item_path)
