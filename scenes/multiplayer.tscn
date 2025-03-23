@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=50 format=3 uid="uid://de27e3hbp0hph"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/multiplayer/player_spawner.gd" id="6_l50oc"]
 [ext_resource type="Script" path="res://scripts/other/sound_manager.gd" id="6_x8auu"]
 [ext_resource type="AudioStream" uid="uid://dlftyl4lsb4o5" path="res://assets/sounds/dig/grass1.ogg" id="7_hpv8s"]
-[ext_resource type="PackedScene" uid="uid://ql4u3t5lhtyt" path="res://scenes/player/player.tscn" id="7_n7355"]
+[ext_resource type="PackedScene" uid="uid://bbet1xkqsp2wo" path="res://scenes/player/player.tscn" id="7_n7355"]
 [ext_resource type="PackedScene" uid="uid://ca1tf375ldayj" path="res://scenes/game.tscn" id="8_62j4i"]
 [ext_resource type="AudioStream" uid="uid://bshcsm6rdob6j" path="res://assets/sounds/dig/grass2.ogg" id="8_231k4"]
 [ext_resource type="AudioStream" uid="uid://b5fxn8ibkvfxq" path="res://assets/sounds/dig/grass3.ogg" id="9_mrmhb"]
@@ -36,6 +36,7 @@
 [ext_resource type="AudioStream" uid="uid://cftecgxiqhol6" path="res://assets/sounds/block/item_frame_add_item3.ogg" id="31_ot16s"]
 [ext_resource type="AudioStream" uid="uid://d4mieippat2vk" path="res://assets/sounds/block/item_frame_add_item4.ogg" id="32_ik8i6"]
 [ext_resource type="Script" path="res://scripts/other/portal_manager.gd" id="34_oj152"]
+[ext_resource type="Script" path="res://scripts/common/saver.gd" id="34_s4tlk"]
 [ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="35_06sqe"]
 [ext_resource type="PackedScene" uid="uid://8oym32y4vfye" path="res://scenes/ui/portal_url.tscn" id="35_fu1ca"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
@@ -196,16 +197,20 @@ volume_db = -11.555
 pitch_scale = 4.0
 bus = &"UI"
 
-[node name="UISyncer" type="Node" parent="." node_paths=PackedStringArray("inventory_holder")]
-script = ExtResource("38_ig7nw")
-inventory_holder = NodePath("../Game/Player UI/Inventory holder/Inventory")
-
 [node name="PortalManager" type="Node" parent="." node_paths=PackedStringArray("UI")]
 script = ExtResource("34_oj152")
 UI = NodePath("portal_url")
 
 [node name="portal_url" parent="PortalManager" instance=ExtResource("35_fu1ca")]
 visible = false
+
+[node name="UISyncer" type="Node" parent="." node_paths=PackedStringArray("inventory_holder") groups=["UISyncer"]]
+script = ExtResource("38_ig7nw")
+inventory_holder = NodePath("../Game/Player UI/Inventory holder/Inventory")
+
+[node name="Saver" type="Node" parent="."]
+script = ExtResource("34_s4tlk")
+encrypt = true
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "loading") groups=["PlayerSpawner"]]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")

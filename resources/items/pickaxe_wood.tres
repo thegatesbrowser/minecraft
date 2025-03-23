@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=6 format=3 uid="uid://j36n47ah560y"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=6 format=3 uid="uid://djg543gibfvro"]
 
-[ext_resource type="PackedScene" uid="uid://bwt4rh27es1y1" path="res://assets/models/tools/Wood/pickaxe_wood.tscn" id="1_gvchh"]
+[ext_resource type="PackedScene" uid="uid://bwt4rh27es1y1" path="res://assets/models/Tools/Wood/pickaxe_wood.tscn" id="1_gvchh"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="1_vhxk3"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_oevvb"]
 [ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="3_h2yhv"]
@@ -17,5 +17,6 @@ unique_name = &""
 texture = ExtResource("5_1wwc1")
 max_stack = 1
 holdable_mesh = ExtResource("1_gvchh")
+rotatable = false
 forgable = false
 forge_time = 2.0

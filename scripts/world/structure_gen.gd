@@ -12,12 +12,13 @@ func generate() -> Structure:
 	
 	for i in structure_data.get_children():
 		var type = i.name.rstrip("_.0123456789") as String
-		var type_length = type.length()
+		#var type_length = type.length()
 		#print("structure block type ",type)
 		
 		if VoxelLibrary.get_model_index_default(type) == -1:
 			push_error("object ", i.name, " as ", type, " is not a vaild block in VoxelLibrary")
-		voxels[Vector3(i.position.x, i.position.y, i.position.z)] =  VoxelLibrary.get_model_index_default(type)
+		else:
+			voxels[Vector3(i.position.x, i.position.y, i.position.z)] =  VoxelLibrary.get_model_index_default(type)
 		#voxels[Vector3(i.position.x, i.position.y, i.position.z)] = VoxelLibrary.get_model_index_default("stone")
 
 	# Let's make crappy trees

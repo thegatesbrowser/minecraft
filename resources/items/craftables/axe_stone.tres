@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_p37o7"]
 [ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="2_tfpbo"]
-[ext_resource type="Resource" uid="uid://db8a31q1w04nw" path="res://resources/items/axe_stone.tres" id="3_qlpc3"]
+[ext_resource type="Resource" uid="uid://dg2gha7cp48ki" path="res://resources/items/axe_stone.tres" id="3_qlpc3"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_orl38"]
 [ext_resource type="Texture2D" uid="uid://b06v0mkdwbv6a" path="res://assets/textures/items/Stone_Axe_JE2_BE2.webp" id="5_y7io2"]
 

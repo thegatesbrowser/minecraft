@@ -20,5 +20,6 @@ unique_name = &"portal"
 texture = ExtResource("2_wd440")
 max_stack = 64
 utility = SubResource("Resource_vss83")
+rotatable = false
 forgable = false
 forge_time = 2.0

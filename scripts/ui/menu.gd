@@ -6,6 +6,7 @@ const SPLASH_ANIMATION_NAME = "Splash"
 @export var multiplayer_btn: Button
 @export var singleplayer_scene: PackedScene
 @export var multiplayer_scene: PackedScene
+@export var login_page: Control
 
 @export_category("Splash Screen")
 @export var splash_sayings: PackedStringArray
@@ -16,6 +17,7 @@ const SPLASH_ANIMATION_NAME = "Splash"
 
 
 func _ready() -> void:
+	SaveGlobal.username_result.connect(username_result)
 	if Connection.is_server():
 		start_scene(multiplayer_scene)
 		return
@@ -39,3 +41,11 @@ func start_scene(scene: PackedScene) -> void:
 
 func loaded(_scene: PackedScene) -> void:
 	print("loaded")
+
+
+func login(new_text: String) -> void:
+	SaveGlobal.check_server_has_user.rpc_id(1,new_text,multiplayer.get_unique_id())
+
+func username_result(result:bool):
+	if result == false:
+		login_page.hide()

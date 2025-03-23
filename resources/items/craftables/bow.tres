@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://cn74d63vbktv"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://kltgxe62khhc"]
 
 [ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_1jr3o"]
 [ext_resource type="Resource" path="res://resources/items/bow.tres" id="2_y5s1x"]

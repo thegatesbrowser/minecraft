@@ -12,5 +12,6 @@ unique_name = &"stick"
 texture = ExtResource("1_anbf2")
 max_stack = 64
 holdable_mesh = SubResource("BoxMesh_rbi0u")
+rotatable = false
 forgable = false
 forge_time = 2.0

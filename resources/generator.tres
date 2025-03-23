@@ -1,4 +1,4 @@
-[gd_resource type="VoxelGeneratorScript" load_steps=12 format=3 uid="uid://dprd06y5qsr36"]
+[gd_resource type="VoxelGeneratorScript" load_steps=12 format=3 uid="uid://han2gfd64uoy"]
 
 [ext_resource type="Curve" uid="uid://cvrt8qtqhadv1" path="res://resources/heightmap_curve.tres" id="1_buuae"]
 [ext_resource type="Script" path="res://scripts/world/generator.gd" id="1_gocow"]
@@ -15,7 +15,7 @@
 
 [resource]
 script = ExtResource("1_gocow")
-generate_custom_structures = true
+generate_custom_structures = false
 generate_trees = true
 HeightmapCurve = ExtResource("1_buuae")
 _heightmap_noise = SubResource("FastNoiseLite_sv834")
