@@ -35,7 +35,7 @@ var view_range:int = 128
 signal spawn_creature(pos,creature)
 signal hunger_points_gained(amount)
 signal spawn_bullet
-signal add_object(id:int,position,instance_path:String)
+signal add_object(data:Array)
 signal removed_spawnpoint(id:Vector3)
 
 # portals
@@ -64,11 +64,14 @@ signal add_item_to_hand(item)
 signal remove_item_in_hand
 signal craftable_hovered(craftable,node)
 signal craftable_unhovered
+signal drop_item(item)
 
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
 
+func _process(delta: float) -> void:
+	pass
 
 func slot_clicked(slot):
 	var soundmanager = get_node("/root/Main").find_child("SoundManager")

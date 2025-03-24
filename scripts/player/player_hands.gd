@@ -2,11 +2,14 @@ extends Node
 
 @export var terrain_interaction:Node
 @export var items_library: ItemsLibrary
+@export var floor_ray:RayCast3D
+@export var drop_item_scene:PackedScene
 
 var timer: Timer
 @export var camera: Camera3D
 
 func _ready():
+	Globals.drop_item.connect(drop)
 	items_library.init_items()
 	terrain_interaction.enable()
 	timer = Timer.new()
@@ -94,3 +97,23 @@ func interaction() -> void:
 		
 		if item.utility.portal:
 			Globals.enter_portal.emit(terrain_interaction.last_hit.position)
+
+func drop(owner_id:int ,item:ItemBase ,amount := 1):
+	print("drop")
+	if get_multiplayer_authority() != owner_id: return
+	print(get_multiplayer_authority(), " is ", owner_id)
+	if floor_ray.is_colliding():
+		var pos = floor_ray.get_collision_point()
+		var spawn_node = get_node("/root/Main").find_child("Objects")
+		
+		sync_drop.rpc_id(1,item.resource_path,pos,amount)
+		#drop_item.Item = item
+		#drop_item.amount = amount
+		#drop_item.position = pos
+		#spawn_node.add_child(drop_item)
+
+@rpc("any_peer","call_local")
+func sync_drop(item_path,pos,amount := 1):
+	#var drop_item = drop_item_scene.instantiate()
+		
+	Globals.add_object.emit([1,pos,"res://scenes/items/dropped_item.tscn",item_path,amount])

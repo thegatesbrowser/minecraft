@@ -26,6 +26,7 @@ FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"
 GlobalAnimation="*res://scripts/common/animation.gd"
 TerrainHelper="*res://scripts/common/terrain_helper.gd"
 SaveGlobal="*res://SaveGlobal.gd"
+_CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
 
 [debug]
 
@@ -47,7 +48,7 @@ run/main_run_args="client"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SunshineVolumetricClouds/plugin.cfg", "res://addons/fps_counter/plugin.cfg", "res://addons/godot-console/console/plugin.cfg", "res://addons/sdg-print/plugin.cfg", "res://addons/setup_multiple_instances/plugin.cfg", "res://addons/thegates_export/plugin.cfg")
+enabled=PackedStringArray("res://addons/CameraShake3D/plugin.cfg", "res://addons/SunshineVolumetricClouds/plugin.cfg", "res://addons/fps_counter/plugin.cfg", "res://addons/godot-console/console/plugin.cfg", "res://addons/sdg-print/plugin.cfg", "res://addons/setup_multiple_instances/plugin.cfg", "res://addons/thegates_export/plugin.cfg")
 
 [global_group]
 
@@ -56,6 +57,7 @@ Player=""
 VoxelTerrain=""
 PlayerSpawner=""
 UISyncer="saves the ui data"
+Hotbar=""
 
 [input]
 

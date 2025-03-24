@@ -106,7 +106,27 @@ func _press_key(i: int) -> void:
 func remove(unique_name: String = "", amount: int = 1) -> void:
 	if unique_name == "":
 		var slot: Slot = get_current()
-		slot.amount -= 1
+		slot.amount -= amount
 		if slot.amount <= 0:
 			slot.Item_resource = null
 		slot.update_slot()
+	else:
+		for slot in buttons:
+			if slot.Item_resource != null:
+				if slot.Item_resource.unique_name == unique_name:
+					slot.amount -= amount
+					if slot.amount <= 0:
+						slot.Item_resource = null
+					slot.update_slot()
+
+
+func drop_all():
+	for slot in slots.get_children():
+		var item = slot.Item_resource as ItemBase
+		if item != null:
+			Globals.drop_item.emit(item,slot.amount)
+					
+			remove(item.unique_name,slot.amount)
+
+func _on_dropall_pressed() -> void:
+	drop_all()
