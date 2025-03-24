@@ -45,8 +45,9 @@ func _process(_delta: float) -> void:
 					spawn_item(Globals.last_clicked_slot.Item_resource,amount)
 					Globals.last_clicked_slot.update_slot()
 					Globals.last_clicked_slot = null
-
-
+					
+	
+			
 func is_even(x: int) -> bool:
 	return x % 2 == 0
 
@@ -195,3 +196,19 @@ func update_client(info):
 		slot.health = info[i].health
 		slot.amount = info[i].amount
 		slot.update_slot()
+
+func pack_items(items:Array[String]):
+	for item in items:
+		var Inventory_ = owner as Inventory
+		Inventory_.spawn_item(load(item))
+
+func drop_all():
+	for slot in items_collection.get_children():
+		var item = slot.Item_resource as ItemBase
+		if item != null:
+			Globals.drop_item.emit(multiplayer.get_unique_id(),item,slot.amount)
+					
+			remove_item(item.unique_name,slot.amount)
+
+func _on_drop_all_pressed() -> void:
+	drop_all()

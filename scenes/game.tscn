@@ -364,7 +364,7 @@ text = "Ssao
 layout_mode = 2
 placeholder_text = "View Range : 800"
 
-[node name="Selection_Buttons" parent="UI" instance=ExtResource("12_qvgc7")]
+[node name="Selection_Buttons" parent="UI" groups=["Hotbar"] instance=ExtResource("12_qvgc7")]
 process_mode = 3
 
 [node name="Text Chat" type="PanelContainer" parent="UI"]

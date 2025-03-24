@@ -37,6 +37,7 @@ var your_id
 @export var collision: CollisionShape3D
 @export var hand_ani: AnimationPlayer
 @export var terrain_interation:TerrainInteraction
+@export var camera_shake:Node
 
 const SENSITIVITY = 0.004
 
@@ -148,7 +149,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
+	
 
+	
 	pos_label.text = str("pos   ", global_position)
 	camera.far = Globals.view_range
 	#if health <= 0:
@@ -233,6 +236,11 @@ func _physics_process(delta: float) -> void:
 		
 		if ray.is_colliding():
 			var coll = ray.get_collider()
+			
+			if coll is Dropped_Item:
+				coll.collect()
+				var soundmanager = get_node("/root/Main").find_child("SoundManager")
+				soundmanager.play_sound("pick_up",ray.get_collision_point())
 			
 			if coll is CreatureBase:
 				if hotbar_item != null:
@@ -405,6 +413,7 @@ func remove_item_in_hand() -> void:
 func hit(damage: int = 1) -> void: 
 	health -= damage
 	hit_sfx.play()
+	camera_shake._shake()
 	if health <= 0:
 		death()
 	print("hit")
@@ -417,7 +426,7 @@ func spawn_bullet() -> void:
 
 @rpc("any_peer","call_local")
 func sync_bullet(transform_: Transform3D) -> void:
-	Globals.add_object.emit(1,transform_,"res://scenes/items/weapons/bullet.tscn")
+	Globals.add_object.emit([1,transform_,"res://scenes/items/weapons/bullet.tscn"])
 
 
 func hunger_update(_delta: float) -> void:
@@ -438,6 +447,7 @@ func hunger_update(_delta: float) -> void:
 			print("dying of hunger")
 			health -= 1
 			hit_sfx.play()
+			camera_shake._shake()
 			health_updated.emit(health)
 			
 		if _move_direction:
@@ -456,6 +466,8 @@ func death() -> void:
 	hunger = base_hunger
 	print("death")
 	respawn.rpc(spawn_position)
+	camera_shake._shake()
+	drop_items()
 	global_position = spawn_position
 
 
@@ -465,6 +477,11 @@ func respawn(pos: Vector3) -> void:
 	global_position = pos
 	velocity = Vector3.ZERO
 
+func drop_items():
+	var inventory = get_tree().get_first_node_in_group("Main Inventory")
+	var hotbar = get_tree().get_first_node_in_group("Hotbar")
+	inventory.drop_all()
+	hotbar.drop_all()
 
 func hunger_points_gained(amount: int) -> void:
 	if hunger + amount < base_hunger:

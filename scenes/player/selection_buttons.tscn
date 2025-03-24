@@ -84,3 +84,9 @@ type = "hotbar"
 
 [node name="eat" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_a1iif")
+
+[node name="dropall" type="Button" parent="."]
+layout_mode = 2
+text = "Drop All"
+
+[connection signal="pressed" from="dropall" to="." method="_on_dropall_pressed"]

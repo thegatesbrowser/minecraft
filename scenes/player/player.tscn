@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=29 format=3 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -8,9 +8,11 @@
 [ext_resource type="Script" path="res://scripts/player/player_hands.gd" id="4_064gd"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_5801w"]
 [ext_resource type="Resource" uid="uid://bh4f3xyyxfdql" path="res://resources/items_library.tres" id="5_qnsii"]
+[ext_resource type="PackedScene" uid="uid://clt86wlubencc" path="res://scenes/items/dropped_item.tscn" id="6_6kxdw"]
 [ext_resource type="PackedScene" uid="uid://bo2ux01fsfpo5" path="res://scenes/other/breakparticle.tscn" id="8_8k80t"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
 [ext_resource type="AudioStream" uid="uid://sn5gwkdparti" path="res://assets/sounds/other/Player_hurt1.ogg" id="11_1skow"]
+[ext_resource type="Script" path="res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd" id="11_8ntd3"]
 [ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="12_7rcqp"]
 [ext_resource type="AudioStream" uid="uid://bdoobkrlhbbdx" path="res://assets/sounds/other/Player_hurt2.ogg" id="12_lotnu"]
 [ext_resource type="AudioStream" uid="uid://bkep405p361he" path="res://assets/sounds/other/Player_hurt3.ogg" id="13_djou0"]
@@ -148,7 +150,7 @@ random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("13_xnj4e")
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake") groups=["Player"]]
 script = ExtResource("1")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
@@ -158,14 +160,17 @@ ping_label = NodePath("Ping")
 collision = NodePath("CollisionShape3D")
 hand_ani = NodePath("RotationRoot/Head/HandAni")
 terrain_interation = NodePath("Hands/TerrainInteraction")
+camera_shake = NodePath("RotationRoot/Head/CameraShake3DNode")
 bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
 max_health = 20
 
-[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction", "camera")]
+[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction", "floor_ray", "camera")]
 script = ExtResource("4_064gd")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
+floor_ray = NodePath("../RotationRoot/floor")
+drop_item_scene = ExtResource("6_6kxdw")
 camera = NodePath("../RotationRoot/Head/Camera3D")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block", "ping_label")]
@@ -315,6 +320,7 @@ far = 800.0
 [node name="RayCast3D" type="RayCast3D" parent="RotationRoot/Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.05)
 target_position = Vector3(0, -10, 0)
+collision_mask = 3
 
 [node name="Drop_node" type="Node3D" parent="RotationRoot/Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.475605, -0.61644)
@@ -328,6 +334,10 @@ libraries = {
 "": SubResource("AnimationLibrary_wp2up")
 }
 
+[node name="CameraShake3DNode" type="Node" parent="RotationRoot/Head" node_paths=PackedStringArray("camera")]
+script = ExtResource("11_8ntd3")
+camera = NodePath("../Camera3D")
+
 [node name="AutoJump" type="RayCast3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 target_position = Vector3(0, 0, -1)
@@ -336,6 +346,10 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 [node name="AutoJump2" type="RayCast3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 target_position = Vector3(0, 0, -1)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="floor" type="RayCast3D" parent="RotationRoot"]
+target_position = Vector3(1.45519e-11, -3, 1.45519e-11)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -352,7 +366,7 @@ panning_strength = 3.0
 
 [node name="punch" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_yes06")
-volume_db = -80.0
+volume_db = -33.2076
 max_distance = 10.0
 panning_strength = 3.0
 

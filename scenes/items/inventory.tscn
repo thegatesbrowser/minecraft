@@ -9,7 +9,7 @@
 color = Color(1, 1, 1, 1)
 thickness = 3
 
-[node name="Inventory" type="ScrollContainer" node_paths=PackedStringArray("items_collection", "inventroy_name")]
+[node name="Inventory" type="ScrollContainer" node_paths=PackedStringArray("items_collection", "inventroy_name") groups=["Hotbar"]]
 process_mode = 3
 custom_minimum_size = Vector2(800, 800)
 anchors_preset = 8
@@ -74,6 +74,10 @@ visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "add random item *debug*"
+
+[node name="Drop All" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "DROP ALL"
 
 [node name="Items" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -245,4 +249,5 @@ layout_mode = 2
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Sort" to="." method="_on_sort_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/AddRandomItem" to="." method="_on_add_random_item_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Drop All" to="." method="_on_drop_all_pressed"]
 [connection signal="timeout" from="Update Tick" to="." method="_on_update_tick_timeout"]

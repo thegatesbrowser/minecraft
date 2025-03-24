@@ -16,6 +16,7 @@ script = ExtResource("1_kvhy5")
 break_time = 0.4
 spawn_chance = 0.1
 spawn_size = 1
+spawn_height = 0.0
 unique_name = &"bed"
 texture = ExtResource("2_ctumy")
 max_stack = 64
