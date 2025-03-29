@@ -11,6 +11,7 @@ eat_time = 0.4
 unique_name = &"meat"
 texture = ExtResource("2_7sw3o")
 max_stack = 64
+rotatable = false
 forgable = true
 forge_time = 2.0
 output_item = ExtResource("1_itoyt")

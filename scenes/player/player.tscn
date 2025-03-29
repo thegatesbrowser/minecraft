@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=34 format=3 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -13,7 +13,6 @@
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
 [ext_resource type="AudioStream" uid="uid://sn5gwkdparti" path="res://assets/sounds/other/Player_hurt1.ogg" id="11_1skow"]
 [ext_resource type="Script" path="res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd" id="11_8ntd3"]
-[ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="12_7rcqp"]
 [ext_resource type="AudioStream" uid="uid://bdoobkrlhbbdx" path="res://assets/sounds/other/Player_hurt2.ogg" id="12_lotnu"]
 [ext_resource type="AudioStream" uid="uid://bkep405p361he" path="res://assets/sounds/other/Player_hurt3.ogg" id="13_djou0"]
 [ext_resource type="AudioStream" uid="uid://doorfb3332k81" path="res://assets/sounds/other/Player_attack_weak.ogg" id="13_xnj4e"]
@@ -25,11 +24,46 @@ size = Vector3(0.8, 1.8, 1.5)
 size = Vector3(1.5, 1.8, 0.8)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kwqlu"]
-albedo_color = Color(0, 0, 0, 1)
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.258824)
 
 [sub_resource type="BoxMesh" id="8"]
 material = SubResource("StandardMaterial3D_kwqlu")
 size = Vector3(0.01, 1, 0.01)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pct4i"]
+emission_shape_offset = Vector3(0.5, 1, 0.5)
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.3, 0.3)
+velocity_pivot = Vector3(1.45519e-11, 1.45519e-11, 1.45519e-11)
+direction = Vector3(1.45519e-11, 2, 1.45519e-11)
+initial_velocity_max = 3.0
+scale_min = 0.0
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+
+[sub_resource type="Gradient" id="Gradient_4lfj0"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.666667)
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rm622"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k5hjn"]
+seamless = true
+color_ramp = SubResource("Gradient_4lfj0")
+noise = SubResource("FastNoiseLite_rm622")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_icev4"]
+transparency = 2
+alpha_scissor_threshold = 0.826
+alpha_antialiasing_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_k5hjn")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5jdb0"]
+material = SubResource("StandardMaterial3D_icev4")
+size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="Animation" id="Animation_4e7vc"]
 length = 0.001
@@ -150,7 +184,7 @@ random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("13_xnj4e")
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "fall_timer", "floor_ray") groups=["Player"]]
 script = ExtResource("1")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
@@ -161,12 +195,16 @@ collision = NodePath("CollisionShape3D")
 hand_ani = NodePath("RotationRoot/Head/HandAni")
 terrain_interation = NodePath("Hands/TerrainInteraction")
 camera_shake = NodePath("RotationRoot/Head/CameraShake3DNode")
+fall_timer = NodePath("Fall_time")
+floor_ray = NodePath("RotationRoot/floor")
 bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
+fall_hurt_height = 3.0
 max_health = 20
 
-[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction", "floor_ray", "camera")]
+[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "camera")]
 script = ExtResource("4_064gd")
+break_part = NodePath("TerrainInteraction/Breakparticle")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
 floor_ray = NodePath("../RotationRoot/floor")
@@ -186,7 +224,6 @@ ping_label = NodePath("../../Ping")
 
 [node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-visible = false
 
 [node name="Area3D" type="Area3D" parent="Hands/TerrainInteraction/BlockOutline"]
 collision_layer = 0
@@ -273,6 +310,14 @@ cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 
+[node name="Breakparticle" type="GPUParticles3D" parent="Hands/TerrainInteraction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.67777, 0.524349, -1.0743)
+emitting = false
+amount = 40
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_pct4i")
+draw_pass_1 = SubResource("BoxMesh_5jdb0")
+
 [node name="RotationRoot" type="Node3D" parent="."]
 
 [node name="minecraft_player" parent="RotationRoot" instance=ExtResource("2_gmbcs")]
@@ -337,6 +382,8 @@ libraries = {
 [node name="CameraShake3DNode" type="Node" parent="RotationRoot/Head" node_paths=PackedStringArray("camera")]
 script = ExtResource("11_8ntd3")
 camera = NodePath("../Camera3D")
+decay = 3.0
+magnitude = 0.7
 
 [node name="AutoJump" type="RayCast3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -349,7 +396,7 @@ target_position = Vector3(0, 0, -1)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="floor" type="RayCast3D" parent="RotationRoot"]
-target_position = Vector3(1.45519e-11, -3, 1.45519e-11)
+target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -366,7 +413,7 @@ panning_strength = 3.0
 
 [node name="punch" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_yes06")
-volume_db = -33.2076
+volume_db = -80.0
 max_distance = 10.0
 panning_strength = 3.0
 
@@ -388,60 +435,17 @@ offset_right = 40.0
 offset_bottom = 23.0
 theme = ExtResource("10_fsqbe")
 
-[node name="loading_check" type="Node3D" parent="." node_paths=PackedStringArray("exclude")]
-script = ExtResource("12_7rcqp")
-exclude = NodePath("..")
-
-[node name="ground" type="RayCast3D" parent="loading_check"]
-target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="loading_check"]
-layer = 23
-visible = false
-
-[node name="loading" type="Control" parent="loading_check/CanvasLayer"]
-z_index = 25
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("10_fsqbe")
-
-[node name="ColorRect" type="ColorRect" parent="loading_check/CanvasLayer/loading"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="loading" type="Label" parent="loading_check/CanvasLayer/loading"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -82.0
-offset_top = -14.0
-offset_right = 82.0
-offset_bottom = 14.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 61
-text = "loading the world"
-uppercase = true
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.0
 autostart = true
+
+[node name="Fall_time" type="Timer" parent="."]
+wait_time = 0.5
 
 [connection signal="block_broken" from="Hands/TerrainInteraction" to="Hands/TerrainInteraction" method="_on_block_broken"]
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_exited"]
 [connection signal="timeout" from="Timer" to="Hands/TerrainInteraction" method="tick"]
+[connection signal="timeout" from="Fall_time" to="." method="_on_fall_time_timeout"]
 
 [editable path="RotationRoot/minecraft_player"]

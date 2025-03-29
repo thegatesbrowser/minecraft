@@ -14,3 +14,4 @@ func _ready() -> void:
 		button.craftable = craftable
 		button.inventory = send_to_inventory
 		list.add_child(button)
+	pass

@@ -6,6 +6,12 @@
 [resource]
 script = ExtResource("1_6cpgl")
 break_time = 0.2
+spawn_chance = 0.1
+spawn_size = 1
+spawn_height = 0.0
 unique_name = &"tall_grass"
 texture = ExtResource("2_3dlfr")
 max_stack = 64
+rotatable = false
+forgable = false
+forge_time = 2.0

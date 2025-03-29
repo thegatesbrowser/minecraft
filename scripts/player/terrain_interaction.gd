@@ -41,9 +41,14 @@ func _physics_process(_delta: float) -> void:
 	last_hit = voxel_tool.raycast(origin, forward, distance)
 
 	if last_hit != null:
-		block.show()
-		block.global_position = Vector3(last_hit.position) + (Vector3.ONE / 2)
+		
+		var target_ = get_type()
+		var target_block = voxel_blocky_type_library.get_type_from_name(target_).base_model
+		#var aabbs = target_block.base_model.collision_aabbs
+		block.scale = target_block.collision_aabbs.front().size
+		block.global_position = Vector3(last_hit.position) + target_block.collision_aabbs.front().position + (Vector3.ONE / 2)
 		block.global_rotation = Vector3.ZERO
+		block.show()
 	else:
 		block.hide()
 

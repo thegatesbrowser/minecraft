@@ -1,7 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cvhj80gdgchp2"]
-
-[ext_resource type="Texture2D" uid="uid://bki3bl6i5mcym" path="res://assets/materials/textureatl_mesh.tres" id="1"]
-
-[resource]
-albedo_texture = ExtResource("1")
-texture_filter = 0

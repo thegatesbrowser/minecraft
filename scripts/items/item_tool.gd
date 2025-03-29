@@ -8,6 +8,7 @@ class_name ItemTool
 @export var max_health : float = 5
 @export var degrade_rate: float = .1
 var health:float
+
 func _init() -> void:
 	call_deferred('ready')
 

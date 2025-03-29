@@ -1,20 +1,20 @@
 [gd_scene load_steps=3 format=3 uid="uid://bo2ux01fsfpo5"]
 
-[ext_resource type="Script" path="res://scripts/other/breakparticle.gd" id="1_fqvbg"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_016o6"]
+emission_shape_offset = Vector3(1.45519e-11, 1.45519e-11, 1.45519e-11)
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.3, 0.3)
+velocity_pivot = Vector3(1.45519e-11, 1, 1.45519e-11)
+direction = Vector3(1.45519e-11, 1, 1.45519e-11)
+initial_velocity_max = 5.0
+scale_min = 0.0
+hue_variation_min = -1.0
+hue_variation_max = 1.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_a6e82"]
+[sub_resource type="BoxMesh" id="BoxMesh_7n4qx"]
 size = Vector3(0.1, 0.1, 0.1)
 
-[node name="Breakparticle" type="CPUParticles3D"]
-emitting = false
-amount = 30
-one_shot = true
-speed_scale = 4.0
-mesh = SubResource("BoxMesh_a6e82")
-emission_shape = 3
-emission_box_extents = Vector3(0.5, 0.5, 0.5)
-gravity = Vector3(1.45519e-11, -90, 1.45519e-11)
-linear_accel_max = 81.9
-script = ExtResource("1_fqvbg")
-
-[connection signal="finished" from="." to="." method="_on_finished"]
+[node name="Breakparticle" type="GPUParticles3D"]
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_016o6")
+draw_pass_1 = SubResource("BoxMesh_7n4qx")

@@ -1,5 +1,6 @@
 extends Node
 
+@export var break_part:GPUParticles3D
 @export var terrain_interaction:Node
 @export var items_library: ItemsLibrary
 @export var floor_ray:RayCast3D
@@ -52,15 +53,22 @@ func _process(_delta: float) -> void:
 						else:
 							timer.wait_time = item.break_time
 							
+				break_part.global_position = terrain_interaction.last_hit.position
+				break_part.emitting = false
+				
 				timer.start()
 				await timer.timeout
-				
+
 				if Input.is_action_pressed("Mine"):
 					
 				
 						
 					if terrain_interaction.last_hit != null:
+						break_part.emitting = false
 						terrain_interaction.break_block()
+	else:
+		break_part.emitting = false
+		timer.stop()
 
 
 func is_interactable() -> bool:

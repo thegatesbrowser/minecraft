@@ -1,0 +1,47 @@
+extends RefCounted
+class_name DAO
+
+var db
+var table
+
+# Called when the node enters the scene tree for the first time.
+func _init():
+	db = SQLite.new()
+	db.path = "user://data.db"
+	db.open_db()
+	
+	table = {
+		"id" : {"data_type": "int", "primary_key" : true, "not_null" : true, "auto_increment"  : true},
+		"name": {"data_type" : "text"},
+		"password" : {"data_type" : "text"},
+		"salt" :{"data_type" : "int", "not_null" : true},
+		"health":{"data_type" : "int"}
+	}
+	
+	db.create_table("players", table)
+	pass # Replace with function body.
+
+func InsertUserData(name, password, salt):
+	var data = {
+		"name" : name,
+		"password" : password,
+		"salt" : salt,
+	}
+	db.insert_row("players", data)
+	
+func change_data(name):
+	db.update_rows("players", "name = '" + name + "'", {"health":10})
+
+func GetUserFromDB(username):
+	var query = "SELECT salt, password, id, health from players where name = ?"
+	var paramBindings = [username]
+	db.query_with_bindings(query, paramBindings)
+	print( db.query_result)
+	for i in db.query_result:
+		return{
+			"id" : i["id"],
+			"hashedPassword" : i["password"],
+			"salt" : i["salt"],
+			"name" : username,
+			"health":  i["health"],
+		}

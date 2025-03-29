@@ -9,7 +9,9 @@ signal item_changed(index:int,item_path:String,amount:int,parent:String,health:f
 @export var amount: int = 1
 
 @export var Item_resource: ItemBase
+@export var background_texture:Texture
 
+@onready var background_texturerect: TextureRect = $"CenterContainer/background texture"
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
 @onready var health_label: Label = $health
@@ -51,6 +53,7 @@ func _process(_delta: float) -> void:
 		amount_label.hide()
 		
 func _ready() -> void:
+	background_texturerect.texture = background_texture
 	index = get_index()
 	
 	if Item_resource != null:

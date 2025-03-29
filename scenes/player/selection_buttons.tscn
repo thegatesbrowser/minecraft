@@ -86,6 +86,7 @@ type = "hotbar"
 stream = SubResource("AudioStreamRandomizer_a1iif")
 
 [node name="dropall" type="Button" parent="."]
+visible = false
 layout_mode = 2
 text = "Drop All"
 

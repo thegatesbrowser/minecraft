@@ -2,6 +2,8 @@ extends Control
 
 const SPLASH_ANIMATION_NAME = "Splash"
 
+@export var Login_window:PanelContainer
+@export var backend_scene:PackedScene
 @export var single_player_btn: Button
 @export var multiplayer_btn: Button
 @export var singleplayer_scene: PackedScene
@@ -17,7 +19,12 @@ const SPLASH_ANIMATION_NAME = "Splash"
 
 
 func _ready() -> void:
-	SaveGlobal.username_result.connect(username_result)
+	
+	#var backend = backend_scene.instantiate()
+	#get_tree().root.call_deferred("add_child",backend)
+	#
+	#SaveGlobal.username_result.connect(username_result)
+	
 	if Connection.is_server():
 		start_scene(multiplayer_scene)
 		return

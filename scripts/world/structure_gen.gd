@@ -16,10 +16,10 @@ func generate() -> Structure:
 		#print("structure block type ",type)
 		
 		if VoxelLibrary.get_model_index_default(type) == -1:
-			push_error("object ", i.name, " as ", type, " is not a vaild block in VoxelLibrary")
+			print("object ", i.name, " as ", type, " is not a vaild block in VoxelLibrary")
 		else:
 			voxels[Vector3(i.position.x, i.position.y, i.position.z)] =  VoxelLibrary.get_model_index_default(type)
-		#voxels[Vector3(i.position.x, i.position.y, i.position.z)] = VoxelLibrary.get_model_index_default("stone")
+		#voxels[Vector3(i.position.x, i.position.y, i.position.z)] = VoxelLibrary.get_model_index_default(&"stone")
 
 	# Let's make crappy trees
 

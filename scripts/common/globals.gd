@@ -17,6 +17,7 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 
 # Player Settings.
 var breaking_efficiency:float = 0.0
+var protection:int = 0
 ## these are copys for ui puepose
 var max_health:int = 3
 var player_health:int = 3
@@ -73,7 +74,7 @@ func _ready():
 func _process(delta: float) -> void:
 	pass
 
-func slot_clicked(slot):
+func slot_clicked(slot:Slot):
 	var soundmanager = get_node("/root/Main").find_child("SoundManager")
 	soundmanager.play_UI_sound()
 			
@@ -86,6 +87,28 @@ func slot_clicked(slot):
 		## move to blank
 		if slot.Item_resource == null:
 			#print("move ")
+			
+			if slot.type == "chest_plate":
+				if Globals.last_clicked_slot.Item_resource is ItemArmour:
+					if Globals.last_clicked_slot.Item_resource.chest == false:
+						return
+				else:
+					return
+					
+			if slot.type == "pants":
+				if Globals.last_clicked_slot.Item_resource is ItemArmour:
+					if Globals.last_clicked_slot.Item_resource.pants == false:
+						return
+				else:
+					return
+					
+			if slot.type == "helment":
+				if Globals.last_clicked_slot.Item_resource is ItemArmour:
+					if Globals.last_clicked_slot.Item_resource.helment == false:
+						return
+				else:
+					return
+					
 			slot.Item_resource = Globals.last_clicked_slot.Item_resource
 			#slot.add_item.rpc(Globals.last_clicked_slot.Item_resource)
 			slot.health = Globals.last_clicked_slot.health
@@ -112,6 +135,28 @@ func slot_clicked(slot):
 				if slot.Item_resource != null:
 					if slot.Item_resource != Globals.last_clicked_slot.Item_resource:
 						#print("swap " )
+						
+						if slot.type == "chest_plate":
+							if Globals.last_clicked_slot.Item_resource is ItemArmour:
+								if Globals.last_clicked_slot.Item_resource.chest == false:
+									return
+							else:
+								return
+							
+						if slot.type == "pants":
+							if Globals.last_clicked_slot.Item_resource is ItemArmour:
+								if Globals.last_clicked_slot.Item_resource.pants == false:
+									return
+							else:
+								return
+							
+						if slot.type == "helment":
+							if Globals.last_clicked_slot.Item_resource is ItemArmour:
+								if Globals.last_clicked_slot.Item_resource.helment == false:
+									return
+							else:
+								return
+							
 						var hold_slot_health = slot.health
 						var hold_slot_amount = slot.amount
 						var hold_slot_resource = slot.Item_resource
