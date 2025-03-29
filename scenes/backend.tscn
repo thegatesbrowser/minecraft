@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://b76lg308pe6q0"]
+
+[ext_resource type="Script" path="res://scripts/multiplayer/backend_client.gd" id="1_vp6qf"]
+[ext_resource type="Script" path="res://scripts/multiplayer/backend_server.gd" id="2_cxhws"]
+
+[node name="Backend" type="Node"]
+
+[node name="BackendClient" type="Node" parent="." node_paths=PackedStringArray("PlayerInfo")]
+script = ExtResource("1_vp6qf")
+PlayerInfo = NodePath("Panel/Player Info")
+
+[node name="Button" type="Button" parent="BackendClient"]
+visible = false
+offset_top = 48.0
+offset_right = 92.0
+offset_bottom = 79.0
+text = "start client"
+
+[node name="Panel" type="Panel" parent="BackendClient"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -256.0
+offset_right = 424.0
+grow_vertical = 0
+
+[node name="Player Info" type="RichTextLabel" parent="BackendClient/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackendServer" type="Node" parent="."]
+script = ExtResource("2_cxhws")
+
+[node name="Button" type="Button" parent="BackendServer"]
+visible = false
+offset_right = 8.0
+offset_bottom = 8.0
+text = "server start"
+
+[connection signal="pressed" from="BackendClient/Button" to="BackendClient" method="_on_start_client_button_down"]
+[connection signal="pressed" from="BackendServer/Button" to="BackendServer" method="_on_start_server_button_down"]

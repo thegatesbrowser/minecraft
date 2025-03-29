@@ -19,6 +19,8 @@ var your_id
 
 @export var can_autojump: bool = true
 
+var fall_time:float = 0.0
+
 # Player model rotation speed
 @export var rotation_speed := 12.0
 
@@ -38,6 +40,8 @@ var your_id
 @export var hand_ani: AnimationPlayer
 @export var terrain_interation:TerrainInteraction
 @export var camera_shake:Node
+@export var fall_timer:Timer
+@export var floor_ray:RayCast3D
 
 const SENSITIVITY = 0.004
 
@@ -50,6 +54,7 @@ var t_bob = 0.0
 const BASE_FOV = 90.0
 const FOV_CHANGE = 1.5
 
+var found_ground:bool = false
 var crouching:bool = false
 var speed
 var gravity = 16.5
@@ -79,6 +84,7 @@ var is_flying: bool
 @export var _direction: Vector3 = Vector3.ZERO
 
 @export_group("STATS")
+@export var fall_hurt_height:float = 2.0
 @export var base_hunger: float = 5.0
 var hunger: float = 0
 @export var hunger_update_time := 10.0
@@ -97,6 +103,7 @@ func _ready() -> void:
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
+	Globals.paused = true
 	spawn_position = start_position
 	hunger = base_hunger
 	health = max_health
@@ -150,12 +157,15 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
-
-	
+	if found_ground == false:
+		if floor_ray.is_colliding():
+			Globals.paused = false
+			global_position = floor_ray.get_collision_point()
+			start_position = floor_ray.get_collision_point()
+			found_ground = true
+		
 	pos_label.text = str("pos   ", global_position)
 	camera.far = Globals.view_range
-	#if health <= 0:
-		#death()
 		
 	hunger_update(_delta)
 		
@@ -175,7 +185,15 @@ func _physics_process(delta: float) -> void:
 	if !is_flying:
 		# Add the gravity.
 		if not is_on_floor():
+			if fall_timer.is_stopped():
+				fall_timer.start()
 			velocity.y -= gravity * delta
+		else:
+			if fall_time >= fall_hurt_height:
+				var damage = fall_time * 2
+				hit(damage)
+			fall_timer.stop()
+			fall_time = 0.0
 		
 		# Handle Jump.
 		if Input.is_action_pressed("Jump") and is_on_floor():
@@ -410,7 +428,11 @@ func remove_item_in_hand() -> void:
 
 
 @rpc("any_peer","call_local")
-func hit(damage: int = 1) -> void: 
+func hit(damage: int = 1) -> void:
+	
+	if damage - Globals.protection < 0:
+		damage = 0
+		
 	health -= damage
 	hit_sfx.play()
 	camera_shake._shake()
@@ -444,10 +466,8 @@ func hunger_update(_delta: float) -> void:
 				health = max_health
 				
 		if hunger <= 0:
-			print("dying of hunger")
-			health -= 1
-			hit_sfx.play()
-			camera_shake._shake()
+			#print("dying of hunger")
+			hit(1)
 			health_updated.emit(health)
 			
 		if _move_direction:
@@ -488,3 +508,7 @@ func hunger_points_gained(amount: int) -> void:
 		hunger += amount
 	else:
 		hunger = base_hunger
+
+
+func _on_fall_time_timeout() -> void:
+	fall_time += 1

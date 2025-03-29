@@ -12,6 +12,7 @@ var input_actions = {
 	"Backward": "Move backward",
 	"Right": "Move right",
 	"Left": "Move left",
+	"Crouch": "Crouch",
 	"Jump": "Jump",
 	"Mine": "Mine",
 	"Build": "Build",

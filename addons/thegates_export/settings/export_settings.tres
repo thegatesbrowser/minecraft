@@ -6,5 +6,5 @@
 script = ExtResource("1_4i6s3")
 title = "Minecraft"
 description = "Our open-source minecraft clone (WIP) [p][/p] Originally by SDG Games"
-image = ""
-export_folder = "/media/common/Projects/thegates-folder/ServerFiles/exports/minecraft"
+image = "res://logo.webp"
+export_folder = "C:/cooper/godot projects/exports/minecraft"

@@ -3,7 +3,6 @@ class_name SpawnPoints
 
 var used_ids: Array[int]
 
-
 func get_spawn_position() -> Vector3:
 	var spawn_points = get_children() as Array[Node]
 	var size = spawn_points.size()

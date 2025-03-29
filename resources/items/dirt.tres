@@ -6,13 +6,12 @@
 [resource]
 script = ExtResource("1_3b7hd")
 break_time = 0.4
+spawn_chance = 0.1
+spawn_size = 1
+spawn_height = 0.0
 unique_name = &"dirt"
 texture = ExtResource("1_vuhr6")
 max_stack = 64
-breaking_efficiency = 0.0
-weapon = false
-damage = 0
-needs_ammo = false
-ammo_name = "Ammo"
-shoots = false
-fire_rate = 0.0
+rotatable = false
+forgable = false
+forge_time = 2.0

@@ -188,7 +188,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int)
 					if height >= 0:
 						
 						
-							
+						#Minimap.gen_image(x,z,Color.GREEN)
 						buffer.set_voxel(GRASS, x, relative_height - 1, z, _CHANNEL)
 						if relative_height - 2 >= 0:
 							buffer.set_voxel(DIRT,x, relative_height - 2, z, _CHANNEL)
@@ -214,11 +214,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int)
 					#var start_relative_height := 0
 					#if relative_height > 0:
 						#start_relative_height = relative_height
-						#
 					#buffer.fill_area(WATER_FULL,
-						#Vector3(x  , start_relative_height - 1, z), 
-						#Vector3(x + 1 , block_size - 1, z + 1), _CHANNEL)
-						#
+						#Vector3(x, start_relative_height, z), 
+						#Vector3(x + 1, block_size, z + 1), _CHANNEL)
 					#if oy + block_size == 0:
 						## Surface block
 						#buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)

@@ -44,27 +44,27 @@ void fragment() {
     float total_angle = 6.283185307; // Full circle in radians (2π)
     float gap = total_angle * gap_ratio;
     float spacing = (total_angle - gap) / float(num_points);
-    
+
     // Determine rotation direction for the ring.
     float direction = reverse_rotation ? 1.0 : -1.0;
     // Offset by -π/2 so the ring starts from the upward direction.
     float rotation = TIME * rotation_speed * direction - 1.570796;
-    
+
     for (int i = 0; i < num_points; i++) {
         int index = reverse_rotation ? (num_points - 1 - i) : i;
         float angle = rotation + spacing * float(index);
-        
+
         vec2 pos = vec2(cos(angle), sin(angle)) * ring_radius;
         if (reverse_rotation) {
             pos = -pos; // Invert position to mirror ring direction.
         }
-        
+
         // Compute dot size:
         // If all_dots_same_size is true, use a constant size.
         // Otherwise, size diminishes along the ring.
         float size_factor = 1.0 - (float(i) / float(num_points));
         float radius = all_dots_same_size ? 0.1 * dot_scale : 0.1 * size_factor * dot_scale;
-        
+
         // Interpolate dot color along the ring from start to end.
         float gradient_factor = float(i) / float(num_points - 1);
         vec4 dot_color = mix(dot_color_start, dot_color_end, gradient_factor);
@@ -72,7 +72,7 @@ void fragment() {
         // Compute smooth dot contribution based on distance.
         float distance = length(uv - pos);
         float contribution = smoothstep(radius + 0.005, radius, distance);
-        
+
         if (contribution > 0.0) {
             ring_color = mix(ring_color, dot_color, contribution);
             dot_accum += contribution;
@@ -99,10 +99,10 @@ void fragment() {
     if (show_icon) {
         // Create a radial mask so that the icon is visible inside the icon_size radius.
         float icon_mask = smoothstep(icon_size, icon_size - 0.005, length(uv));
-        
+
         // Normalize UV coordinates from (-icon_size ... +icon_size) to (0 ... 1)
         vec2 icon_uv = (uv / icon_size + vec2(1.0)) / 2.0;
-        
+
         // Apply icon rotation if enabled.
         if (enable_icon_rotation) {
             float icon_angle = TIME * icon_rotation_speed;
@@ -117,11 +117,11 @@ void fragment() {
                                centered_uv.x * s + centered_uv.y * c);
             icon_uv = centered_uv + vec2(0.5);
         }
-        
+
         vec4 icon_sample = texture(icon_texture, icon_uv);
         // Blend the icon texture with the ring based on the icon mask and the texture's alpha.
         base_color = mix(base_color, icon_sample, icon_mask * icon_sample.a);
     }
-    
+
     COLOR = base_color;
 }

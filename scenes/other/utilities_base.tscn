@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cxmsmlihr3hyj"]
 
 [ext_resource type="Script" path="res://scripts/other/utilities_base.gd" id="1_jcfkw"]
-[ext_resource type="ArrayMesh" uid="uid://bbiqx8j8ggoif" path="res://assets/models/chest.mesh" id="3_q4oap"]
+[ext_resource type="ArrayMesh" uid="uid://bbiqx8j8ggoif" path="res://assets/chest.mesh" id="3_q4oap"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_o23sf"]
 

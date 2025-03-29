@@ -1,6 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cvh8mc8ybmio1"]
 
 [ext_resource type="Script" path="res://scripts/ui/menu.gd" id="1_v1vki"]
+[ext_resource type="PackedScene" uid="uid://b76lg308pe6q0" path="res://scenes/backend.tscn" id="2_2y4dw"]
 [ext_resource type="PackedScene" uid="uid://de27e3hbp0hph" path="res://scenes/multiplayer.tscn" id="2_koh5b"]
 [ext_resource type="PackedScene" uid="uid://b8t6ynqqhm1mc" path="res://scenes/single_player.tscn" id="3_0kue3"]
 [ext_resource type="Texture2D" uid="uid://ctxaquevonft0" path="res://assets/menu/mine_mark.png" id="3_snl8p"]
@@ -89,11 +90,6 @@ _data = {
 "Splash": SubResource("5")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ikef"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_bottom = 10
-border_color = Color(1, 1, 1, 1)
-
 [node name="Menu" type="Control" node_paths=PackedStringArray("single_player_btn", "multiplayer_btn", "login_page", "splash", "animation_player")]
 layout_mode = 3
 anchors_preset = 15
@@ -103,7 +99,9 @@ offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("4_1o25k")
 script = ExtResource("1_v1vki")
+backend_scene = ExtResource("2_2y4dw")
 single_player_btn = NodePath("CenterContainer2/VBoxContainer/Singleplayer")
 multiplayer_btn = NodePath("CenterContainer2/VBoxContainer/Multiplayer")
 singleplayer_scene = ExtResource("3_0kue3")
@@ -218,6 +216,7 @@ texture = ExtResource("6_8pyqi")
 stretch_mode = 1
 
 [node name="Login" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -238,35 +237,6 @@ mouse_filter = 2
 texture = ExtResource("6_8pyqi")
 stretch_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Login"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -277.5
-offset_top = -20.0
-offset_right = 277.5
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Username" type="LineEdit" parent="Login/VBoxContainer"]
-custom_minimum_size = Vector2(1000, 50)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.262745)
-theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
-theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 35
-theme_override_font_sizes/font_size = 61
-theme_override_styles/normal = SubResource("StyleBoxFlat_3ikef")
-placeholder_text = "USERNAME"
-alignment = 1
-
 [node name="Label" type="Label" parent="Login"]
 layout_mode = 1
 anchors_preset = 5
@@ -284,5 +254,3 @@ theme_override_constants/outline_size = 20
 theme_override_constants/shadow_outline_size = 105
 theme_override_font_sizes/font_size = 176
 text = "RUNESTONE"
-
-[connection signal="text_submitted" from="Login/VBoxContainer/Username" to="." method="login"]

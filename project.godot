@@ -48,7 +48,7 @@ run/main_run_args="client"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/CameraShake3D/plugin.cfg", "res://addons/SunshineVolumetricClouds/plugin.cfg", "res://addons/fps_counter/plugin.cfg", "res://addons/godot-console/console/plugin.cfg", "res://addons/sdg-print/plugin.cfg", "res://addons/setup_multiple_instances/plugin.cfg", "res://addons/thegates_export/plugin.cfg")
+enabled=PackedStringArray("res://addons/CameraShake3D/plugin.cfg", "res://addons/SunshineVolumetricClouds/plugin.cfg", "res://addons/fps_counter/plugin.cfg", "res://addons/godot-console/console/plugin.cfg", "res://addons/godot-sqlite/plugin.cfg", "res://addons/sdg-print/plugin.cfg", "res://addons/setup_multiple_instances/plugin.cfg", "res://addons/thegates_export/plugin.cfg")
 
 [global_group]
 
@@ -258,6 +258,7 @@ Crouch={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/decals/filter=0
 environment/volumetric_fog/volume_size=128
 anti_aliasing/quality/msaa_2d=3
 2d/snapping/use_gpu_pixel_snap=true

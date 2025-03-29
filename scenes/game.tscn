@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=74 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="PackedScene" uid="uid://bai247yhexqwe" path="res://scenes/sky.tscn" id="3_jfwkf"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
+[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="4_6pk3d"]
 [ext_resource type="VoxelGeneratorScript" uid="uid://han2gfd64uoy" path="res://resources/generator.tres" id="4_tpxqt"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
@@ -14,27 +15,69 @@
 [ext_resource type="PackedScene" uid="uid://b4ef0j31tttko" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
 [ext_resource type="PackedScene" uid="uid://dwwv5ywawdbba" path="res://scenes/ui/crafting_ui.tscn" id="12_151fq"]
 [ext_resource type="PackedScene" uid="uid://cog3w5pk86koo" path="res://scenes/player/selection_buttons.tscn" id="12_qvgc7"]
-[ext_resource type="Resource" uid="uid://dgswqwr4e80oy" path="res://scripts/items/craftables/craftable_library.tres" id="13_5ceup"]
+[ext_resource type="Resource" uid="uid://bfr8tc7ljf5l2" path="res://resources/craftables_library.tres" id="13_p6nu7"]
+[ext_resource type="Script" path="res://scripts/ui/armour_holder.gd" id="13_wsp3s"]
 [ext_resource type="Script" path="res://scripts/ui/stats_ui_update.gd" id="14_ho63k"]
+[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="14_ihskq"]
 [ext_resource type="Texture2D" uid="uid://8pjqg2q1q1ea" path="res://assets/gui/Healthbar.webp" id="15_7hqkq"]
+[ext_resource type="Texture2D" uid="uid://ck5pnmgsl8f7j" path="res://assets/textures/items/leather_helmet.png" id="15_kdnva"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
 [ext_resource type="Texture2D" uid="uid://bhh6ygqgmcb04" path="res://assets/gui/Hunger_JE2_BE2.webp" id="16_fjtoi"]
+[ext_resource type="Texture2D" uid="uid://dp2u2uccah4f8" path="res://assets/textures/items/leather_chestplate.png" id="16_jipce"]
+[ext_resource type="Texture2D" uid="uid://psbdqd3q4naj" path="res://assets/textures/items/leather_leggings.png" id="17_vqxny"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="20_j2a6v"]
 [ext_resource type="Script" path="res://scripts/ui/grapthic_settings.gd" id="21_8u2nj"]
+[ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="21_ig8ss"]
+[ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="22_0lwf4"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
+[ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="23_4u70j"]
 [ext_resource type="AudioStream" uid="uid://c625ntyc2nlhe" path="res://assets/sounds/ambient/Soulsand_valley_ambience.ogg" id="23_fu53x"]
+[ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="24_0bstr"]
 [ext_resource type="PackedScene" uid="uid://7bxiyo4hesal" path="res://scenes/other/random_sound.tscn" id="24_r824s"]
+[ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="25_5i73i"]
+[ext_resource type="Resource" uid="uid://bbwu7wqguky81" path="res://resources/items/leaf_oak.tres" id="26_foygn"]
+[ext_resource type="Resource" uid="uid://bk4meuo0rs246" path="res://resources/items/leaf_birch.tres" id="27_mupgd"]
 [ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="27_yvp68"]
+[ext_resource type="Resource" uid="uid://d3ecx624ljcyc" path="res://resources/items/glass.tres" id="28_g6gey"]
+[ext_resource type="Resource" uid="uid://d26i62gur1o23" path="res://resources/items/log_oak.tres" id="29_hm8td"]
+[ext_resource type="Resource" uid="uid://cogc5ac14y0ad" path="res://resources/items/log_birch.tres" id="30_jvpgd"]
+[ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="31_obhup"]
+[ext_resource type="Resource" uid="uid://mv1twiklruq5" path="res://resources/items/shovel_wood.tres" id="32_vk3kx"]
+[ext_resource type="Resource" uid="uid://ds6640766cx5k" path="res://resources/items/axe_wood.tres" id="33_rjf64"]
+[ext_resource type="Resource" uid="uid://djg543gibfvro" path="res://resources/items/pickaxe_wood.tres" id="34_8kp1m"]
+[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="35_idi8l"]
+[ext_resource type="Resource" uid="uid://bkg02u1wtw0q3" path="res://resources/items/grass_tall.tres" id="36_n2q1h"]
+[ext_resource type="Resource" uid="uid://lxq2aq82pa5e" path="res://resources/items/chest.tres" id="37_v5ery"]
+[ext_resource type="Resource" uid="uid://c2c8qekfermsb" path="res://resources/items/bow.tres" id="38_met67"]
+[ext_resource type="Resource" uid="uid://dah3r6qldt8la" path="res://resources/items/pickaxe_stone.tres" id="39_w83em"]
+[ext_resource type="Resource" uid="uid://dg2gha7cp48ki" path="res://resources/items/axe_stone.tres" id="40_63iuy"]
+[ext_resource type="Resource" uid="uid://cmku2fpockw70" path="res://resources/items/shovel_stone.tres" id="41_4caau"]
+[ext_resource type="Resource" uid="uid://dlboikqlvjswi" path="res://resources/items/glowstone.tres" id="42_cb2yh"]
+[ext_resource type="Resource" uid="uid://c4g4nofmjg2jg" path="res://resources/items/diamond_block.tres" id="43_csd2r"]
+[ext_resource type="Resource" uid="uid://dvlxseu7sf1d4" path="res://resources/items/iron_block.tres" id="44_w0mv8"]
+[ext_resource type="Resource" uid="uid://2cgpe8xf3dkh" path="res://resources/items/bed.tres" id="45_y2cgb"]
+[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/forge.tres" id="46_npkva"]
+[ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="47_2is4p"]
+[ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="48_hwqys"]
+[ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="49_6fhua"]
+[ext_resource type="Resource" uid="uid://dmfnsgf0lvbhh" path="res://resources/items/fern.tres" id="50_j7kip"]
+[ext_resource type="Resource" uid="uid://d0ns05o7rlxa5" path="res://resources/items/flower.tres" id="51_vrpuo"]
+[ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/helment.tres" id="52_wm2ll"]
+[ext_resource type="Resource" uid="uid://cx1gtjn1dlvqi" path="res://resources/items/leather_chest.tres" id="53_ctxg7"]
+[ext_resource type="Resource" uid="uid://l4nd5is685cm" path="res://resources/items/pants.tres" id="54_57bq4"]
+[ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
+[ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
 
 [sub_resource type="Environment" id="Environment_dhksy"]
 background_mode = 1
 
-[sub_resource type="VoxelStreamSQLite" id="VoxelStreamSQLite_3fff2"]
-database_path = "minecraft_db.sqlite3"
-preferred_coordinate_format = "minecraft_db.sqlite3"
-
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
+
+[sub_resource type="Resource" id="Resource_c0ten"]
+script = ExtResource("56_rtthk")
+items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), ExtResource("28_g6gey"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), ExtResource("38_met67"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_ctxg7"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
@@ -49,7 +92,6 @@ creature_s = ExtResource("2_pgqmj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.667196, -0.49845, -0.553531, -0.647287, 0.020241, 0.761977, -0.368604, 0.866682, -0.336145, 0, 9.91598, 0)
-light_energy = 1.3
 shadow_enabled = true
 shadow_bias = 0.01
 
@@ -61,8 +103,9 @@ cull_mask = 0
 environment = SubResource("Environment_dhksy")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
+run_stream_in_editor = false
 use_gpu_generation = true
-stream = SubResource("VoxelStreamSQLite_3fff2")
+stream = ExtResource("4_6pk3d")
 generator = ExtResource("4_tpxqt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00867271, 0.0195246, -0.00582218)
@@ -128,15 +171,48 @@ offset_right = 502.0
 offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
 [node name="Crafting" parent="Player UI/Inventory holder/Inventory" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
 layout_mode = 2
 send_to_inventory = NodePath("../Inventory")
-crafting_library = ExtResource("13_5ceup")
+crafting_library = ExtResource("13_p6nu7")
+
+[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/Inventory" node_paths=PackedStringArray("slot_holder")]
+layout_mode = 2
+script = ExtResource("13_wsp3s")
+slot_holder = NodePath("MarginContainer/Slot_Holder")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/Inventory/Armour"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Helment" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "helment"
+background_texture = ExtResource("15_kdnva")
+
+[node name="Chest" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "chest_plate"
+background_texture = ExtResource("16_jipce")
+
+[node name="Pants" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "pants"
+background_texture = ExtResource("17_vqxny")
 
 [node name="Inventory" parent="Player UI/Inventory holder/Inventory" groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 sync = false
+items_library = SubResource("Resource_c0ten")
 
 [node name="Craftable Info" parent="Player UI/Inventory holder" instance=ExtResource("11_cdfh2")]
 layout_mode = 0
@@ -153,36 +229,28 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("14_ho63k")
 
-[node name="healthbar" type="TextureProgressBar" parent="Player UI/stats_ui_update"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Player UI/stats_ui_update"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 544.0
 offset_top = -128.0
-offset_right = -544.0
-offset_bottom = -101.0
 grow_horizontal = 2
 grow_vertical = 0
+alignment = 1
+
+[node name="healthbar" type="TextureProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
+layout_mode = 2
 value = 60.0
 texture_under = ExtResource("15_7hqkq")
 texture_progress = ExtResource("15_7hqkq")
 tint_under = Color(0, 0, 0, 1)
 
-[node name="hungerbar" type="TextureProgressBar" parent="Player UI/stats_ui_update"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -168.0
-offset_top = -136.0
-offset_right = -128.0
-offset_bottom = -96.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="hungerbar" type="TextureProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 0
 value = 60.0
 nine_patch_stretch = true
 texture_under = ExtResource("16_fjtoi")
@@ -261,6 +329,7 @@ layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_xl6xy")
 
 [node name="Main Menu" type="Button" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Main Menu"
 
@@ -411,6 +480,9 @@ parameters/looping = true
 
 [node name="Random Sound" parent="." instance=ExtResource("24_r824s")]
 
+[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/Inventory/Armour" method="_on_helment_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/Inventory/Armour" method="_on_chest_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/Inventory/Armour" method="_on_pants_item_changed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]
 [connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]

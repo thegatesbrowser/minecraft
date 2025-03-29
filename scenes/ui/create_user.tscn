@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://xlramxseaccj"]
+
+[ext_resource type="Script" path="res://scripts/ui/create_user.gd" id="1_034hu"]
+
+[node name="Create_User" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -301.0
+offset_top = -63.0
+offset_right = 1.0
+offset_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_034hu")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Create User"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 3
+text = " x "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "USERNAME"
+scroll_active = false
+
+[node name="Username" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(1.45519e-11, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PASSWORD"
+scroll_active = false
+
+[node name="Password" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(1.45519e-11, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+
+[node name="Submit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SUBMIT"
+
+[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer3/Exit" to="." method="_on_exit_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/Submit" to="." method="_on_submit_button_down"]
