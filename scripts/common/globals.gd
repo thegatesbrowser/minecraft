@@ -49,6 +49,7 @@ signal remove_portal_data(id:Vector3)
 # ui
 signal new_ui(position:Vector3,instance_path:String)
 signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,health: int)
+signal save_player_ui
 signal remove_ui(position:Vector3)
 var last_clicked_slot:Node
 var selected_slot:Slot ## the slot that is selected in the hotbar
@@ -67,6 +68,9 @@ signal craftable_hovered(craftable,node)
 signal craftable_unhovered
 signal drop_item(item)
 
+# Backend
+var username:String
+signal send_data(data:Dictionary)
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)

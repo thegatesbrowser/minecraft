@@ -1,8 +1,8 @@
 extends ScrollContainer
 class_name HotBar
 
-@onready var eat_sfx: AudioStreamPlayer = $eat
-@onready var slots: HBoxContainer = $MarginContainer/VBoxContainer/Slots
+@export var eat_sfx: AudioStreamPlayer
+@export var slots: HBoxContainer
 
 var selected_item: ItemBase 
 
@@ -14,6 +14,10 @@ var keys
 func _ready() -> void:
 	Globals.remove_item_from_hotbar.connect(remove)
 	buttons = slots.get_children()
+	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+	if !BackendClient.playerdata.is_empty():
+		if BackendClient.playerdata.Hotbar != null:
+			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
 
 
 func _input(_event: InputEvent) -> void:
@@ -130,3 +134,37 @@ func drop_all():
 
 func _on_dropall_pressed() -> void:
 	drop_all()
+
+
+func save() -> Dictionary:
+	var save_data:Dictionary = {}
+	for i in slots.get_children():
+		if i.Item_resource != null:
+			save_data[str(i.get_index())] = {
+				"item_path":i.Item_resource.get_path(),
+				"amount":i.amount,
+				"parent":i.get_parent().name,
+				"health":i.health
+				}
+		else:
+			save_data[str(i.get_index())] = {
+				"item_path":"",
+				"amount":i.amount,
+				"parent":i.get_parent().name,
+				"health":i.health
+				}
+	return save_data
+
+func update(info):
+	for i in info:
+		
+		var slot = find_child(info[i].parent).get_child(i.to_int())
+		
+		if info[i].item_path != "":
+			slot.Item_resource = load(info[i].item_path)
+		else:
+			slot.Item_resource = null
+			
+		slot.health = info[i].health
+		slot.amount = info[i].amount
+		slot.update_slot()

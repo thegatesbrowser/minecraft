@@ -153,11 +153,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
-
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if found_ground == false:
+		var ClientServer = get_tree().get_first_node_in_group("BackendClient")
+		if ClientServer.playerdata.is_empty() == false:
+			if ClientServer.playerdata.Position_x != null:
+				global_position = Vector3(ClientServer.playerdata.Position_x,ClientServer.playerdata.Position_y,ClientServer.playerdata.Position_z) + Vector3(0,1,0)
+		
 		if floor_ray.is_colliding():
 			Globals.paused = false
 			global_position = floor_ray.get_collision_point()
@@ -248,7 +252,7 @@ func _physics_process(delta: float) -> void:
 			hand_ani.play("RESET")
 
 	if Input.is_action_just_pressed("Mine"):
-		var hotbar = get_node("/root/Main").find_child("Selection_Buttons") as HotBar
+		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
 		var hotbar_item = hotbar.get_current().Item_resource
 		#print(hotbar.get_current().Item_resource)
 		
@@ -321,6 +325,10 @@ func set_sync_properties() -> void:
 	_rotation = rotation_root.rotation
 	_direction = _move_direction
 
+func save_data():
+	Globals.send_data.emit({"name": Globals.username,"change_name": "Position_x", "change": position.x})
+	Globals.send_data.emit({"name": Globals.username,"change_name": "Position_y", "change": position.y})
+	Globals.send_data.emit({"name": Globals.username,"change_name": "Position_z", "change": position.z})
 
 func on_synchronized() -> void:
 	velocity = _velocity
@@ -512,3 +520,7 @@ func hunger_points_gained(amount: int) -> void:
 
 func _on_fall_time_timeout() -> void:
 	fall_time += 1
+
+
+func _on_update_timeout() -> void:
+	save_data()

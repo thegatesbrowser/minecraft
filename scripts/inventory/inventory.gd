@@ -28,7 +28,11 @@ func _ready() -> void:
 	Globals.spawn_item_inventory.connect(spawn_item)
 	Globals.remove_item.connect(remove_item)
 	Globals.check_amount_of_item.connect(check_amount_of_item)
-
+	
+	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+	if !BackendClient.playerdata.is_empty():
+		if BackendClient.playerdata.Inventory != null:
+			update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
 
 func _process(_delta: float) -> void:
 	
@@ -181,7 +185,6 @@ func change(index: int, item_path: String, amount: int,parent:String,health:floa
 	if sync:
 		Globals.sync_ui_change.emit(index,item_path,amount,parent,health)
 
-
 @rpc("any_peer","call_local")
 func update_client(info):
 	for i in info:
@@ -212,3 +215,22 @@ func drop_all():
 
 func _on_drop_all_pressed() -> void:
 	drop_all()
+
+func save() -> Dictionary:
+	var save_data:Dictionary = {}
+	for i in items_collection.get_children():
+		if i.Item_resource != null:
+			save_data[str(i.get_index())] = {
+				"item_path":i.Item_resource.get_path(),
+				"amount":i.amount,
+				"parent":i.get_parent().name,
+				"health":i.health
+				}
+		else:
+			save_data[str(i.get_index())] = {
+				"item_path":"",
+				"amount":i.amount,
+				"parent":i.get_parent().name,
+				"health":i.health
+				}
+	return save_data

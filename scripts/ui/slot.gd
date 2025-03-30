@@ -85,6 +85,7 @@ func update_slot() -> void:
 			
 		image.texture = Item_resource.texture
 
+		
 		item_changed.emit(index,Item_resource.get_path(),amount,get_parent().name,health)
 		
 		if not Item_resource is ItemTool:
@@ -99,6 +100,8 @@ func update_slot() -> void:
 		item_changed.emit(index,"",amount,get_parent().name,health)
 		health = 0
 		health_bar.hide()
+		
+	Globals.save_player_ui.emit() ## saves the players slots only
 
 func used() -> void:
 	health -= Item_resource.degrade_rate

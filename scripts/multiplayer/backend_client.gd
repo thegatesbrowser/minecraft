@@ -2,27 +2,9 @@ extends Node
 
 @export var login_window = preload("res://scenes/ui/login_window.tscn")
 @export var PlayerInfo:RichTextLabel
-@export var LoginWindow:PanelContainer
+@export var address:String = "ws://127.0.0.1:8915"
 
-enum Message{
-	id,
-	join,
-	userConnected,
-	userDisconnected,
-	lobby,
-	candidate,
-	offer,
-	answer,
-	checkIn,
-	serverLobbyInfo,
-	removeLobby,
-	createUser,
-	loginUser ,
-	playerinfo,
-	failedToLogin,
-	update
-}
-
+var LoginWindow
 var peer = WebSocketMultiplayerPeer.new()
 var id = 0
 var rtcPeer : WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new()
@@ -31,8 +13,11 @@ var lobbyValue = ""
 var lobbyInfo = {}
 var cryptoUtil = UserCrypto.new()
 var username:String
+
+var playerdata:Dictionary = {}
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Globals.send_data.connect(update)
 	multiplayer.connected_to_server.connect(RTCServerConnected)
 	multiplayer.peer_connected.connect(RTCPeerConnected)
 	multiplayer.peer_disconnected.connect(RTCPeerDisconnected)
@@ -43,6 +28,17 @@ func _ready():
 	make_login()
 	pass # Replace with function body.
 
+func ask_for_player_data(username):
+	var data = {"username" : username.strip_edges(true, true), 
+	}
+	var message = {
+		"peer" : id,
+		"orgPeer" : self.id,
+		"message" :  Util.Message.checkIn,
+		"data": data,
+		"Lobby": lobbyValue
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 
 func createUser(username, password):
 	var data = {"username" : username.strip_edges(true, true), 
@@ -51,7 +47,7 @@ func createUser(username, password):
 	var message = {
 		"peer" : id,
 		"orgPeer" : self.id,
-		"message" : Message.createUser,
+		"message" : Util.Message.createUser,
 		"data": data,
 		"Lobby": lobbyValue
 	}
@@ -65,7 +61,7 @@ func loginUser(username, password):
 	var message = {
 		"peer" : id,
 		"orgPeer" : self.id,
-		"message" :  Message.loginUser,
+		"message" :  Util.Message.loginUser,
 		"data": data,
 		"Lobby": lobbyValue
 	}
@@ -84,10 +80,10 @@ func RTCPeerDisconnected(id):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
+		
 	peer.poll()
 	if Input.is_action_just_pressed("0"):
-		update({"name": username,"health": 10})
+		ask_for_player_data(username)
 	if peer.get_available_packet_count() > 0:
 		var packet = peer.get_packet()
 		if packet != null:
@@ -96,37 +92,43 @@ func _process(delta):
 			
 			print(data)
 			
-			
-			if data.message == Message.id:
+			if data.message == Util.Message.id:
 				id = data.id
 				
 				connected(id)
 				
-			#if data.message == Message.userConnected:
+			#if data.message == Util.Message.userConnected:
 				##GameManager.Players[data.id] = data.player
 				#createPeer(data.id)
 				
-			if data.message == Message.candidate:
+			if data.message == Util.Message.candidate:
 				if rtcPeer.has_peer(data.orgPeer):
 					print("Got Candididate: " + str(data.orgPeer) + " my id is " + str(id))
 					rtcPeer.get_peer(data.orgPeer).connection.add_ice_candidate(data.mid, data.index, data.sdp)
 			
-			if data.message == Message.offer:
+			if data.message == Util.Message.offer:
 				if rtcPeer.has_peer(data.orgPeer):
 					rtcPeer.get_peer(data.orgPeer).connection.set_remote_description("offer", data.data)
 			
-			if data.message == Message.answer:
+			if data.message == Util.Message.answer:
 				if rtcPeer.has_peer(data.orgPeer):
 					rtcPeer.get_peer(data.orgPeer).connection.set_remote_description("answer", data.data)
-#			if data.message == Message.serverLobbyInfo:
+#			if data.message == Util.Message.serverLobbyInfo:
 #
 #				$LobbyBrowser.InstanceLobbyInfo(data.name,data.userCount)
-			if data.message == Message.playerinfo:
+			if data.message == Util.Message.playerinfo:
+				playerdata = data
+				print(playerdata)
+				PlayerInfo.text = ""
 				for i in data:
-					PlayerInfo.text += str(i,"\n")
+					var variable = data[i]
+					PlayerInfo.text += str(i," : ",variable,"\n")
+					
 				#PlayerInfo.text = data.username + "\n"+ str(data.id)  + "\n" + str(data.health)
 				username = data.username
-			if data.message == Message.failedToLogin:
+				Globals.username = username
+				
+			if data.message == Util.Message.failedToLogin:
 				LoginWindow.SetSystemErrorLabel(data.text)
 	pass
 
@@ -134,7 +136,7 @@ func update(data:Dictionary):
 	var message = {
 		"peer" : id,
 		"orgPeer" : self.id,
-		"message" : Message.update,
+		"message" : Util.Message.update,
 		"data": data,
 		"Lobby": lobbyValue
 	}
@@ -179,7 +181,7 @@ func sendOffer(id, data):
 	var message = {
 		"peer" : id,
 		"orgPeer" : self.id,
-		"message" :  Message.offer,
+		"message" :  Util.Message.offer,
 		"data": data,
 		"Lobby": lobbyValue
 	}
@@ -190,7 +192,7 @@ func sendAnswer(id, data):
 	var message = {
 		"peer" : id,
 		"orgPeer" : self.id,
-		"message" : Message.answer,
+		"message" : Util.Message.answer,
 		"data": data,
 		"Lobby": lobbyValue
 	}
@@ -201,7 +203,7 @@ func iceCandidateCreated(midName, indexName, sdpName, id):
 	var message = {
 		"peer" : id,
 		"orgPeer" : self.id,
-		"message" :  Message.candidate,
+		"message" :  Util.Message.candidate,
 		"mid": midName,
 		"index": indexName,
 		"sdp": sdpName,
@@ -211,7 +213,7 @@ func iceCandidateCreated(midName, indexName, sdpName, id):
 	pass
 
 func connectToServer(ip):
-	peer.create_client("ws://127.0.0.1:8915")
+	peer.create_client(address)
 	print("started client")
 
 

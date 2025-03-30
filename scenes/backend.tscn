@@ -5,9 +5,9 @@
 
 [node name="Backend" type="Node"]
 
-[node name="BackendClient" type="Node" parent="." node_paths=PackedStringArray("PlayerInfo")]
+[node name="BackendClient" type="Node" parent="." node_paths=PackedStringArray("PlayerInfo") groups=["BackendClient"]]
 script = ExtResource("1_vp6qf")
-PlayerInfo = NodePath("Panel/Player Info")
+PlayerInfo = NodePath("Debug/Player Info")
 
 [node name="Button" type="Button" parent="BackendClient"]
 visible = false
@@ -16,7 +16,7 @@ offset_right = 92.0
 offset_bottom = 79.0
 text = "start client"
 
-[node name="Panel" type="Panel" parent="BackendClient"]
+[node name="Debug" type="Panel" parent="BackendClient"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -24,7 +24,7 @@ offset_top = -256.0
 offset_right = 424.0
 grow_vertical = 0
 
-[node name="Player Info" type="RichTextLabel" parent="BackendClient/Panel"]
+[node name="Player Info" type="RichTextLabel" parent="BackendClient/Debug"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
