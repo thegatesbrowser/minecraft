@@ -12,9 +12,9 @@ var Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
 var cryptoUtil = UserCrypto.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if "--server" in OS.get_cmdline_user_args():
-		#print("hosting on " + str(hostPort))
-		startServer()
+	#if "--server" in OS.get_cmdline_user_args():
+		##print("hosting on " + str(hostPort))
+		#startServer()
 		
 	peer.connect("peer_connected", peer_connected)
 	peer.connect("peer_disconnected", peer_disconnected)
