@@ -26,8 +26,12 @@ func _ready() -> void:
 
 func create_player(id: int) -> void:
 	if not multiplayer.is_server(): return
+	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	
-	var spawn_position = spawn_points.get_spawn_position()
+	var spawn_position:Vector3
+	spawn_position = spawn_points.get_spawn_position()
+		
+			
 	spawn([id, spawn_position])
 
 	Debug.log_msg("Player %d spawned at %.v" % [id, spawn_position])

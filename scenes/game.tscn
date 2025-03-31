@@ -209,7 +209,7 @@ layout_mode = 2
 type = "pants"
 background_texture = ExtResource("17_vqxny")
 
-[node name="Inventory" parent="Player UI/Inventory holder/Inventory" groups=["Main Inventory"] instance=ExtResource("10_hxw3b")]
+[node name="Inventory" parent="Player UI/Inventory holder/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 sync = false
 items_library = SubResource("Resource_c0ten")
@@ -433,7 +433,7 @@ text = "Ssao
 layout_mode = 2
 placeholder_text = "View Range : 800"
 
-[node name="Selection_Buttons" parent="UI" groups=["Hotbar"] instance=ExtResource("12_qvgc7")]
+[node name="Hotbar" parent="UI" groups=["Hotbar"] instance=ExtResource("12_qvgc7")]
 process_mode = 3
 
 [node name="Text Chat" type="PanelContainer" parent="UI"]

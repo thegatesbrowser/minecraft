@@ -9,7 +9,7 @@
 color = Color(1, 1, 1, 1)
 thickness = 3
 
-[node name="Inventory" type="ScrollContainer" node_paths=PackedStringArray("items_collection", "inventroy_name") groups=["Hotbar"]]
+[node name="Inventory" type="ScrollContainer" node_paths=PackedStringArray("items_collection", "inventroy_name")]
 process_mode = 3
 custom_minimum_size = Vector2(800, 800)
 anchors_preset = 8

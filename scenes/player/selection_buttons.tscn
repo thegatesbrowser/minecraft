@@ -12,7 +12,7 @@ stream_0/stream = ExtResource("10_4f7le")
 stream_1/stream = ExtResource("11_cqmpa")
 stream_2/stream = ExtResource("12_w0oy7")
 
-[node name="Selection_Buttons" type="ScrollContainer"]
+[node name="Hotbar" type="ScrollContainer" node_paths=PackedStringArray("eat_sfx", "slots") groups=["PlayersUI"]]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -23,6 +23,8 @@ grow_vertical = 0
 mouse_filter = 2
 vertical_scroll_mode = 0
 script = ExtResource("1_favd0")
+eat_sfx = NodePath("eat")
+slots = NodePath("MarginContainer/VBoxContainer/Slots")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

@@ -20,9 +20,9 @@ const SPLASH_ANIMATION_NAME = "Splash"
 
 func _ready() -> void:
 	
-	#var backend = backend_scene.instantiate()
-	#get_tree().root.call_deferred("add_child",backend)
-	#
+	var backend = backend_scene.instantiate()
+	get_tree().root.call_deferred("add_child",backend)
+	##
 	#SaveGlobal.username_result.connect(username_result)
 	
 	if Connection.is_server():

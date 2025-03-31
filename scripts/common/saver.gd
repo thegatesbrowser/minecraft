@@ -7,7 +7,7 @@ var passcode = "dqaduqiqbnmn1863841hjb"
 @export var UIsave_path:String = "res://UISyncer.save"
 
 func _ready() -> void:
-	
+	Globals.save_player_ui.connect(save_player_ui)
 	if multiplayer.is_server():
 		load_inventory()
 		
@@ -86,3 +86,11 @@ func load_inventory():
 		var UI_saver = get_tree().get_first_node_in_group("UISyncer")
 		
 		UI_saver.server_ui_info = node_data["server_ui_info"]
+		
+func save_player_ui():
+	for ui in get_tree().get_nodes_in_group("PlayersUI"):
+		if ui.has_method("save"):
+			var ui_data = ui.call("save")
+			var data = JSON.stringify(ui_data)
+			var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+			Globals.send_data.emit({"name" : BackendClient.username , "change_name" : ui.name,"change" : data})

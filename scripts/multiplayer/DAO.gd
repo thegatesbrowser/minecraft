@@ -15,7 +15,12 @@ func _init():
 		"name": {"data_type" : "text"},
 		"password" : {"data_type" : "text"},
 		"salt" :{"data_type" : "int", "not_null" : true},
-		"health":{"data_type" : "int"}
+		"health":{"data_type" : "int"},
+		"Position_x":{"data_type": "float"},
+		"Position_y":{"data_type": "float"},
+		"Position_z":{"data_type": "float"},
+		"Inventory":{"data_type": "String"},
+		"Hotbar":{"data_type": "String"},
 	}
 	
 	db.create_table("players", table)
@@ -29,11 +34,12 @@ func InsertUserData(name, password, salt):
 	}
 	db.insert_row("players", data)
 	
-func change_data(name):
-	db.update_rows("players", "name = '" + name + "'", {"health":10})
+func change_data(name:String, change_name:String, change):
+	#db.update_rows("players", "name = '" + name + "'", {"health":10})
+	db.update_rows("players", "name = '" + name + "'", {change_name:change})
 
 func GetUserFromDB(username):
-	var query = "SELECT salt, password, id, health from players where name = ?"
+	var query = "SELECT salt, password, id, health, Position_x,Position_y,Position_z, Inventory, Hotbar from players where name = ?"
 	var paramBindings = [username]
 	db.query_with_bindings(query, paramBindings)
 	print( db.query_result)
@@ -44,4 +50,9 @@ func GetUserFromDB(username):
 			"salt" : i["salt"],
 			"name" : username,
 			"health":  i["health"],
+			"Position_x": i["Position_x"],
+			"Position_y": i["Position_y"],
+			"Position_z": i["Position_z"],
+			"Inventory": i["Inventory"],
+			"Hotbar": i["Hotbar"],
 		}

@@ -17,7 +17,6 @@ func _ready() -> void:
 func new_ui(position: Vector3, scene_path: String) -> void:
 	server_make_ui.rpc_id(1,position,scene_path)
 
-
 func open_ui(position: Vector3) -> void:
 	check_server.rpc_id(1, position)
 	Opened_ui.rpc_id(1, position)
