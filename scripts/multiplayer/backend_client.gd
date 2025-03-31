@@ -1,8 +1,10 @@
 extends Node
 
+@export var debug_ui:Control
 @export var login_window = preload("res://scenes/ui/login_window.tscn")
 @export var PlayerInfo:RichTextLabel
-@export var address:String = "ws://127.0.0.1:8915"
+#@export var address:String = "ws://127.0.0.1:8819"
+@export var address:String = "ws://188.245.188.59:8819"
 
 var LoginWindow
 var peer = WebSocketMultiplayerPeer.new()
@@ -17,6 +19,9 @@ var username:String
 var playerdata:Dictionary = {}
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Console.add_command("saveD", self, 'saveD')\
+		.set_description("shows the saved player data from the backend).")\
+		.register()
 	Globals.send_data.connect(update)
 	multiplayer.connected_to_server.connect(RTCServerConnected)
 	multiplayer.peer_connected.connect(RTCPeerConnected)
@@ -127,6 +132,7 @@ func _process(delta):
 				#PlayerInfo.text = data.username + "\n"+ str(data.id)  + "\n" + str(data.health)
 				username = data.username
 				Globals.username = username
+				LoginWindow.queue_free()
 				
 			if data.message == Util.Message.failedToLogin:
 				LoginWindow.SetSystemErrorLabel(data.text)
@@ -227,3 +233,6 @@ func make_login():
 	login.LoginUser.connect(loginUser)
 	add_child(login)
 	LoginWindow = login
+
+func saveD():
+	debug_ui.visible = !debug_ui.visible

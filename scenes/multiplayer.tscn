@@ -225,10 +225,6 @@ inventory_holder = NodePath("../Game/Player UI/Inventory holder/Inventory")
 script = ExtResource("34_s4tlk")
 encrypt = true
 
-[node name="Timer" type="Timer" parent="Saver"]
-wait_time = 10.0
-autostart = true
-
 [node name="UI_Handler" type="Node" parent="."]
 script = ExtResource("37_0ju56")
 
@@ -295,5 +291,3 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 61
 text = "loading the world"
 uppercase = true
-
-[connection signal="timeout" from="Saver/Timer" to="Saver" method="_on_timer_timeout"]

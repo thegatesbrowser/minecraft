@@ -197,19 +197,16 @@ alignment = 1
 [node name="Helment" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "helment"
-amount = 1
 background_texture = ExtResource("15_kdnva")
 
 [node name="Chest" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "chest_plate"
-amount = 1
 background_texture = ExtResource("16_jipce")
 
 [node name="Pants" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "pants"
-amount = 1
 background_texture = ExtResource("17_vqxny")
 
 [node name="Inventory" parent="Player UI/Inventory holder/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]

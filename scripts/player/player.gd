@@ -519,8 +519,10 @@ func hunger_points_gained(amount: int) -> void:
 
 
 func _on_fall_time_timeout() -> void:
+	if Globals.paused: return
 	fall_time += 1
 
 
 func _on_update_timeout() -> void:
-	save_data()
+	if not Connection.is_server():
+		save_data()

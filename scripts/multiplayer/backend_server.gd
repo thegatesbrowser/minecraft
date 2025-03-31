@@ -7,13 +7,13 @@ var users = {}
 var lobbies = {}
 var dao = DAO.new()
 var Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-@export var hostPort = 8915
+@export var hostPort = 8819
 
 var cryptoUtil = UserCrypto.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if "--server" in OS.get_cmdline_user_args():
-		print("hosting on " + str(hostPort))
+		#print("hosting on " + str(hostPort))
 		startServer()
 		
 	peer.connect("peer_connected", peer_connected)
@@ -89,6 +89,13 @@ func get_player_data(data):
 	
 func login(data):
 	var userData = dao.GetUserFromDB(data.data.username)
+	if userData == null:
+		var returnData ={
+			"message" :Util.Message.failedToLogin,
+			"text" : "Failed to login invalid username or password"
+		}
+		peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
+		return
 	if(userData.hashedPassword == cryptoUtil.HashPassword(data.data.password, userData.salt)):
 		var returnData = {
 			"username" : userData.name,
@@ -121,7 +128,7 @@ func generateRandomString():
 	return result
 
 func startServer():
-	peer.create_server(8915)
+	peer.create_server(hostPort)
 	print("Started Server")
 
 func _on_start_server_button_down():
