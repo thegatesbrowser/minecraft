@@ -7,7 +7,7 @@ var table
 # Called when the node enters the scene tree for the first time.
 func _init():
 	db = SQLite.new()
-	db.path = "user://data.db"
+	db.path = "res://data.db"
 	db.open_db()
 	
 	table = {
