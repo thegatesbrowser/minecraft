@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cog3w5pk86koo"]
+[gd_scene load_steps=8 format=3 uid="uid://cog3w5pk86koo"]
 
 [ext_resource type="Script" path="res://scripts/ui/selection_buttons.gd" id="1_favd0"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_og1jy"]
+[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="3_7pwj4"]
 [ext_resource type="AudioStream" uid="uid://brsc44tm3my31" path="res://assets/sounds/other/Eat1.ogg" id="10_4f7le"]
 [ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="11_cqmpa"]
 [ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="12_w0oy7"]
@@ -47,6 +48,8 @@ alignment = 1
 [node name="Slot" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2
 type = "hotbar"
+amount = 26
+Item_resource = ExtResource("3_7pwj4")
 
 [node name="Slot2" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_og1jy")]
 layout_mode = 2

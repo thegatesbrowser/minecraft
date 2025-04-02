@@ -1,7 +1,7 @@
 extends TextureButton
 class_name Slot
 
-signal item_changed(index:int,item_path:String,amount:int,parent:String,health:float)
+signal item_changed(index:int,item_path:String,amount:int,parent:String,health:float,rot:int)
 
 @export var pressed_panel: Panel
 
@@ -17,10 +17,10 @@ signal item_changed(index:int,item_path:String,amount:int,parent:String,health:f
 @onready var health_label: Label = $health
 @onready var health_bar: ProgressBar = $CenterContainer/health
 
-
+var max_rot:int = 0
+var rot:int = 0
 var index:int
 var health:float
-
 var played_ani:bool = false
 var focused:bool = false
 
@@ -85,8 +85,14 @@ func update_slot() -> void:
 			
 		image.texture = Item_resource.texture
 
+		if Item_resource is ItemFood:
+			max_rot = Item_resource.max_rot_steps
+			$rot.text = str(rot)
+			$rot.show()
+		else:
+			$rot.hide()
 		
-		item_changed.emit(index,Item_resource.get_path(),amount,get_parent().name,health)
+		item_changed.emit(index,Item_resource.get_path(),amount,get_parent().name,health,rot)
 		
 		if not Item_resource is ItemTool:
 			health_bar.hide()
@@ -94,10 +100,11 @@ func update_slot() -> void:
 			health_bar.show()
 
 	else:
+		$rot.hide()
 		amount_label.hide()
 		amount = 1
 		image.texture = null
-		item_changed.emit(index,"",amount,get_parent().name,health)
+		item_changed.emit(index,"",amount,get_parent().name,health,rot)
 		health = 0
 		health_bar.hide()
 		
@@ -107,5 +114,23 @@ func update_slot() -> void:
 func used() -> void:
 	health -= Item_resource.degrade_rate
 	if health <= 0:
+		Item_resource = null
+	update_slot()
+	
+var timer:Timer
+func start_rot(time:float):
+	var rot_timer = Timer.new()
+	rot_timer.wait_time = time
+	add_child(rot_timer)
+	rot_timer.start()
+	rot_timer.timeout.connect(rot_update)
+	timer = rot_timer
+	
+	
+func rot_update():
+	rot += 1
+	timer.start()
+	if rot >= max_rot:
+		timer.queue_free()
 		Item_resource = null
 	update_slot()

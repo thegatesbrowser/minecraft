@@ -127,6 +127,11 @@ func slot_clicked(slot:Slot):
 			if slot.Item_resource == Globals.last_clicked_slot.Item_resource:
 				if slot.amount + Globals.last_clicked_slot.amount  < slot.Item_resource.max_stack:
 					#print("stack ")
+					if slot.Item_resource is ItemFood:
+						if Globals.last_clicked_slot.Item_resource is ItemFood:
+							if Globals.last_clicked_slot.rot != slot.rot:
+								return
+								
 					slot.amount += Globals.last_clicked_slot.amount
 					Globals.last_clicked_slot.Item_resource = null
 					Globals.last_clicked_slot.update_slot()

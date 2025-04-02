@@ -17,8 +17,9 @@ func _ready() -> void:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Hotbar != null:
-			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
-
+			#update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			pass
+			
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_released("Scroll_Up"):
