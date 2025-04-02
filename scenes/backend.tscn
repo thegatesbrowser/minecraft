@@ -40,6 +40,7 @@ grow_vertical = 2
 
 [node name="Button2" type="Button" parent="BackendServer/Debug"]
 visible = false
+layout_mode = 0
 offset_top = 48.0
 offset_right = 92.0
 offset_bottom = 79.0
@@ -47,6 +48,7 @@ text = "start client"
 
 [node name="Button" type="Button" parent="BackendServer/Debug"]
 visible = false
+layout_mode = 0
 offset_right = 98.0
 offset_bottom = 31.0
 text = "server start"

@@ -250,7 +250,20 @@ func _physics_process(delta: float) -> void:
 	else:
 		if hand_ani.current_animation != "RESET":
 			hand_ani.play("RESET")
-
+			
+	if Input.is_action_just_pressed("Build"):
+		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
+		var hotbar_item = hotbar.get_current().Item_resource
+		
+		if ray.is_colliding():
+			var coll = ray.get_collider()
+			
+			if coll is CreatureBase:
+				if coll.creature_resource.tamable:
+					if hotbar_item != null:
+						coll.give(hotbar_item,name.to_int())
+						Globals.remove_item_from_hotbar.emit()
+		
 	if Input.is_action_just_pressed("Mine"):
 		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
 		var hotbar_item = hotbar.get_current().Item_resource

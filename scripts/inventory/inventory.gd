@@ -33,7 +33,10 @@ func _ready() -> void:
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Inventory != null:
 			update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
-
+	if is_in_group("Main Inventory"):
+		Console.add_command("item", self, '_on_add_random_item_pressed')\
+		.set_description("spawns random item).")\
+		.register()
 func _process(_delta: float) -> void:
 	
 	check_slots()
@@ -56,13 +59,16 @@ func is_even(x: int) -> bool:
 	return x % 2 == 0
 
 
-func spawn_item(item_resource, amount:int = 1,health:int = 0) -> void:
+func spawn_item(item_resource:ItemBase, amount:int = 1,health:int = 0) -> void:
 	if !visible: return
 	if !full:
 		for i in items_collection.get_children():
 			if i.Item_resource == null:
 				i.Item_resource = item_resource
 				i.amount = amount
+				
+				if item_resource is ItemFood:
+					i.start_rot(item_resource.time_rot_step)
 				
 				if health != 0:
 					i.health = health
@@ -224,13 +230,15 @@ func save() -> Dictionary:
 				"item_path":i.Item_resource.get_path(),
 				"amount":i.amount,
 				"parent":i.get_parent().name,
-				"health":i.health
+				"health":i.health,
+				"rot":i.rot,
 				}
 		else:
 			save_data[str(i.get_index())] = {
 				"item_path":"",
 				"amount":i.amount,
 				"parent":i.get_parent().name,
-				"health":i.health
+				"health":i.health,
+				"rot":i.rot,
 				}
 	return save_data

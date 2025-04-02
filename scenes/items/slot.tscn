@@ -139,6 +139,21 @@ theme_override_font_sizes/font_size = 15
 text = "1"
 horizontal_alignment = 1
 
+[node name="rot" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -21.0
+offset_bottom = 79.0
+grow_horizontal = 0
+theme = ExtResource("3_dn7xo")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 1
+
 [node name="pressed" type="Panel" parent="."]
 visible = false
 show_behind_parent = true

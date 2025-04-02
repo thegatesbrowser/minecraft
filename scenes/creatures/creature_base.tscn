@@ -38,9 +38,10 @@ streams_count = 2
 stream_0/stream = ExtResource("3_yg616")
 stream_1/stream = ExtResource("4_4tu1u")
 
-[node name="AI Base" type="CharacterBody3D" groups=["NPCS"]]
+[node name="AI Base" type="CharacterBody3D" node_paths=PackedStringArray("walk_timer") groups=["NPCS"]]
 script = ExtResource("1_yo80c")
 creature_resource = ExtResource("2_qtj8b")
+walk_timer = NodePath("Move")
 
 [node name="RotationRoot" type="Node3D" parent="."]
 
@@ -77,25 +78,35 @@ surface_material_override/0 = SubResource("StandardMaterial3D_akaej")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_oq0u8")
 
-[node name="hurt" type="AudioStreamPlayer3D" parent="."]
+[node name="Sounds" type="Node3D" parent="."]
+
+[node name="feed" type="AudioStreamPlayer3D" parent="Sounds"]
 stream = SubResource("AudioStreamRandomizer_fl4w3")
 max_distance = 10.0
 panning_strength = 3.0
 
-[node name="idle" type="AudioStreamPlayer3D" parent="."]
+[node name="hurt" type="AudioStreamPlayer3D" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_fl4w3")
+max_distance = 10.0
+panning_strength = 3.0
+
+[node name="idle" type="AudioStreamPlayer3D" parent="Sounds"]
 stream = SubResource("AudioStreamRandomizer_fl4w3")
 max_distance = 40.0
 panning_strength = 3.0
 script = ExtResource("5_ayjnj")
 
-[node name="Timer" type="Timer" parent="idle"]
+[node name="Timer" type="Timer" parent="Sounds/idle"]
 wait_time = 6.0
 autostart = true
 
-[node name="death" type="AudioStreamPlayer3D" parent="."]
+[node name="death" type="AudioStreamPlayer3D" parent="Sounds"]
 max_distance = 10.0
 panning_strength = 3.0
 
+[node name="Ground" type="RayCast3D" parent="."]
+target_position = Vector3(1.45519e-11, -3000, 1.45519e-11)
+
 [connection signal="body_entered" from="attack range" to="." method="_on_attack_range_body_entered"]
 [connection signal="timeout" from="Move" to="." method="_on_move_timeout"]
-[connection signal="timeout" from="idle/Timer" to="idle" method="_on_timer_timeout"]
+[connection signal="timeout" from="Sounds/idle/Timer" to="Sounds/idle" method="_on_timer_timeout"]

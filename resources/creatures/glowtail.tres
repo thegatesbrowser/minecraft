@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Creature" load_steps=14 format=3 uid="uid://cylxg4ja44lhh"]
+[gd_resource type="Resource" script_class="Creature" load_steps=15 format=3 uid="uid://cylxg4ja44lhh"]
 
 [ext_resource type="PackedScene" uid="uid://bm84k63fubxes" path="res://assets/models/glowtail.glb" id="1_oitx8"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_25jlh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ub3wt"]
 [ext_resource type="Resource" uid="uid://dlboikqlvjswi" path="res://resources/items/glowstone.tres" id="5_7xh10"]
 [ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="5_s4hjm"]
+[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="6_oudns"]
 [ext_resource type="AudioStream" uid="uid://bvw3dv5xk1sm2" path="res://assets/sounds/other/Fox_hurt2.ogg" id="6_oyhmh"]
 [ext_resource type="AudioStream" uid="uid://dxd8kf1git7iw" path="res://assets/sounds/other/Fox_hurt3.ogg" id="7_5qakb"]
 [ext_resource type="AudioStream" uid="uid://bj3cpbjncj2hs" path="res://assets/sounds/other/Fox_hurt4.ogg" id="8_xtcw0"]
@@ -42,5 +43,10 @@ idle_ani_name = "idle"
 mesh_name = "Cube"
 hurt_sound = SubResource("AudioStreamRandomizer_q6oy4")
 death_sound = SubResource("AudioStreamRandomizer_bdycu")
+flyies = false
+flying_height = 10.0
+tamable = true
+excepted_items = Array[ExtResource("2_25jlh")]([ExtResource("6_oudns")])
+amount = 1
 creature_name = "Glowtail"
 drop_items = Array[ExtResource("2_25jlh")]([ExtResource("5_7xh10")])
