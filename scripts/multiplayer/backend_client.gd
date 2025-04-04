@@ -30,7 +30,7 @@ func _ready():
 	if Connection.is_server() == false:
 		connectToServer("")
 		
-	make_login()
+		make_login()
 	pass # Replace with function body.
 
 func ask_for_player_data(username):
@@ -220,7 +220,7 @@ func iceCandidateCreated(midName, indexName, sdpName, id):
 
 func connectToServer(ip):
 	peer.create_client(address)
-	print("started client")
+	print("started client trying to connect or ", address)
 
 
 func _on_start_client_button_down():

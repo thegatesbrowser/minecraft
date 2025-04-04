@@ -10,14 +10,13 @@ var current_key = 1
 var buttons
 var keys
 
-
 func _ready() -> void:
 	Globals.remove_item_from_hotbar.connect(remove)
 	buttons = slots.get_children()
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Hotbar != null:
-			#update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
 			pass
 			
 
@@ -145,14 +144,16 @@ func save() -> Dictionary:
 				"item_path":i.Item_resource.get_path(),
 				"amount":i.amount,
 				"parent":i.get_parent().name,
-				"health":i.health
+				"health":i.health,
+				"rot":i.rot,
 				}
 		else:
 			save_data[str(i.get_index())] = {
 				"item_path":"",
 				"amount":i.amount,
 				"parent":i.get_parent().name,
-				"health":i.health
+				"health":i.health,
+				"rot":i.rot,
 				}
 	return save_data
 
@@ -168,4 +169,5 @@ func update(info):
 			
 		slot.health = info[i].health
 		slot.amount = info[i].amount
+		slot.rot = info[i].rot
 		slot.update_slot()

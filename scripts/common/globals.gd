@@ -117,6 +117,7 @@ func slot_clicked(slot:Slot):
 			#slot.add_item.rpc(Globals.last_clicked_slot.Item_resource)
 			slot.health = Globals.last_clicked_slot.health
 			slot.amount = Globals.last_clicked_slot.amount
+			slot.rot = Globals.last_clicked_slot.rot
 			Globals.last_clicked_slot.Item_resource = null
 			slot.update_slot()
 			Globals.last_clicked_slot.update_slot()
@@ -168,18 +169,21 @@ func slot_clicked(slot:Slot):
 							
 						var hold_slot_health = slot.health
 						var hold_slot_amount = slot.amount
+						var hold_slot_rot = slot.rot
 						var hold_slot_resource = slot.Item_resource
 						
 						slot.Item_resource = Globals.last_clicked_slot.Item_resource
 						
 						#slot.Item_resource =  Globals.last_clicked_slot.Item_resource
+						slot.rot = Globals.last_clicked_slot.rot
 						slot.amount = Globals.last_clicked_slot.amount
 						slot.health = Globals.last_clicked_slot.health
 						#Globals.last_clicked_slot.Item_resource = hold_slot_resource
 						Globals.last_clicked_slot.Item_resource = hold_slot_resource
-
+						
 						Globals.last_clicked_slot.amount = hold_slot_amount
 						Globals.last_clicked_slot.health = hold_slot_health
+						Globals.last_clicked_slot.rot = hold_slot_rot
 						Globals.last_clicked_slot.update_slot()
 						Globals.last_clicked_slot.focused = false
 						Globals.last_clicked_slot = null

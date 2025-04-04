@@ -1,15 +1,20 @@
-[gd_resource type="Resource" script_class="ItemFood" load_steps=4 format=3 uid="uid://c4e134x487d6g"]
+[gd_resource type="Resource" script_class="ItemFood" load_steps=6 format=3 uid="uid://c4e134x487d6g"]
 
 [ext_resource type="Script" path="res://scripts/items/item_food.gd" id="1_irmsy"]
 [ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="1_itoyt"]
-[ext_resource type="Texture2D" uid="uid://db5770yd2432b" path="res://assets/textures/items/beef_raw.png" id="2_7sw3o"]
+[ext_resource type="Texture2D" uid="uid://2ipuodxyyoae" path="res://assets/textures/items/pixil-frame-0 - 2025-04-04T181640.172.png" id="2_ifq8d"]
+[ext_resource type="Texture2D" uid="uid://d2vcuoao7ahce" path="res://assets/textures/items/raw meat (1).png" id="3_ru0bn"]
+[ext_resource type="Texture2D" uid="uid://cqdxhl5xbaoy0" path="res://assets/textures/items/raw meat (3).png" id="4_wlfta"]
 
 [resource]
 script = ExtResource("1_irmsy")
 food_points = 2
 eat_time = 0.4
+time_rot_step = 5.0
+max_rot_steps = 3
+rot_step_textures = Array[Texture]([ExtResource("2_ifq8d"), ExtResource("3_ru0bn"), ExtResource("4_wlfta")])
 unique_name = &"meat"
-texture = ExtResource("2_7sw3o")
+texture = ExtResource("2_ifq8d")
 max_stack = 64
 rotatable = false
 forgable = true

@@ -29,14 +29,15 @@ func _ready() -> void:
 	Globals.remove_item.connect(remove_item)
 	Globals.check_amount_of_item.connect(check_amount_of_item)
 	
-	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	if !BackendClient.playerdata.is_empty():
-		if BackendClient.playerdata.Inventory != null:
-			update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
 	if is_in_group("Main Inventory"):
 		Console.add_command("item", self, '_on_add_random_item_pressed')\
 		.set_description("spawns random item).")\
 		.register()
+		
+		var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+		if !BackendClient.playerdata.is_empty():
+			if BackendClient.playerdata.Inventory != null:
+				update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
 func _process(_delta: float) -> void:
 	
 	check_slots()
@@ -187,9 +188,9 @@ func open(server_details:= {}):
 			update_client.rpc(server_details)
 
 
-func change(index: int, item_path: String, amount: int,parent:String,health:float):
+func change(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	if sync:
-		Globals.sync_ui_change.emit(index,item_path,amount,parent,health)
+		Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
 
 @rpc("any_peer","call_local")
 func update_client(info):
@@ -204,6 +205,7 @@ func update_client(info):
 			
 		slot.health = info[i].health
 		slot.amount = info[i].amount
+		slot.rot = info[i].rot
 		slot.update_slot()
 
 func pack_items(items:Array[String]):

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemFood" load_steps=5 format=3 uid="uid://r3vd515sq66w"]
+
+[ext_resource type="Texture2D" uid="uid://dk66m47kya22o" path="res://assets/textures/items/raw chicken (2).png" id="1_jnmvs"]
+[ext_resource type="Texture2D" uid="uid://2mx5yojhwvy3" path="res://assets/textures/items/cooked chicken (2).png" id="2_ljhb4"]
+[ext_resource type="Texture2D" uid="uid://d4bp5kftt5lh5" path="res://assets/textures/items/cooked chicken (1).png" id="3_5uoko"]
+[ext_resource type="Script" path="res://scripts/items/item_food.gd" id="3_6s7ao"]
+
+[resource]
+script = ExtResource("3_6s7ao")
+food_points = 6
+eat_time = 4.0
+time_rot_step = 5.0
+max_rot_steps = 3
+rot_step_textures = Array[Texture]([ExtResource("1_jnmvs"), ExtResource("2_ljhb4"), ExtResource("3_5uoko")])
+unique_name = &"cooked_chicken"
+texture = ExtResource("1_jnmvs")
+max_stack = 64
+rotatable = false
+forgable = false
+forge_time = 2.0

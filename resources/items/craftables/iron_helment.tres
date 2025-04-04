@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://dpkc8k2a64whr"]
+
+[ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_21842"]
+[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/forge.tres" id="2_a6dvy"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_iicld"]
+[ext_resource type="Texture2D" uid="uid://rbrqt8yjuvpt" path="res://assets/textures/items/furnace_front_off.png" id="4_hr2og"]
+
+[resource]
+script = ExtResource("3_iicld")
+Name = "forge"
+texture = ExtResource("4_hr2og")
+output_item = ExtResource("2_a6dvy")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 8,
+"name": "stone",
+"texture": ExtResource("1_21842")
+}
+}
