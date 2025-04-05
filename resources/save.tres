@@ -3,3 +3,4 @@
 [resource]
 database_path = "minecraft_db.sqlite3"
 preferred_coordinate_format = "minecraft_db.sqlite3"
+save_generator_output = true

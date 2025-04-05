@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="Creature" load_steps=12 format=3 uid="uid://bgq1uw8gii0xc"]
+
+[ext_resource type="PackedScene" uid="uid://4uc0qdkbo56e" path="res://assets/models/bird.glb" id="1_exrqk"]
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_vipb4"]
+[ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="2_mblni"]
+[ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="2_xpub8"]
+[ext_resource type="AudioStream" uid="uid://bvw3dv5xk1sm2" path="res://assets/sounds/other/Fox_hurt2.ogg" id="3_r8qox"]
+[ext_resource type="AudioStream" uid="uid://dxd8kf1git7iw" path="res://assets/sounds/other/Fox_hurt3.ogg" id="4_xuulr"]
+[ext_resource type="AudioStream" uid="uid://bj3cpbjncj2hs" path="res://assets/sounds/other/Fox_hurt4.ogg" id="5_71sg3"]
+[ext_resource type="Resource" uid="uid://bi2uaabadl7r3" path="res://resources/items/chicken_raw.tres" id="7_gvn4u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3rn82"]
+size = Vector3(0.287048, 0.486572, 0.418945)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f8dwm"]
+random_pitch = 1.2
+random_volume_offset_db = 3.27
+streams_count = 4
+stream_0/stream = ExtResource("2_mblni")
+stream_1/stream = ExtResource("3_r8qox")
+stream_2/stream = ExtResource("4_xuulr")
+stream_3/stream = ExtResource("5_71sg3")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_eoa4o"]
+random_pitch = 1.2
+random_volume_offset_db = 3.27
+streams_count = 4
+stream_0/stream = ExtResource("2_mblni")
+stream_1/stream = ExtResource("3_r8qox")
+stream_2/stream = ExtResource("4_xuulr")
+stream_3/stream = ExtResource("5_71sg3")
+
+[resource]
+script = ExtResource("2_xpub8")
+body_scene = ExtResource("1_exrqk")
+max_health = 0
+attacks = false
+run_away_after_attack = false
+damage = 0
+speed = 5.0
+coll_shape = SubResource("BoxShape3D_3rn82")
+walk_ani_name = "fly"
+idle_ani_name = "fly"
+mesh_name = "Body"
+hurt_sound = SubResource("AudioStreamRandomizer_eoa4o")
+death_sound = SubResource("AudioStreamRandomizer_f8dwm")
+flyies = true
+flying_height = 10.0
+tamable = false
+excepted_items = Array[ExtResource("1_vipb4")]([])
+amount = 0
+creature_name = "Sparrow"
+drop_items = Array[ExtResource("1_vipb4")]([ExtResource("7_gvn4u")])

@@ -42,7 +42,7 @@ func GetUserFromDB(username):
 	var query = "SELECT salt, password, id, health, Position_x,Position_y,Position_z, Inventory, Hotbar from players where name = ?"
 	var paramBindings = [username]
 	db.query_with_bindings(query, paramBindings)
-	print( db.query_result)
+	#print( db.query_result)
 	for i in db.query_result:
 		return{
 			"id" : i["id"],

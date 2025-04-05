@@ -3,7 +3,7 @@ extends Control
 const SPLASH_ANIMATION_NAME = "Splash"
 
 @export var Login_window:PanelContainer
-@export var backend_scene:PackedScene
+@export var backend_scene:PackedScene = preload("res://scenes/backend.tscn")
 @export var single_player_btn: Button
 @export var multiplayer_btn: Button
 @export var singleplayer_scene: PackedScene
@@ -17,11 +17,13 @@ const SPLASH_ANIMATION_NAME = "Splash"
 
 @export var loading_scene_packedscene: PackedScene = preload("res://scenes/ui/loading_scene.tscn")
 
-
-func _ready() -> void:
-	
+func _enter_tree() -> void:
 	var backend = backend_scene.instantiate()
 	get_tree().root.call_deferred("add_child",backend)
+	
+func _ready() -> void:
+	
+	
 	##
 	#SaveGlobal.username_result.connect(username_result)
 	

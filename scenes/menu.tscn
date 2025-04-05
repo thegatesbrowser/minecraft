@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://cvh8mc8ybmio1"]
+[gd_scene load_steps=11 format=3 uid="uid://cvh8mc8ybmio1"]
 
 [ext_resource type="Script" path="res://scripts/ui/menu.gd" id="1_v1vki"]
-[ext_resource type="PackedScene" uid="uid://b76lg308pe6q0" path="res://scenes/backend.tscn" id="2_2y4dw"]
 [ext_resource type="PackedScene" uid="uid://de27e3hbp0hph" path="res://scenes/multiplayer.tscn" id="2_koh5b"]
 [ext_resource type="PackedScene" uid="uid://b8t6ynqqhm1mc" path="res://scenes/single_player.tscn" id="3_0kue3"]
 [ext_resource type="Texture2D" uid="uid://ctxaquevonft0" path="res://assets/menu/mine_mark.png" id="3_snl8p"]
@@ -101,7 +100,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_1o25k")
 script = ExtResource("1_v1vki")
-backend_scene = ExtResource("2_2y4dw")
 single_player_btn = NodePath("CenterContainer2/VBoxContainer/Singleplayer")
 multiplayer_btn = NodePath("CenterContainer2/VBoxContainer/Multiplayer")
 singleplayer_scene = ExtResource("3_0kue3")

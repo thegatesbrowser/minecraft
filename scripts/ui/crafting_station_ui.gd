@@ -4,7 +4,7 @@ extends ScrollContainer
 @export var craftable_button_scene:PackedScene
 @export var crafting_library:CraftableLibrary
 
-@onready var list: GridContainer = $MarginContainer/VBoxContainer/List
+@onready var list: GridContainer = $Panel/MarginContainer/VBoxContainer/List
 
 
 func _ready() -> void:

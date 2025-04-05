@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://de27e3hbp0hph"]
+[gd_scene load_steps=53 format=3 uid="uid://de27e3hbp0hph"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -43,6 +43,7 @@
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
 [ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="41_0dc52"]
+[ext_resource type="Script" path="res://scripts/world/random_ticker.gd" id="44_caq2v"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6qgro"]
 streams_count = 4
@@ -228,6 +229,10 @@ encrypt = true
 [node name="UI_Handler" type="Node" parent="."]
 script = ExtResource("37_0ju56")
 
+[node name="RandomTick" type="Node" parent="."]
+script = ExtResource("44_caq2v")
+burnables = Array[int]([4, 5, 6, 7, 8, 9])
+
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "loading") groups=["PlayerSpawner"]]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
@@ -246,7 +251,7 @@ _spawnable_scenes = PackedStringArray("res://scenes/items/dropped_item.tscn")
 spawn_path = NodePath("../Objects")
 script = ExtResource("37_5iseo")
 
-[node name="Players" type="Node3D" parent="."]
+[node name="Players" type="Node3D" parent="." groups=["PlayerContainer"]]
 
 [node name="Creatures" type="Node3D" parent="."]
 

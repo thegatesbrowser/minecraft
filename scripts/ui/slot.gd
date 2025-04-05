@@ -11,6 +11,7 @@ signal item_changed(index:int,item_path:String,amount:int,parent:String,health:f
 @export var Item_resource: ItemBase
 @export var background_texture:Texture
 
+@export var rot_label:Label 
 @onready var background_texturerect: TextureRect = $"CenterContainer/background texture"
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
@@ -30,7 +31,16 @@ func _process(_delta: float) -> void:
 	if Item_resource != null:
 		health_label.text = str(health)
 		health_bar.value = health
-		image.texture = Item_resource.texture
+		
+		if Item_resource is ItemFood:
+			if Item_resource.rot_step_textures.size() >= rot:
+				image.texture = Item_resource.rot_step_textures[rot]
+			else:
+				Item_resource = null
+				update_slot()
+		else:
+			image.texture = Item_resource.texture
+			
 	else:
 		image.texture = null
 		
@@ -59,6 +69,8 @@ func _ready() -> void:
 	if Item_resource != null:
 		image.texture = Item_resource.texture
 		
+	if Item_resource is ItemFood:
+		start_rot(Item_resource.time_rot_step)
 	update_slot()
 
 
@@ -82,15 +94,13 @@ func update_slot() -> void:
 		
 		if amount >= 2:
 			amount_label.show()
-			
-		image.texture = Item_resource.texture
 
 		if Item_resource is ItemFood:
 			max_rot = Item_resource.max_rot_steps
-			$rot.text = str(rot)
-			$rot.show()
+			rot_label.text = str(rot)
+			rot_label.show()
 		else:
-			$rot.hide()
+			rot_label.hide()
 		
 		item_changed.emit(index,Item_resource.get_path(),amount,get_parent().name,health,rot)
 		
@@ -100,13 +110,13 @@ func update_slot() -> void:
 			health_bar.show()
 
 	else:
-		$rot.hide()
-		amount_label.hide()
 		amount = 1
 		image.texture = null
 		item_changed.emit(index,"",amount,get_parent().name,health,rot)
 		health = 0
 		health_bar.hide()
+		rot_label.hide()
+		amount_label.hide()
 		
 	if !Connection.is_server():
 		Globals.save_player_ui.emit() ## saves the players slots only

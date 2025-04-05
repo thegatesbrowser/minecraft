@@ -27,6 +27,7 @@ GlobalAnimation="*res://scripts/common/animation.gd"
 TerrainHelper="*res://scripts/common/terrain_helper.gd"
 SaveGlobal="*res://SaveGlobal.gd"
 _CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
+BackendServer="*res://scripts/multiplayer/backend_server.gd"
 
 [debug]
 

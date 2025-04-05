@@ -12,7 +12,7 @@ var Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
 var cryptoUtil = UserCrypto.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if "--server" in OS.get_cmdline_user_args():
+	if is_server():
 		#print("hosting on " + str(hostPort))
 		startServer()
 		
@@ -20,7 +20,9 @@ func _ready():
 	peer.connect("peer_disconnected", peer_disconnected)
 	
 	
-
+static func is_server() -> bool:
+	var args = OS.get_cmdline_args() + OS.get_cmdline_user_args()
+	return "--server" in args
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	peer.poll()
@@ -29,7 +31,7 @@ func _process(delta):
 		if packet != null:
 			var dataString = packet.get_string_from_utf8()
 			var data = JSON.parse_string(dataString)
-			print(data)
+			#print(data)
 			
 			if data.message == Util.Message.update:
 				update(data)

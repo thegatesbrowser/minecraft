@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://cm3ggrje5swt3"]
+
+[ext_resource type="Texture2D" uid="uid://dt263alrd18sy" path="res://assets/textures/items/iron_ingot.png" id="1_fn28r"]
+[ext_resource type="Resource" uid="uid://dsltjvratfyrg" path="res://resources/items/iron_chestplate.tres" id="2_f1y4u"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_roinm"]
+[ext_resource type="Texture2D" uid="uid://psbdqd3q4naj" path="res://assets/textures/items/leather_leggings.png" id="4_naiyb"]
+
+[resource]
+script = ExtResource("3_roinm")
+Name = "iron leggings"
+texture = ExtResource("4_naiyb")
+output_item = ExtResource("2_f1y4u")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 4,
+"name": "iron",
+"texture": ExtResource("1_fn28r")
+}
+}

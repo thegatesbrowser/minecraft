@@ -64,7 +64,7 @@
 [ext_resource type="Resource" uid="uid://dmfnsgf0lvbhh" path="res://resources/items/fern.tres" id="50_j7kip"]
 [ext_resource type="Resource" uid="uid://d0ns05o7rlxa5" path="res://resources/items/flower.tres" id="51_vrpuo"]
 [ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/helment.tres" id="52_wm2ll"]
-[ext_resource type="Resource" uid="uid://cx1gtjn1dlvqi" path="res://resources/items/leather_chest.tres" id="53_ctxg7"]
+[ext_resource type="Resource" uid="uid://dsltjvratfyrg" path="res://resources/items/iron_chestplate.tres" id="53_asrdx"]
 [ext_resource type="Resource" uid="uid://l4nd5is685cm" path="res://resources/items/pants.tres" id="54_57bq4"]
 [ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
@@ -77,7 +77,7 @@ library = ExtResource("5_td8xe")
 
 [sub_resource type="Resource" id="Resource_c0ten"]
 script = ExtResource("56_rtthk")
-items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), ExtResource("28_g6gey"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), ExtResource("38_met67"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_ctxg7"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
+items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), ExtResource("28_g6gey"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), ExtResource("38_met67"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
@@ -172,6 +172,7 @@ offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
+alignment = 1
 
 [node name="Crafting" parent="Player UI/Inventory holder/Inventory" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
 layout_mode = 2

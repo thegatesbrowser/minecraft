@@ -11,15 +11,15 @@ thickness = 3
 
 [node name="Inventory" type="ScrollContainer" node_paths=PackedStringArray("items_collection", "inventroy_name")]
 process_mode = 3
-custom_minimum_size = Vector2(800, 800)
+custom_minimum_size = Vector2(500, 800)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
+offset_left = -269.0
 offset_top = -400.0
-offset_right = 400.0
+offset_right = 269.0
 offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -65,7 +65,6 @@ layout_mode = 2
 text = "close"
 
 [node name="Sort" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "SORT"
 
@@ -81,7 +80,7 @@ text = "DROP ALL"
 
 [node name="Items" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-columns = 9
+columns = 6
 
 [node name="Slot" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
 layout_mode = 2
@@ -207,42 +206,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Slot42" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot43" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot44" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot45" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot46" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot47" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot48" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot49" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot50" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot51" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot52" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot53" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
-layout_mode = 2
-
-[node name="Slot54" parent="PanelContainer/MarginContainer/VBoxContainer/Items" instance=ExtResource("3_v400e")]
 layout_mode = 2
 
 [node name="Update Tick" type="Timer" parent="."]
