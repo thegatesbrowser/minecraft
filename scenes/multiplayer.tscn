@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://de27e3hbp0hph"]
+[gd_scene load_steps=54 format=3 uid="uid://de27e3hbp0hph"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -42,6 +42,7 @@
 [ext_resource type="Script" path="res://scripts/ui/ui_handler.gd" id="37_0ju56"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
 [ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
+[ext_resource type="Script" path="res://scripts/ui/item_manager.gd" id="39_smonu"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="41_0dc52"]
 [ext_resource type="Script" path="res://scripts/world/random_ticker.gd" id="44_caq2v"]
 
@@ -233,6 +234,9 @@ script = ExtResource("37_0ju56")
 script = ExtResource("44_caq2v")
 burnables = Array[int]([4, 5, 6, 7, 8, 9])
 
+[node name="ItemManager" type="Node" parent="."]
+script = ExtResource("39_smonu")
+
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "loading") groups=["PlayerSpawner"]]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
@@ -296,3 +300,8 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 61
 text = "loading the world"
 uppercase = true
+
+[node name="TextureRect" type="TextureRect" parent="loading/loading"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

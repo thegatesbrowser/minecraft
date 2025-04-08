@@ -94,3 +94,4 @@ func save_player_ui():
 			var data = JSON.stringify(ui_data)
 			var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 			Globals.send_data.emit({"name" : BackendClient.username , "change_name" : ui.name,"change" : data})
+			await get_tree().create_timer(1.0).timeout

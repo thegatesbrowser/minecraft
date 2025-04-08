@@ -5,7 +5,7 @@ extends Node
 var peer = WebSocketMultiplayerPeer.new()
 var users = {}
 var lobbies = {}
-var dao = DAO.new()
+var dao 
 var Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 @export var hostPort = 8819
 
@@ -13,6 +13,7 @@ var cryptoUtil = UserCrypto.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if is_server():
+		dao = DAO.new()
 		#print("hosting on " + str(hostPort))
 		startServer()
 		

@@ -3,8 +3,8 @@ extends Node
 @export var debug_ui:Control
 @export var login_window = preload("res://scenes/ui/login_window.tscn")
 @export var PlayerInfo:RichTextLabel
-#@export var address:String = "ws://127.0.0.1:8819"
-@export var address:String = "ws://188.245.188.59:8819"
+@export var address:String = "ws://127.0.0.1:8819"
+#@export var address:String = "ws://188.245.188.59:8819"
 
 var LoginWindow
 var peer = WebSocketMultiplayerPeer.new()
@@ -95,7 +95,7 @@ func _process(delta):
 			var dataString = packet.get_string_from_utf8()
 			var data = JSON.parse_string(dataString)
 			
-			print(data)
+			#print(data)
 			
 			if data.message == Util.Message.id:
 				id = data.id
@@ -123,7 +123,7 @@ func _process(delta):
 #				$LobbyBrowser.InstanceLobbyInfo(data.name,data.userCount)
 			if data.message == Util.Message.playerinfo:
 				playerdata = data
-				print(playerdata)
+				#print(playerdata)
 				PlayerInfo.text = ""
 				for i in data:
 					var variable = data[i]
@@ -132,7 +132,8 @@ func _process(delta):
 				#PlayerInfo.text = data.username + "\n"+ str(data.id)  + "\n" + str(data.health)
 				username = data.username
 				Globals.username = username
-				LoginWindow.queue_free()
+				if LoginWindow != null:
+					LoginWindow.queue_free()
 				
 			if data.message == Util.Message.failedToLogin:
 				LoginWindow.SetSystemErrorLabel(data.text)

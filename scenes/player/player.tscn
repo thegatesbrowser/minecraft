@@ -758,7 +758,9 @@ target_position = Vector3(0, 0, -1)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="floor" type="RayCast3D" parent="RotationRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.328914, 0)
 target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
+hit_from_inside = true
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

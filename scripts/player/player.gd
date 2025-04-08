@@ -56,7 +56,7 @@ const FOV_CHANGE = 1.5
 
 var found_ground:bool = false
 var crouching:bool = false
-var speed
+var speed: float
 var gravity = 16.5
 var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
@@ -157,16 +157,16 @@ func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if found_ground == false:
-		var ClientServer = get_tree().get_first_node_in_group("BackendClient")
+		var ClientServer = get_tree().get_first_node_in_group("BackendClient")	
 		if ClientServer.playerdata.is_empty() == false:
 			if ClientServer.playerdata.Position_x != null:
 				global_position = Vector3(ClientServer.playerdata.Position_x,ClientServer.playerdata.Position_y,ClientServer.playerdata.Position_z) + Vector3(0,1,0)
-		
-		if floor_ray.is_colliding():
-			Globals.paused = false
-			global_position = floor_ray.get_collision_point()
-			start_position = floor_ray.get_collision_point()
-			found_ground = true
+			if floor_ray.is_colliding():
+				#Globals.paused = false
+				global_position = floor_ray.get_collision_point() + Vector3(0,1,0)
+				start_position = floor_ray.get_collision_point() + Vector3(0,1,0)
+				found_ground = true
+				Globals.paused = false
 		
 	pos_label.text = str("pos   ", global_position)
 	camera.far = Globals.view_range
@@ -180,148 +180,38 @@ func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
 		
-	if Globals.paused: return
-	
 	if your_id != get_multiplayer_authority():
 		var inventory = get_tree().get_first_node_in_group("Main Inventory")
 		your_id = get_multiplayer_authority()
 	
-	if !is_flying:
+	if !is_flying and found_ground:
 		# Add the gravity.
 		if not is_on_floor():
 			if fall_timer.is_stopped():
 				fall_timer.start()
 			velocity.y -= gravity * delta
 		else:
+			# Fall Damage
 			if fall_time >= fall_hurt_height:
 				var damage = fall_time * 2
 				hit(damage)
 			fall_timer.stop()
 			fall_time = 0.0
+			
+	if !Globals.paused:
+		mine_and_place(delta)
+	if !is_flying and !Globals.paused:
+		normal_movement(delta)
+	if is_flying and !Globals.paused:
+		flying_movement(delta)
 		
-		# Handle Jump.
-		if Input.is_action_pressed("Jump") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
+	if Globals.paused and found_ground:
+		velocity.x = lerp(velocity.x,0.0,.1)
+		velocity.z = lerp(velocity.x,0.0,.1)
 	
-	# Handle Sprint.
-	if Input.is_action_pressed("Sprint"):
-		speed = SPRINT_SPEED
-	else:
-		speed = WALK_SPEED
-		
-		# Crouch
-		if Input.is_action_pressed("Crouch"):
-			crouching = true
-			speed = CROUCH_SPEED
-		else:
-			speed = WALK_SPEED
-			crouching = false
-	
-	# Get the input direction and handle the movement/deceleration.
-	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
-	_move_direction = (rotation_root.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
-	## Normal Controls
-	if !is_flying:
-		if is_on_floor():
-			if _move_direction:
-				if ANI.current_animation != "walk":
-					ANI.play("walk")
-				velocity.x = _move_direction.x * speed
-				velocity.z = _move_direction.z * speed
-			else:
-				if ANI.current_animation != "idle":
-					ANI.play("idle")
-				velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 7.0)
-				velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 7.0)
-		else:
-			velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 3.0)
-			velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 3.0)
-		
-		## Auto jump
-		var moving_forward = input_dir.y < 0
-		if can_autojump and moving_forward and is_on_floor():
-			if auto_jump.is_colliding() and !can_auto_jump_check.is_colliding():
-				velocity.y = JUMP_VELOCITY
-	
-	if Input.is_action_pressed("Mine"):
-		if hand_ani.current_animation != "attack":
-			hand_ani.play("attack")
-	else:
-		if hand_ani.current_animation != "RESET":
-			hand_ani.play("RESET")
-			
-	if Input.is_action_just_pressed("Build"):
-		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
-		var hotbar_item = hotbar.get_current().Item_resource
-		
-		if ray.is_colliding():
-			var coll = ray.get_collider()
-			
-			if coll is CreatureBase:
-				if coll.creature_resource.tamable:
-					if hotbar_item != null:
-						coll.give(hotbar_item,name.to_int())
-						Globals.remove_item_from_hotbar.emit()
-		
-	if Input.is_action_just_pressed("Mine"):
-		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
-		var hotbar_item = hotbar.get_current().Item_resource
-		#print(hotbar.get_current().Item_resource)
-		
-		if ray.is_colliding():
-			var coll = ray.get_collider()
-			
-			if coll is Dropped_Item:
-				coll.collect()
-				var soundmanager = get_node("/root/Main").find_child("SoundManager")
-				soundmanager.play_sound("pick_up",ray.get_collision_point())
-			
-			if coll is CreatureBase:
-				if hotbar_item != null:
-					if "damage" in hotbar_item:
-						coll.hit(hotbar_item.damage)
-					else:
-						coll.hit()
-				else:
-					coll.hit()
-					
-			if coll is Player:
-				if hotbar_item != null:
-					if "damage" in hotbar_item:
-						coll.hit.rpc_id(coll.get_multiplayer_authority(),hotbar_item.damage)
-					else:
-						coll.hit.rpc_id(coll.get_multiplayer_authority())
-				else:
-					coll.hit.rpc_id(coll.get_multiplayer_authority())
-	
-	## Flying Controls
-	if is_flying:
-		if camera.rotation.x > max_flying_margin:
-			velocity.y = camera.rotation.x * speed * 2
-		else:
-			velocity.y = lerp(velocity.y,0.0,.1)
-			
-		if  camera.rotation.x < min_flying_margin:
-			velocity.y = camera.rotation.x * speed * 2
-			
-		else:
-			velocity.y = lerp(velocity.y,0.0,.1)
-			
-		if _move_direction:
-			if ANI.current_animation != "walk":
-					ANI.play("walk")
-			velocity.x = _move_direction.x * speed
-			velocity.z = _move_direction.z * speed
-		else:
-			if ANI.current_animation != "idle":
-					ANI.play("idle")
-			velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 7.0)
-			velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 7.0)
-		
-		# Head bob
-		t_bob += delta * velocity.length() * float(is_on_floor())
-		camera.transform.origin = _headbob(t_bob)
+	# Head bob
+	t_bob += delta * velocity.length() * float(is_on_floor())
+	camera.transform.origin = _headbob(t_bob)
 	
 	# FOV
 	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
@@ -532,10 +422,131 @@ func hunger_points_gained(amount: int) -> void:
 
 
 func _on_fall_time_timeout() -> void:
-	if Globals.paused: return
 	fall_time += 1
 
 
 func _on_update_timeout() -> void:
 	if not Connection.is_server():
 		save_data()
+
+func normal_movement(delta:float):
+	
+	# Handle Sprint.
+	if Input.is_action_pressed("Sprint"):
+		speed = SPRINT_SPEED
+	else:
+		speed = WALK_SPEED
+		
+		# Crouch
+		if Input.is_action_pressed("Crouch"):
+			crouching = true
+			speed = CROUCH_SPEED
+		else:
+			speed = WALK_SPEED
+			crouching = false
+			
+	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
+	_move_direction = (rotation_root.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if is_on_floor():
+		if _move_direction:
+			if ANI.current_animation != "walk":
+				ANI.play("walk")
+			velocity.x = _move_direction.x * speed
+			velocity.z = _move_direction.z * speed
+		else:
+			if ANI.current_animation != "idle":
+				ANI.play("idle")
+			velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 7.0)
+			velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 7.0)
+	else:
+		velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 3.0)
+		velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 3.0)
+		
+	# Handle Jump.
+	if Input.is_action_pressed("Jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+		
+	## Auto jump
+	var moving_forward = input_dir.y < 0
+	if can_autojump and moving_forward and is_on_floor():
+		if auto_jump.is_colliding() and !can_auto_jump_check.is_colliding():
+			velocity.y = JUMP_VELOCITY
+			
+			
+			
+func flying_movement(delta:float):
+	if camera.rotation.x > max_flying_margin:
+			velocity.y = camera.rotation.x * speed * 2
+	else:
+		velocity.y = lerp(velocity.y,0.0,.1)
+		
+	if  camera.rotation.x < min_flying_margin:
+		velocity.y = camera.rotation.x * speed * 2
+		
+	else:
+		velocity.y = lerp(velocity.y,0.0,.1)
+		
+	if _move_direction:
+		if ANI.current_animation != "walk":
+				ANI.play("walk")
+		velocity.x = _move_direction.x * speed
+		velocity.z = _move_direction.z * speed
+	else:
+		if ANI.current_animation != "idle":
+				ANI.play("idle")
+		velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 7.0)
+		velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 7.0)
+		
+func mine_and_place(delta:float):
+	if Input.is_action_pressed("Mine"):
+		if hand_ani.current_animation != "attack":
+			hand_ani.play("attack")
+	else:
+		if hand_ani.current_animation != "RESET":
+			hand_ani.play("RESET")
+			
+	if Input.is_action_just_pressed("Build"):
+		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
+		var hotbar_item = hotbar.get_current().Item_resource
+		
+		if ray.is_colliding():
+			var coll = ray.get_collider()
+			
+			if coll is CreatureBase:
+				if coll.creature_resource.tamable:
+					if hotbar_item != null:
+						coll.give(hotbar_item,name.to_int())
+						Globals.remove_item_from_hotbar.emit()
+		
+	if Input.is_action_just_pressed("Mine"):
+		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
+		var hotbar_item = hotbar.get_current().Item_resource
+		#print(hotbar.get_current().Item_resource)
+		
+		if ray.is_colliding():
+			var coll = ray.get_collider()
+			
+			if coll is Dropped_Item:
+				coll.collect()
+				var soundmanager = get_node("/root/Main").find_child("SoundManager")
+				soundmanager.play_sound("pick_up",ray.get_collision_point())
+			
+			if coll is CreatureBase:
+				if hotbar_item != null:
+					if "damage" in hotbar_item:
+						coll.hit(hotbar_item.damage)
+					else:
+						coll.hit()
+				else:
+					coll.hit()
+					
+			if coll is Player:
+				if hotbar_item != null:
+					if "damage" in hotbar_item:
+						coll.hit.rpc_id(coll.get_multiplayer_authority(),hotbar_item.damage)
+					else:
+						coll.hit.rpc_id(coll.get_multiplayer_authority())
+				else:
+					coll.hit.rpc_id(coll.get_multiplayer_authority())
+					
+					

@@ -22,13 +22,6 @@ var inventory = []
 
 
 func _ready() -> void:
-	for i in items_collection.get_children():
-		i.item_changed.connect(change)
-		
-	Globals.spawn_item_inventory.connect(spawn_item)
-	Globals.remove_item.connect(remove_item)
-	Globals.check_amount_of_item.connect(check_amount_of_item)
-	
 	if is_in_group("Main Inventory"):
 		Console.add_command("item", self, '_on_add_random_item_pressed')\
 		.set_description("spawns random item).")\
@@ -38,6 +31,15 @@ func _ready() -> void:
 		if !BackendClient.playerdata.is_empty():
 			if BackendClient.playerdata.Inventory != null:
 				update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
+				
+	for i in items_collection.get_children():
+		i.item_changed.connect(change)
+		
+	Globals.spawn_item_inventory.connect(spawn_item)
+	Globals.remove_item.connect(remove_item)
+	Globals.check_amount_of_item.connect(check_amount_of_item)
+	
+	
 func _process(_delta: float) -> void:
 	
 	check_slots()

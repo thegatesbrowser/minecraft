@@ -26,8 +26,6 @@ func send_to_server(id: Vector3, url: String = "https://thegates.io/worlds/world
 		"url": url
 	}
 	
-	#print(server_info[id])
-
 
 func add_portal_url(id: Vector3, url: String) -> void:
 	send_to_server.rpc_id(1,id,url)
