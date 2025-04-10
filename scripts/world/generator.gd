@@ -34,8 +34,8 @@ var structure: String
 
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
-var DIRT := VoxelLibrary.get_model_index_default("hell_ore")
-var GRASS := VoxelLibrary.get_model_index_default("hell_ore")
+var DIRT := VoxelLibrary.get_model_index_default("dirt")
+var GRASS := VoxelLibrary.get_model_index_default("grass")
 var WATER_FULL := VoxelLibrary.get_model_index_default("water_full")
 var WATER_TOP := VoxelLibrary.get_model_index_default("water_fill")
 var LOG := VoxelLibrary.get_model_index_default("log_oak")
@@ -43,7 +43,7 @@ var OAK_LEAVES := VoxelLibrary.get_model_index_default("leaf_oak")
 var BIRCH_LEAVES := VoxelLibrary.get_model_index_default("leaf_birch")
 var TALL_GRASS := VoxelLibrary.get_model_index_default("tall_grass")
 var DEAD_SHRUB := VoxelLibrary.get_model_index_default("air")
-var STONE := VoxelLibrary.get_model_index_default("hell_ore")
+var STONE := VoxelLibrary.get_model_index_default("stone")
 var SAND := VoxelLibrary.get_model_index_default("sand")
 
 const _CHANNEL = VoxelBuffer.CHANNEL_TYPE
@@ -174,7 +174,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int)
 						if pos.y >= 0:
 							if pos.x >= 0:
 								if pos.z >= 0:
-									buffer.fill_area(VoxelLibrary.get_model_index_default("hell_ore"),Vector3(pos.x,pos.y,pos.z),Vector3(pos.x +1,pos.y + 1,pos.z+ 1),_CHANNEL)
+									buffer.fill_area(VoxelLibrary.get_model_index_default(ore.unique_name),Vector3(pos.x,pos.y,pos.z),Vector3(pos.x +1,pos.y + 1,pos.z+ 1),_CHANNEL)
 					
 					buffer.fill_area(DIRT,
 						Vector3(x, 0, z), Vector3(x , block_size, z ), _CHANNEL)
@@ -201,10 +201,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int)
 								Globals.call_deferred("Spawn_creature",Vector3(pos.x,_get_height_at(x,z) + 10,pos.z),possible_creatures.pick_random())
 								#buffer.set_voxel(DIRT, x, relative_height + 2 , z, _CHANNEL)
 							if rng.randf() < plant_odds:
-								if !possible_plants.is_empty():
-									var plant = possible_plants.pick_random()
-									var foliage = VoxelLibrary.get_model_index_default(plant)
-									buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
+								var plant = possible_plants.pick_random()
+								var foliage = VoxelLibrary.get_model_index_default(plant)
+								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
 					
 					
 				#if height < 0 and oy < 0:

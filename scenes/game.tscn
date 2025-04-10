@@ -103,6 +103,7 @@ cull_mask = 0
 environment = SubResource("Environment_dhksy")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
+run_stream_in_editor = false
 use_gpu_generation = true
 stream = ExtResource("4_6pk3d")
 generator = ExtResource("4_tpxqt")

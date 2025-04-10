@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_4i6s3")
-title = "Runestone World 2"
-description = "Our open-source minecraft clone (WIP"
+title = "Minecraft"
+description = "Our open-source minecraft clone (WIP) [p][/p] Originally by SDG Games"
 image = "res://logo.webp"
-export_folder = "C:/cooper/godot projects/exports/mine craft world 2"
+export_folder = "C:/cooper/godot projects/exports/minecraft/unstable"
