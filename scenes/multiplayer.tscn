@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://de27e3hbp0hph"]
+[gd_scene load_steps=53 format=3 uid="uid://de27e3hbp0hph"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -42,7 +42,6 @@
 [ext_resource type="Script" path="res://scripts/ui/ui_handler.gd" id="37_0ju56"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
 [ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
-[ext_resource type="Script" path="res://scripts/ui/item_manager.gd" id="39_smonu"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="41_0dc52"]
 [ext_resource type="Script" path="res://scripts/world/random_ticker.gd" id="44_caq2v"]
 
@@ -221,11 +220,12 @@ visible = false
 
 [node name="UISyncer" type="Node" parent="." node_paths=PackedStringArray("inventory_holder") groups=["UISyncer"]]
 script = ExtResource("38_ig7nw")
-inventory_holder = NodePath("../Game/Player UI/Inventory holder/Inventory")
+inventory_holder = NodePath("../Game/Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory")
 
-[node name="Saver" type="Node" parent="."]
+[node name="Saver" type="Node" parent="." node_paths=PackedStringArray("ItemManager")]
 script = ExtResource("34_s4tlk")
 encrypt = true
+ItemManager = NodePath("../ItemManager")
 
 [node name="UI_Handler" type="Node" parent="."]
 script = ExtResource("37_0ju56")
@@ -235,7 +235,6 @@ script = ExtResource("44_caq2v")
 burnables = Array[int]([4, 5, 6, 7, 8, 9])
 
 [node name="ItemManager" type="Node" parent="."]
-script = ExtResource("39_smonu")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "loading") groups=["PlayerSpawner"]]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")

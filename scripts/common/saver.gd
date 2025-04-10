@@ -5,6 +5,7 @@ var Terrain:VoxelTerrain
 var passcode = "dqaduqiqbnmn1863841hjb"
 @export var encrypt:bool = false
 @export var UIsave_path:String = "res://UISyncer.save"
+@export var ItemManager:Node
 
 func _ready() -> void:
 	Globals.save_player_ui.connect(save_player_ui)
@@ -94,4 +95,45 @@ func save_player_ui():
 			var data = JSON.stringify(ui_data)
 			var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 			Globals.send_data.emit({"name" : BackendClient.username , "change_name" : ui.name,"change" : data})
-			await get_tree().create_timer(1.0).timeout
+			await get_tree().create_timer(2.0).timeout
+			#for i in ui_data:
+				#var item = ui_data[i].item_path
+				#if item == "":
+					#continue
+				#else:
+					#save_item(load(item))
+					#
+func save_item(item:ItemBase, _buffer=[], size:Vector2 = Vector2.ZERO):
+	var data := {}
+	var item_data = inst_to_dict(item)
+	
+	var image = item.texture.get_image()
+	
+	var buffer = image.save_png_to_buffer()
+	
+	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+	if BackendClient.playerdata.item_data != null:
+		data = JSON.parse_string(BackendClient.playerdata.item_data)
+		
+	if data.has(item.unique_name):
+		if BackendClient.playerdata.Inventory.has(item.unique_name) == false and BackendClient.playerdata.Hotbar.has(item.unique_name) == false:
+			data.erase(item.unique_name)
+	else:
+		data[item.unique_name] = {
+			"texture": buffer
+		}
+	
+	
+	var save_data = JSON.stringify(data)
+	
+	## Save This Data
+	Globals.send_data.emit({"name" : BackendClient.username , "change_name" : "item_data","change" : save_data})
+	#var new_image = Image.new()
+	#new_image.load_png_from_buffer(buffer)
+	#
+	#new_image.save_png("res://buffer.png")
+	
+
+	#Saver.save_item(item,buffer,image.get_size())
+	
+	#ItemManager.create_item.rpc_id(1,item_data,buffer,size)

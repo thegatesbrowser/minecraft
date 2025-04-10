@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_a26th"]
 [ext_resource type="Script" path="res://scripts/other/utilities.gd" id="2_cmbb3"]
-[ext_resource type="Texture2D" uid="uid://bj0k37nqmn31y" path="res://assets/textures/blocks/lapis_block.png" id="2_wd440"]
+[ext_resource type="Texture2D" uid="uid://b0omyudpmrpm4" path="res://assets/textures/items/portal.png" id="2_smnnp"]
 
 [sub_resource type="Resource" id="Resource_vss83"]
 script = ExtResource("2_cmbb3")
@@ -18,7 +18,7 @@ spawn_chance = 0.1
 spawn_size = 1
 spawn_height = 0.0
 unique_name = &"portal"
-texture = ExtResource("2_wd440")
+texture = ExtResource("2_smnnp")
 max_stack = 64
 utility = SubResource("Resource_vss83")
 rotatable = false

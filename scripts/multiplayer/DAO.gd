@@ -22,6 +22,7 @@ func _init():
 			"Position_z":{"data_type": "float"},
 			"Inventory":{"data_type": "String"},
 			"Hotbar":{"data_type": "String"},
+			"item_data": {"data_type": "String"}
 		}
 		
 		db.create_table("players", table)
@@ -40,7 +41,7 @@ func change_data(name:String, change_name:String, change):
 	db.update_rows("players", "name = '" + name + "'", {change_name:change})
 
 func GetUserFromDB(username):
-	var query = "SELECT salt, password, id, health, Position_x,Position_y,Position_z, Inventory, Hotbar from players where name = ?"
+	var query = "SELECT salt, password, id, health, Position_x,Position_y,Position_z, Inventory, Hotbar, item_data from players where name = ?"
 	var paramBindings = [username]
 	db.query_with_bindings(query, paramBindings)
 	#print( db.query_result)
@@ -56,6 +57,7 @@ func GetUserFromDB(username):
 			"Position_z": i["Position_z"],
 			"Inventory": i["Inventory"],
 			"Hotbar": i["Hotbar"],
+			"item_data": i["item_data"]
 		}
 		
 		

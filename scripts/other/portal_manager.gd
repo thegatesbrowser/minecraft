@@ -21,7 +21,7 @@ func check_portal(id: Vector3) -> void:
 
 
 @rpc("any_peer","call_local")
-func send_to_server(id: Vector3, url: String = "https://thegates.io/worlds/world.gate") -> void:
+func send_to_server(id: Vector3, url: String = "https://thegates.io/worlds/devs/snap_games_studio/minecraft_world2.gate") -> void:
 	server_info[id] = {
 		"url": url
 	}

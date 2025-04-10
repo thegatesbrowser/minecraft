@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=4 format=3 uid="uid://b4g78ll6bonjn"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://b4g78ll6bonjn"]
 
 [ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="1_2j346"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_l4sry"]
 [ext_resource type="Texture2D" uid="uid://bj0k37nqmn31y" path="res://assets/textures/blocks/lapis_block.png" id="3_55hmk"]
+[ext_resource type="Texture2D" uid="uid://b0omyudpmrpm4" path="res://assets/textures/items/portal.png" id="4_8ux27"]
 
 [resource]
 script = ExtResource("1_l4sry")
 Name = "Portal"
-texture = ExtResource("3_55hmk")
+texture = ExtResource("4_8ux27")
 output_item = ExtResource("1_2j346")
 output_amount = 1
 items_needed = {

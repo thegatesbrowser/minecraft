@@ -8,6 +8,8 @@ var start_position:Vector3
 var spawn_position: Vector3
 var your_id
 
+@export var defualt_hand_model:PackedScene
+
 @export_group("MOVEMENT")
 @export_range(0.1, 1.1, 0.1) var max_flying_margin = 0.2
 @export_range(-1.1, -0.1, 0.1) var min_flying_margin = -0.2
@@ -47,7 +49,7 @@ const SENSITIVITY = 0.004
 
 # Bob variables
 const BOB_FREQ = 2.4
-const BOB_AMP = 0.08
+const BOB_AMP = 0.03
 var t_bob = 0.0
 
 # FOV variables
@@ -161,12 +163,12 @@ func _process(_delta: float) -> void:
 		if ClientServer.playerdata.is_empty() == false:
 			if ClientServer.playerdata.Position_x != null:
 				global_position = Vector3(ClientServer.playerdata.Position_x,ClientServer.playerdata.Position_y,ClientServer.playerdata.Position_z) + Vector3(0,1,0)
-			if floor_ray.is_colliding():
-				#Globals.paused = false
-				global_position = floor_ray.get_collision_point() + Vector3(0,1,0)
-				start_position = floor_ray.get_collision_point() + Vector3(0,1,0)
-				found_ground = true
-				Globals.paused = false
+		if floor_ray.is_colliding():
+			#Globals.paused = false
+			global_position = floor_ray.get_collision_point() + Vector3(0,1,0)
+			start_position = floor_ray.get_collision_point() + Vector3(0,1,0)
+			found_ground = true
+			Globals.paused = false
 		
 	pos_label.text = str("pos   ", global_position)
 	camera.far = Globals.view_range
@@ -334,8 +336,11 @@ func add_item_to_hand(item: ItemBase) -> void:
 
 
 func remove_item_in_hand() -> void:
+		
 	for i in hand.get_children():
 		i.queue_free()
+	
+		
 
 
 @rpc("any_peer","call_local")
@@ -451,11 +456,19 @@ func normal_movement(delta:float):
 		if _move_direction:
 			if ANI.current_animation != "walk":
 				ANI.play("walk")
+			if hand_ani.current_animation != "attack":
+				if hand_ani.current_animation != "walk":
+					hand_ani.play("walk")
 			velocity.x = _move_direction.x * speed
 			velocity.z = _move_direction.z * speed
 		else:
 			if ANI.current_animation != "idle":
 				ANI.play("idle")
+				
+			if hand_ani.current_animation != "attack":
+				if hand_ani.current_animation != "idle":
+					hand_ani.play("idle")
+					
 			velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 7.0)
 			velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 7.0)
 	else:
@@ -502,8 +515,9 @@ func mine_and_place(delta:float):
 		if hand_ani.current_animation != "attack":
 			hand_ani.play("attack")
 	else:
-		if hand_ani.current_animation != "RESET":
-			hand_ani.play("RESET")
+		if hand_ani.current_animation != "idle" and hand_ani.current_animation != "walk":
+			if hand_ani.current_animation != "RESET":
+				hand_ani.play("RESET")
 			
 	if Input.is_action_just_pressed("Build"):
 		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar

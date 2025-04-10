@@ -45,4 +45,4 @@ theme_override_styles/separator = SubResource("StyleBoxLine_2g6cg")
 
 [node name="List" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-columns = 2
+columns = 4

@@ -1,15 +1,19 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://cdgc65lkfgvyq"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://cdgc65lkfgvyq"]
 
 [ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="1_bo0dc"]
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="2_idmfe"]
-[ext_resource type="Resource" uid="uid://blqe3qx1cpq57" path="res://resources/items/shovel_wood.tres" id="3_1ehjv"]
+[ext_resource type="Resource" uid="uid://mv1twiklruq5" path="res://resources/items/shovel_wood.tres" id="3_1ehjv"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_c1li7"]
-[ext_resource type="Texture2D" uid="uid://dd6vye4j4llvt" path="res://assets/textures/items/Wooden_Shovel_JE2_BE2.webp" id="5_gv1r4"]
+[ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="5_v63xs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_613gu"]
+atlas = ExtResource("5_v63xs")
+region = Rect2(16, 1.45519e-11, 16, 16)
 
 [resource]
 script = ExtResource("4_c1li7")
 Name = "Shovel Wood"
-texture = ExtResource("5_gv1r4")
+texture = SubResource("AtlasTexture_613gu")
 output_item = ExtResource("3_1ehjv")
 output_amount = 1
 items_needed = {

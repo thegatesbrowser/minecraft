@@ -1,7 +1,8 @@
-[gd_scene load_steps=44 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=47 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
+[ext_resource type="PackedScene" uid="uid://cgaf0un1khsvl" path="res://assets/models/Hand.tscn" id="2_w6sp7"]
 [ext_resource type="PackedScene" uid="uid://cqk7bidvb6vqn" path="res://scenes/items/weapons/bullet.tscn" id="2_y2grk"]
 [ext_resource type="PackedScene" uid="uid://cx2ae4w7whc6p" path="res://scenes/items/weapons/weapon_base.tscn" id="3_jtlx2"]
 [ext_resource type="Script" path="res://scripts/player/player_hands.gd" id="4_064gd"]
@@ -448,10 +449,70 @@ tracks/2/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_stbf1"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.392292, 0.659754),
+"update": 0,
+"values": [Vector3(0, -1.5708, 2.59181), Vector3(0.0349066, -1.5708, 2.60927)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hand:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1.93187, 1),
+"update": 0,
+"values": [Vector3(0.333, -0.536575, -0.225), Vector3(0.333, -0.577, -0.225)]
+}
+
+[sub_resource type="Animation" id="Animation_kn7ks"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -1.5708, 2.59181)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hand:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.812252, 1),
+"update": 0,
+"values": [Vector3(0.333, -0.536575, -0.225), Vector3(0.333, -0.507, -0.225)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wp2up"]
 _data = {
 "RESET": SubResource("Animation_4e7vc"),
-"attack": SubResource("Animation_6iggv")
+"attack": SubResource("Animation_6iggv"),
+"idle": SubResource("Animation_kn7ks"),
+"walk": SubResource("Animation_stbf1")
 }
 
 [sub_resource type="CylinderShape3D" id="10"]
@@ -488,6 +549,7 @@ stream_0/stream = ExtResource("13_xnj4e")
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "fall_timer", "floor_ray") groups=["Player"]]
 script = ExtResource("1")
+defualt_hand_model = ExtResource("2_w6sp7")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
 hit_sfx = NodePath("hit")
@@ -498,7 +560,7 @@ hand_ani = NodePath("RotationRoot/Head/HandAni")
 terrain_interation = NodePath("Hands/TerrainInteraction")
 camera_shake = NodePath("RotationRoot/Head/CameraShake3DNode")
 fall_timer = NodePath("Fall_time")
-floor_ray = NodePath("RotationRoot/floor")
+floor_ray = NodePath("floor")
 bullet_scene = ExtResource("2_y2grk")
 weapon_base = ExtResource("3_jtlx2")
 fall_hurt_height = 3.0
@@ -509,7 +571,7 @@ script = ExtResource("4_064gd")
 break_part = NodePath("TerrainInteraction/Breakparticle")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
-floor_ray = NodePath("../RotationRoot/floor")
+floor_ray = NodePath("../floor")
 drop_item_scene = ExtResource("6_6kxdw")
 camera = NodePath("../RotationRoot/Head/Camera3D")
 
@@ -740,6 +802,7 @@ root_node = NodePath("../Camera3D")
 libraries = {
 "": SubResource("AnimationLibrary_wp2up")
 }
+playback_default_blend_time = 0.3
 
 [node name="CameraShake3DNode" type="Node" parent="RotationRoot/Head" node_paths=PackedStringArray("camera")]
 script = ExtResource("11_8ntd3")
@@ -755,12 +818,6 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 [node name="AutoJump2" type="RayCast3D" parent="RotationRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 target_position = Vector3(0, 0, -1)
-debug_shape_custom_color = Color(1, 0, 0, 1)
-
-[node name="floor" type="RayCast3D" parent="RotationRoot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.328914, 0)
-target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
-hit_from_inside = true
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -809,6 +866,12 @@ wait_time = 0.5
 [node name="Update" type="Timer" parent="."]
 wait_time = 20.0
 autostart = true
+
+[node name="floor" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.328914, 0)
+target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
+hit_from_inside = true
+debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [connection signal="block_broken" from="Hands/TerrainInteraction" to="Hands/TerrainInteraction" method="_on_block_broken"]
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_entered"]

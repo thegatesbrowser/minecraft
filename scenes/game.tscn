@@ -63,7 +63,7 @@
 [ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="49_6fhua"]
 [ext_resource type="Resource" uid="uid://dmfnsgf0lvbhh" path="res://resources/items/fern.tres" id="50_j7kip"]
 [ext_resource type="Resource" uid="uid://d0ns05o7rlxa5" path="res://resources/items/flower.tres" id="51_vrpuo"]
-[ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/helment.tres" id="52_wm2ll"]
+[ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="52_wm2ll"]
 [ext_resource type="Resource" uid="uid://dsltjvratfyrg" path="res://resources/items/iron_chestplate.tres" id="53_asrdx"]
 [ext_resource type="Resource" uid="uid://l4nd5is685cm" path="res://resources/items/pants.tres" id="54_57bq4"]
 [ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
@@ -155,62 +155,72 @@ grow_vertical = 2
 pivot_offset = Vector2(960, 540)
 mouse_filter = 2
 script = ExtResource("3_fe1qo")
-h_box_container = NodePath("Inventory")
+h_box_container = NodePath("PanelContainer/MarginContainer/Inventory")
 
-[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder"]
-custom_minimum_size = Vector2(1012, 800)
+[node name="PanelContainer" type="PanelContainer" parent="Player UI/Inventory holder"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -502.0
-offset_top = -400.0
-offset_right = 502.0
-offset_bottom = 400.0
+offset_left = -521.0
+offset_top = -415.0
+offset_right = 521.0
+offset_bottom = 415.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
-alignment = 1
 
-[node name="Crafting" parent="Player UI/Inventory holder/Inventory" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
-layout_mode = 2
-send_to_inventory = NodePath("../Inventory")
-crafting_library = ExtResource("13_p6nu7")
-
-[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/Inventory" node_paths=PackedStringArray("slot_holder")]
-layout_mode = 2
-script = ExtResource("13_wsp3s")
-slot_holder = NodePath("MarginContainer/Slot_Holder")
-
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/Inventory/Armour"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer"]
+[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(1012, 800)
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Crafting" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
+layout_mode = 2
+send_to_inventory = NodePath("../Inventory")
+crafting_library = ExtResource("13_p6nu7")
+
+[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" node_paths=PackedStringArray("slot_holder")]
+layout_mode = 2
+script = ExtResource("13_wsp3s")
+slot_holder = NodePath("MarginContainer/Slot_Holder")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Helment" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Helment" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "helment"
 background_texture = ExtResource("15_kdnva")
 
-[node name="Chest" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Chest" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "chest_plate"
 background_texture = ExtResource("16_jipce")
 
-[node name="Pants" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Pants" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "pants"
 background_texture = ExtResource("17_vqxny")
 
-[node name="Inventory" parent="Player UI/Inventory holder/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
+[node name="Inventory" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 sync = false
 items_library = SubResource("Resource_c0ten")
@@ -481,9 +491,9 @@ parameters/looping = true
 
 [node name="Random Sound" parent="." instance=ExtResource("24_r824s")]
 
-[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/Inventory/Armour" method="_on_helment_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/Inventory/Armour" method="_on_chest_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/Inventory/Armour" method="_on_pants_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_helment_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_chest_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_pants_item_changed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]
 [connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]

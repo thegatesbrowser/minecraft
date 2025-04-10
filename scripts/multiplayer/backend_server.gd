@@ -84,7 +84,8 @@ func get_player_data(data):
 		"Position_y": userData.Position_y,
 		"Position_z": userData.Position_z,
 		"Inventory": userData.Inventory,
-		"Hotbar": userData.Hotbar, ## add stuff like player pos etc
+		"Hotbar": userData.Hotbar,
+		"item_data": userData.item_data ## add stuff like player pos etc
 	}
 	peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
 
@@ -110,8 +111,8 @@ func login(data):
 			"Position_z": userData.Position_z,
 			"Inventory": userData.Inventory,
 			"Hotbar": userData.Hotbar,
-			 ## add stuff like player pos etc
-		}
+			"item_data": userData.item_data ## add stuff like player pos etc
+	}
 		peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
 	else:
 		var returnData ={
