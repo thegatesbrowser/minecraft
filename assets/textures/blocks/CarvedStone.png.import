@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctbg4xwmdk2er"
-path="res://.godot/imported/buffer.png-2d99f63390bbb05b2637d1893b8e6328.ctex"
+uid="uid://dc5cfaclu3qls"
+path="res://.godot/imported/CarvedStone.png-548e28f873a2e6d19b4d977cd208e09e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://buffer.png"
-dest_files=["res://.godot/imported/buffer.png-2d99f63390bbb05b2637d1893b8e6328.ctex"]
+source_file="res://assets/textures/blocks/CarvedStone.png"
+dest_files=["res://.godot/imported/CarvedStone.png-548e28f873a2e6d19b4d977cd208e09e.ctex"]
 
 [params]
 

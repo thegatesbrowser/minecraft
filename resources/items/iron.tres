@@ -8,5 +8,6 @@ script = ExtResource("1_nc0j2")
 unique_name = &"iron"
 texture = ExtResource("2_ck0h4")
 max_stack = 64
+rotatable = false
 forgable = false
 forge_time = 2.0

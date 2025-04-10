@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bnh6g1ms1p7dm"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_2sy0p"]
+[ext_resource type="Texture2D" uid="uid://cwyjj1uvhykqs" path="res://assets/textures/blocks/sandstone_top.png" id="2_yriwt"]
+
+[resource]
+script = ExtResource("1_2sy0p")
+break_time = 0.6
+spawn_chance = 0.1
+spawn_size = 1
+spawn_height = 0.0
+unique_name = &"hell_ore"
+texture = ExtResource("2_yriwt")
+max_stack = 64
+rotatable = false
+forgable = false
+forge_time = 2.0

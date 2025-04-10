@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/world/generator.gd" id="1_gocow"]
 [ext_resource type="Curve" uid="uid://cvrt8qtqhadv1" path="res://resources/heightmap_curve.tres" id="1_vgaa5"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="2_blhgi"]
-[ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/Glowtail.tres" id="3_yvx72"]
+[ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/glowtail.tres" id="3_yvx72"]
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="4_8wfm7"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="5_a8n2h"]
 [ext_resource type="Resource" uid="uid://dlo4g7vetwnq7" path="res://resources/creatures/rabbit.tres" id="5_ujeax"]
@@ -28,6 +28,6 @@ possible_tree_types = {
 "birch": ["log_birch", "leaf_oak"],
 "oak": ["log_oak", "leaf_oak"]
 }
-possible_plants = Array[StringName]([&"tall_grass", &"flower", &"fern"])
+possible_plants = Array[StringName]([])
 possible_ore = Array[ExtResource("5_a8n2h")]([ExtResource("6_1e2se"), ExtResource("7_y6uke")])
 possible_structures = Array[PackedScene]([ExtResource("8_1kv1b")])
