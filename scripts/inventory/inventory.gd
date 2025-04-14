@@ -116,8 +116,8 @@ func _on_sort_pressed() -> void:
 
 
 func _on_add_random_item_pressed() -> void:
-	var item = items_library.items_array.pick_random()
-	spawn_item(item)
+	#var item = items_library.items_array.pick_random()
+	spawn_item(load("res://resources/items/cooked_meat.tres"))
 
 
 func check_amount_of_item(item:StringName) -> int:

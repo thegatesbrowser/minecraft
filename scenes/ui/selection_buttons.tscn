@@ -1,0 +1,100 @@
+[gd_scene load_steps=9 format=3 uid="uid://cog3w5pk86koo"]
+
+[ext_resource type="Script" path="res://scripts/ui/selection_buttons.gd" id="1_dt2os"]
+[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_1yeel"]
+[ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="3_da4o2"]
+[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="4_5dof2"]
+[ext_resource type="AudioStream" uid="uid://brsc44tm3my31" path="res://assets/sounds/other/Eat1.ogg" id="5_6e4fu"]
+[ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="6_gwy0a"]
+[ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="7_yhl2k"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a1iif"]
+streams_count = 3
+stream_0/stream = ExtResource("5_6e4fu")
+stream_1/stream = ExtResource("6_gwy0a")
+stream_2/stream = ExtResource("7_yhl2k")
+
+[node name="Hotbar" type="ScrollContainer" node_paths=PackedStringArray("eat_sfx", "slots") groups=["PlayersUI"]]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -103.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+vertical_scroll_mode = 0
+script = ExtResource("1_dt2os")
+eat_sfx = NodePath("eat")
+slots = NodePath("MarginContainer/VBoxContainer/Slots")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Slots" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Slot" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+Item_resource = ExtResource("3_da4o2")
+
+[node name="Slot2" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+Item_resource = ExtResource("3_da4o2")
+
+[node name="Slot3" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+
+[node name="Slot4" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+
+[node name="Slot5" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+
+[node name="Slot6" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+
+[node name="Slot7" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+Item_resource = ExtResource("4_5dof2")
+
+[node name="Slot8" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+
+[node name="Slot9" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+
+[node name="Slot10" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_1yeel")]
+layout_mode = 2
+type = "hotbar"
+
+[node name="eat" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_a1iif")
+
+[node name="dropall" type="Button" parent="."]
+visible = false
+layout_mode = 2
+text = "Drop All"
+
+[connection signal="pressed" from="dropall" to="." method="_on_dropall_pressed"]

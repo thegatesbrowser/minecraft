@@ -1,7 +1,7 @@
 extends Control
 
-@onready var healthbar: TextureProgressBar = $HBoxContainer/healthbar
-@onready var hungerbar: TextureProgressBar = $HBoxContainer/hungerbar
+@onready var healthbar: TextureProgressBar = $healthbar
+@onready var hungerbar: TextureProgressBar = $hungerbar
 
 var your_player: Player
 

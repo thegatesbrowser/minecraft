@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://crufrgoaycfa4"]
+
+[sub_resource type="Gradient" id="Gradient_cco1p"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q7m0x"]
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_05f7c"]
+color_ramp = SubResource("Gradient_cco1p")
+noise = SubResource("FastNoiseLite_q7m0x")
+
+[sub_resource type="FogMaterial" id="FogMaterial_34qu2"]
+albedo = Color(0.227451, 0.643137, 1, 1)
+density_texture = SubResource("NoiseTexture3D_05f7c")
+
+[node name="WaterFog" type="FogVolume"]
+size = Vector3(1, 1, 1)
+material = SubResource("FogMaterial_34qu2")

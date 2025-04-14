@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=49 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -9,14 +9,17 @@
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_5801w"]
 [ext_resource type="Resource" uid="uid://bh4f3xyyxfdql" path="res://resources/items_library.tres" id="5_qnsii"]
 [ext_resource type="PackedScene" uid="uid://clt86wlubencc" path="res://scenes/items/dropped_item.tscn" id="6_6kxdw"]
-[ext_resource type="PackedScene" uid="uid://bo2ux01fsfpo5" path="res://scenes/other/breakparticle.tscn" id="8_8k80t"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
 [ext_resource type="Texture2D" uid="uid://ldgtc5gy885g" path="res://assets/models/minecraft_player_Image_0.png" id="10_o16j5"]
 [ext_resource type="AudioStream" uid="uid://sn5gwkdparti" path="res://assets/sounds/other/Player_hurt1.ogg" id="11_1skow"]
+[ext_resource type="Script" path="res://scenes/player/ground_check.gd" id="11_5go8a"]
 [ext_resource type="Script" path="res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd" id="11_8ntd3"]
 [ext_resource type="AudioStream" uid="uid://bdoobkrlhbbdx" path="res://assets/sounds/other/Player_hurt2.ogg" id="12_lotnu"]
 [ext_resource type="AudioStream" uid="uid://bkep405p361he" path="res://assets/sounds/other/Player_hurt3.ogg" id="13_djou0"]
 [ext_resource type="AudioStream" uid="uid://doorfb3332k81" path="res://assets/sounds/other/Player_attack_weak.ogg" id="13_xnj4e"]
+[ext_resource type="AudioStream" uid="uid://brsc44tm3my31" path="res://assets/sounds/other/Eat1.ogg" id="13_y6cgu"]
+[ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="14_322f3"]
+[ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="15_qijyr"]
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -43,33 +46,21 @@ scale_min = 0.0
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 
-[sub_resource type="Gradient" id="Gradient_4lfj0"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.666667)
-colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_rm622"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k5hjn"]
-seamless = true
-color_ramp = SubResource("Gradient_4lfj0")
-noise = SubResource("FastNoiseLite_rm622")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_icev4"]
-transparency = 2
-alpha_scissor_threshold = 0.826
-alpha_antialiasing_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-albedo_texture = SubResource("NoiseTexture2D_k5hjn")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6f0tj"]
+transparency = 4
+shading_mode = 2
+albedo_color = Color(0.0509804, 0.0509804, 0.0509804, 0.352941)
+metallic_specular = 0.19
 
 [sub_resource type="BoxMesh" id="BoxMesh_5jdb0"]
-material = SubResource("StandardMaterial3D_icev4")
+material = SubResource("StandardMaterial3D_6f0tj")
 size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bji8u"]
 resource_name = "skin.001"
 cull_mode = 2
 albedo_texture = ExtResource("10_o16j5")
+metallic_specular = 0.0
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ok6gk"]
@@ -406,6 +397,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../eat:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_6iggv"]
 resource_name = "attack"
@@ -449,33 +452,45 @@ tracks/2/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_stbf1"]
-resource_name = "walk"
-length = 0.4
+[sub_resource type="Animation" id="Animation_wlwky"]
+resource_name = "eat"
+length = 4.0
 loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Hand:rotation")
+tracks/0/path = NodePath("Hand:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.392292, 0.659754),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, -1.5708, 2.59181), Vector3(0.0349066, -1.5708, 2.60927)]
+"values": [Vector3(0.333, -0.536575, -0.225), Vector3(0.333, -0.537, 0.035)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Hand:position")
+tracks/1/path = NodePath("Hand:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.366667),
-"transitions": PackedFloat32Array(1.93187, 1),
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.533333, 0.666667, 0.766667, 0.866667, 1, 1.13333, 1.26667, 1.36667, 1.5, 1.63333, 1.7, 1.8, 1.93333, 2.06667, 2.2, 2.3, 2.43333, 2.56667, 2.66667, 2.76667, 2.9, 3.03333, 3.16667, 3.26667, 3.4, 3.53333, 3.6, 3.7, 3.83333, 3.96667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0.333, -0.536575, -0.225), Vector3(0.333, -0.577, -0.225)]
+"values": [Vector3(0, -1.5708, 2.59181), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181), Vector3(0, -0.340339, 2.68781), Vector3(0, -0.340339, 2.59181)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../eat:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.666667, 1.56667, 2.26667, 3.03333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, true, true, true, true]
 }
 
 [sub_resource type="Animation" id="Animation_kn7ks"]
@@ -507,13 +522,49 @@ tracks/1/keys = {
 "values": [Vector3(0.333, -0.536575, -0.225), Vector3(0.333, -0.507, -0.225)]
 }
 
+[sub_resource type="Animation" id="Animation_stbf1"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.392292, 0.659754),
+"update": 0,
+"values": [Vector3(0, -1.5708, 2.59181), Vector3(0.0349066, -1.5708, 2.60927)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hand:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1.93187, 1),
+"update": 0,
+"values": [Vector3(0.333, -0.536575, -0.225), Vector3(0.333, -0.577, -0.225)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wp2up"]
 _data = {
 "RESET": SubResource("Animation_4e7vc"),
 "attack": SubResource("Animation_6iggv"),
+"eat": SubResource("Animation_wlwky"),
 "idle": SubResource("Animation_kn7ks"),
 "walk": SubResource("Animation_stbf1")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ar6mo"]
+streams_count = 3
+stream_0/stream = ExtResource("13_y6cgu")
+stream_1/stream = ExtResource("14_322f3")
+stream_2/stream = ExtResource("15_qijyr")
 
 [sub_resource type="CylinderShape3D" id="10"]
 height = 1.8
@@ -550,6 +601,9 @@ stream_0/stream = ExtResource("13_xnj4e")
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "fall_timer", "floor_ray") groups=["Player"]]
 script = ExtResource("1")
 defualt_hand_model = ExtResource("2_w6sp7")
+WALK_SPEED = 4.0
+SPRINT_SPEED = 6.0
+CROUCH_SPEED = 1.0
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/minecraft_player/AnimationPlayer")
 hit_sfx = NodePath("hit")
@@ -566,24 +620,23 @@ weapon_base = ExtResource("3_jtlx2")
 fall_hurt_height = 3.0
 max_health = 20
 
-[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "camera")]
+[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "hand_ani", "camera")]
 script = ExtResource("4_064gd")
 break_part = NodePath("TerrainInteraction/Breakparticle")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
 floor_ray = NodePath("../floor")
 drop_item_scene = ExtResource("6_6kxdw")
+hand_ani = NodePath("../RotationRoot/Head/HandAni")
 camera = NodePath("../RotationRoot/Head/Camera3D")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block", "ping_label")]
 script = ExtResource("2_5q13p")
-broken_part = ExtResource("8_8k80t")
 distance = 5.0
 camera = NodePath("../../RotationRoot/Head/Camera3D")
 block = NodePath("BlockOutline")
 voxel_blocky_type_library = ExtResource("5_5801w")
 item_library = ExtResource("5_qnsii")
-break_particle_scene = ExtResource("8_8k80t")
 ping_label = NodePath("../../Ping")
 
 [node name="BlockOutline" type="Node3D" parent="Hands/TerrainInteraction"]
@@ -676,11 +729,20 @@ skeleton = NodePath("../..")
 
 [node name="Breakparticle" type="GPUParticles3D" parent="Hands/TerrainInteraction"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.67777, 0.524349, -1.0743)
+cast_shadow = 0
 emitting = false
 amount = 40
 lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_pct4i")
 draw_pass_1 = SubResource("BoxMesh_5jdb0")
+
+[node name="AreaCheck" type="Node" parent="." node_paths=PackedStringArray("player", "floor_ray", "head_ray")]
+script = ExtResource("11_5go8a")
+player = NodePath("..")
+floor_ray = NodePath("../feet")
+head_ray = NodePath("../head check")
+voxel_blocky_type_library = ExtResource("5_5801w")
+item_library = ExtResource("5_qnsii")
 
 [node name="RotationRoot" type="Node3D" parent="."]
 
@@ -709,14 +771,14 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(0.999994, 0.00340353, -1.6036e-05, -0.00340353, 0.999949, -0.00947594, -1.62165e-05, 0.00947594, 0.999955, -1.2078e-09, 0.501849, -9.33578e-10)
 bones/2/enabled = true
 bones/2/position = Vector3(-1.2078e-09, 0.501849, -9.33578e-10)
-bones/2/rotation = Quaternion(0.00473803, 4.51374e-08, -0.00170179, 0.999987)
+bones/2/rotation = Quaternion(0.00656705, -3.06743e-06, -0.00170178, 0.999977)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "arm.L_3"
 bones/3/parent = 1
 bones/3/rest = Transform3D(0.00280041, -0.00340341, -0.99999, 0.00946661, -0.999949, 0.00342979, -0.999951, -0.00947612, -0.00276816, 0.33942, 0.387725, 0.00462112)
 bones/3/enabled = true
 bones/3/position = Vector3(0.33942, 0.387725, 0.00462112)
-bones/3/rotation = Quaternion(0.708082, 0.00214071, -0.706113, -0.00455664)
+bones/3/rotation = Quaternion(0.708093, 0.00443381, -0.706102, -0.0022571)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "arm.L_3.001"
 bones/4/parent = 3
@@ -737,7 +799,7 @@ bones/6/parent = 1
 bones/6/rest = Transform3D(-0.00280023, -0.00340356, 0.99999, -0.00946657, -0.999949, -0.00342993, 0.999951, -0.00947608, 0.00276786, -0.336773, 0.390044, 0.00274944)
 bones/6/enabled = true
 bones/6/position = Vector3(-0.336773, 0.390044, 0.00274944)
-bones/6/rotation = Quaternion(0.706113, -0.00455668, 0.708081, -0.00214065)
+bones/6/rotation = Quaternion(0.706116, -0.00685605, 0.708063, 0.000152416)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "arm.R_5.001"
 bones/7/parent = 6
@@ -759,12 +821,12 @@ mesh = SubResource("ArrayMesh_ok6gk")
 skin = SubResource("Skin_36f8o")
 
 [node name="Left Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D"]
-transform = Transform3D(3.05999e-07, -0.00773978, -0.99997, 1.31547e-07, -0.99997, 0.00773978, -1, -1.33414e-07, -2.40713e-07, 0.339821, 1.03312, -0.0148718)
+transform = Transform3D(-4.09852e-07, -0.00124481, -0.999999, 1.17796e-07, -0.999999, 0.00124481, -1, -1.17806e-07, 3.31947e-07, 0.341173, 1.03312, -0.0148718)
 bone_name = "arm.L_3.001"
 bone_idx = 4
 
 [node name="Right Hand" type="BoneAttachment3D" parent="RotationRoot/minecraft_player/Model/Skeleton3D"]
-transform = Transform3D(3.74468e-07, -0.0155336, 0.999879, -1.43143e-07, -0.999879, -0.0155336, 1, -1.34481e-07, -5.58698e-07, -0.336379, 1.03312, -0.0148718)
+transform = Transform3D(-4.61291e-07, -0.0220272, 0.999757, -6.35377e-08, -0.999757, -0.0220272, 1, -6.9713e-08, 3.08543e-07, -0.33773, 1.03312, -0.0148718)
 bone_name = "arm.R_5.001"
 bone_idx = 7
 
@@ -803,6 +865,11 @@ libraries = {
 "": SubResource("AnimationLibrary_wp2up")
 }
 playback_default_blend_time = 0.3
+
+[node name="eat" type="AudioStreamPlayer" parent="RotationRoot/Head"]
+stream = SubResource("AudioStreamRandomizer_ar6mo")
+volume_db = -6.11765
+pitch_scale = 1.13
 
 [node name="CameraShake3DNode" type="Node" parent="RotationRoot/Head" node_paths=PackedStringArray("camera")]
 script = ExtResource("11_8ntd3")
@@ -870,6 +937,19 @@ autostart = true
 [node name="floor" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.328914, 0)
 target_position = Vector3(1.45519e-11, -1000, 1.45519e-11)
+hit_from_inside = true
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="feet" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0297664, 0.328914, 0)
+target_position = Vector3(1.45519e-11, -0.5, 1.45519e-11)
+hit_from_inside = true
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="head check" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, 1.865, 0)
+target_position = Vector3(1.45519e-11, -1, 1.45519e-11)
+collision_mask = 2
 hit_from_inside = true
 debug_shape_custom_color = Color(1, 0, 0, 1)
 

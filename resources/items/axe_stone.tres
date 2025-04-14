@@ -16,9 +16,9 @@ region = Rect2(80, 0, 16, 16)
 [resource]
 script = ExtResource("2_cqyaj")
 suitable_objects = Array[ExtResource("3_pc2pr")]([ExtResource("4_se7tg"), ExtResource("5_fonj7"), ExtResource("6_ysb6d"), ExtResource("7_tbqnj")])
-breaking_efficiency = 0.6
+breaking_efficiency = 0.75
 damage = 2
-max_health = 5.0
+max_health = 10.0
 degrade_rate = 0.1
 unique_name = &""
 texture = SubResource("AtlasTexture_0u6p7")

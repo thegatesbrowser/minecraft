@@ -1,18 +1,22 @@
-[gd_resource type="Resource" script_class="ItemFood" load_steps=6 format=3 uid="uid://cmt66qn8cepqr"]
+[gd_resource type="Resource" script_class="ItemFood" load_steps=9 format=3 uid="uid://cmt66qn8cepqr"]
 
+[ext_resource type="PackedScene" uid="uid://bbybfarbjmrqc" path="res://assets/models/food/cooked_meat.tscn" id="1_l0sxf"]
 [ext_resource type="Script" path="res://scripts/items/item_food.gd" id="1_q81vl"]
 [ext_resource type="Texture2D" uid="uid://dg5xyra8ndvec" path="res://assets/textures/items/cooked_meat.png" id="1_vqfmi"]
+[ext_resource type="PackedScene" uid="uid://qtm7lhj5w18f" path="res://assets/models/food/cooked_meat_1.tscn" id="2_j127q"]
 [ext_resource type="Texture2D" uid="uid://b85f25v7oins4" path="res://assets/textures/items/cooked meat (3).png" id="2_pjlux"]
 [ext_resource type="Texture2D" uid="uid://m5xks8ypy66x" path="res://assets/textures/items/cooked meat (2).png" id="3_hq51q"]
+[ext_resource type="PackedScene" uid="uid://b408c4ylxecnv" path="res://assets/models/food/cooked_meat_2.tscn" id="3_jkia5"]
 [ext_resource type="Texture2D" uid="uid://b2pj8ty8f2jyy" path="res://assets/textures/items/cooked meat (1).png" id="4_2d2j3"]
 
 [resource]
 script = ExtResource("1_q81vl")
 food_points = 4
-eat_time = 0.4
-time_rot_step = 5.0
+eat_time = 1.4
+time_rot_step = 4.0
 max_rot_steps = 4
 rot_step_textures = Array[Texture]([ExtResource("1_vqfmi"), ExtResource("2_pjlux"), ExtResource("3_hq51q"), ExtResource("4_2d2j3")])
+rot_step_holdable_models = Array[PackedScene]([ExtResource("1_l0sxf"), ExtResource("2_j127q"), ExtResource("3_jkia5"), ExtResource("3_jkia5")])
 unique_name = &"cooked_meat"
 texture = ExtResource("1_vqfmi")
 max_stack = 64

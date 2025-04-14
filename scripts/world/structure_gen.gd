@@ -15,10 +15,10 @@ func generate() -> Structure:
 		#var type_length = type.length()
 		#print("structure block type ",type)
 		
-		if VoxelLibrary.get_model_index_default(type) == -1:
-			print("object ", i.name, " as ", type, " is not a vaild block in VoxelLibrary")
-		else:
-			voxels[Vector3(i.position.x, i.position.y, i.position.z)] =  VoxelLibrary.get_model_index_default(type)
+		#if VoxelLibrary.get_model_index_default(type) == -1:
+			#print("object ", i.name, " as ", type, " is not a vaild block in VoxelLibrary")
+		#else:
+		voxels[Vector3(i.position.x, i.position.y, i.position.z)] =  VoxelLibrary.get_model_index_default(type)
 		#voxels[Vector3(i.position.x, i.position.y, i.position.z)] = VoxelLibrary.get_model_index_default(&"stone")
 
 	# Let's make crappy trees

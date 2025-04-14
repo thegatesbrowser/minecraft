@@ -14,6 +14,7 @@ var your_id
 @export_range(0.1, 1.1, 0.1) var max_flying_margin = 0.2
 @export_range(-1.1, -0.1, 0.1) var min_flying_margin = -0.2
 
+@export var SWIMMING_SPEED = 4.0
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
 @export var JUMP_VELOCITY = 7.0
@@ -57,6 +58,7 @@ const BASE_FOV = 90.0
 const FOV_CHANGE = 1.5
 
 var found_ground:bool = false
+var swimming:bool = false
 var crouching:bool = false
 var speed: float
 var gravity = 16.5
@@ -202,24 +204,28 @@ func _physics_process(delta: float) -> void:
 			
 	if !Globals.paused:
 		mine_and_place(delta)
-	if !is_flying and !Globals.paused:
+	if !is_flying and !Globals.paused and !swimming:
 		normal_movement(delta)
-	if is_flying and !Globals.paused:
+	if is_flying and !Globals.paused and !swimming:
 		flying_movement(delta)
+	if !is_flying and !Globals.paused and swimming:
+		swimming_movement(delta)
 		
 	if Globals.paused and found_ground:
 		velocity.x = lerp(velocity.x,0.0,.1)
 		velocity.z = lerp(velocity.x,0.0,.1)
 	
 	# Head bob
-	t_bob += delta * velocity.length() * float(is_on_floor())
-	camera.transform.origin = _headbob(t_bob)
+	if SettingsManager.headbob:
+		t_bob += delta * velocity.length() * float(is_on_floor())
+		camera.transform.origin = _headbob(t_bob)
 	
 	# FOV
-	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
-	var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
-	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
-	
+	if SettingsManager.varing_fov:
+		var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
+		var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
+		camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
+		
 	move_and_slide()
 	set_sync_properties()
 
@@ -315,11 +321,12 @@ func _exit_tree():
 	Console.remove_command("player_clipping")
 
 
-func add_item_to_hand(item: ItemBase) -> void:
+func add_item_to_hand(item: ItemBase, scene:PackedScene) -> void:
+	for i in hand.get_children():
+			i.queue_free()
+			
 	if item != null:
 		
-		for i in hand.get_children():
-			i.queue_free()
 			
 		if item is ItemWeapon:
 			var weapon = weapon_base.instantiate()
@@ -333,6 +340,9 @@ func add_item_to_hand(item: ItemBase) -> void:
 			var mesh_instance = MeshInstance3D.new()
 			mesh_instance.mesh = item.holdable_mesh
 			hand.add_child(mesh_instance)
+	else:
+		var holdable_mesh = scene.instantiate()
+		hand.add_child(holdable_mesh) 
 
 
 func remove_item_in_hand() -> void:
@@ -427,6 +437,7 @@ func hunger_points_gained(amount: int) -> void:
 
 
 func _on_fall_time_timeout() -> void:
+	if Globals.paused or swimming: return
 	fall_time += 1
 
 
@@ -457,8 +468,9 @@ func normal_movement(delta:float):
 			if ANI.current_animation != "walk":
 				ANI.play("walk")
 			if hand_ani.current_animation != "attack":
-				if hand_ani.current_animation != "walk":
-					hand_ani.play("walk")
+				if hand_ani.current_animation != "eat":
+					if hand_ani.current_animation != "walk":
+						hand_ani.play("walk")
 			velocity.x = _move_direction.x * speed
 			velocity.z = _move_direction.z * speed
 		else:
@@ -466,8 +478,9 @@ func normal_movement(delta:float):
 				ANI.play("idle")
 				
 			if hand_ani.current_animation != "attack":
-				if hand_ani.current_animation != "idle":
-					hand_ani.play("idle")
+				if hand_ani.current_animation != "eat":
+					if hand_ani.current_animation != "idle":
+						hand_ani.play("idle")
 					
 			velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 7.0)
 			velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 7.0)
@@ -488,6 +501,8 @@ func normal_movement(delta:float):
 			
 			
 func flying_movement(delta:float):
+	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
+	_move_direction = (rotation_root.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if camera.rotation.x > max_flying_margin:
 			velocity.y = camera.rotation.x * speed * 2
 	else:
@@ -513,11 +528,13 @@ func flying_movement(delta:float):
 func mine_and_place(delta:float):
 	if Input.is_action_pressed("Mine"):
 		if hand_ani.current_animation != "attack":
-			hand_ani.play("attack")
+			if hand_ani.current_animation != "eat":
+				hand_ani.play("attack")
 	else:
 		if hand_ani.current_animation != "idle" and hand_ani.current_animation != "walk":
 			if hand_ani.current_animation != "RESET":
-				hand_ani.play("RESET")
+				if hand_ani.current_animation != "eat":
+					hand_ani.play("RESET")
 			
 	if Input.is_action_just_pressed("Build"):
 		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
@@ -564,3 +581,27 @@ func mine_and_place(delta:float):
 					coll.hit.rpc_id(coll.get_multiplayer_authority())
 					
 					
+func swimming_movement(delta:float) -> void:
+	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
+	_move_direction = (rotation_root.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if camera.rotation.x > max_flying_margin:
+			velocity.y = camera.rotation.x * SWIMMING_SPEED * 2
+	else:
+		velocity.y = lerp(velocity.y,0.0,.1)
+		
+	if  camera.rotation.x < min_flying_margin:
+		velocity.y = camera.rotation.x * SWIMMING_SPEED * 2
+		
+	else:
+		velocity.y = lerp(velocity.y,0.0,.1)
+		
+	if _move_direction:
+		if ANI.current_animation != "walk":
+				ANI.play("walk")
+		velocity.x = _move_direction.x * SWIMMING_SPEED
+		velocity.z = _move_direction.z * SWIMMING_SPEED
+	else:
+		if ANI.current_animation != "idle":
+				ANI.play("idle")
+		velocity.x = lerp(velocity.x, _move_direction.x * SWIMMING_SPEED, delta * 7.0)
+		velocity.z = lerp(velocity.z, _move_direction.z * SWIMMING_SPEED, delta * 7.0)

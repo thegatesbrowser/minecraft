@@ -1,6 +1,7 @@
 #tool
 extends VoxelGeneratorScript
 
+const WaterFog = preload("res://assets/other/waterfog.tscn")
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
 const TreeGenerator = preload("./tree_generator.gd")
@@ -37,7 +38,7 @@ var AIR := VoxelLibrary.get_model_index_default("air")
 var DIRT := VoxelLibrary.get_model_index_default("dirt")
 var GRASS := VoxelLibrary.get_model_index_default("grass")
 var WATER_FULL := VoxelLibrary.get_model_index_default("water_full")
-var WATER_TOP := VoxelLibrary.get_model_index_default("water_fill")
+var WATER_TOP := VoxelLibrary.get_model_index_default("water_top")
 var LOG := VoxelLibrary.get_model_index_default("log_oak")
 var OAK_LEAVES := VoxelLibrary.get_model_index_default("leaf_oak")
 var BIRCH_LEAVES := VoxelLibrary.get_model_index_default("leaf_birch")
@@ -199,27 +200,22 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int)
 								var ncpos : Vector3 = (chunk_pos).round()
 								pos += ncpos * block_size
 								Globals.call_deferred("Spawn_creature",Vector3(pos.x,_get_height_at(x,z) + 10,pos.z),possible_creatures.pick_random())
-								#buffer.set_voxel(DIRT, x, relative_height + 2 , z, _CHANNEL)
 							if rng.randf() < plant_odds:
 								var plant = possible_plants.pick_random()
 								var foliage = VoxelLibrary.get_model_index_default(plant)
 								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
 					
-					
-				#if height < 0 and oy < 0:
-					#buffer.set_voxel(OAK_LEAVES, x, block_size - 1, z, _CHANNEL)
-					#print("ore")
 				# Water
-				#if height < 0 and oy < 0:
-					#var start_relative_height := 0
-					#if relative_height > 0:
-						#start_relative_height = relative_height
-					#buffer.fill_area(WATER_FULL,
-						#Vector3(x, start_relative_height, z), 
-						#Vector3(x + 1, block_size, z + 1), _CHANNEL)
-					#if oy + block_size == 0:
-						## Surface block
-						#buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
+				if height < 0 and oy < 0:
+					var start_relative_height := 0
+					if relative_height > 0:
+						start_relative_height = relative_height
+					buffer.fill_area(WATER_FULL,
+						Vector3(x, start_relative_height, z), 
+						Vector3(x + 1, block_size, z + 1), _CHANNEL)
+					if oy + block_size == 0:
+						# Surface block
+						buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
 						
 				gx += 1
 

@@ -8,3 +8,4 @@ class_name ItemFood
 @export var max_rot_steps := 3
 
 @export var rot_step_textures:Array[Texture]
+@export var rot_step_holdable_models:Array[PackedScene]

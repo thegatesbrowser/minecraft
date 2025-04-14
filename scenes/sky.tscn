@@ -27,6 +27,7 @@ ssr_fade_in = 0.15529
 ssao_enabled = true
 ssao_intensity = 2.32
 ssil_intensity = 2.68
+sdfgi_use_occlusion = true
 glow_enabled = true
 glow_intensity = 5.83
 glow_strength = 0.96

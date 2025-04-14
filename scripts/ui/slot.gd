@@ -127,20 +127,21 @@ func used() -> void:
 		Item_resource = null
 	update_slot()
 	
+var _time
 var timer:Timer
-func start_rot(time:float):
+func start_rot(time:float) -> void:
 	var rot_timer = Timer.new()
 	rot_timer.wait_time = time
 	add_child(rot_timer)
 	rot_timer.start()
 	rot_timer.timeout.connect(rot_update)
 	timer = rot_timer
+	_time = time
 	
 	
-func rot_update():
+func rot_update() -> void:
+	
 	rot += 1
-	timer.start()
 	if rot >= max_rot:
-		timer.queue_free()
 		Item_resource = null
 	update_slot()

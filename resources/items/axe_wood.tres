@@ -16,7 +16,7 @@ region = Rect2(32, 1.45519e-11, 16, 16)
 [resource]
 script = ExtResource("2_wfc3b")
 suitable_objects = Array[ExtResource("3_q1uog")]([ExtResource("4_vll5h"), ExtResource("5_vfcjb"), ExtResource("6_gsk5u"), ExtResource("7_5xj0c")])
-breaking_efficiency = 0.6
+breaking_efficiency = 0.5
 damage = 2
 max_health = 5.0
 degrade_rate = 0.1

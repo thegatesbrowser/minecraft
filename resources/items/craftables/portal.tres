@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://b4g78ll6bonjn"]
 
 [ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="1_2j346"]
+[ext_resource type="Texture2D" uid="uid://k45100npl032" path="res://assets/textures/items/diamond.png" id="1_78ais"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_l4sry"]
-[ext_resource type="Texture2D" uid="uid://bj0k37nqmn31y" path="res://assets/textures/blocks/lapis_block.png" id="3_55hmk"]
 [ext_resource type="Texture2D" uid="uid://b0omyudpmrpm4" path="res://assets/textures/items/portal.png" id="4_8ux27"]
 
 [resource]
@@ -13,8 +13,8 @@ output_item = ExtResource("1_2j346")
 output_amount = 1
 items_needed = {
 1: {
-"amount": 8,
-"name": "glowstone",
-"texture": ExtResource("3_55hmk")
+"amount": 2,
+"name": "diamond",
+"texture": ExtResource("1_78ais")
 }
 }

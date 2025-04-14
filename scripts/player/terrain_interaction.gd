@@ -3,17 +3,16 @@ class_name TerrainInteraction
 
 signal block_broken(type: StringName)
 
-@export var broken_part:PackedScene
 @export var distance: float = 10
 @export var camera: Camera3D
 @export var block: Node3D
 @export var voxel_blocky_type_library: VoxelBlockyTypeLibrary
 @export var item_library:ItemsLibrary
-@export var break_particle_scene:PackedScene
 @export var ping_label:Label
 
 const AIR_TYPE = 0
 
+var plants: Array[int]
 var terrain: VoxelTerrain
 var voxel_tool: VoxelTool
 
@@ -25,6 +24,8 @@ var last_ping_time: float
 
 
 func _ready() -> void:
+	plants = [voxel_blocky_type_library.get_model_index_default("tall_grass"),voxel_blocky_type_library.get_model_index_default("fern"),voxel_blocky_type_library.get_model_index_default("flower")]
+
 	if is_multiplayer_authority() or Connection.is_server():
 		terrain = TerrainHelper.get_terrain_tool()
 		voxel_tool = terrain.get_voxel_tool()
@@ -38,7 +39,7 @@ func _physics_process(_delta: float) -> void:
 	
 	var origin = camera.get_global_transform().origin
 	var forward = -camera.get_global_transform().basis.z.normalized()
-	last_hit = voxel_tool.raycast(origin, forward, distance)
+	last_hit = voxel_tool.raycast(origin, forward, distance, 1)
 
 	if last_hit != null:
 		
@@ -79,6 +80,17 @@ func get_type() -> StringName:
 func place_block(type: StringName, player_pos: Vector3) -> void:
 	_place_block_server.rpc_id(1, type, last_hit.previous_position, player_pos)
 
+	var item = item_library.get_item(type)
+	
+	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
+	
+	if item.rotatable:
+		## make the block rotation towards the player when placed
+		voxel_tool.value = voxel_blocky_type_library.get_model_index_single_attribute(type,get_direction(player_pos,last_hit.previous_position))
+	else:
+		voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
+	
+	voxel_tool.do_point(last_hit.previous_position)
 
 ## Breaks the block and returns the type name
 func break_block() -> void:
@@ -113,9 +125,14 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 func _break_block_server(position: Vector3) -> void:
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	voxel_tool.value = AIR_TYPE
-
+	
+	var above_voxel:int = voxel_tool.get_voxel(position + Vector3(0,1,0))
+	
 	var voxel: int = voxel_tool.get_voxel(position)
 	
+	if plants.has(above_voxel):
+		voxel_tool.do_point(position + Vector3(0,1,0))
+		
 	voxel_tool.do_point(position)
 	
 	var array = voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)
@@ -144,9 +161,6 @@ func _block_broken_local(type: StringName) -> void:
 	
 	if last_hit != null:
 		soundmanager.play_sound(type,last_hit.previous_position)
-		#var part = broken_part.instantiate()
-		#part.position = last_hit.previous_position
-		#get_node("/root/Main").add_child(part)
 		
 	block_broken.emit(type)
 
@@ -206,7 +220,7 @@ func _on_block_broken(type: StringName) -> void:
 	pass # Replace with function body.
 
 @rpc("any_peer","call_local")
-func remove_spawn_point(pos:Vector3) -> void:
+func remove_spawn_point(pos: Vector3) -> void:
 	var player = get_parent().get_parent() as Player
 	if player.spawn_position == pos + Vector3(0,1,0):
 		player.spawn_position = player.start_position

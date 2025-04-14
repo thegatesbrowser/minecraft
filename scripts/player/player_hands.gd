@@ -5,7 +5,9 @@ extends Node
 @export var items_library: ItemsLibrary
 @export var floor_ray:RayCast3D
 @export var drop_item_scene:PackedScene
+@export var hand_ani:AnimationPlayer
 
+var eat_timer: Timer
 var timer: Timer
 @export var camera: Camera3D
 
@@ -16,6 +18,10 @@ func _ready():
 	timer = Timer.new()
 	timer.one_shot = true
 	add_child(timer)
+	
+	eat_timer = Timer.new()
+	eat_timer.one_shot = true
+	add_child(eat_timer)
 
 
 func _process(_delta: float) -> void:
@@ -30,6 +36,33 @@ func _process(_delta: float) -> void:
 				var player_pos = get_parent().global_position
 				terrain_interaction.place_block(Globals.current_block,player_pos)
 				Globals.remove_item_from_hotbar.emit()
+				
+		if Input.is_action_pressed("Build"):
+			if eat_timer.is_stopped():
+				if Globals.selected_slot != null:
+					var item =  Globals.selected_slot.Item_resource
+					if item is ItemFood:
+						
+						eat_timer.wait_time = item.eat_time
+						eat_timer.name = "food eat timer"
+						eat_timer.start()
+						
+						if hand_ani.current_animation != "eat":
+								hand_ani.play("eat")
+								
+						await eat_timer.timeout
+						
+						if Input.is_action_pressed("Build"):
+							#eat_sfx.play()
+							
+								
+							if item != null:
+								Globals.hunger_points_gained.emit(item.food_points)
+								print("ate ", item.unique_name, " gained ", item.food_points," food points")
+								Globals.remove_item_from_hotbar.emit()
+								Globals.remove_item_in_hand.emit()
+								hand_ani.stop()
+
 	
 	if Input.is_action_pressed("Mine"):
 		
@@ -42,27 +75,29 @@ func _process(_delta: float) -> void:
 				var type = terrain_interaction.get_type()
 				if type == "air": return
 				
-				var item = items_library.get_item(type)
+				var item = items_library.get_item(type) as ItemBlock
 				
-				if Globals.custom_block.is_empty():
-					timer.wait_time = item.break_time
-				else:
-					if items_library.get_item(Globals.custom_block) is ItemTool:
-						if items_library.get_item(Globals.custom_block).suitable_objects.has(items_library.get_item(type)):
-							timer.wait_time = item.break_time - items_library.get_item(Globals.custom_block).breaking_efficiency
+				if Globals.selected_slot != null:
+					if Globals.selected_slot.Item_resource is ItemTool:
+						var holding_item = Globals.selected_slot.Item_resource as ItemTool
+						if holding_item.suitable_objects.has(item):
+							timer.wait_time = item.break_time - holding_item.breaking_efficiency
 						else:
 							timer.wait_time = item.break_time
+					else:
+							timer.wait_time = item.break_time
+				else:
+					timer.wait_time = item.break_time
+					
+				#print(timer.wait_time )
 							
 				break_part.global_position = terrain_interaction.last_hit.position
-				break_part.emitting = false
-				
+				break_part.emitting = true
+				break_part.show()
 				timer.start()
 				await timer.timeout
 
 				if Input.is_action_pressed("Mine"):
-					
-				
-						
 					if terrain_interaction.last_hit != null:
 						break_part.emitting = false
 						terrain_interaction.break_block()
@@ -106,7 +141,7 @@ func interaction() -> void:
 		if item.utility.portal:
 			Globals.enter_portal.emit(terrain_interaction.last_hit.position)
 
-func drop(owner_id:int ,item:ItemBase ,amount := 1):
+func drop(owner_id: int ,item: ItemBase ,amount := 1) -> void:
 	print("drop")
 	if get_multiplayer_authority() != owner_id: return
 	print(get_multiplayer_authority(), " is ", owner_id)
@@ -115,13 +150,8 @@ func drop(owner_id:int ,item:ItemBase ,amount := 1):
 		var spawn_node = get_node("/root/Main").find_child("Objects")
 		
 		sync_drop.rpc_id(1,item.resource_path,pos,amount)
-		#drop_item.Item = item
-		#drop_item.amount = amount
-		#drop_item.position = pos
-		#spawn_node.add_child(drop_item)
+
 
 @rpc("any_peer","call_local")
-func sync_drop(item_path,pos,amount := 1):
-	#var drop_item = drop_item_scene.instantiate()
-		
+func sync_drop(item_path: String, pos: Vector3 ,amount := 1) -> void:
 	Globals.add_object.emit([1,pos,"res://scenes/items/dropped_item.tscn",item_path,amount])

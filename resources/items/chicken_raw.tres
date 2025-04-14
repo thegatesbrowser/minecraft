@@ -13,6 +13,7 @@ eat_time = 2.0
 time_rot_step = 5.0
 max_rot_steps = 3
 rot_step_textures = Array[Texture]([ExtResource("2_dohb4"), ExtResource("3_edynf"), ExtResource("4_vx1pj")])
+rot_step_holdable_models = Array[PackedScene]([])
 unique_name = &"raw_chicken"
 texture = ExtResource("2_dohb4")
 max_stack = 64

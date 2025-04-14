@@ -159,3 +159,14 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 					_voxel_tool.set_voxel(npos, VoxelLibraryResource.get_model_index_default("fire"))
 					_terrain.save_block(npos)
 					break
+					
+		## gets rid of the fire if no surroundings
+		var found_burnable:bool = false
+		for di in len(_fire_dirs):
+			var npos := pos + _fire_dirs[di]
+			var nv := _voxel_tool.get_voxel(npos)
+			if burnable(nv):
+				found_burnable = true
+				
+		if found_burnable == false:
+			_voxel_tool.set_voxel(pos, VoxelLibraryResource.get_model_index_default("air"))
