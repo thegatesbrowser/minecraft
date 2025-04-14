@@ -1,11 +1,9 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://dpkc8k2a64whr"]
 
 [ext_resource type="Texture2D" uid="uid://dt263alrd18sy" path="res://assets/textures/items/iron_ingot.png" id="1_snlfw"]
+[ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="2_0stt5"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_iicld"]
 [ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/iron_armour.png" id="4_ti7rf"]
-
-[sub_resource type="Resource" id="Resource_xrltw"]
-metadata/__load_path__ = "res://resources/items/helment.tres"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8cbe1"]
 atlas = ExtResource("4_ti7rf")
@@ -15,7 +13,7 @@ region = Rect2(0, 0, 16, 16)
 script = ExtResource("3_iicld")
 Name = "iron helment"
 texture = SubResource("AtlasTexture_8cbe1")
-output_item = SubResource("Resource_xrltw")
+output_item = ExtResource("2_0stt5")
 output_amount = 1
 items_needed = {
 1: {

@@ -9,13 +9,12 @@ signal player_despawned(id: int)
 @export var stats_ui_updater: Control
 @export var loading:CanvasLayer
 
-@onready var spawn_points: SpawnPoints 
+@onready var spawn_points: SpawnPoints = $"../Game/SpawnPoints"
 
 var players: Dictionary = {}
 
 
 func _ready() -> void:
-	spawn_points = get_tree().get_first_node_in_group("spawnpoints")
 	assert(is_instance_valid(spawn_points), "Fix the path to spawn points")
 	
 	spawn_function = custom_spawn

@@ -34,8 +34,8 @@ var structure: String
 
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
-var DIRT := VoxelLibrary.get_model_index_default("sand")
-var GRASS := VoxelLibrary.get_model_index_default("sand")
+var DIRT := VoxelLibrary.get_model_index_default("dirt")
+var GRASS := VoxelLibrary.get_model_index_default("grass")
 var WATER_FULL := VoxelLibrary.get_model_index_default("water_full")
 var WATER_TOP := VoxelLibrary.get_model_index_default("water_fill")
 var LOG := VoxelLibrary.get_model_index_default("log_oak")
@@ -200,10 +200,10 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, _lod: int)
 								pos += ncpos * block_size
 								Globals.call_deferred("Spawn_creature",Vector3(pos.x,_get_height_at(x,z) + 10,pos.z),possible_creatures.pick_random())
 								#buffer.set_voxel(DIRT, x, relative_height + 2 , z, _CHANNEL)
-							#if rng.randf() < plant_odds:
-								#var plant = possible_plants.pick_random()
-								#var foliage = VoxelLibrary.get_model_index_default(plant)
-								#buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
+							if rng.randf() < plant_odds:
+								var plant = possible_plants.pick_random()
+								var foliage = VoxelLibrary.get_model_index_default(plant)
+								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
 					
 					
 				#if height < 0 and oy < 0:
