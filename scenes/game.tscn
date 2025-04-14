@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=39 format=3 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -28,45 +28,10 @@
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="20_j2a6v"]
 [ext_resource type="Script" path="res://scripts/ui/grapthic_settings.gd" id="21_8u2nj"]
-[ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="21_ig8ss"]
-[ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="22_0lwf4"]
 [ext_resource type="PackedScene" uid="uid://by82u1qe5rbch" path="res://scenes/ui/input_button.tscn" id="22_2hbom"]
-[ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="23_4u70j"]
 [ext_resource type="AudioStream" uid="uid://c625ntyc2nlhe" path="res://assets/sounds/ambient/Soulsand_valley_ambience.ogg" id="23_fu53x"]
-[ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="24_0bstr"]
 [ext_resource type="PackedScene" uid="uid://7bxiyo4hesal" path="res://scenes/other/random_sound.tscn" id="24_r824s"]
-[ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="25_5i73i"]
-[ext_resource type="Resource" uid="uid://bbwu7wqguky81" path="res://resources/items/leaf_oak.tres" id="26_foygn"]
-[ext_resource type="Resource" uid="uid://bk4meuo0rs246" path="res://resources/items/leaf_birch.tres" id="27_mupgd"]
 [ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="27_yvp68"]
-[ext_resource type="Resource" uid="uid://d3ecx624ljcyc" path="res://resources/items/glass.tres" id="28_g6gey"]
-[ext_resource type="Resource" uid="uid://d26i62gur1o23" path="res://resources/items/log_oak.tres" id="29_hm8td"]
-[ext_resource type="Resource" uid="uid://cogc5ac14y0ad" path="res://resources/items/log_birch.tres" id="30_jvpgd"]
-[ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="31_obhup"]
-[ext_resource type="Resource" uid="uid://mv1twiklruq5" path="res://resources/items/shovel_wood.tres" id="32_vk3kx"]
-[ext_resource type="Resource" uid="uid://ds6640766cx5k" path="res://resources/items/axe_wood.tres" id="33_rjf64"]
-[ext_resource type="Resource" uid="uid://djg543gibfvro" path="res://resources/items/pickaxe_wood.tres" id="34_8kp1m"]
-[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="35_idi8l"]
-[ext_resource type="Resource" uid="uid://bkg02u1wtw0q3" path="res://resources/items/grass_tall.tres" id="36_n2q1h"]
-[ext_resource type="Resource" uid="uid://lxq2aq82pa5e" path="res://resources/items/chest.tres" id="37_v5ery"]
-[ext_resource type="Resource" uid="uid://c2c8qekfermsb" path="res://resources/items/bow.tres" id="38_met67"]
-[ext_resource type="Resource" uid="uid://dah3r6qldt8la" path="res://resources/items/pickaxe_stone.tres" id="39_w83em"]
-[ext_resource type="Resource" uid="uid://dg2gha7cp48ki" path="res://resources/items/axe_stone.tres" id="40_63iuy"]
-[ext_resource type="Resource" uid="uid://cmku2fpockw70" path="res://resources/items/shovel_stone.tres" id="41_4caau"]
-[ext_resource type="Resource" uid="uid://dlboikqlvjswi" path="res://resources/items/glowstone.tres" id="42_cb2yh"]
-[ext_resource type="Resource" uid="uid://c4g4nofmjg2jg" path="res://resources/items/diamond_block.tres" id="43_csd2r"]
-[ext_resource type="Resource" uid="uid://dvlxseu7sf1d4" path="res://resources/items/iron_block.tres" id="44_w0mv8"]
-[ext_resource type="Resource" uid="uid://2cgpe8xf3dkh" path="res://resources/items/bed.tres" id="45_y2cgb"]
-[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/forge.tres" id="46_npkva"]
-[ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="47_2is4p"]
-[ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="48_hwqys"]
-[ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="49_6fhua"]
-[ext_resource type="Resource" uid="uid://dmfnsgf0lvbhh" path="res://resources/items/fern.tres" id="50_j7kip"]
-[ext_resource type="Resource" uid="uid://d0ns05o7rlxa5" path="res://resources/items/flower.tres" id="51_vrpuo"]
-[ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="52_wm2ll"]
-[ext_resource type="Resource" uid="uid://dsltjvratfyrg" path="res://resources/items/iron_chestplate.tres" id="53_asrdx"]
-[ext_resource type="Resource" uid="uid://l4nd5is685cm" path="res://resources/items/pants.tres" id="54_57bq4"]
-[ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
 
 [sub_resource type="Environment" id="Environment_dhksy"]
@@ -77,7 +42,7 @@ library = ExtResource("5_td8xe")
 
 [sub_resource type="Resource" id="Resource_c0ten"]
 script = ExtResource("56_rtthk")
-items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), ExtResource("28_g6gey"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), ExtResource("38_met67"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
+items_array = Array[ExtResource("20_j2a6v")]([])
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
@@ -116,7 +81,7 @@ script = ExtResource("7_dy7rt")
 [node name="Building Check" type="Node" parent="VoxelTerrain"]
 script = ExtResource("8_na7qa")
 
-[node name="SpawnPoints" type="Node3D" parent="."]
+[node name="SpawnPoints" type="Node3D" parent="." groups=["spawnpoints"]]
 script = ExtResource("5_ekbqf")
 
 [node name="SpwanPoint" type="Node3D" parent="SpawnPoints"]
@@ -155,72 +120,62 @@ grow_vertical = 2
 pivot_offset = Vector2(960, 540)
 mouse_filter = 2
 script = ExtResource("3_fe1qo")
-h_box_container = NodePath("PanelContainer/MarginContainer/Inventory")
+h_box_container = NodePath("Inventory")
 
-[node name="PanelContainer" type="PanelContainer" parent="Player UI/Inventory holder"]
+[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder"]
+custom_minimum_size = Vector2(1012, 800)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -521.0
-offset_top = -415.0
-offset_right = 521.0
-offset_bottom = 415.0
+offset_left = -502.0
+offset_top = -400.0
+offset_right = 502.0
+offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer"]
-custom_minimum_size = Vector2(1012, 800)
-layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Crafting" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
+[node name="Crafting" parent="Player UI/Inventory holder/Inventory" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
 layout_mode = 2
 send_to_inventory = NodePath("../Inventory")
 crafting_library = ExtResource("13_p6nu7")
 
-[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" node_paths=PackedStringArray("slot_holder")]
+[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/Inventory" node_paths=PackedStringArray("slot_holder")]
 layout_mode = 2
 script = ExtResource("13_wsp3s")
 slot_holder = NodePath("MarginContainer/Slot_Holder")
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/Inventory/Armour"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer"]
+[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Helment" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Helment" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "helment"
 background_texture = ExtResource("15_kdnva")
 
-[node name="Chest" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Chest" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "chest_plate"
 background_texture = ExtResource("16_jipce")
 
-[node name="Pants" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Pants" parent="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "pants"
 background_texture = ExtResource("17_vqxny")
 
-[node name="Inventory" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
+[node name="Inventory" parent="Player UI/Inventory holder/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 sync = false
 items_library = SubResource("Resource_c0ten")
@@ -491,9 +446,9 @@ parameters/looping = true
 
 [node name="Random Sound" parent="." instance=ExtResource("24_r824s")]
 
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_helment_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_chest_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_pants_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/Inventory/Armour" method="_on_helment_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/Inventory/Armour" method="_on_chest_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/Inventory/Armour" method="_on_pants_item_changed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]
 [connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]

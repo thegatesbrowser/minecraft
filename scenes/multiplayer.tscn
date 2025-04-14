@@ -218,9 +218,8 @@ UI = NodePath("portal_url")
 [node name="portal_url" parent="PortalManager" instance=ExtResource("35_fu1ca")]
 visible = false
 
-[node name="UISyncer" type="Node" parent="." node_paths=PackedStringArray("inventory_holder") groups=["UISyncer"]]
+[node name="UISyncer" type="Node" parent="." groups=["UISyncer"]]
 script = ExtResource("38_ig7nw")
-inventory_holder = NodePath("../Game/Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory")
 
 [node name="Saver" type="Node" parent="." node_paths=PackedStringArray("ItemManager")]
 script = ExtResource("34_s4tlk")

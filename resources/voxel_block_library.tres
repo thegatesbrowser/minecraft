@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=74 format=3 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=75 format=3 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
 [ext_resource type="Texture2D" uid="uid://4kefle857qqh" path="res://assets/textures.webp" id="3_ewiam"]
@@ -169,6 +169,11 @@ unique_name = &"leaf_birch"
 base_model = SubResource("VoxelBlockyModelCube_il7i2")
 resource_name = "leaf_birch"
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8nxld"]
+albedo_texture = ExtResource("12_d826q")
+uv1_triplanar = true
+texture_filter = 0
+
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_g76rx"]
 atlas_size_in_tiles = Vector2i(12, 4)
 tile_left = Vector2i(2, 1)
@@ -178,7 +183,7 @@ tile_top = Vector2i(2, 1)
 tile_back = Vector2i(2, 1)
 tile_front = Vector2i(2, 1)
 culls_neighbors = false
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = SubResource("StandardMaterial3D_8nxld")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_i06l5"]
 unique_name = &"sand"

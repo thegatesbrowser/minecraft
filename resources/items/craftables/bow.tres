@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_1jr3o"]
 [ext_resource type="Resource" uid="uid://c2c8qekfermsb" path="res://resources/items/bow.tres" id="2_y5s1x"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_35rm7"]
-[ext_resource type="Texture2D" uid="uid://cs0w8nddhqtjw" path="res://assets/textures/items/bow.tres" id="4_m28aa"]
+[ext_resource type="Texture2D" path="res://assets/textures/items/bow.tres" id="4_m28aa"]
 
 [resource]
 script = ExtResource("3_35rm7")

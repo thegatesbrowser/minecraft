@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Runestone"
+config/name="Runestone world 2"
 config/tags=PackedStringArray("thegates")
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.3")
@@ -61,6 +61,7 @@ UISyncer="saves the ui data"
 Hotbar=""
 BackendClient=""
 PlayersUI="saves the players ui"
+spawnpoints=""
 
 [input]
 

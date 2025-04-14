@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemArmour" load_steps=3 format=3 uid="uid://bfu7ppixwys3b"]
+[gd_resource type="Resource" script_class="ItemArmour" load_steps=3 format=3 uid="uid://wg0sw6aavkhm"]
 
 [ext_resource type="Script" path="res://scripts/items/item_armour.gd" id="1_uy8wl"]
-[ext_resource type="Texture2D" uid="uid://dfq1xsxxwwqdp" path="res://assets/textures/items/iron_helment.tres" id="2_q8762"]
+[ext_resource type="Texture2D" uid="uid://cg14njep1bmdt" path="res://assets/textures/items/iron_helment.tres" id="2_q8762"]
 
 [resource]
 script = ExtResource("1_uy8wl")
