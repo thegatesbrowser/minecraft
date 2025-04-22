@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_rw87v")
 break_time = 0.4
-spawn_chance = 1.0
+spawn_chance = 0.3
 spawn_size = 1
 spawn_height = 0.0
 unique_name = &"iron"

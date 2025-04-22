@@ -120,6 +120,7 @@ func update_slot() -> void:
 		
 	if !Connection.is_server():
 		Globals.save_player_ui.emit() ## saves the players slots only
+		pass
 
 func used() -> void:
 	health -= Item_resource.degrade_rate

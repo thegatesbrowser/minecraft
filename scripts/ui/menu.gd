@@ -14,6 +14,7 @@ const SPLASH_ANIMATION_NAME = "Splash"
 func _enter_tree() -> void:
 	var backend = backend_scene.instantiate()
 	get_tree().root.call_deferred("add_child",backend)
+	pass
 	
 func _ready() -> void:
 	

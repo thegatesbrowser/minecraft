@@ -24,7 +24,7 @@ var last_ping_time: float
 
 
 func _ready() -> void:
-	plants = [voxel_blocky_type_library.get_model_index_default("tall_grass"),voxel_blocky_type_library.get_model_index_default("fern"),voxel_blocky_type_library.get_model_index_default("flower")]
+	plants = [voxel_blocky_type_library.get_model_index_default("tall_grass"),voxel_blocky_type_library.get_model_index_default("fern"),voxel_blocky_type_library.get_model_index_default("flower"),voxel_blocky_type_library.get_model_index_default("reeds")]
 
 	if is_multiplayer_authority() or Connection.is_server():
 		terrain = TerrainHelper.get_terrain_tool()
@@ -112,6 +112,7 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	
+		
 	if item.rotatable:
 		## make the block rotation towards the player when placed
 		voxel_tool.value = voxel_blocky_type_library.get_model_index_single_attribute(type,get_direction(player_pos,position))
@@ -119,7 +120,15 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 		voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
 	
 	voxel_tool.do_point(position)
+	
+	if item.utility.portal:
+		voxel_tool.set_voxel_metadata(position,"dave")
 
+@rpc("any_peer","call_local")
+func get_voxel_meta(position:Vector3):
+	var meta = voxel_tool.get_voxel_metadata(position)
+	get_parent().rpc_id(multiplayer.get_remote_sender_id(),"receive_meta",meta,voxel_tool.get_voxel(position))
+	
 
 @rpc("reliable", "authority")
 func _break_block_server(position: Vector3) -> void:

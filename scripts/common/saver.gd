@@ -8,7 +8,8 @@ var passcode = "dqaduqiqbnmn1863841hjb"
 @export var ItemManager:Node
 
 func _ready() -> void:
-	Globals.save_player_ui.connect(save_player_ui)
+	#Globals.save_player_ui.connect(save_player_ui)
+	Globals.send_change.connect(save_slot)
 	if multiplayer.is_server():
 		load_inventory()
 		
@@ -89,20 +90,24 @@ func load_inventory():
 		UI_saver.server_ui_info = node_data["server_ui_info"]
 		
 func save_player_ui():
-	for ui in get_tree().get_nodes_in_group("PlayersUI"):
-		if ui.has_method("save"):
-			var ui_data = ui.call("save")
-			var data = JSON.stringify(ui_data)
-			var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-			Globals.send_data.emit({"name" : BackendClient.username , "change_name" : ui.name,"change" : data})
-			await get_tree().create_timer(2.0).timeout
-			#for i in ui_data:
+	#for ui in get_tree().get_nodes_in_group("PlayersUI"):
+		#if ui.has_method("save"):
+			#var ui_data = ui.call("save")
+			#var data = JSON.stringify(ui_data)
+			#var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+			##Globals.send_data.emit({"name" : BackendClient.username , "change_name" : ui.name,"change" : data})
+			#await get_tree().create_timer(2.0).timeout
+			##for i in ui_data:
 				#var item = ui_data[i].item_path
 				#if item == "":
 					#continue
-				#else:
-					#save_item(load(item))
-					#
+	pass
+func save_slot(index: int, item_path: String, amount: int,parent: String,health: int, rot:int):
+	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+	Globals.send_change.emit(index,item_path,amount,parent,health,rot,BackendClient.username)
+					
+					
+					
 func save_item(item:ItemBase, _buffer=[], size:Vector2 = Vector2.ZERO):
 	var data := {}
 	var item_data = inst_to_dict(item)

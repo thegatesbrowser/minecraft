@@ -42,14 +42,14 @@ signal removed_spawnpoint(id:Vector3)
 # portals
 signal open_portal_url(id:Vector3)
 signal create_portal(id:Vector3)
-signal enter_portal(id:Vector3)
+signal enter_portal(url:String)
 signal add_portal_url(id:Vector3,url:String)
 signal remove_portal_data(id:Vector3)
 
 # ui
 signal new_ui(position:Vector3,instance_path:String)
 signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,health: int)
-signal save_player_ui
+signal save_player_ui(index: int, item_path: String, amount: int,parent: String,health: int)
 signal remove_ui(position:Vector3)
 var last_clicked_slot:Node
 var selected_slot:Slot ## the slot that is selected in the hotbar
@@ -75,6 +75,7 @@ signal stop_hand_ani()
 # Backend
 var username:String
 signal send_data(data:Dictionary)
+signal send_change(index: int, item_path: String, amount: int,parent: String,health: int, rot:int)
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)

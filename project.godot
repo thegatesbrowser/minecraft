@@ -26,7 +26,6 @@ FpsCounter="*res://addons/fps_counter/FpsCounter.tscn"
 GlobalAnimation="*res://scripts/common/animation.gd"
 TerrainHelper="*res://scripts/common/terrain_helper.gd"
 _CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
-BackendServer="*res://scripts/multiplayer/backend_server.gd"
 SettingsManager="*res://SettingsManager.gd"
 
 [debug]
@@ -260,6 +259,10 @@ Crouch={
 ]
 }
 
+[memory]
+
+limits/message_queue/max_size_mb=60
+
 [network]
 
 limits/webrtc/max_channel_in_buffer_kb=200
@@ -274,3 +277,7 @@ anti_aliasing/quality/use_taa=true
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 environment/default_environment="res://Assets/default_env.tres"
+
+[voxel]
+
+threads/count/minimum=2

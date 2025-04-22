@@ -33,6 +33,8 @@ func _process(delta):
 			var dataString = packet.get_string_from_utf8()
 			var data = JSON.parse_string(dataString)
 			#print(data)
+			if data.message == Util.Message.update_change:
+				update_change(data)
 			
 			if data.message == Util.Message.update:
 				update(data)
@@ -64,6 +66,29 @@ func peer_disconnected(id):
 	users.erase(id)
 	pass
 	
+func update_change(data):
+	var new_data = JSON.parse_string(data)
+		
+	var index:int = new_data.index
+	var item_path:String = new_data.item_path
+	var amount:int =  new_data.amount
+	var parent:String =  new_data.parent
+	var health:int = new_data.health
+	var rot:int = new_data.rot
+	var username = new_data.name
+	
+	var userData = dao.GetUserFromDB(username)
+	
+	userData.Inventory[index] = {
+		"item_path":index,
+		"amount":amount,
+		"parent":parent,
+		"health":health,
+		"rot":rot,
+	}
+	#{"name" : BackendClient.username , "change_name" : ui.name,"change" : data}
+	update({"name":username,"change_name":"Inventory","change":userData})
+		
 func update(data):
 	dao.change_data(data.data.name, data.data.change_name, data.data.change)
 	

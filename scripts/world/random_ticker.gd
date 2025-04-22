@@ -1,6 +1,5 @@
 # Implements random cellular automata behavior of the terrain,
 # such as growth of grass and crops, fire etc.
-
 extends Node
 
 const VoxelLibraryResource = preload("res://resources/voxel_block_library.tres")
@@ -170,3 +169,11 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 				
 		if found_burnable == false:
 			_voxel_tool.set_voxel(pos, VoxelLibraryResource.get_model_index_default("air"))
+	
+	if value == VoxelLibraryResource.get_model_index_default("creature_spawner"):
+		#print("creature")
+		if randf() <= .8:
+			var creature = _voxel_tool.get_voxel_metadata(pos)
+			#print("creature ", creature)
+			Globals.spawn_creature.emit(pos + Vector3i(0,1,0),creature)
+			_voxel_tool.do_point(pos)

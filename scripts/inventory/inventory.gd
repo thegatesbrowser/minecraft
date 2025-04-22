@@ -31,7 +31,7 @@ func _ready() -> void:
 		if !BackendClient.playerdata.is_empty():
 			if BackendClient.playerdata.Inventory != null:
 				update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
-				
+				#pass
 	for i in items_collection.get_children():
 		i.item_changed.connect(change)
 		
@@ -117,7 +117,7 @@ func _on_sort_pressed() -> void:
 
 func _on_add_random_item_pressed() -> void:
 	#var item = items_library.items_array.pick_random()
-	spawn_item(load("res://resources/items/cooked_meat.tres"))
+	spawn_item(load("res://resources/items/portal.tres"))
 
 
 func check_amount_of_item(item:StringName) -> int:
@@ -193,7 +193,8 @@ func open(server_details:= {}):
 func change(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	if sync:
 		Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
-
+		Globals.send_change.emit(index,item_path,amount,parent,health,rot)
+		
 @rpc("any_peer","call_local")
 func update_client(info):
 	for i in info:

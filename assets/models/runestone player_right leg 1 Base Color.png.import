@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4qc2xe8j6hkv"
-path="res://.godot/imported/reeds.png-e75c929037abbbce741d8dcd67031cea.ctex"
+uid="uid://ftfi0mih6i5"
+path.s3tc="res://.godot/imported/runestone player_right leg 1 Base Color.png-c676c1ddbd78364ab4efce65e2e59762.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "514c5fc49ccd8e720e42ccfc2c603b7e"
 }
 
 [deps]
 
-source_file="res://assets/textures/blocks/reeds.png"
-dest_files=["res://.godot/imported/reeds.png-e75c929037abbbce741d8dcd67031cea.ctex"]
+source_file="res://assets/models/runestone player_right leg 1 Base Color.png"
+dest_files=["res://.godot/imported/runestone player_right leg 1 Base Color.png-c676c1ddbd78364ab4efce65e2e59762.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

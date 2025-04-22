@@ -3,8 +3,8 @@ extends Node
 @export var debug_ui:Control
 @export var login_window = preload("res://scenes/ui/login_window.tscn")
 @export var PlayerInfo:RichTextLabel
-@export var address:String = "ws://127.0.0.1:8819"
-#@export var address:String = "ws://188.245.188.59:8819"
+#@export var address:String = "ws://127.0.0.1:8819"
+@export var address:String = "ws://188.245.188.59:8819"
 
 var LoginWindow
 var peer = WebSocketMultiplayerPeer.new()
@@ -22,7 +22,8 @@ func _ready():
 	Console.add_command("saveD", self, 'saveD')\
 		.set_description("shows the saved player data from the backend).")\
 		.register()
-	Globals.send_data.connect(update)
+	#Globals.send_data.connect(update)
+	Globals.send_change.connect(update_change)
 	multiplayer.connected_to_server.connect(RTCServerConnected)
 	multiplayer.peer_connected.connect(RTCPeerConnected)
 	multiplayer.peer_disconnected.connect(RTCPeerDisconnected)
@@ -138,8 +139,32 @@ func _process(delta):
 			if data.message == Util.Message.failedToLogin:
 				LoginWindow.SetSystemErrorLabel(data.text)
 	pass
-
+func update_change(index: int, item_path: String, amount: int,parent: String,health: int, rot:int, username:String):
+	#var data := {}
+	#data[index] = {
+		#"item_path":item_path,
+		#"amount":amount,
+		#"parent":parent,
+		#"health":health,
+		#"rot":rot,
+		#"name":username
+		#}
+	#
+	#var message = {
+		#"peer" : id,
+		#"orgPeer" : self.id,
+		#"message" : Util.Message.update_change,
+		#"data": data,
+		#"Lobby": lobbyValue
+	#}
+	#peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	pass
+	#
 func update(data:Dictionary):
+	call_deferred("_update",data)
+	
+	
+func _update(data:Dictionary):
 	var message = {
 		"peer" : id,
 		"orgPeer" : self.id,

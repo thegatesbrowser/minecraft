@@ -3,10 +3,13 @@ extends Node
 @export var break_part:GPUParticles3D
 @export var terrain_interaction:Node
 @export var items_library: ItemsLibrary
+@export var voxel_library = preload("res://resources/voxel_block_library.tres")
 @export var floor_ray:RayCast3D
 @export var drop_item_scene:PackedScene
 @export var hand_ani:AnimationPlayer
 
+var terrian:VoxelTerrain
+var voxel_tool:VoxelTool
 var eat_timer: Timer
 var timer: Timer
 @export var camera: Camera3D
@@ -15,6 +18,8 @@ func _ready():
 	Globals.drop_item.connect(drop)
 	items_library.init_items()
 	terrain_interaction.enable()
+	voxel_tool = TerrainHelper.get_terrain_tool().get_voxel_tool()
+	
 	timer = Timer.new()
 	timer.one_shot = true
 	add_child(timer)
@@ -139,7 +144,8 @@ func interaction() -> void:
 			print_debug("spawn point set ",get_parent().spawn_position)
 		
 		if item.utility.portal:
-			Globals.enter_portal.emit(terrain_interaction.last_hit.position)
+			terrain_interaction.rpc_id(1,"get_voxel_meta",terrain_interaction.last_hit.position)
+			#
 
 func drop(owner_id: int ,item: ItemBase ,amount := 1) -> void:
 	print("drop")
@@ -155,3 +161,10 @@ func drop(owner_id: int ,item: ItemBase ,amount := 1) -> void:
 @rpc("any_peer","call_local")
 func sync_drop(item_path: String, pos: Vector3 ,amount := 1) -> void:
 	Globals.add_object.emit([1,pos,"res://scenes/items/dropped_item.tscn",item_path,amount])
+
+
+@rpc("any_peer","call_local")
+func receive_meta(meta_data, type:int):
+	print(meta_data)
+	if type == voxel_library.get_model_index_default("portal"):
+		Globals.enter_portal.emit(meta_data)

@@ -45,6 +45,8 @@ var fall_time:float = 0.0
 @export var camera_shake:Node
 @export var fall_timer:Timer
 @export var floor_ray:RayCast3D
+@export var skeleton_3d: Skeleton3D
+
 
 const SENSITIVITY = 0.004
 
@@ -98,7 +100,7 @@ var hunger: float = 0
 @export var max_health: int = 3
 var health
 
-@onready var minecraft_player: Node3D = $RotationRoot/minecraft_player # TP
+@onready var minecraft_player: Node3D = $"RotationRoot/runestone player" # TP
 #@onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp # FP
 
 var spawn_point_set := {}
@@ -156,15 +158,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotation_root.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-
+	
+	var bone_rot = camera.rotation.x / 100
+	var head = skeleton_3d.find_bone("head")
+	var t = skeleton_3d.get_bone_pose(head)
+	t = t.rotated(Vector3(0.0, 1.0, 0.0),bone_rot)
+	skeleton_3d.set_bone_pose(head,t)
+	
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if found_ground == false:
-		var ClientServer = get_tree().get_first_node_in_group("BackendClient")	
+		var ClientServer = get_tree().get_first_node_in_group("BackendClient")
 		if ClientServer.playerdata.is_empty() == false:
 			if ClientServer.playerdata.Position_x != null:
 				global_position = Vector3(ClientServer.playerdata.Position_x,ClientServer.playerdata.Position_y,ClientServer.playerdata.Position_z) + Vector3(0,1,0)
+		pass
 		if floor_ray.is_colliding():
 			#Globals.paused = false
 			global_position = floor_ray.get_collision_point() + Vector3(0,1,0)
@@ -269,7 +278,7 @@ func interpolate_client(delta: float) -> void:
 		if (_position - position).length() > 1.0 and _velocity.is_zero_approx():
 			position = _position # Fix misplacement
 		
-		if ANI.current_animation != "walk": ANI.play("walk")
+		if ANI.current_animation != "waling": ANI.play("waling")
 	else:
 		# Interpolate between position_before_sync and _position
 		# and add to ongoing movement to compensate misplacement
@@ -465,8 +474,8 @@ func normal_movement(delta:float):
 	_move_direction = (rotation_root.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
 		if _move_direction:
-			if ANI.current_animation != "walk":
-				ANI.play("walk")
+			if ANI.current_animation != "waling":
+				ANI.play("waling")
 			if hand_ani.current_animation != "attack":
 				if hand_ani.current_animation != "eat":
 					if hand_ani.current_animation != "walk":
@@ -515,8 +524,8 @@ func flying_movement(delta:float):
 		velocity.y = lerp(velocity.y,0.0,.1)
 		
 	if _move_direction:
-		if ANI.current_animation != "walk":
-				ANI.play("walk")
+		if ANI.current_animation != "waling":
+				ANI.play("waling")
 		velocity.x = _move_direction.x * speed
 		velocity.z = _move_direction.z * speed
 	else:
@@ -596,8 +605,8 @@ func swimming_movement(delta:float) -> void:
 		velocity.y = lerp(velocity.y,0.0,.1)
 		
 	if _move_direction:
-		if ANI.current_animation != "walk":
-				ANI.play("walk")
+		if ANI.current_animation != "waling":
+				ANI.play("waling")
 		velocity.x = _move_direction.x * SWIMMING_SPEED
 		velocity.z = _move_direction.z * SWIMMING_SPEED
 	else:
