@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b76lg308pe6q0"]
+[gd_scene load_steps=3 format=3 uid="uid://b76lg308pe6q0"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/backend_client.gd" id="1_vp6qf"]
+[ext_resource type="PackedScene" uid="uid://bjlvavqd1x1no" path="res://scenes/backend_server.tscn" id="2_arord"]
 
 [node name="Backend" type="Node"]
 
@@ -49,3 +50,5 @@ layout_mode = 0
 offset_right = 98.0
 offset_bottom = 31.0
 text = "server start"
+
+[node name="BackendServer" parent="." instance=ExtResource("2_arord")]

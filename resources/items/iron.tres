@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://m4j2psp0aswb"]
 
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_nc0j2"]
-[ext_resource type="Texture2D" uid="uid://dt263alrd18sy" path="res://assets/textures/items/iron_ingot.png" id="2_ck0h4"]
+[ext_resource type="Texture2D" uid="uid://btpo7f8axkpl" path="res://assets/textures/blocks/iron.png" id="2_3mbax"]
 
 [resource]
 script = ExtResource("1_nc0j2")
 unique_name = &"iron"
-texture = ExtResource("2_ck0h4")
+texture = ExtResource("2_3mbax")
 max_stack = 64
+rotatable = false
 forgable = false
 forge_time = 2.0

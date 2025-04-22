@@ -42,14 +42,14 @@ signal removed_spawnpoint(id:Vector3)
 # portals
 signal open_portal_url(id:Vector3)
 signal create_portal(id:Vector3)
-signal enter_portal(id:Vector3)
+signal enter_portal(url:String)
 signal add_portal_url(id:Vector3,url:String)
 signal remove_portal_data(id:Vector3)
 
 # ui
 signal new_ui(position:Vector3,instance_path:String)
 signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,health: int)
-signal save_player_ui
+signal save_player_ui(index: int, item_path: String, amount: int,parent: String,health: int)
 signal remove_ui(position:Vector3)
 var last_clicked_slot:Node
 var selected_slot:Slot ## the slot that is selected in the hotbar
@@ -62,15 +62,20 @@ signal spawn_item_inventory(item)
 signal check_amount_of_item(item)
 signal remove_item(item,amount)
 signal hotbar_slot_clicked(slot)
-signal add_item_to_hand(item)
+signal add_item_to_hand(item,scene:PackedScene)
 signal remove_item_in_hand
 signal craftable_hovered(craftable,node)
 signal craftable_unhovered
 signal drop_item(item)
 
+signal start_hand_ani(ani_name)
+signal stop_hand_ani()
+
+@onready var waterfog = preload("res://assets/other/waterfog.tscn")
 # Backend
 var username:String
 signal send_data(data:Dictionary)
+signal send_change(index: int, item_path: String, amount: int,parent: String,health: int, rot:int)
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
@@ -193,3 +198,12 @@ func slot_clicked(slot:Slot):
 
 func Spawn_creature(pos,creature):
 	spawn_creature.emit(pos,creature)
+
+func Add_water_fog(pos):
+	sync_water.rpc(pos)
+
+@rpc("any_peer","call_local")
+func sync_water(pos):
+	var water = waterfog.instantiate()
+	water.position = pos
+	get_tree().get_first_node_in_group("Game").call_deferred("add_child",water)

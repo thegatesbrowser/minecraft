@@ -1,15 +1,62 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxmsmlihr3hyj"]
+[gd_scene load_steps=6 format=4 uid="uid://iotra8ignv7h"]
 
-[ext_resource type="Script" path="res://scripts/other/utilities_base.gd" id="1_jcfkw"]
-[ext_resource type="ArrayMesh" uid="uid://bbiqx8j8ggoif" path="res://assets/chest.mesh" id="3_q4oap"]
+[ext_resource type="Texture2D" uid="uid://dvuwcnfhtc5mc" path="res://assets/models/chest_normal.png" id="1_h3ypr"]
+
+[sub_resource type="GDScript" id="GDScript_v1hkb"]
+script/source = "extends StaticBody3D
+
+@export var resource: Utilities
+
+@onready var body: MeshInstance3D = $body
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+@onready var ui: Control = $UI
+
+var mesh: MeshInstance3D
+var inventory
+
+
+func _ready() -> void:
+	if resource:
+		body.mesh = resource.mesh
+		collision_shape_3d.shape = body.mesh.create_trimesh_shape()
+		if resource.has_inventory:
+			Globals.add_subinventory.emit(self)
+
+
+func interact() -> void:
+	if resource.has_inventory:
+		Globals.open_inventory.emit(self)
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_224ok"]
+resource_name = "Material.001"
+albedo_texture = ExtResource("1_h3ypr")
+metallic = 0.5
+texture_filter = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_5wkf7"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1, 1, 1),
+"attribute_data": PackedByteArray("jG80sIxvWO9oMDSwaDBY73BwoO9wcGCwr6+g76+vYLAQsQvwELGJsZPvC/CT74mx9DAesGBvHrD0MIruYG+K7jVw1+81cBCw/K/X7/yvELBDcSfvQ3EqsUCvJ+9Aryqx"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcA"),
+"material": SubResource("StandardMaterial3D_224ok"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("//8AAAAAVNUAAAAAAABU1f//AAD//1TVAAAAAP//VNUAAAAA//8AgAAA/////wCA//8AAP//AID///////8AgP//AAD///+//////////7///wAAAAD/v/////8AAP+/AAD//wAA/7//////AAD/vwAA//////+//////////78AAAAAAAD/vwAA//8AAP+/AAAAAP///78AAP//////v///AAAAAP///////wAA//8AAAAAAAD//wAA//8AAP//VFVUVVRVVFVUVVRVVFVUVf9/////f////3////9/////fwAA/38AAP9/AAD/fwAA////f////3////9/////f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_o23sf"]
 
 [node name="utilities base" type="StaticBody3D"]
-script = ExtResource("1_jcfkw")
+script = SubResource("GDScript_v1hkb")
 
 [node name="body" type="MeshInstance3D" parent="."]
-mesh = ExtResource("3_q4oap")
+mesh = SubResource("ArrayMesh_5wkf7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConcavePolygonShape3D_o23sf")

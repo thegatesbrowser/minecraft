@@ -18,4 +18,5 @@ enum Message{
 	playerinfo,
 	failedToLogin,
 	update,
+	update_change
 }

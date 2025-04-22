@@ -20,6 +20,7 @@ func _physics_process(delta: float) -> void:
 						i.queue_free()
 		
 		if visible:
+			Globals.save_player_ui.emit()
 			GlobalAnimation._tween(self,"bounce_in",.2)
 			Globals.paused = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -30,6 +31,7 @@ func _physics_process(delta: float) -> void:
 
 #
 func open_inventory(id:Vector3) -> void:
+	Globals.save_player_ui.emit()
 	for i in h_box_container.get_children():
 		if "id" in i:
 			if i.id == id:

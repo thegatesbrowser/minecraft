@@ -1,23 +1,27 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=9 format=3 uid="uid://dg2gha7cp48ki"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=10 format=3 uid="uid://dg2gha7cp48ki"]
 
-[ext_resource type="PackedScene" uid="uid://dsjh1sn3y3flk" path="res://assets/models/Tools/Stone/axe_stone.tscn" id="1_rnakm"]
+[ext_resource type="PackedScene" uid="uid://dsjh1sn3y3flk" path="res://assets/models/tools/Stone/axe_stone.tscn" id="1_rnakm"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_cqyaj"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="3_pc2pr"]
 [ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="4_se7tg"]
 [ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="5_fonj7"]
 [ext_resource type="Resource" uid="uid://cogc5ac14y0ad" path="res://resources/items/log_birch.tres" id="6_ysb6d"]
 [ext_resource type="Resource" uid="uid://d26i62gur1o23" path="res://resources/items/log_oak.tres" id="7_tbqnj"]
-[ext_resource type="Texture2D" uid="uid://b06v0mkdwbv6a" path="res://assets/textures/items/Stone_Axe_JE2_BE2.webp" id="8_5nofn"]
+[ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="8_djlpr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0u6p7"]
+atlas = ExtResource("8_djlpr")
+region = Rect2(80, 0, 16, 16)
 
 [resource]
 script = ExtResource("2_cqyaj")
 suitable_objects = Array[ExtResource("3_pc2pr")]([ExtResource("4_se7tg"), ExtResource("5_fonj7"), ExtResource("6_ysb6d"), ExtResource("7_tbqnj")])
-breaking_efficiency = 0.6
+breaking_efficiency = 0.75
 damage = 2
-max_health = 5.0
+max_health = 10.0
 degrade_rate = 0.1
 unique_name = &""
-texture = ExtResource("8_5nofn")
+texture = SubResource("AtlasTexture_0u6p7")
 max_stack = 1
 holdable_mesh = ExtResource("1_rnakm")
 rotatable = false

@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ItemWeapon" load_steps=4 format=3 uid="uid://c2c8qekfermsb"]
 
 [ext_resource type="Script" path="res://scripts/items/item_weapon.gd" id="1_gvnb6"]
-[ext_resource type="Texture2D" uid="uid://cn1d02yli3ih4" path="res://assets/textures/items/Bow_JE2_BE1.webp" id="2_errgo"]
-[ext_resource type="PackedScene" uid="uid://qyw35mgovdwg" path="res://assets/models/tools/Other/bow.tscn" id="3_udrkq"]
+[ext_resource type="Texture2D" uid="uid://cs0w8nddhqtjw" path="res://assets/textures/items/bow.tres" id="2_n5hb7"]
+[ext_resource type="PackedScene" uid="uid://d2ulg3076tk5l" path="res://assets/models/tools/Other/bow.tscn" id="3_udrkq"]
 
 [resource]
 script = ExtResource("1_gvnb6")
@@ -13,7 +13,8 @@ ammo_name = &"arrow"
 shoots = true
 fire_rate = 0.3
 unique_name = &"bow"
-texture = ExtResource("2_errgo")
+texture = ExtResource("2_n5hb7")
 max_stack = 1
+rotatable = false
 forgable = false
 forge_time = 2.0

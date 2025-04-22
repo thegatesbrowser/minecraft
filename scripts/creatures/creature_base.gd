@@ -33,6 +33,7 @@ var walk_time := 10.0
 @onready var player_view_distance: float = 128 * sqrt(2)
 
 @export var target_reached: bool = false
+@export var _synchronizer:MultiplayerSynchronizer
 
 var health
 var tame_step:int = 0
@@ -61,6 +62,10 @@ var is_despawning: bool = false
 func _ready() -> void:
 	if Connection.is_server():
 		terrain = TerrainHelper.get_terrain_tool()
+	else:
+		#_synchronizer.delta_synchronized.connect(on_synchronized)
+		#_synchronizer.synchronized.connect(on_synchronized)
+		pass
 	
 	health = creature_resource.max_health
 	
@@ -105,7 +110,7 @@ func change_state(state: String) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not multiplayer.is_server():
+	if Connection.is_server() == false:
 		interpolate_client(delta)
 		return
 		
@@ -114,8 +119,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		ground_movement(delta)
 	
-	_position = position
-	_rotation = rotation_root.rotation
+	set_sync_properties()
 
 
 func _process(_delta: float) -> void:
@@ -183,7 +187,7 @@ func get_random_pos_in_sphere(radius : float) -> Vector3:
 
 
 func _on_move_timeout() -> void:
-	if !multiplayer.is_server(): return
+	if Connection.is_server() == false: return
 	
 	if animal_owner == null:
 		walk_time = 10
@@ -191,10 +195,11 @@ func _on_move_timeout() -> void:
 		target_position = sphere_point + global_position
 		target_reached = false
 	else:
-		walk_time = 1
+		walk_time = 10
 		target_position = animal_owner.global_position
 		#print(animal_owner.global_position)
 		target_reached = false
+		
 	walk_timer.wait_time = walk_time
 	change_state("walking")
 

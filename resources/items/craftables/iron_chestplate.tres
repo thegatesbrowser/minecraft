@@ -1,14 +1,18 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://jkmqicb34cig"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://jkmqicb34cig"]
 
 [ext_resource type="Texture2D" uid="uid://dt263alrd18sy" path="res://assets/textures/items/iron_ingot.png" id="1_8bqma"]
 [ext_resource type="Resource" uid="uid://dsltjvratfyrg" path="res://resources/items/iron_chestplate.tres" id="2_bnpqp"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_fryjm"]
-[ext_resource type="Texture2D" uid="uid://dp2u2uccah4f8" path="res://assets/textures/items/leather_chestplate.png" id="4_nwftp"]
+[ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/iron_armour.png" id="4_h00a4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqlgr"]
+atlas = ExtResource("4_h00a4")
+region = Rect2(16, 1.45519e-11, 16, 16)
 
 [resource]
 script = ExtResource("3_fryjm")
-Name = "iron legging"
-texture = ExtResource("4_nwftp")
+Name = "iron chest plate"
+texture = SubResource("AtlasTexture_gqlgr")
 output_item = ExtResource("2_bnpqp")
 output_amount = 1
 items_needed = {

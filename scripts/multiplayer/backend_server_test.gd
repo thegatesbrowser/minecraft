@@ -27,7 +27,7 @@ func _process(delta):
 		if packet != null:
 			var dataString = packet.get_string_from_utf8()
 			var data = JSON.parse_string(dataString)
-			print(data)
+			#print(data)
 			
 			if data.message ==  Util.Message.lobby:
 				JoinLobby(data)

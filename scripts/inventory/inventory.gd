@@ -22,13 +22,6 @@ var inventory = []
 
 
 func _ready() -> void:
-	for i in items_collection.get_children():
-		i.item_changed.connect(change)
-		
-	Globals.spawn_item_inventory.connect(spawn_item)
-	Globals.remove_item.connect(remove_item)
-	Globals.check_amount_of_item.connect(check_amount_of_item)
-	
 	if is_in_group("Main Inventory"):
 		Console.add_command("item", self, '_on_add_random_item_pressed')\
 		.set_description("spawns random item).")\
@@ -38,6 +31,15 @@ func _ready() -> void:
 		if !BackendClient.playerdata.is_empty():
 			if BackendClient.playerdata.Inventory != null:
 				update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
+				#pass
+	for i in items_collection.get_children():
+		i.item_changed.connect(change)
+		
+	Globals.spawn_item_inventory.connect(spawn_item)
+	Globals.remove_item.connect(remove_item)
+	Globals.check_amount_of_item.connect(check_amount_of_item)
+	
+	
 func _process(_delta: float) -> void:
 	
 	check_slots()
@@ -114,8 +116,8 @@ func _on_sort_pressed() -> void:
 
 
 func _on_add_random_item_pressed() -> void:
-	var item = items_library.items_array.pick_random()
-	spawn_item(item)
+	#var item = items_library.items_array.pick_random()
+	spawn_item(load("res://resources/items/portal.tres"))
 
 
 func check_amount_of_item(item:StringName) -> int:
@@ -191,7 +193,8 @@ func open(server_details:= {}):
 func change(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	if sync:
 		Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
-
+		Globals.send_change.emit(index,item_path,amount,parent,health,rot)
+		
 @rpc("any_peer","call_local")
 func update_client(info):
 	for i in info:

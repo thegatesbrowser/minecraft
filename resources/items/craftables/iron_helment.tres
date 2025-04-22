@@ -1,20 +1,24 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://dpkc8k2a64whr"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://dpkc8k2a64whr"]
 
-[ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_21842"]
-[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/forge.tres" id="2_a6dvy"]
+[ext_resource type="Texture2D" uid="uid://dt263alrd18sy" path="res://assets/textures/items/iron_ingot.png" id="1_snlfw"]
+[ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="2_0stt5"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_iicld"]
-[ext_resource type="Texture2D" uid="uid://rbrqt8yjuvpt" path="res://assets/textures/items/furnace_front_off.png" id="4_hr2og"]
+[ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/iron_armour.png" id="4_ti7rf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cbe1"]
+atlas = ExtResource("4_ti7rf")
+region = Rect2(0, 0, 16, 16)
 
 [resource]
 script = ExtResource("3_iicld")
-Name = "forge"
-texture = ExtResource("4_hr2og")
-output_item = ExtResource("2_a6dvy")
+Name = "iron helment"
+texture = SubResource("AtlasTexture_8cbe1")
+output_item = ExtResource("2_0stt5")
 output_amount = 1
 items_needed = {
 1: {
 "amount": 8,
-"name": "stone",
-"texture": ExtResource("1_21842")
+"name": "iron",
+"texture": ExtResource("1_snlfw")
 }
 }

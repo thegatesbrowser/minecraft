@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://db0xmf22abm26"
+path="res://.godot/imported/water_top.obj-48c4cb9db3e0491748ce40b885df31d6.mesh"
+
+[deps]
+
+files=["res://.godot/imported/water_top.obj-48c4cb9db3e0491748ce40b885df31d6.mesh"]
+
+source_file="res://assets/models/water_top.obj"
+dest_files=["res://.godot/imported/water_top.obj-48c4cb9db3e0491748ce40b885df31d6.mesh", "res://.godot/imported/water_top.obj-48c4cb9db3e0491748ce40b885df31d6.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

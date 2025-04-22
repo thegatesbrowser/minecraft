@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://b7r7uxwty6dkv"]
 
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_fxstq"]
-[ext_resource type="Texture2D" uid="uid://dp00nanlqv0e3" path="res://assets/textures/items/Arrow_JE2_BE1.webp" id="2_q462q"]
+[ext_resource type="Texture2D" uid="uid://qy6bwyrphdnd" path="res://assets/textures/items/arrow.png" id="2_hu4y4"]
 
 [resource]
 script = ExtResource("1_fxstq")
 unique_name = &"arrow"
-texture = ExtResource("2_q462q")
+texture = ExtResource("2_hu4y4")
 max_stack = 64
+rotatable = false
 forgable = false
 forge_time = 2.0

@@ -18,6 +18,7 @@ func _ready() -> void:
 
 
 func spawn_creature(pos: Vector3, creature:Creature) -> void:
+	print(creature, pos)
 	if not multiplayer.is_server(): return
 	
 	var spawn_position = pos

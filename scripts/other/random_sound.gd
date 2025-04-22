@@ -7,4 +7,5 @@ var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _on_timer_timeout() -> void:
 	if rng.randf() < chance:
-		play()
+		if playing == false:
+			play()

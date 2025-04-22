@@ -22,7 +22,8 @@ func _ready():
 	Console.add_command("saveD", self, 'saveD')\
 		.set_description("shows the saved player data from the backend).")\
 		.register()
-	Globals.send_data.connect(update)
+	#Globals.send_data.connect(update)
+	Globals.send_change.connect(update_change)
 	multiplayer.connected_to_server.connect(RTCServerConnected)
 	multiplayer.peer_connected.connect(RTCPeerConnected)
 	multiplayer.peer_disconnected.connect(RTCPeerDisconnected)
@@ -95,7 +96,7 @@ func _process(delta):
 			var dataString = packet.get_string_from_utf8()
 			var data = JSON.parse_string(dataString)
 			
-			print(data)
+			#print(data)
 			
 			if data.message == Util.Message.id:
 				id = data.id
@@ -123,7 +124,7 @@ func _process(delta):
 #				$LobbyBrowser.InstanceLobbyInfo(data.name,data.userCount)
 			if data.message == Util.Message.playerinfo:
 				playerdata = data
-				print(playerdata)
+				#print(playerdata)
 				PlayerInfo.text = ""
 				for i in data:
 					var variable = data[i]
@@ -132,13 +133,38 @@ func _process(delta):
 				#PlayerInfo.text = data.username + "\n"+ str(data.id)  + "\n" + str(data.health)
 				username = data.username
 				Globals.username = username
-				LoginWindow.queue_free()
+				if LoginWindow != null:
+					LoginWindow.queue_free()
 				
 			if data.message == Util.Message.failedToLogin:
 				LoginWindow.SetSystemErrorLabel(data.text)
 	pass
-
+func update_change(index: int, item_path: String, amount: int,parent: String,health: int, rot:int, username:String):
+	#var data := {}
+	#data[index] = {
+		#"item_path":item_path,
+		#"amount":amount,
+		#"parent":parent,
+		#"health":health,
+		#"rot":rot,
+		#"name":username
+		#}
+	#
+	#var message = {
+		#"peer" : id,
+		#"orgPeer" : self.id,
+		#"message" : Util.Message.update_change,
+		#"data": data,
+		#"Lobby": lobbyValue
+	#}
+	#peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	pass
+	#
 func update(data:Dictionary):
+	call_deferred("_update",data)
+	
+	
+func _update(data:Dictionary):
 	var message = {
 		"peer" : id,
 		"orgPeer" : self.id,
