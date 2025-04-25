@@ -89,6 +89,7 @@ func _ready() -> void:
 	change_state("idle")
 
 
+
 func change_state(state: String) -> void:
 	match state:
 		"idle":
@@ -107,7 +108,6 @@ func change_state(state: String) -> void:
 				#ani.play(creature_resource.walk_ani_name)
 			current_state = 3
 			speed = creature_resource.speed
-
 
 func _physics_process(delta: float) -> void:
 	if Connection.is_server() == false:
@@ -167,41 +167,24 @@ func try_despawn() -> void:
 	queue_free()
 
 
-func get_random_pos_in_sphere(radius : float) -> Vector3:
-	var x1= randi_range(-1,1)
-	var x2= randi_range(-1,1)
-	
-	while x1*x1 + x2*x2 >=1:
-		x1= randi_range(-1,1)
-		x2= randi_range(-1,1)
-		
-	var random_pos_on_unit_sphere = Vector3 (
-		1 -2 * (x1*x1 + x2*x2),
-		0,
-		1 -2 * (x1*x1 + x2*x2))
-		
-	random_pos_on_unit_sphere.x *= randi_range(-radius, radius)
-	random_pos_on_unit_sphere.z *= randi_range(-radius, radius)
-	
-	return random_pos_on_unit_sphere
 
-
-func _on_move_timeout() -> void:
-	if Connection.is_server() == false: return
-	
-	if animal_owner == null:
-		walk_time = 10
-		var sphere_point = get_random_pos_in_sphere(walk_distance)
-		target_position = sphere_point + global_position
-		target_reached = false
-	else:
-		walk_time = 10
-		target_position = animal_owner.global_position
-		#print(animal_owner.global_position)
-		target_reached = false
-		
-	walk_timer.wait_time = walk_time
-	change_state("walking")
+#
+#func _on_move_timeout() -> void:
+	#if Connection.is_server() == false: return
+	#
+	#if animal_owner == null:
+		#walk_time = 10
+		#var sphere_point = get_random_pos_in_sphere(walk_distance)
+		#target_position = sphere_point + global_position
+		#target_reached = false
+	#else:
+		#walk_time = 10
+		#target_position = animal_owner.global_position
+		##print(animal_owner.global_position)
+		#target_reached = false
+		#
+	#walk_timer.wait_time = walk_time
+	#change_state("walking")
 
 
 func hit(damage:int = 1):
@@ -284,32 +267,33 @@ func interpolate_client(delta: float) -> void:
 
 
 func ground_movement(delta:float):
+	#pass
 	if not is_on_floor():
 		velocity.y -= 30 * delta
-	
-	var new_velocity: Vector3
-	if !target_reached:
-		$target.global_position = target_position
-		var current_pos = global_position
-		var new_velocity_x = (target_position.x - current_pos.x)
-		var new_velocity_z = (target_position.z - current_pos.z)
-		new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
-	else:
-		new_velocity = Vector3(0,0,0)
-	
-	velocity = velocity.move_toward(new_velocity, .25)
-	
-	if target_position != null:
-		if !target_reached:
-			if guide.global_position != target_position:
-				guide.look_at(target_position)
-	
-	rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
-	
+	#
+	#var new_velocity: Vector3
+	#if !target_reached:
+		#$target.global_position = target_position
+		#var current_pos = global_position
+		#var new_velocity_x = (target_position.x - current_pos.x)
+		#var new_velocity_z = (target_position.z - current_pos.z)
+		#new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
+	#else:
+		#new_velocity = Vector3(0,0,0)
+	#
+	#velocity = velocity.move_toward(new_velocity, .25)
+	#
+	#if target_position != null:
+		#if !target_reached:
+			#if guide.global_position != target_position:
+				#guide.look_at(target_position)
+	#
+	#rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
+	#
 	if !target_reached:
 		if jump.is_colliding() and is_on_floor():
 			velocity.y += 10
-	
+	#
 	move_and_slide()
 
 func flying_movement(delta:float):
@@ -354,7 +338,7 @@ func tame(owner_id:int):
 			animal_owner = i
 			animal_ownerid = owner_id
 			#print(animal_owner)
-			_on_move_timeout()
+			#_on_move_timeout()
 	
 func give(item:ItemBase,id):
 	feed_sfx.play()

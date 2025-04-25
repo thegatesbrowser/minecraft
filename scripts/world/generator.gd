@@ -10,6 +10,9 @@ const CaveHeightmapCurve = preload("res://resources/cave_heightmap_curve.tres")
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const ItemLibrary  = preload("res://resources/items_library.tres")
 
+@export var noise:NoiseTexture2D
+var _array_mutex := Mutex.new()
+
 # TODO Don't hardcode, get by name from library somehow
 var AIR := VoxelLibrary.get_model_index_default("air")
 var DIRT := VoxelLibrary.get_model_index_default("dirt")
@@ -35,6 +38,12 @@ var diamond := preload("res://resources/items/diamond_block.tres")
 
 @export var desert_creatures: Array[Creature]
 @export var forest_creatures: Array[Creature]
+
+const forest_biome = preload("res://resources/forest.tres")
+const desert_biome = preload("res://resources/desert.tres")
+
+@export var biomes : Array[Biome]
+
 
 var possible_ore = [iron,diamond]
 
@@ -87,8 +96,10 @@ func _init():
 	_heightmap_noise.frequency = 1.0 / 128.0
 	_heightmap_noise.fractal_octaves = 4
 	
-	HeatNoise.frequency = 0.0017
-	HeatNoise.fractal_octaves = 4
+	HeatNoise.noise_type = FastNoiseLite.TYPE_PERLIN
+	HeatNoise.frequency = 0.0009
+	HeatNoise.fractal_octaves = 5
+	HeatNoise.fractal_weighted_strength = 1
 	
 
 	# IMPORTANT
@@ -98,13 +109,16 @@ func _init():
 	CaveHeightmapCurve.bake()
 	HeightmapCurve.bake()
 
-
 func _get_used_channels_mask() -> int:
 	return 1 << _CHANNEL
 
+var biome:Biome
 
 func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
+			
+	
 	var temp:float
+	
 	# TODO There is an issue doing this, need to investigate why because it should be supported
 	# Saves from this demo used 8-bit, which is no longer the default
 	# buffer.set_channel_depth(_CHANNEL, VoxelBuffer.DEPTH_8_BIT)
@@ -122,12 +136,34 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 	_heightmap_range = _heightmap_max_y - _heightmap_min_y
 
 	# Ground
-
+	
+	temp = temp_data(origin_in_voxels.x,origin_in_voxels.z)
+	
+	if !biome:
+		_array_mutex.lock()
+		biome = get_biome(temp)
+		_array_mutex.unlock()
+	else:
+		if biome:
+			if temp <= biome.min_temp:
+				_array_mutex.lock()
+				biome = get_biome(temp)
+				_array_mutex.unlock()
+			elif temp >= biome.max_temp:
+				_array_mutex.lock()
+				biome = get_biome(temp)
+				_array_mutex.unlock()
+				
+	
 	if origin_in_voxels.y > _heightmap_max_y:
 		buffer.fill(AIR, _CHANNEL)
+		
 
-	elif origin_in_voxels.y + block_size < _heightmap_min_y:
-		buffer.fill(STONE, _CHANNEL)
+
+	
+	## BedRock
+	#elif origin_in_voxels.y + block_size < _heightmap_min_y:
+		#buffer.fill(STONE, _CHANNEL)
 
 	else:
 		var rng := RandomNumberGenerator.new()
@@ -141,12 +177,15 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 
 			for x in block_size:
 				var height := _get_height_at(gx, gz)
-				temp = temp_data(gx,gz)
+				
+				
+				
+						
 				var relative_height := height - oy
 				
 				# Dirt and grass
 				if relative_height > block_size:
-					buffer.fill_area(STONE,
+					buffer.fill_area(biome.blocks.stone_layer_block,
 						Vector3(x, 0, z), Vector3(x + 1, block_size, z + 1), _CHANNEL)
 					
 							
@@ -159,49 +198,47 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 								if pos.z >= 0:
 									buffer.fill_area(VoxelLibrary.get_model_index_default(ore.unique_name),Vector3(pos.x,pos.y,pos.z),Vector3(pos.x +1,pos.y + 1,pos.z+ 1),_CHANNEL)
 									
-					buffer.fill_area(DIRT,
+					buffer.fill_area(biome.blocks.dirt_layer_block,
 						Vector3(x, 0, z), Vector3(x , block_size, z ), _CHANNEL)
 						
 				elif relative_height > 0:
-					buffer.fill_area(STONE,
+					buffer.fill_area(biome.blocks.stone_layer_block,
 						Vector3(x, 0, z), Vector3(x + 1, relative_height, z + 1), _CHANNEL)
 						
 					
 					if height >= 0:
-						if temp <= 10:
-							buffer.set_voxel(GRASS, x, relative_height - 1, z, _CHANNEL)
-						else:
-							buffer.set_voxel(SAND, x, relative_height - 1, z, _CHANNEL)
+						#if temp <= 10:
+						buffer.set_voxel(biome.blocks.surface_block, x, relative_height - 1, z, _CHANNEL)
+						#else:
+							#buffer.set_voxel(SAND, x, relative_height - 1, z, _CHANNEL)
 							
 						if relative_height - 2 >= 0:
-							if temp <= 10:
-								buffer.set_voxel(DIRT,x, relative_height - 2, z, _CHANNEL)
-							else:
-								buffer.set_voxel(SAND,x, relative_height - 2, z, _CHANNEL)
+							#if temp <= 10:
+							buffer.set_voxel(biome.blocks.dirt_layer_block,x, relative_height - 2, z, _CHANNEL)
+							#else:
+								#buffer.set_voxel(SAND,x, relative_height - 2, z, _CHANNEL)
 								
 						if relative_height < block_size:
 							if rng.randf() < 0.001:
 								buffer.set_voxel(CREATURE_SPAWNER,x,relative_height,z,_CHANNEL)
-								if temp < 10:
-									buffer.set_voxel_metadata(Vector3i(x,relative_height,z),forest_creatures.pick_random())
-								else:
-									buffer.set_voxel_metadata(Vector3i(x,relative_height,z),desert_creatures.pick_random())
+								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),biome.possible_creatures.pick_random())
+							
 							
 							if rng.randf() < 0.0001:
 								buffer.set_voxel(PORTAl,x,relative_height,z,_CHANNEL)
 								var worlds = possible_worlds.size() - 1
 								var world = possible_worlds[rng.randi_range(0,worlds)]
 								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),world)
-								
-							if rng.randf() < 0.2:
-								var foliage
-								if temp <= 10:
-									foliage = TALL_GRASS
-								else:
-									if rng.randf() < 0.1:
-										foliage = REEDS
-								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
-			
+							
+							var plant_size = biome.plants.size() - 1
+							var plant = biome.plants[rng.randi_range(0,plant_size)]
+							
+							var foliage
+							
+							if rng.randf() <= biome.plant_chance:
+								foliage = plant
+							buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
+							pass
 								
 					
 				# Water
@@ -221,32 +258,32 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			gz += 1
 
 	# Trees
-
-	if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
-		var voxel_tool := buffer.get_voxel_tool()
-		var structure_instances := []
-			
-		_get_tree_instances_in_chunk(chunk_pos, origin_in_voxels, block_size, structure_instances)
-	
-		# Relative to current block
-		var block_aabb := AABB(Vector3(), buffer.get_size() + Vector3i(1, 1, 1))
-
-		for dir in _moore_dirs:
-			var ncpos : Vector3 = (chunk_pos + dir).round()
-			_get_tree_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
-
-		for structure_instance in structure_instances:
-			var pos : Vector3 = structure_instance[0]
-			var structure : Structure = structure_instance[1]
-			var lower_corner_pos := pos - structure.offset
-			var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
+	if biome:
+		if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
+			var voxel_tool := buffer.get_voxel_tool()
+			var structure_instances := []
 				
-			if temp <= 10:
-				if aabb.intersects(block_aabb):
-					voxel_tool.paste_masked(lower_corner_pos, 
-						structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
-						# Masking
-						VoxelBuffer.CHANNEL_TYPE, AIR)
+			_get_tree_instances_in_chunk(chunk_pos, origin_in_voxels, block_size, structure_instances)
+		
+			# Relative to current block
+			var block_aabb := AABB(Vector3(), buffer.get_size() + Vector3i(1, 1, 1))
+
+			for dir in _moore_dirs:
+				var ncpos : Vector3 = (chunk_pos + dir).round()
+				_get_tree_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
+
+			for structure_instance in structure_instances:
+				var pos : Vector3 = structure_instance[0]
+				var structure : Structure = structure_instance[1]
+				var lower_corner_pos := pos - structure.offset
+				var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
+					
+				if biome.trees:
+					if aabb.intersects(block_aabb):
+						voxel_tool.paste_masked(lower_corner_pos, 
+							structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
+							# Masking
+							VoxelBuffer.CHANNEL_TYPE, AIR)
 
 	buffer.compress_uniform_channels()
 
@@ -278,10 +315,18 @@ static func _get_chunk_seed_2d(cpos: Vector3) -> int:
 
 func temp_data(x: int, z: int) -> int:
 	var t = 0.5 + 0.5 * HeatNoise.get_noise_2d(x, z)
-	#return int(HeightmapCurve.sample_baked(t))
+	#return int(HeightmapCurve.sample_baked(t)) 
 	return int(HeatCurve.sample_baked(t))
 
 func _get_height_at(x: int, z: int) -> int:
 	var t = 0.5 + 0.5 * _heightmap_noise.get_noise_2d(x, z)
 	return int(HeightmapCurve.sample_baked(t))
+	
+func get_biome(temp:float) -> Biome:
+	var return_biome:Biome
+	for _biome in biomes:
+		if temp >= _biome.min_temp and temp <= _biome.max_temp:
+			return_biome = _biome
+			return_biome.create_voxels_ids()
+	return return_biome
 	
