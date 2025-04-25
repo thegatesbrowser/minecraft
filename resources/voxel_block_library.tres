@@ -1,6 +1,7 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=94 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=95 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
+[ext_resource type="Shader" path="res://scripts/shaders/wind block.gdshader" id="2_4mkw4"]
 [ext_resource type="Texture2D" uid="uid://4kefle857qqh" path="res://assets/textures.webp" id="3_ewiam"]
 [ext_resource type="Texture2D" uid="uid://djxr6uhl80usp" path="res://assets/textures/blocks/tallgrass.png" id="4_q5um5"]
 [ext_resource type="ArrayMesh" uid="uid://bj6dxjaih1d51" path="res://assets/models/grass.obj" id="4_vwypi"]
@@ -157,9 +158,9 @@ unique_name = &"leaf_oak"
 base_model = SubResource("VoxelBlockyModelCube_j6y2v")
 resource_name = "leaf_oak"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_31aan"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fp4e3"]
 render_priority = 0
-shader = ExtResource("7_ssghj")
+shader = ExtResource("2_4mkw4")
 shader_parameter/grass_texture = ExtResource("3_ewiam")
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_il7i2"]
@@ -171,7 +172,7 @@ tile_top = Vector2i(6, 1)
 tile_back = Vector2i(6, 1)
 tile_front = Vector2i(6, 1)
 culls_neighbors = false
-material_override_0 = SubResource("ShaderMaterial_31aan")
+material_override_0 = SubResource("ShaderMaterial_fp4e3")
 collision_enabled_0 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pgid7"]
@@ -207,11 +208,11 @@ shader_parameter/grass_texture = ExtResource("4_q5um5")
 
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_ot456"]
 mesh = ExtResource("4_vwypi")
+culls_neighbors = false
+lod_skirts_enabled = false
 collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 1, 0.9, 1)])
 material_override_0 = SubResource("ShaderMaterial_xr8t2")
-material_override_1 = SubResource("ShaderMaterial_xr8t2")
 collision_enabled_0 = false
-collision_enabled_1 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_uiln0"]
 unique_name = &"tall_grass"
@@ -326,9 +327,7 @@ mesh = ExtResource("4_vwypi")
 culls_neighbors = false
 collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 0.4, 0.7, 0.4)])
 material_override_0 = SubResource("ShaderMaterial_2snh6")
-material_override_1 = SubResource("ShaderMaterial_2snh6")
 collision_enabled_0 = false
-collision_enabled_1 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_jqf1y"]
 unique_name = &"flower"
@@ -344,9 +343,7 @@ shader_parameter/grass_texture = ExtResource("9_ixyq0")
 mesh = ExtResource("4_vwypi")
 collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 0.9, 0.8, 0.9)])
 material_override_0 = SubResource("ShaderMaterial_qo2p1")
-material_override_1 = SubResource("ShaderMaterial_qo2p1")
 collision_enabled_0 = false
-collision_enabled_1 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_k01kp"]
 unique_name = &"fern"
@@ -469,9 +466,7 @@ mesh = ExtResource("4_vwypi")
 culls_neighbors = false
 random_tickable = true
 material_override_0 = ExtResource("11_4llsq")
-material_override_1 = ExtResource("11_4llsq")
 collision_enabled_0 = false
-collision_enabled_1 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_v5joj"]
 unique_name = &"fire"

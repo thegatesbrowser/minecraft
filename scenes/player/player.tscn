@@ -687,7 +687,7 @@ stream_0/stream = ExtResource("13_xnj4e")
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "fall_timer", "floor_ray", "skeleton_3d") groups=["Player"]]
 script = ExtResource("1")
 defualt_hand_model = ExtResource("2_w6sp7")
-WALK_SPEED = 4.0
+WALK_SPEED = 20.0
 SPRINT_SPEED = 6.0
 CROUCH_SPEED = 1.0
 rotation_root = NodePath("RotationRoot")
@@ -1016,7 +1016,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 cull_mask = 1048543
 fov = 90.0
-near = 0.01
+near = 0.001
 far = 800.0
 
 [node name="RayCast3D" type="RayCast3D" parent="RotationRoot/Head/Camera3D"]

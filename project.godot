@@ -274,6 +274,7 @@ textures/decals/filter=0
 environment/volumetric_fog/use_filter=0
 anti_aliasing/quality/msaa_2d=1
 anti_aliasing/quality/use_taa=true
+anti_aliasing/quality/use_debanding=true
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 environment/default_environment="res://Assets/default_env.tres"
