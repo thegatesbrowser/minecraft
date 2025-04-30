@@ -1,6 +1,5 @@
 extends Node
-
-var time:int
+@export var speed:float = .05
 
 @onready var night: DirectionalLight3D = $"../rotation/night"
 @onready var day: DirectionalLight3D = $"../rotation/day"
@@ -10,7 +9,8 @@ var time:int
 
 func _process(delta: float) -> void:
 	
-	rotation.rotation_degrees.x += .01
+	rotation.rotation_degrees.x += speed
+	
 
 	if rotation.rotation_degrees.x >= 360 or rotation.rotation_degrees.x <= -360:
 		rotation.rotation_degrees.x = 0
@@ -18,12 +18,14 @@ func _process(delta: float) -> void:
 	if rotation.rotation_degrees.x <= 120:
 		night.show()
 		day.hide()
-		world_environment.environment.ambient_light_energy = 1
+		world_environment.environment.volumetric_fog_albedo = Color.DARK_SLATE_BLUE
+		#world_environment.environment.ambient_light_energy = 1
 		#world_environment.environment.amb = Color.BLACK
 	elif rotation.rotation_degrees.x >= 200:
 		#world_environment.environment.ambient_light_color = Color(0.14, 0.14, 0.14)
 		day.show()
 		night.hide()
-		world_environment.environment.ambient_light_energy = 2.85
+		world_environment.environment.volumetric_fog_albedo = Color.LIGHT_BLUE
+		#world_environment.environment.ambient_light_energy = 2.85
 	
 	

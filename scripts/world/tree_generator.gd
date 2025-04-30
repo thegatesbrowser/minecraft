@@ -1,36 +1,24 @@
 
-const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
-const Structure = preload("./structure.gd")
+const Structure = preload("res://scripts/world/structure.gd")
+const Voxel_Lib = preload("res://resources/voxel_block_library.tres")
 
-var possible_types:Dictionary
-var trunk_len_min:= 5
+var trunk_len_min := 6
 var trunk_len_max := 15
-var log_type := VoxelLibrary.get_model_index_default("log_oak")
-var leaves_type := VoxelLibrary.get_model_index_default("leaf_oak")
+var log_type := Voxel_Lib.get_model_index_default("log_oak")
+var leaves_type := Voxel_Lib.get_model_index_default("leaf_oak")
 var channel := VoxelBuffer.CHANNEL_TYPE
 
 
 func generate() -> Structure:
-	
-	#var possible_tree_type_size: int = possible_types.size()
-	#var tree_key: String = possible_types.keys()[randi() % possible_tree_type_size]
-	#var tree_type: Array = possible_types[tree_key]
-
-	#log_type = VoxelLibrary.get_model_index_default(tree_type.front())
-	#leaves_type = VoxelLibrary.get_model_index_default(tree_type.back())
-	
-	var voxels: Dictionary = {}
+	var voxels := {}
 	# Let's make crappy trees
-	#
-	#var stucture = preload("res://assets/models/2599604944.txt")
-	#var data = JSON.parse_string(stucture)
-
-	## Trunk
-	var trunk_len: int = int(randf_range(trunk_len_min, trunk_len_max))
+	
+	# Trunk
+	var trunk_len := int(randf_range(trunk_len_min, trunk_len_max))
 	for y in trunk_len:
 		voxels[Vector3(0, y, 0)] = log_type
-#
-	## Branches
+
+	# Branches
 	var branches_start := int(randf_range(trunk_len / 3, trunk_len / 2))
 	for y in range(branches_start, trunk_len):
 		var t := float(y - branches_start) / float(trunk_len)
@@ -45,7 +33,7 @@ func generate() -> Structure:
 				var ipos = pos.round()
 				voxels[ipos] = log_type
 
-	## Leaves
+	# Leaves
 	var log_positions := voxels.keys()
 	log_positions.shuffle()
 	var leaf_count := int(0.75 * len(log_positions))
@@ -66,26 +54,21 @@ func generate() -> Structure:
 			var npos = pos + dirs[di]
 			if not voxels.has(npos):
 				voxels[npos] = leaves_type
-#
-	## Make structure
-	var aabb: AABB = AABB()
+
+	# Make structure
+	var aabb := AABB()
 	for pos in voxels:
 		aabb = aabb.expand(pos)
-	
-	var structure: Structure = Structure.new()
+
+	var structure := Structure.new()
 	structure.offset = -aabb.position
 
-	var buffer: VoxelBuffer = structure.voxels
+	var buffer := structure.voxels
 	buffer.create(int(aabb.size.x) + 1, int(aabb.size.y) + 1, int(aabb.size.z) + 1)
 
 	for pos in voxels:
-		var rpos: Vector3 = pos + structure.offset
-		var v: int = voxels[pos]
+		var rpos = pos + structure.offset
+		var v = voxels[pos]
 		buffer.set_voxel(v, rpos.x, rpos.y, rpos.z, channel)
-	
-	#print(voxels)
+
 	return structure
-
-
-static func _get_chunk_seed_2d(cpos: Vector3) -> int:
-	return int(cpos.x) ^ (31 * int(cpos.z))

@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=95 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=99 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
 [ext_resource type="Shader" path="res://scripts/shaders/wind block.gdshader" id="2_4mkw4"]
@@ -299,6 +299,21 @@ base_model = SubResource("VoxelBlockyModelCube_45jlq")
 attributes = Array[VoxelBlockyAttribute]([SubResource("VoxelBlockyAttributeDirection_oxmji")])
 resource_name = "forge"
 
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_xh23b"]
+atlas_size_in_tiles = Vector2i(12, 4)
+tile_left = Vector2i(2, 2)
+tile_right = Vector2i(2, 2)
+tile_bottom = Vector2i(2, 2)
+tile_top = Vector2i(2, 2)
+tile_back = Vector2i(2, 2)
+tile_front = Vector2i(2, 2)
+material_override_0 = ExtResource("1_v2tgt")
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_4tqua"]
+unique_name = &"lava"
+base_model = SubResource("VoxelBlockyModelCube_xh23b")
+resource_name = "lava"
+
 [sub_resource type="VoxelBlockyAttributeDirection" id="VoxelBlockyAttributeDirection_ics12"]
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_p3ml1"]
@@ -473,15 +488,6 @@ unique_name = &"fire"
 base_model = SubResource("VoxelBlockyModelMesh_7fnfm")
 resource_name = "fire"
 
-[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_lbu4t"]
-culls_neighbors = false
-random_tickable = true
-
-[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_vuquy"]
-unique_name = &"creature_spawner"
-base_model = SubResource("VoxelBlockyModelEmpty_lbu4t")
-resource_name = "creature_spawner"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pt7dp"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
@@ -537,6 +543,31 @@ unique_name = &"cactus"
 base_model = SubResource("VoxelBlockyModelMesh_knsgf")
 resource_name = "cactus"
 
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_kwwuv"]
+atlas_size_in_tiles = Vector2i(12, 4)
+tile_left = Vector2i(1, 3)
+tile_right = Vector2i(1, 3)
+tile_bottom = Vector2i(1, 3)
+tile_top = Vector2i(1, 3)
+tile_back = Vector2i(1, 3)
+tile_front = Vector2i(1, 3)
+material_override_0 = ExtResource("1_v2tgt")
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_y11nm"]
+unique_name = &"hell_stone"
+base_model = SubResource("VoxelBlockyModelCube_kwwuv")
+resource_name = "hell_stone"
+
+[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_3l01d"]
+culls_neighbors = false
+random_tickable = true
+lod_skirts_enabled = false
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_06gsb"]
+unique_name = &"creature_spawner"
+base_model = SubResource("VoxelBlockyModelEmpty_3l01d")
+resource_name = "creature_spawner"
+
 [resource]
-types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_vuquy"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_ap0nr")])
-_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus")
+types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_ap0nr"), SubResource("VoxelBlockyType_y11nm"), SubResource("VoxelBlockyType_06gsb")])
+_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal")

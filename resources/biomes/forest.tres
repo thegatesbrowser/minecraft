@@ -11,9 +11,9 @@ min_temp = 0.0
 max_temp = 10.0
 biome_name = "forest"
 possible_creatures = Array[ExtResource("1_xn2j4")]([ExtResource("2_td8v1"), ExtResource("3_w0f62")])
-plants = ["tall_grass"]
+plants = [&"tall_grass"]
 trees = true
-plant_chance = 0.4
+plant_chance = 0.01
 blocks = {
 "dirt_layer_block": "dirt",
 "stone_layer_block": "stone",

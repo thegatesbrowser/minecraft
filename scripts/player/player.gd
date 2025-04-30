@@ -302,8 +302,10 @@ func toggle_flying() -> void:
 func toggle_clipping() -> void:
 	collision.disabled = !collision.disabled
 	if collision.disabled:
+		WALK_SPEED = 20.0
 		is_flying = true
-
+	else:
+		WALK_SPEED = 5.0
 
 func show_pos() -> void:
 	pos_label.visible = !pos_label.visible

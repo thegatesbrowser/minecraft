@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=4 format=3 uid="uid://dcbfvglpggtjq"]
+
+[ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="1_5laei"]
+[ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_i0kjt"]
+[ext_resource type="Script" path="res://scripts/world/biome.gd" id="2_uivtf"]
+
+[resource]
+script = ExtResource("2_uivtf")
+min_temp = 31.0
+max_temp = 60.0
+biome_name = "Hell"
+possible_creatures = Array[ExtResource("1_5laei")]([ExtResource("2_i0kjt")])
+plants = []
+trees = false
+plant_chance = 1.0
+blocks = {
+"dirt_layer_block": "lava",
+"stone_layer_block": "stone",
+"surface_block": "hell_stone"
+}

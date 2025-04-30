@@ -33,8 +33,8 @@ func destroy_creature(Name: String) -> void:
 
 func toggle_AI_debug() -> void:
 	#debug = !debug
-	#for i in get_tree().get_nodes_in_group("NPCS"):
-		#i.toggle_debug()
+	for i in get_tree().get_nodes_in_group("NPCS"):
+		i.show_debug()
 	pass
 
 

@@ -6,10 +6,9 @@ var target : Vector3
 var wander_time : float
 
 @export var creature: CreatureBase
-@export var move_speed := 10.0
 
 func randomize_wander():
-	target = get_random_pos_in_sphere(move_distance)
+	target = get_random_pos_in_sphere(move_distance) + creature.global_position
 	wander_time = randf_range(1,4)
 
 func Enter():
@@ -27,9 +26,24 @@ func Physics_Update(delta:float):
 		var current_pos = creature.global_position
 		var new_velocity_x = (target.x - current_pos.x)
 		var new_velocity_z = (target.z - current_pos.z)
-		new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * move_speed
-	
+		new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * creature.creature_resource.speed
+		
+		creature.look_at_target = Vector3(target.x,current_pos.y + 0.01,target.z)
 		creature.velocity = creature.velocity.move_toward(new_velocity, .25)
+		
+		var player = get_closest_player()
+		
+		if creature.creature_resource.attacks:
+			
+			if player:
+				#print("distance ",current_pos.distance_to(player.global_position))
+				if current_pos.distance_to(player.global_position) <= 10:
+					Transitioned.emit(self,"Attack")
+		else:
+			if player:
+				#print("distance ",current_pos.distance_to(player.global_position))
+				if current_pos.distance_to(player.global_position) <= 10:
+					Transitioned.emit(self,"runaway")
 
 func get_random_pos_in_sphere(radius : float) -> Vector3:
 	var x1= randi_range(-1,1)
@@ -48,3 +62,19 @@ func get_random_pos_in_sphere(radius : float) -> Vector3:
 	random_pos_on_unit_sphere.z *= randi_range(-radius, radius)
 	
 	return random_pos_on_unit_sphere
+
+
+func get_closest_player():
+	var last_distance: float = 0.0
+	var closest_player: CharacterBody3D
+	
+	for i in get_tree().get_nodes_in_group("Player"):
+		if last_distance == 0.0:
+			last_distance = creature.global_position.distance_to(i .global_position)
+			closest_player = i
+		else:
+			if last_distance > creature.global_position.distance_to(i .global_position):
+				last_distance = creature.global_position.distance_to(i .global_position)
+				closest_player = i
+
+	return closest_player

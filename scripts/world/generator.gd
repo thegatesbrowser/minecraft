@@ -39,8 +39,6 @@ var diamond := preload("res://resources/items/diamond_block.tres")
 @export var desert_creatures: Array[Creature]
 @export var forest_creatures: Array[Creature]
 
-const forest_biome = preload("res://resources/forest.tres")
-const desert_biome = preload("res://resources/desert.tres")
 
 @export var biomes : Array[Biome]
 
@@ -141,17 +139,23 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 	
 	if !biome:
 		_array_mutex.lock()
-		biome = get_biome(temp)
+		var test_biome =  get_biome(temp)
+		if test_biome != null:
+				biome =test_biome
 		_array_mutex.unlock()
 	else:
 		if biome:
 			if temp <= biome.min_temp:
 				_array_mutex.lock()
-				biome = get_biome(temp)
+				var test_biome =  get_biome(temp)
+				if test_biome != null:
+					biome =test_biome
 				_array_mutex.unlock()
 			elif temp >= biome.max_temp:
 				_array_mutex.lock()
-				biome = get_biome(temp)
+				var test_biome =  get_biome(temp)
+				if test_biome != null:
+					biome =test_biome
 				_array_mutex.unlock()
 				
 	
@@ -219,74 +223,84 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 								#buffer.set_voxel(SAND,x, relative_height - 2, z, _CHANNEL)
 								
 						if relative_height < block_size:
-							if rng.randf() < 0.001:
+							pass
+							
+							#
+							#
+							#
+							var plant_size = biome.plants.size() - 1
+							if biome.plants.size()  != 0:
+								var plant = biome.plants[rng.randi_range(0,plant_size)]
+								
+								var foliage
+								
+								if rng.randf() <= biome.plant_chance:
+									foliage = plant
+								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
+							
+							#
+							if rng.randf() < 0.01:
 								buffer.set_voxel(CREATURE_SPAWNER,x,relative_height,z,_CHANNEL)
 								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),biome.possible_creatures.pick_random())
-							
-							
-							if rng.randf() < 0.0001:
+								TerrainHelper.get_terrain_tool().save_block(Vector3i(x,relative_height,z))
+							elif rng.randf() < 0.1:
+								var voxel_tool := buffer.get_voxel_tool()
+								var a = VoxelBlockyAttributeCustom.new()
+								
 								buffer.set_voxel(PORTAl,x,relative_height,z,_CHANNEL)
 								var worlds = possible_worlds.size() - 1
 								var world = possible_worlds[rng.randi_range(0,worlds)]
 								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),world)
-							
-							var plant_size = biome.plants.size() - 1
-							var plant = biome.plants[rng.randi_range(0,plant_size)]
-							
-							var foliage
-							
-							if rng.randf() <= biome.plant_chance:
-								foliage = plant
-							buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
-							pass
 								
-					
-				# Water
-				if height < 0 and oy < 0:
-					var start_relative_height := 0
-					if relative_height > 0:
-						start_relative_height = relative_height
-					buffer.fill_area(WATER_FULL,
-						Vector3(x, start_relative_height, z), 
-						Vector3(x + 1, block_size, z + 1), _CHANNEL)
-					if oy + block_size == 0:
-						# Surface block
-						buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
+								#
+					##
+				## Water
+				#if height < 0 and oy < 0:
+					#var start_relative_height := 0
+					#if relative_height > 0:
+						#start_relative_height = relative_height
+					#buffer.fill_area(WATER_FULL,
+						#Vector3(x, start_relative_height, z), 
+						#Vector3(x + 1, block_size, z + 1), _CHANNEL)
+					#if oy + block_size == 0:
+						## Surface block
+						#buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
 						
 				gx += 1
 
 			gz += 1
 
 	# Trees
-	if biome:
-		if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
-			var voxel_tool := buffer.get_voxel_tool()
-			var structure_instances := []
-				
-			_get_tree_instances_in_chunk(chunk_pos, origin_in_voxels, block_size, structure_instances)
-		
-			# Relative to current block
-			var block_aabb := AABB(Vector3(), buffer.get_size() + Vector3i(1, 1, 1))
 
-			for dir in _moore_dirs:
-				var ncpos : Vector3 = (chunk_pos + dir).round()
-				_get_tree_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
+	if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
+		var voxel_tool := buffer.get_voxel_tool()
+		var structure_instances := []
+			
+		_get_tree_instances_in_chunk(chunk_pos, origin_in_voxels, block_size, structure_instances)
+	
+		# Relative to current block
+		var block_aabb := AABB(Vector3(), buffer.get_size() + Vector3i(1, 1, 1))
 
-			for structure_instance in structure_instances:
-				var pos : Vector3 = structure_instance[0]
-				var structure : Structure = structure_instance[1]
-				var lower_corner_pos := pos - structure.offset
-				var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
-					
-				if biome.trees:
-					if aabb.intersects(block_aabb):
-						voxel_tool.paste_masked(lower_corner_pos, 
-							structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
-							# Masking
-							VoxelBuffer.CHANNEL_TYPE, AIR)
+		for dir in _moore_dirs:
+			var ncpos : Vector3 = (chunk_pos + dir).round()
+			_get_tree_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
+
+		for structure_instance in structure_instances:
+			var pos : Vector3 = structure_instance[0]
+			var structure : Structure = structure_instance[1]
+			var lower_corner_pos := pos - structure.offset
+			var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
+
+			if aabb.intersects(block_aabb) or !biome.trees:
+				voxel_tool.paste_masked(lower_corner_pos, 
+					structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
+					# Masking
+					VoxelBuffer.CHANNEL_TYPE, AIR)
 
 	buffer.compress_uniform_channels()
+	
 
+	
 
 func _get_tree_instances_in_chunk(
 	cpos: Vector3, offset: Vector3, chunk_size: int, tree_instances: Array):
