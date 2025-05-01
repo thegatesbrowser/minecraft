@@ -1,6 +1,8 @@
 extends CharacterBody3D
 class_name CreatureBase
 
+var look_at_target:Vector3
+
 @export var creature_resource: Creature
 
 @export_group("Sync Properties")
@@ -15,6 +17,8 @@ class_name CreatureBase
 
 @export var walk_distance = 50
 @onready var jump: RayCast3D = $RotationRoot/jump
+@onready var jump_2: RayCast3D = $RotationRoot/jump2
+
 @onready var rotation_root: Node3D = $RotationRoot
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var eyes: RayCast3D = $eyes
@@ -35,6 +39,7 @@ var walk_time := 10.0
 @export var target_reached: bool = false
 @export var _synchronizer:MultiplayerSynchronizer
 
+@export var StateManager:Node
 var health
 var tame_step:int = 0
 var tame_progress:float = 100.0 ## percent
@@ -86,28 +91,7 @@ func _ready() -> void:
 	collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
 	attack_coll.position.y =  mesh.get_aabb().size.y / 2
 	
-	change_state("idle")
 
-
-
-func change_state(state: String) -> void:
-	match state:
-		"idle":
-			#if ani.current_animation != creature_resource.idle_ani_name:
-				#ani.play(creature_resource.idle_ani_name)
-			current_state = states.IDLE
-			speed = 0.000000001
-		"walking":
-			#if ani.current_animation != creature_resource.walk_ani_name:
-				#ani.play(creature_resource.walk_ani_name)
-			current_state = states.WALKING
-			speed = creature_resource.speed
-			
-		"attack":
-			#if ani.current_animation != creature_resource.walk_ani_name:
-				#ani.play(creature_resource.walk_ani_name)
-			current_state = 3
-			speed = creature_resource.speed
 
 func _physics_process(delta: float) -> void:
 	if Connection.is_server() == false:
@@ -115,36 +99,37 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	if creature_resource.flyies:
-		flying_movement(delta)
+		if ground_raycast.is_colliding():
+			if jump.is_colliding():
+				velocity.y += 10 * delta
+			else:
+				var hit_distance = global_position.distance_to(ground_raycast.get_collision_point())
+				#print(hit_distance)
+				if hit_distance < creature_resource.flying_height:
+					velocity.y += 10 * delta
+				else:
+					velocity.y -= 10 * delta
 	else:
-		ground_movement(delta)
+		if not is_on_floor():
+			velocity.y -= 30 * delta
+			
+		if !target_reached:
+			if jump.is_colliding() and is_on_floor():
+				velocity.y += 10
+			elif jump_2.is_colliding() and is_on_floor():
+				velocity.y += 10
+			
+		
+	rotation_root.look_at(look_at_target)
+		
+	move_and_slide()
 	
 	set_sync_properties()
 
 
 func _process(_delta: float) -> void:
 	if not Connection.is_server(): return
-	
-	if global_position.distance_to(target_position) < 5:
-		if target_reached == false:
-			change_state("idle")
-			target_reached = true
-			
 
-		
-	if creature_resource.attacks:
-		var closest_player = get_closest_player()
-	
-		if closest_player != null:
-			eyes.look_at(closest_player.global_position)
-		
-		if eyes.is_colliding():
-			var coll = eyes.get_collider()
-			if coll != null:
-				if coll.is_in_group("Player"):
-					change_state("attack")
-					target_position = coll.global_position
-	
 	try_despawn()
 
 
@@ -167,26 +152,6 @@ func try_despawn() -> void:
 	queue_free()
 
 
-
-#
-#func _on_move_timeout() -> void:
-	#if Connection.is_server() == false: return
-	#
-	#if animal_owner == null:
-		#walk_time = 10
-		#var sphere_point = get_random_pos_in_sphere(walk_distance)
-		#target_position = sphere_point + global_position
-		#target_reached = false
-	#else:
-		#walk_time = 10
-		#target_position = animal_owner.global_position
-		##print(animal_owner.global_position)
-		#target_reached = false
-		#
-	#walk_timer.wait_time = walk_time
-	#change_state("walking")
-
-
 func hit(damage:int = 1):
 	#print("hit")
 	hurt_sfx.play()
@@ -200,20 +165,6 @@ func hit(damage:int = 1):
 		queue_free()
 
 
-func get_closest_player() -> Node:
-	var last_distance: float
-	var closest_player: Node
-	
-	for i in get_tree().get_nodes_in_group("Player"):
-		if last_distance == null:
-			last_distance = global_position.distance_to(i .global_position)
-			closest_player = i
-		else:
-			if last_distance > global_position.distance_to(i .global_position):
-				last_distance = global_position.distance_to(i .global_position)
-				closest_player = i
-
-	return closest_player
 
 
 func _on_attack_range_body_entered(body: Node3D) -> void:
@@ -266,75 +217,14 @@ func interpolate_client(delta: float) -> void:
 	move_and_slide()
 
 
-func ground_movement(delta:float):
-	#pass
-	if not is_on_floor():
-		velocity.y -= 30 * delta
-	#
-	#var new_velocity: Vector3
-	#if !target_reached:
-		#$target.global_position = target_position
-		#var current_pos = global_position
-		#var new_velocity_x = (target_position.x - current_pos.x)
-		#var new_velocity_z = (target_position.z - current_pos.z)
-		#new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
-	#else:
-		#new_velocity = Vector3(0,0,0)
-	#
-	#velocity = velocity.move_toward(new_velocity, .25)
-	#
-	#if target_position != null:
-		#if !target_reached:
-			#if guide.global_position != target_position:
-				#guide.look_at(target_position)
-	#
-	#rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
-	#
-	if !target_reached:
-		if jump.is_colliding() and is_on_floor():
-			velocity.y += 10
-	#
-	move_and_slide()
 
-func flying_movement(delta:float):
-	if ground_raycast.is_colliding():
-			if jump.is_colliding():
-				velocity.y += 10 * delta
-			else:
-				var hit_distance = global_position.distance_to(ground_raycast.get_collision_point())
-				#print(hit_distance)
-				if hit_distance < creature_resource.flying_height:
-					velocity.y += 10 * delta
-				else:
-					velocity.y -= 10 * delta
-		
-	var new_velocity: Vector3
-	if !target_reached:
-		$target.global_position = target_position
-		var current_pos = global_position
-		var new_velocity_x = (target_position.x - current_pos.x)
-		var new_velocity_z = (target_position.z - current_pos.z)
-		new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * speed
-	else:
-		new_velocity = Vector3(0,0,0)
-	
-	velocity = velocity.move_toward(new_velocity, .25)
-	
-	if target_position != null:
-		if !target_reached:
-			if guide.global_position != target_position:
-				guide.look_at(target_position)
-	
-	rotation_root.rotation.y = lerpf(rotation_root.rotation.y,guide.rotation.y,.2)
-	
-	
-	move_and_slide()
 
 @rpc("any_peer","call_local")
 func tame(owner_id:int):
 	var players = get_tree().get_nodes_in_group("Player")
 	for i in players:
 		if owner_id == i.name.to_int():
+			#StateManager._on_child_transition(self,"Follow")
 			animal_owner = i
 			animal_ownerid = owner_id
 			#print(animal_owner)
@@ -352,3 +242,5 @@ func give(item:ItemBase,id):
 			tame.rpc_id(1,id)
 			
 	
+func show_debug():
+	$target.visible = !$target.visible

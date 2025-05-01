@@ -120,9 +120,6 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 		voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
 	
 	voxel_tool.do_point(position)
-	
-	if item.utility.portal:
-		voxel_tool.set_voxel_metadata(position,"dave")
 
 @rpc("any_peer","call_local")
 func get_voxel_meta(position:Vector3):

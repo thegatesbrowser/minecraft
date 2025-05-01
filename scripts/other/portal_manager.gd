@@ -12,7 +12,9 @@ func _ready() -> void:
 	#Globals.remove_portal_data.connect(remove_portal_data)
 
 func enter_portal(url:String):
+	print("enter",url)
 	if get_tree().has_method("send_command"):
+		
 		get_tree().send_command("open_gate", url)
 
 #func add_new_portal(id: Vector3) -> void:

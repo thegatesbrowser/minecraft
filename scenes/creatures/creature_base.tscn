@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://buts6uhmr7s2d"]
+[gd_scene load_steps=17 format=3 uid="uid://buts6uhmr7s2d"]
 
 [ext_resource type="Script" path="res://scripts/creatures/creature_base.gd" id="1_yo80c"]
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_qtj8b"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://scenes/creatures/state_manager.gd" id="6_o53i3"]
 [ext_resource type="Script" path="res://scripts/creatures/creature_idle.gd" id="7_p3osw"]
 [ext_resource type="Script" path="res://scripts/creatures/creature_follow.gd" id="8_kj448"]
+[ext_resource type="Script" path="res://scripts/creatures/creature_attack.gd" id="9_rkyij"]
+[ext_resource type="Script" path="res://scripts/creatures/creature_runaway.gd" id="10_pyy3y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3pi47"]
 size = Vector3(0.285156, 0.395752, 0.785471)
@@ -15,8 +17,8 @@ size = Vector3(0.285156, 0.395752, 0.785471)
 [sub_resource type="BoxShape3D" id="BoxShape3D_14nko"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_wyi4v"]
-radius = 2.0
-height = 4.0
+radius = 0.25
+height = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_akaej"]
 transparency = 1
@@ -24,7 +26,7 @@ no_depth_test = true
 shading_mode = 0
 disable_ambient_light = true
 disable_fog = true
-albedo_color = Color(1, 0, 0, 0.431373)
+albedo_color = Color(1, 0, 0, 0.222)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oq0u8"]
 properties/0/path = NodePath(".:position")
@@ -54,6 +56,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
 target_position = Vector3(0, 0, -2)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
+[node name="jump2" type="RayCast3D" parent="RotationRoot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.22, 0)
+target_position = Vector3(0, 0, -2)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
 [node name="guide" type="Node3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -69,14 +76,13 @@ shape = SubResource("BoxShape3D_14nko")
 wait_time = 5.0
 autostart = true
 
-[node name="Update" type="Timer" parent="."]
-
 [node name="eyes" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05284, 0)
 target_position = Vector3(0, 0, -3.09)
 debug_shape_custom_color = Color(1, 1, 0, 1)
 
 [node name="target" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("SphereMesh_wyi4v")
 surface_material_override/0 = SubResource("StandardMaterial3D_akaej")
 
@@ -114,14 +120,22 @@ target_position = Vector3(1.45519e-11, -3000, 1.45519e-11)
 
 [node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("6_o53i3")
-initial_state = NodePath("CreatureFollow")
+initial_state = NodePath("Idle")
 
-[node name="CreatureIdle" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
+[node name="Idle" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
 script = ExtResource("7_p3osw")
 creature = NodePath("../..")
 
-[node name="CreatureFollow" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
+[node name="Follow" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
 script = ExtResource("8_kj448")
+creature = NodePath("../..")
+
+[node name="Attack" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
+script = ExtResource("9_rkyij")
+creature = NodePath("../..")
+
+[node name="RunAway" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
+script = ExtResource("10_pyy3y")
 creature = NodePath("../..")
 
 [connection signal="body_entered" from="attack range" to="." method="_on_attack_range_body_entered"]

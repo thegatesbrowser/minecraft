@@ -7,12 +7,13 @@ const VoxelLibraryResource = preload("res://resources/voxel_block_library.tres")
 # Takes effect in a large radius around the player
 const RADIUS = 100
 # How many voxels are affected per frame
-const VOXELS_PER_FRAME = 512
+const VOXELS_PER_FRAME = 500
 
 @onready var _terrain : VoxelTerrain
 @onready var _voxel_tool : VoxelToolTerrain
 @onready var _players_container : Node3D
 
+var rng = RandomNumberGenerator.new()
 @export var burnables: Array[int]
 var plant_voxels = []
 
@@ -114,6 +115,7 @@ func _makes_grass_die(raw_type: int) -> bool:
 
 
 func _random_tick_callback(pos: Vector3i, value: int) -> void:
+	print(value)
 	if value == VoxelLibraryResource.get_model_index_default("grass"):
 		var above := pos + Vector3i(0, 1, 0)
 		var above_v := _voxel_tool.get_voxel(above)
@@ -172,8 +174,10 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 	
 	if value == VoxelLibraryResource.get_model_index_default("creature_spawner"):
 		#print("creature")
-		if randf() <= .8:
+		if rng.randf() < 0.8:
 			var creature = _voxel_tool.get_voxel_metadata(pos)
-			#print("creature ", creature)
+			#print("creature? ", _voxel_tool.get_voxel_metadata(pos))
+			if creature == null:
+				return
 			Globals.spawn_creature.emit(pos + Vector3i(0,1,0),creature)
 			_voxel_tool.do_point(pos)
