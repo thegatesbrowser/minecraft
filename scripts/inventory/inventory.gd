@@ -193,8 +193,13 @@ func open(server_details:= {}):
 func change(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	if sync:
 		Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
-		Globals.send_change.emit(index,item_path,amount,parent,health,rot)
-		
+	else:
+		var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+		if BackendClient.playerdata.Inventory == null:
+			Globals.save.emit()
+		else:
+			Globals.save_slot.emit(index,item_path,amount,parent,health,rot)
+			
 @rpc("any_peer","call_local")
 func update_client(info):
 	for i in info:

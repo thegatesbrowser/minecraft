@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://clt86wlubencc" path="res://scenes/items/dropped_item.tscn" id="6_6kxdw"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="10_fsqbe"]
 [ext_resource type="AudioStream" uid="uid://sn5gwkdparti" path="res://assets/sounds/other/Player_hurt1.ogg" id="11_1skow"]
-[ext_resource type="Script" path="res://scenes/player/ground_check.gd" id="11_5go8a"]
+[ext_resource type="Script" path="res://scripts/player/ground_check.gd" id="11_5go8a"]
 [ext_resource type="Script" path="res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd" id="11_8ntd3"]
 [ext_resource type="Texture2D" uid="uid://byydkxo6aq3jp" path="res://assets/models/runestone player_Head Base Color.png" id="11_brm37"]
 [ext_resource type="Texture2D" uid="uid://c2l4cjrtvlrxb" path="res://assets/models/runestone player_right arm 1 Base Color.png" id="12_kn6c7"]
@@ -1023,7 +1023,7 @@ far = 800.0
 
 [node name="RayCast3D" type="RayCast3D" parent="RotationRoot/Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.05)
-target_position = Vector3(0, -10, 0)
+target_position = Vector3(1.45519e-11, -5, 1.45519e-11)
 collision_mask = 3
 
 [node name="Drop_node" type="Node3D" parent="RotationRoot/Head/Camera3D"]
@@ -1104,7 +1104,7 @@ autostart = true
 wait_time = 0.5
 
 [node name="Update" type="Timer" parent="."]
-wait_time = 20.0
+wait_time = 10.0
 autostart = true
 
 [node name="floor" type="RayCast3D" parent="."]

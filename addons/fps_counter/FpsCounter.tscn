@@ -5,6 +5,7 @@
 
 [node name="CanvasLayer" type="CanvasLayer"]
 layer = 128
+visible = false
 script = ExtResource("2")
 
 [node name="Counter" parent="." instance=ExtResource("1")]

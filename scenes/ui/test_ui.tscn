@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cdxwom21p7sio"]
 
 [ext_resource type="PackedScene" uid="uid://dnqhxtkp8jhnd" path="res://scenes/ui/furnace_ui.tscn" id="1_6nc8g"]
-[ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/items/inventory.tscn" id="2_dhf2j"]
+[ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="2_dhf2j"]
 [ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="3_r85ut"]
 [ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="4_jju1w"]
 

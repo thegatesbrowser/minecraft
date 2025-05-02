@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2707t8cxxdvp"]
+[gd_scene load_steps=5 format=3 uid="uid://d2707t8cxxdvp"]
 
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_exyan"]
 [ext_resource type="Script" path="res://scripts/ui/login_window.gd" id="1_onibv"]
 [ext_resource type="PackedScene" uid="uid://xlramxseaccj" path="res://scenes/ui/create_user.tscn" id="2_s3cbq"]
 [ext_resource type="AudioStream" uid="uid://d4mieippat2vk" path="res://assets/sounds/block/item_frame_add_item4.ogg" id="4_o8p0u"]
-[ext_resource type="Texture2D" uid="uid://ctxaquevonft0" path="res://assets/menu/mine_mark.png" id="5_thkm7"]
 
 [node name="Login_Window" type="PanelContainer"]
 anchors_preset = 15
@@ -83,16 +82,6 @@ pitch_scale = 3.0
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
-
-[node name="Title" type="TextureRect" parent="CenterContainer"]
-visible = false
-custom_minimum_size = Vector2(1092, 256)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("5_thkm7")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="CenterContainer"]
 layout_mode = 2

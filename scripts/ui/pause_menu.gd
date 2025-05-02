@@ -16,12 +16,14 @@ func _process(_delta: float) -> void:
 		visible = !visible
 		
 		if visible:
+			Globals.paused = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			if !played_ani:
-				GlobalAnimation._tween(self,"bounce_in",.2)
-				played_ani = true
+			#if !played_ani:
+				#GlobalAnimation._tween(self,"bounce_in",.2)
+				#played_ani = true
 			show()
 		else:
+			Globals.paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			settings.hide()
 			played_ani = false

@@ -17,6 +17,7 @@ func _init():
 			"password" : {"data_type" : "text"},
 			"salt" :{"data_type" : "int", "not_null" : true},
 			"health":{"data_type" : "int"},
+			"hunger":{"data_type" : "float"},
 			"Position_x":{"data_type": "float"},
 			"Position_y":{"data_type": "float"},
 			"Position_z":{"data_type": "float"},
@@ -41,7 +42,7 @@ func change_data(name:String, change_name:String, change):
 	db.update_rows("players", "name = '" + name + "'", {change_name:change})
 
 func GetUserFromDB(username):
-	var query = "SELECT salt, password, id, health, Position_x,Position_y,Position_z, Inventory, Hotbar, item_data from players where name = ?"
+	var query = "SELECT salt, password, id, health, hunger, Position_x,Position_y,Position_z, Inventory, Hotbar, item_data from players where name = ?"
 	var paramBindings = [username]
 	db.query_with_bindings(query, paramBindings)
 	#print( db.query_result)
@@ -52,6 +53,7 @@ func GetUserFromDB(username):
 			"salt" : i["salt"],
 			"name" : username,
 			"health":  i["health"],
+			"hunger": i["hunger"],
 			"Position_x": i["Position_x"],
 			"Position_y": i["Position_y"],
 			"Position_z": i["Position_z"],

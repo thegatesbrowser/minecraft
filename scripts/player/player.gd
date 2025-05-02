@@ -48,6 +48,8 @@ var fall_time:float = 0.0
 @export var skeleton_3d: Skeleton3D
 
 
+var backendclient
+
 const SENSITIVITY = 0.004
 
 # Bob variables
@@ -106,13 +108,25 @@ var health
 var spawn_point_set := {}
 
 func _ready() -> void:
+	backendclient = get_tree().get_first_node_in_group("BackendClient")
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
 	Globals.paused = true
 	spawn_position = start_position
-	hunger = base_hunger
-	health = max_health
+	
+	if !backendclient.playerdata.is_empty():
+		if backendclient.playerdata.hunger == null:
+			hunger = base_hunger
+		else:
+			hunger = backendclient.playerdata.hunger
+		if backendclient.playerdata.hunger == null:
+			health = max_health
+		else:
+			health = backendclient.playerdata.health
+	else:
+		hunger = base_hunger
+		health = max_health
 
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
@@ -246,10 +260,15 @@ func set_sync_properties() -> void:
 	_direction = _move_direction
 
 func save_data():
-	Globals.send_data.emit({"name": Globals.username,"change_name": "Position_x", "change": position.x})
-	Globals.send_data.emit({"name": Globals.username,"change_name": "Position_y", "change": position.y})
-	Globals.send_data.emit({"name": Globals.username,"change_name": "Position_z", "change": position.z})
-
+	#Position
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "Position_x", "change": position.x})
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "Position_y", "change": position.y})
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "Position_z", "change": position.z})
+	
+	#Stats
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "health", "change": health})
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "hunger", "change": hunger})
+	
 func on_synchronized() -> void:
 	velocity = _velocity
 	position_before_sync = position
@@ -330,7 +349,6 @@ func is_print_logs() -> bool:
 func _exit_tree():
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
-
 
 func add_item_to_hand(item: ItemBase, scene:PackedScene) -> void:
 	for i in hand.get_children():

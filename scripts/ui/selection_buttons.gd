@@ -13,11 +13,14 @@ var keys
 func _ready() -> void:
 	Globals.remove_item_from_hotbar.connect(remove)
 	buttons = slots.get_children()
+	
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Hotbar != null:
 			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
-	pass
+			
+	for slot in buttons:
+		slot.item_changed.connect(slot_updated)
 			
 
 func _input(_event: InputEvent) -> void:
@@ -160,3 +163,10 @@ func update(info) -> void:
 		slot.amount = info[i].amount
 		slot.rot = info[i].rot
 		slot.update_slot()
+
+func slot_updated(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
+	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
+	if BackendClient.playerdata.Inventory == null:
+		Globals.save.emit()
+	else:
+		Globals.save_slot.emit(index,item_path,amount,parent,health,rot)

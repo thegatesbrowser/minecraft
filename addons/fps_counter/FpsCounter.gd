@@ -16,7 +16,7 @@ func _ready():
 				.set_description("Enables or disables the FPS counter.")\
 				.register()
 	
-	enabled = true
+	enabled = false
 
 
 func toggle_enabled():

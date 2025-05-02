@@ -118,8 +118,9 @@ func update_slot() -> void:
 		rot_label.hide()
 		amount_label.hide()
 		
-	if !Connection.is_server():
-		Globals.save_player_ui.emit() ## saves the players slots only
+	#if !Connection.is_server():
+		#if
+		#Globals.save.emit()
 		pass
 
 func used() -> void:

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://ck7wy7ive5y3m"]
+
+[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="1_l2yfj"]
+[ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="2_m4awc"]
+[ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="3_ojvec"]
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_dqmnc"]
+
+[resource]
+script = ExtResource("4_dqmnc")
+Name = "oak_planks"
+texture = ExtResource("1_l2yfj")
+output_item = ExtResource("3_ojvec")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 1,
+"name": "log_oak",
+"texture": ExtResource("1_l2yfj")
+},
+2: {
+"amount": 1,
+"name": "stone",
+"texture": ExtResource("2_m4awc")
+}
+}

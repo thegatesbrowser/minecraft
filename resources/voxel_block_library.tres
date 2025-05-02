@@ -1,7 +1,6 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=99 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=98 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
-[ext_resource type="Shader" path="res://scripts/shaders/wind block.gdshader" id="2_4mkw4"]
 [ext_resource type="Texture2D" uid="uid://4kefle857qqh" path="res://assets/textures.webp" id="3_ewiam"]
 [ext_resource type="Texture2D" uid="uid://djxr6uhl80usp" path="res://assets/textures/blocks/tallgrass.png" id="4_q5um5"]
 [ext_resource type="ArrayMesh" uid="uid://bj6dxjaih1d51" path="res://assets/models/grass.obj" id="4_vwypi"]
@@ -136,9 +135,11 @@ unique_name = &"wood_birch"
 base_model = SubResource("VoxelBlockyModelCube_gikdy")
 resource_name = "wood_birch"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_smgpq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_age8u"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = 60.0
+shader_parameter/distance_fade_max = 50.0
 shader_parameter/grass_texture = ExtResource("3_ewiam")
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_j6y2v"]
@@ -150,7 +151,7 @@ tile_top = Vector2i(6, 0)
 tile_back = Vector2i(6, 0)
 tile_front = Vector2i(6, 0)
 culls_neighbors = false
-material_override_0 = SubResource("ShaderMaterial_smgpq")
+material_override_0 = SubResource("ShaderMaterial_age8u")
 collision_enabled_0 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pwkao"]
@@ -158,9 +159,11 @@ unique_name = &"leaf_oak"
 base_model = SubResource("VoxelBlockyModelCube_j6y2v")
 resource_name = "leaf_oak"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fp4e3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kw4kd"]
 render_priority = 0
-shader = ExtResource("2_4mkw4")
+shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = 60.0
+shader_parameter/distance_fade_max = 50.0
 shader_parameter/grass_texture = ExtResource("3_ewiam")
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_il7i2"]
@@ -172,7 +175,7 @@ tile_top = Vector2i(6, 1)
 tile_back = Vector2i(6, 1)
 tile_front = Vector2i(6, 1)
 culls_neighbors = false
-material_override_0 = SubResource("ShaderMaterial_fp4e3")
+material_override_0 = SubResource("ShaderMaterial_kw4kd")
 collision_enabled_0 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_pgid7"]
@@ -184,6 +187,9 @@ resource_name = "leaf_birch"
 albedo_texture = ExtResource("12_d826q")
 uv1_triplanar = true
 texture_filter = 0
+distance_fade_mode = 2
+distance_fade_min_distance = 60.0
+distance_fade_max_distance = 50.0
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_g76rx"]
 atlas_size_in_tiles = Vector2i(12, 4)
@@ -204,6 +210,8 @@ resource_name = "sand"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xr8t2"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = 60.0
+shader_parameter/distance_fade_max = 50.0
 shader_parameter/grass_texture = ExtResource("4_q5um5")
 
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_ot456"]
@@ -335,6 +343,8 @@ resource_name = "chest"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2snh6"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = null
+shader_parameter/distance_fade_max = null
 shader_parameter/grass_texture = ExtResource("8_es8ej")
 
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_lt0yd"]
@@ -352,6 +362,8 @@ resource_name = "flower"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qo2p1"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = null
+shader_parameter/distance_fade_max = null
 shader_parameter/grass_texture = ExtResource("9_ixyq0")
 
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_22ywj"]
@@ -491,6 +503,8 @@ resource_name = "fire"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pt7dp"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = 50.0
+shader_parameter/distance_fade_max = 60.0
 shader_parameter/grass_texture = ExtResource("15_2yhxf")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_v8pyf"]
@@ -558,14 +572,11 @@ unique_name = &"hell_stone"
 base_model = SubResource("VoxelBlockyModelCube_kwwuv")
 resource_name = "hell_stone"
 
-[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_3l01d"]
-culls_neighbors = false
-random_tickable = true
-lod_skirts_enabled = false
+[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_ydxtk"]
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_06gsb"]
 unique_name = &"creature_spawner"
-base_model = SubResource("VoxelBlockyModelEmpty_3l01d")
+base_model = SubResource("VoxelBlockyModelEmpty_ydxtk")
 resource_name = "creature_spawner"
 
 [resource]
