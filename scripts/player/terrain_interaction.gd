@@ -233,7 +233,7 @@ func remove_spawn_point(pos: Vector3) -> void:
 
 	
 
-func get_direction(player_pos, place_pos):
+func get_direction(player_pos:Vector3, place_pos:Vector3):
 	var dir = place_pos.direction_to(player_pos)
 	print(dir)
 	

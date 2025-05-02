@@ -13,7 +13,7 @@ output_item = ExtResource("1_t8vil")
 output_amount = 4
 items_needed = {
 1: {
-"amount": 1,
+"amount": 10,
 "name": "log_oak",
 "texture": ExtResource("1_i47l1")
 }

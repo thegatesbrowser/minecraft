@@ -2,7 +2,7 @@ extends PanelContainer
 
 signal Create_User(user,password)
 
-@onready var username: TextEdit = $MarginContainer/VBoxContainer/HBoxContainer/Username
+@onready var username: LineEdit = $MarginContainer/VBoxContainer/HBoxContainer/Username
 @onready var password: LineEdit = $MarginContainer/VBoxContainer/HBoxContainer2/Password
 @onready var ui: AudioStreamPlayer = $UI
 

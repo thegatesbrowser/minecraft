@@ -1,4 +1,5 @@
 extends Node
+
 @export var speed:float = .05
 
 @onready var night: DirectionalLight3D = $"../rotation/night"

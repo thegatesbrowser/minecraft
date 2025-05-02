@@ -8,10 +8,13 @@ color = Color(1, 1, 1, 1)
 thickness = 3
 
 [node name="Crafting" type="ScrollContainer"]
-custom_minimum_size = Vector2(0, 800)
-size_flags_horizontal = 4
+custom_minimum_size = Vector2(1.45519e-11, 80)
+anchors_preset = -1
+anchor_right = 0.288021
+anchor_bottom = 0.1
 size_flags_vertical = 4
-horizontal_scroll_mode = 0
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
 script = ExtResource("1_wotjt")
 craftable_button_scene = ExtResource("2_od5gg")
 metadata/_edit_use_anchors_ = true
@@ -34,15 +37,16 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "CRAFTABLES"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_2g6cg")
 
-[node name="List" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="List" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-columns = 4

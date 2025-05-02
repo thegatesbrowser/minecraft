@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://dp3vw6ecck05s"]
 
-[ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_g0jy7"]
-[ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="2_c0s30"]
-[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_nbp6w"]
-[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_dn7xo"]
+[ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_kl6vd"]
+[ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="2_gx7ws"]
+[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="3_38nco"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="4_2r2mj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ekc5y"]
-shader = ExtResource("2_c0s30")
+shader = ExtResource("2_gx7ws")
 shader_parameter/clr = Color(0.435192, 0.435192, 0.435192, 1)
 shader_parameter/type = 2
 shader_parameter/thickness = 1.0
@@ -21,15 +21,11 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]
 bg_color = Color(0, 0, 0, 0.572549)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.176419, 0.176419, 0.176419, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+border_color = Color(0.176, 0.176, 0.176, 0.632)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 shadow_color = Color(0, 0, 0, 0.152941)
 shadow_size = 2
 shadow_offset = Vector2(3, 3)
@@ -42,10 +38,10 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 anti_aliasing = false
 
 [node name="Slot" type="TextureButton" node_paths=PackedStringArray("pressed_panel", "rot_label")]
@@ -54,7 +50,7 @@ offset_right = 80.0
 offset_bottom = 80.0
 pivot_offset = Vector2(40, 40)
 stretch_mode = 4
-script = ExtResource("1_g0jy7")
+script = ExtResource("1_kl6vd")
 pressed_panel = NodePath("pressed")
 rot_label = NodePath("rot")
 
@@ -66,10 +62,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="background texture" type="TextureRect" parent="CenterContainer"]
 modulate = Color(0, 0, 0, 0.0117647)
@@ -79,7 +75,7 @@ layout_mode = 2
 [node name="Image" type="TextureRect" parent="CenterContainer"]
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("2_nbp6w")
+texture = ExtResource("3_38nco")
 expand_mode = 1
 stretch_mode = 5
 
@@ -116,7 +112,7 @@ offset_top = -44.0
 offset_right = -2.0
 grow_horizontal = 0
 grow_vertical = 0
-theme = ExtResource("3_dn7xo")
+theme = ExtResource("4_2r2mj")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 15
@@ -133,7 +129,7 @@ anchor_right = 1.0
 offset_left = -21.0
 offset_bottom = 79.0
 grow_horizontal = 0
-theme = ExtResource("3_dn7xo")
+theme = ExtResource("4_2r2mj")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 15
@@ -148,7 +144,7 @@ anchor_right = 1.0
 offset_left = -21.0
 offset_bottom = 79.0
 grow_horizontal = 0
-theme = ExtResource("3_dn7xo")
+theme = ExtResource("4_2r2mj")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 15
@@ -156,7 +152,6 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="pressed" type="Panel" parent="."]
-visible = false
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dnqhxtkp8jhnd"]
 
-[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="2_3e275"]
+[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/ui/slot.tscn" id="2_3e275"]
 [ext_resource type="Script" path="res://scripts/ui/furnace_ui.gd" id="2_nr2i6"]
 [ext_resource type="Texture2D" uid="uid://db5770yd2432b" path="res://assets/textures/items/beef_raw.png" id="3_4aw2q"]
 [ext_resource type="Texture2D" uid="uid://em5kbswgwfi8" path="res://assets/textures/items/charcoal.png" id="4_8cy1a"]

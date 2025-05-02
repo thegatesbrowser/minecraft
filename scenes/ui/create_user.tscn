@@ -54,7 +54,7 @@ size_flags_horizontal = 3
 text = "USERNAME"
 scroll_active = false
 
-[node name="Username" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Username" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(1.45519e-11, 40)
 layout_mode = 2
 size_flags_horizontal = 3

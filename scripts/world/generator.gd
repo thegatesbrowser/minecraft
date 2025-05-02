@@ -4,7 +4,6 @@ extends VoxelGeneratorScript
 const Structure = preload("res://scripts/world/structure.gd")
 const TreeGenerator = preload("res://scripts/world/tree_generator.gd")
 const HeightmapCurve = preload("res://resources/heightmap_curve.tres")
-const _cave_noise = preload("res://resources/cave_noise.tres")
 const HeatCurve = preload("res://resources/HeatCurve.tres")
 const CaveHeightmapCurve = preload("res://resources/cave_heightmap_curve.tres")
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
@@ -47,6 +46,7 @@ var possible_ore = [iron,diamond]
 
 var HeatNoise = FastNoiseLite.new()
 var caves := []
+var creatures_spawners: Array[Vector3] = []
 
 const _CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
@@ -182,9 +182,6 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			for x in block_size:
 				var height := _get_height_at(gx, gz)
 				
-				
-				
-						
 				var relative_height := height - oy
 				
 				# Dirt and grass
@@ -209,25 +206,14 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 					buffer.fill_area(biome.blocks.stone_layer_block,
 						Vector3(x, 0, z), Vector3(x + 1, relative_height, z + 1), _CHANNEL)
 						
-					
 					if height >= 0:
-						#if temp <= 10:
 						buffer.set_voxel(biome.blocks.surface_block, x, relative_height - 1, z, _CHANNEL)
-						#else:
-							#buffer.set_voxel(SAND, x, relative_height - 1, z, _CHANNEL)
-							
+						
 						if relative_height - 2 >= 0:
-							#if temp <= 10:
 							buffer.set_voxel(biome.blocks.dirt_layer_block,x, relative_height - 2, z, _CHANNEL)
-							#else:
-								#buffer.set_voxel(SAND,x, relative_height - 2, z, _CHANNEL)
-								
+						
 						if relative_height < block_size:
-							pass
 							
-							#
-							#
-							#
 							var plant_size = biome.plants.size() - 1
 							if biome.plants.size()  != 0:
 								var plant = biome.plants[rng.randi_range(0,plant_size)]
@@ -242,11 +228,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 							if rng.randf() < 0.01:
 								buffer.set_voxel(CREATURE_SPAWNER,x,relative_height,z,_CHANNEL)
 								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),biome.possible_creatures.pick_random())
-								TerrainHelper.get_terrain_tool().save_block(Vector3i(x,relative_height,z))
-							elif rng.randf() < 0.1:
-								var voxel_tool := buffer.get_voxel_tool()
-								var a = VoxelBlockyAttributeCustom.new()
-								
+								creatures_spawners.append(Vector3(x,relative_height,z))
+							elif rng.randf() < 0.000001:
+		
 								buffer.set_voxel(PORTAl,x,relative_height,z,_CHANNEL)
 								var worlds = possible_worlds.size() - 1
 								var world = possible_worlds[rng.randi_range(0,worlds)]
@@ -290,13 +274,17 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			var structure : Structure = structure_instance[1]
 			var lower_corner_pos := pos - structure.offset
 			var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
-
-			if aabb.intersects(block_aabb) or !biome.trees:
+			
+			if aabb.intersects(block_aabb) and biome.trees:
+					
 				voxel_tool.paste_masked(lower_corner_pos, 
-					structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,
+					structure.voxels,VoxelBuffer.CHANNEL_TYPE,
 					# Masking
 					VoxelBuffer.CHANNEL_TYPE, AIR)
+					
+			
 
+			
 	buffer.compress_uniform_channels()
 	
 

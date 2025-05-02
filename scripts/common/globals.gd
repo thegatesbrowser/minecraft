@@ -49,7 +49,6 @@ signal remove_portal_data(id:Vector3)
 # ui
 signal new_ui(position:Vector3,instance_path:String)
 signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,health: int)
-signal save_player_ui(index: int, item_path: String, amount: int,parent: String,health: int)
 signal remove_ui(position:Vector3)
 var last_clicked_slot:Node
 var selected_slot:Slot ## the slot that is selected in the hotbar
@@ -72,10 +71,14 @@ signal start_hand_ani(ani_name)
 signal stop_hand_ani()
 
 @onready var waterfog = preload("res://assets/other/waterfog.tscn")
+
 # Backend
 var username:String
-signal send_data(data:Dictionary)
-signal send_change(index: int, item_path: String, amount: int,parent: String,health: int, rot:int)
+signal save
+signal save_slot(index: int, item_path: String, amount: int,parent: String,health: int)
+signal send_to_server(data:Dictionary)
+signal send_slot_data(data:Dictionary)
+
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)

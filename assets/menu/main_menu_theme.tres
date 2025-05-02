@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c1tenirmy1xiy"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://c1tenirmy1xiy"]
 
 [ext_resource type="FontFile" uid="uid://bcyn2himieq3h" path="res://assets/menu/mc_menu.ttf" id="1_usq7f"]
 
@@ -12,6 +12,23 @@ border_color = Color(0.151276, 0.151276, 0.151276, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
+
+[sub_resource type="ImageTexture" id="ImageTexture_tg15r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wopgi"]
+bg_color = Color(0.6, 0.6, 0.6, 0.278431)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ohlpf"]
+bg_color = Color(0.6, 0.6, 0.6, 0.278431)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xcro"]
+bg_color = Color(0.6, 0.6, 0.6, 0.278431)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1egu"]
+bg_color = Color(0.6, 0.6, 0.6, 0.278431)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6i3ra"]
+bg_color = Color(0.6, 0.6, 0.6, 0.278431)
 
 [sub_resource type="StyleBoxEmpty" id="6"]
 
@@ -56,8 +73,23 @@ Button/constants/hseparation = 10
 Button/styles/hover = SubResource("3")
 Button/styles/normal = SubResource("3")
 Button/styles/pressed = SubResource("3")
+HScrollBar/icons/decrement = SubResource("ImageTexture_tg15r")
+HScrollBar/icons/decrement_highlight = SubResource("ImageTexture_tg15r")
+HScrollBar/icons/decrement_pressed = SubResource("ImageTexture_tg15r")
+HScrollBar/icons/increment = SubResource("ImageTexture_tg15r")
+HScrollBar/icons/increment_highlight = SubResource("ImageTexture_tg15r")
+HScrollBar/icons/increment_pressed = SubResource("ImageTexture_tg15r")
+HScrollBar/styles/grabber = SubResource("StyleBoxFlat_wopgi")
+HScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_ohlpf")
+HScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_1xcro")
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_i1egu")
+HScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_6i3ra")
 HSeparator/constants/separation = 16
 HSeparator/styles/separator = SubResource("6")
 Panel/styles/panel = SubResource("StyleBoxFlat_8wr3k")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_ug056")
 VScrollBar/styles/grabber = SubResource("5")
+VScrollBar/styles/grabber_highlight = SubResource("5")
+VScrollBar/styles/grabber_pressed = SubResource("5")
+VScrollBar/styles/scroll = SubResource("5")
+VScrollBar/styles/scroll_focus = SubResource("5")

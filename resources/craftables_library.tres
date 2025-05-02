@@ -1,8 +1,7 @@
-[gd_resource type="Resource" script_class="CraftableLibrary" load_steps=21 format=3 uid="uid://bfr8tc7ljf5l2"]
+[gd_resource type="Resource" script_class="CraftableLibrary" load_steps=20 format=3 uid="uid://bfr8tc7ljf5l2"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_bg3qg"]
 [ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://resources/items/craftables/wood_2.tres" id="2_tspjb"]
-[ext_resource type="Resource" uid="uid://dh62ut64ibysg" path="res://resources/items/craftables/wood_1.tres" id="3_6ayi8"]
 [ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="4_4f3rf"]
 [ext_resource type="Resource" uid="uid://dwyevxsjqljjl" path="res://resources/items/craftables/forge.tres" id="5_44dxb"]
 [ext_resource type="Resource" uid="uid://bhvdh5jd8e1jh" path="res://resources/items/craftables/bed.tres" id="6_w55lx"]
@@ -14,13 +13,13 @@
 [ext_resource type="Resource" uid="uid://cqmhwea1gfd5r" path="res://resources/items/craftables/axe_stone.tres" id="12_etmbp"]
 [ext_resource type="Resource" uid="uid://q0wwywxds52w" path="res://resources/items/craftables/shovel_stone.tres" id="13_r8vrx"]
 [ext_resource type="Resource" uid="uid://kltgxe62khhc" path="res://resources/items/craftables/bow.tres" id="14_7l1fi"]
-[ext_resource type="Resource" uid="uid://bmkvd4u27kgp1" path="res://resources/items/craftables/arrow.tres" id="15_kvtpr"]
 [ext_resource type="Resource" uid="uid://dpkc8k2a64whr" path="res://resources/items/craftables/iron_helment.tres" id="16_cehkx"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable_library.gd" id="16_cxr8e"]
 [ext_resource type="Resource" uid="uid://jkmqicb34cig" path="res://resources/items/craftables/iron_chestplate.tres" id="17_02fb7"]
 [ext_resource type="Resource" uid="uid://cm3ggrje5swt3" path="res://resources/items/craftables/iron_leg.tres" id="18_771tx"]
+[ext_resource type="Resource" uid="uid://ck7wy7ive5y3m" path="res://resources/items/craftables/oak_planks.tres" id="18_y7f6b"]
 [ext_resource type="Resource" uid="uid://b4g78ll6bonjn" path="res://resources/items/craftables/portal.tres" id="19_4qc7d"]
 
 [resource]
 script = ExtResource("16_cxr8e")
-craftable_array = Array[ExtResource("1_bg3qg")]([ExtResource("2_tspjb"), ExtResource("3_6ayi8"), ExtResource("4_4f3rf"), ExtResource("5_44dxb"), ExtResource("6_w55lx"), ExtResource("7_suevq"), ExtResource("8_nulcj"), ExtResource("9_0dxvs"), ExtResource("10_bnnyb"), ExtResource("11_70hn4"), ExtResource("12_etmbp"), ExtResource("13_r8vrx"), ExtResource("14_7l1fi"), ExtResource("15_kvtpr"), ExtResource("16_cehkx"), ExtResource("17_02fb7"), ExtResource("18_771tx"), ExtResource("19_4qc7d")])
+craftable_array = Array[ExtResource("1_bg3qg")]([ExtResource("2_tspjb"), ExtResource("4_4f3rf"), ExtResource("5_44dxb"), ExtResource("6_w55lx"), ExtResource("7_suevq"), ExtResource("8_nulcj"), ExtResource("9_0dxvs"), ExtResource("10_bnnyb"), ExtResource("11_70hn4"), ExtResource("12_etmbp"), ExtResource("13_r8vrx"), ExtResource("14_7l1fi"), ExtResource("16_cehkx"), ExtResource("17_02fb7"), ExtResource("18_771tx"), ExtResource("19_4qc7d"), ExtResource("18_y7f6b")])

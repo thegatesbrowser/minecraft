@@ -15,12 +15,12 @@ output_amount = 1
 items_needed = {
 1: {
 "amount": 3,
-"name": "wood",
+"name": "log_oak",
 "texture": ExtResource("1_6ol14")
 },
 2: {
 "amount": 3,
-"name": "leaf",
+"name": "leaf_oak",
 "texture": ExtResource("2_dw1ax")
 }
 }

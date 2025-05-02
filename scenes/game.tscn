@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=92 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -11,14 +11,14 @@
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
 [ext_resource type="Script" path="res://scripts/world/building_check.gd" id="8_na7qa"]
-[ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/items/inventory.tscn" id="10_hxw3b"]
+[ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
 [ext_resource type="PackedScene" uid="uid://b4ef0j31tttko" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
 [ext_resource type="PackedScene" uid="uid://dwwv5ywawdbba" path="res://scenes/ui/crafting_ui.tscn" id="12_151fq"]
 [ext_resource type="PackedScene" uid="uid://cog3w5pk86koo" path="res://scenes/ui/selection_buttons.tscn" id="12_qvgc7"]
 [ext_resource type="Resource" uid="uid://bfr8tc7ljf5l2" path="res://resources/craftables_library.tres" id="13_p6nu7"]
 [ext_resource type="Script" path="res://scripts/ui/armour_holder.gd" id="13_wsp3s"]
 [ext_resource type="Script" path="res://scripts/ui/stats_ui_update.gd" id="14_ho63k"]
-[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/items/slot.tscn" id="14_ihskq"]
+[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/ui/slot.tscn" id="14_ihskq"]
 [ext_resource type="Texture2D" uid="uid://ck5pnmgsl8f7j" path="res://assets/textures/items/leather_helmet.png" id="15_kdnva"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
 [ext_resource type="Texture2D" uid="uid://dp2u2uccah4f8" path="res://assets/textures/items/leather_chestplate.png" id="16_jipce"]
@@ -64,11 +64,9 @@
 [ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="52_wm2ll"]
 [ext_resource type="Resource" uid="uid://dsltjvratfyrg" path="res://resources/items/iron_chestplate.tres" id="53_asrdx"]
 [ext_resource type="Resource" uid="uid://l4nd5is685cm" path="res://resources/items/pants.tres" id="54_57bq4"]
+[ext_resource type="Script" path="res://scripts/ui/crafting_menu.gd" id="55_ri7k6"]
 [ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
-[ext_resource type="Texture2D" uid="uid://u3f7kepv2btw" path="res://assets/textures/pixil-frame-0 - 2025-04-13T101630.965.png" id="59_1xpfq"]
-[ext_resource type="Texture2D" uid="uid://dak3r0858ud15" path="res://assets/textures/pixil-frame-0 - 2025-04-13T101606.662.png" id="60_dp70j"]
-[ext_resource type="Texture2D" uid="uid://dg5xyra8ndvec" path="res://assets/textures/items/cooked_meat.png" id="61_jbvdl"]
 [ext_resource type="Script" path="res://scripts/ui/gameplay_settings.gd" id="66_h5gdj"]
 [ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="69_713dd"]
 [ext_resource type="AudioStream" uid="uid://sx4737eqqk7h" path="res://assets/sounds/ambient/Soulsand_valley_wind3.ogg" id="70_eg5sl"]
@@ -159,9 +157,6 @@ volumetric_fog_albedo = Color(0.654453, 0.823636, 0.866721, 1)
 volumetric_fog_detail_spread = 4.0
 volumetric_fog_ambient_inject = 0.96
 
-[sub_resource type="Environment" id="Environment_dhksy"]
-background_mode = 1
-
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
 occlusion_enabled = false
@@ -169,6 +164,21 @@ occlusion_enabled = false
 [sub_resource type="Resource" id="Resource_c0ten"]
 script = ExtResource("56_rtthk")
 items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), ExtResource("28_g6gey"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), ExtResource("38_met67"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_xhoya"]
+color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_211ce"]
+bg_color = Color(0, 0, 0, 0.168)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ouh7k"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wwb2f"]
+bg_color = Color(0, 0, 0, 0.168)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ai7gg"]
+bg_color = Color(0.333054, 0.119308, 2.40654e-08, 1)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
@@ -216,13 +226,9 @@ shadow_blur = 0.5
 script = ExtResource("4_dglu2")
 speed = 0.01
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128, 0)
-cull_mask = 0
-environment = SubResource("Environment_dhksy")
-
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 run_stream_in_editor = false
+mesh_block_size = 32
 generator = ExtResource("4_eo0cp")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 script = ExtResource("7_dy7rt")
@@ -258,6 +264,21 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("3_v2bsq")
 
+[node name="prombt" type="Label" parent="Player UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -146.0
+offset_top = -59.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("3_v2bsq")
+text = "F - Text Chat
+~ - Pause Menu"
+
 [node name="Inventory holder" type="Control" parent="Player UI" node_paths=PackedStringArray("h_box_container")]
 process_mode = 3
 visible = false
@@ -271,7 +292,7 @@ grow_vertical = 2
 pivot_offset = Vector2(960, 540)
 mouse_filter = 2
 script = ExtResource("3_fe1qo")
-h_box_container = NodePath("PanelContainer/MarginContainer/Inventory")
+h_box_container = NodePath("PanelContainer/MarginContainer/VBoxContainer/Inventory")
 
 [node name="PanelContainer" type="PanelContainer" parent="Player UI/Inventory holder"]
 layout_mode = 1
@@ -280,10 +301,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -521.0
-offset_top = -415.0
-offset_right = 521.0
-offset_bottom = 415.0
+offset_left = -340.0
+offset_top = -252.0
+offset_right = 340.0
+offset_bottom = 252.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -294,54 +315,101 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer"]
-custom_minimum_size = Vector2(1012, 800)
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Crafting" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
-layout_mode = 2
-send_to_inventory = NodePath("../Inventory")
-crafting_library = ExtResource("13_p6nu7")
-
-[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" node_paths=PackedStringArray("slot_holder")]
+[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory" node_paths=PackedStringArray("slot_holder")]
 layout_mode = 2
 script = ExtResource("13_wsp3s")
 slot_holder = NodePath("MarginContainer/Slot_Holder")
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer"]
+[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Helment" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Helment" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "helment"
 background_texture = ExtResource("15_kdnva")
 
-[node name="Chest" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Chest" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "chest_plate"
 background_texture = ExtResource("16_jipce")
 
-[node name="Pants" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Pants" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "pants"
 background_texture = ExtResource("17_vqxny")
 
-[node name="Inventory" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
+[node name="Inventory" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 sync = false
 items_library = SubResource("Resource_c0ten")
 
+[node name="Crafting Menu" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input_1", "input_2", "output_slot")]
+visible = false
+layout_mode = 2
+script = ExtResource("55_ri7k6")
+craftables = ExtResource("13_p6nu7")
+input_1 = NodePath("MarginContainer/HBoxContainer/Slot")
+input_2 = NodePath("MarginContainer/HBoxContainer/Slot2")
+output_slot = NodePath("MarginContainer/HBoxContainer/Slot3")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Slot" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+
+[node name="Slot2" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxLine_xhoya")
+
+[node name="Label" type="Label" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "="
+
+[node name="VSeparator2" type="VSeparator" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxLine_xhoya")
+
+[node name="Slot3" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+
+[node name="Crafting" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
+layout_mode = 2
+theme = ExtResource("3_v2bsq")
+send_to_inventory = NodePath("../Inventory/Inventory")
+crafting_library = ExtResource("13_p6nu7")
+
 [node name="Craftable Info" parent="Player UI/Inventory holder" instance=ExtResource("11_cdfh2")]
+visible = false
 layout_mode = 0
 offset_bottom = 47.0
 mouse_filter = 2
@@ -357,35 +425,268 @@ mouse_filter = 2
 script = ExtResource("14_ho63k")
 
 [node name="HBoxContainer" type="VBoxContainer" parent="Player UI/stats_ui_update"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 108.0
-offset_bottom = 216.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -416.0
+offset_top = -128.0
+offset_right = 416.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="healthbar" type="TextureProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
-custom_minimum_size = Vector2(100, 100)
+[node name="healthbar" type="ProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
+custom_minimum_size = Vector2(1.45519e-11, 10)
 layout_mode = 2
-value = 10.0
-fill_mode = 5
-nine_patch_stretch = true
-texture_under = ExtResource("59_1xpfq")
-texture_progress = ExtResource("60_dp70j")
-tint_under = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_styles/background = SubResource("StyleBoxFlat_211ce")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ouh7k")
+step = 1.0
+value = 100.0
+show_percentage = false
 metadata/_edit_use_anchors_ = true
 
-[node name="hungerbar" type="TextureProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
-custom_minimum_size = Vector2(100, 100)
+[node name="hungerbar" type="ProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
+custom_minimum_size = Vector2(1.45519e-11, 10)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_styles/background = SubResource("StyleBoxFlat_wwb2f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ai7gg")
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Hotbar" parent="Player UI" groups=["Hotbar"] instance=ExtResource("12_qvgc7")]
+process_mode = 3
+layout_mode = 1
+
+[node name="Text Chat" type="PanelContainer" parent="Player UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -512.0
+offset_top = -272.0
+offset_right = 4.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("3_v2bsq")
+script = ExtResource("27_yvp68")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Text Chat"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Text Chat/MarginContainer"]
+layout_mode = 2
+
+[node name="message display" type="TextEdit" parent="Player UI/Text Chat/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1.45519e-11, 200)
+layout_mode = 2
+editable = false
+
+[node name="message_edit" type="LineEdit" parent="Player UI/Text Chat/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "MESSAGE"
+clear_button_enabled = true
+
+[node name="Pause Menu" type="Control" parent="Player UI" node_paths=PackedStringArray("settings")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_uiy3n")
+settings = NodePath("Settings")
+
+[node name="Buttons" type="PanelContainer" parent="Player UI/Pause Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = -67.0
+offset_right = 106.0
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(106, 540)
+theme = ExtResource("3_v2bsq")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Buttons"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Buttons/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Pause Menu"
+
+[node name="HSeparator" type="HSeparator" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_xl6xy")
+
+[node name="Main Menu" type="Button" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Main Menu"
+
+[node name="Settings" type="Button" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="Settings" type="TabContainer" parent="Player UI/Pause Menu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -321.0
+offset_right = 600.0
+offset_bottom = 321.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_v2bsq")
+current_tab = 1
+
+[node name="InputSettings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q5s33")
+script = ExtResource("18_1gacs")
+input_button_scene = ExtResource("22_2hbom")
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/InputSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionList" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 0
-value = 100.0
-fill_mode = 3
-nine_patch_stretch = true
-texture_under = ExtResource("61_jbvdl")
-texture_progress = ExtResource("61_jbvdl")
-tint_under = Color(0, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
+
+[node name="ResetButton" type="Button" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+text = "reset to default"
+
+[node name="Grapthic Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings" node_paths=PackedStringArray("enviorment")]
+layout_mode = 2
+script = ExtResource("21_8u2nj")
+enviorment = NodePath("../../../../WorldEnvironment")
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Glow" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Glow"
+
+[node name="Fog" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Fog
+"
+
+[node name="Ssao" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Ssao
+"
+
+[node name="SDFGI" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "SDFGI
+"
+
+[node name="TAA" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "TAA"
+
+[node name="view_range" type="LineEdit" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "View Range : 800"
+
+[node name="Gameplay Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
+visible = false
+layout_mode = 2
+script = ExtResource("66_h5gdj")
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Gameplay Settings"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer"]
+layout_mode = 2
+
+[node name="Headbob" type="CheckButton" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Headbob"
+
+[node name="varing fov" type="CheckButton" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Varying FOV"
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -4
@@ -404,268 +705,41 @@ mouse_filter = 2
 
 [node name="Label" type="Label" parent="Background/ScreenCenterCross"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.152941)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 10
 theme_override_font_sizes/font_size = 30
 text = "+"
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="WORLD SFX" type="Node" parent="."]
 
-[node name="prombt" type="Label" parent="UI"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -144.0
-offset_top = -28.0
-grow_horizontal = 0
-grow_vertical = 0
-theme = ExtResource("3_v2bsq")
-text = "F - Text Chat
-~ - Pause Menu"
-
-[node name="Pause Menu" type="Control" parent="UI" node_paths=PackedStringArray("settings")]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("15_uiy3n")
-settings = NodePath("Settings")
-
-[node name="Pause Menu" type="PanelContainer" parent="UI/Pause Menu"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 212.0
-grow_vertical = 2
-pivot_offset = Vector2(106, 540)
-theme = ExtResource("3_v2bsq")
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/Pause Menu/Pause Menu"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause Menu/Pause Menu/MarginContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 26
-text = "Pause Menu"
-
-[node name="HSeparator" type="HSeparator" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_xl6xy")
-
-[node name="Main Menu" type="Button" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Main Menu"
-
-[node name="Settings" type="Button" parent="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Settings"
-
-[node name="Settings" type="TabContainer" parent="UI/Pause Menu"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -600.0
-offset_top = -321.0
-offset_right = 600.0
-offset_bottom = 321.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-theme = ExtResource("3_v2bsq")
-current_tab = 1
-
-[node name="InputSettings" type="PanelContainer" parent="UI/Pause Menu/Settings"]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_q5s33")
-script = ExtResource("18_1gacs")
-input_button_scene = ExtResource("22_2hbom")
-metadata/_tab_index = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/Pause Menu/Settings/InputSettings"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause Menu/Settings/InputSettings/MarginContainer"]
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ActionList" type="VBoxContainer" parent="UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ResetButton" type="Button" parent="UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-focus_mode = 0
-mouse_filter = 1
-text = "reset to default"
-
-[node name="Grapthic Settings" type="PanelContainer" parent="UI/Pause Menu/Settings" node_paths=PackedStringArray("enviorment")]
-layout_mode = 2
-script = ExtResource("21_8u2nj")
-enviorment = NodePath("../../../../WorldEnvironment")
-metadata/_tab_index = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/Pause Menu/Settings/Grapthic Settings"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer"]
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Glow" type="CheckButton" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-button_pressed = true
-text = "Glow"
-
-[node name="Fog" type="CheckButton" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-button_pressed = true
-text = "Fog
-"
-
-[node name="Ssao" type="CheckButton" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-button_pressed = true
-text = "Ssao
-"
-
-[node name="SDFGI" type="CheckButton" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "SDFGI
-"
-
-[node name="TAA" type="CheckButton" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "TAA"
-
-[node name="view_range" type="LineEdit" parent="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-placeholder_text = "View Range : 800"
-
-[node name="Gameplay Settings" type="PanelContainer" parent="UI/Pause Menu/Settings"]
-visible = false
-layout_mode = 2
-script = ExtResource("66_h5gdj")
-metadata/_tab_index = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/Pause Menu/Settings/Gameplay Settings"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause Menu/Settings/Gameplay Settings/MarginContainer"]
-layout_mode = 2
-
-[node name="Headbob" type="CheckButton" parent="UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-button_pressed = true
-text = "Headbob"
-
-[node name="varing fov" type="CheckButton" parent="UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-button_pressed = true
-text = "Varying FOV"
-
-[node name="Hotbar" parent="UI" groups=["Hotbar"] instance=ExtResource("12_qvgc7")]
-process_mode = 3
-
-[node name="Text Chat" type="PanelContainer" parent="UI"]
-visible = false
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -512.0
-offset_top = -272.0
-offset_right = 4.0
-offset_bottom = -2.0
-grow_horizontal = 0
-grow_vertical = 0
-theme = ExtResource("3_v2bsq")
-script = ExtResource("27_yvp68")
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/Text Chat"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Text Chat/MarginContainer"]
-layout_mode = 2
-
-[node name="message display" type="TextEdit" parent="UI/Text Chat/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1.45519e-11, 200)
-layout_mode = 2
-editable = false
-
-[node name="message_edit" type="LineEdit" parent="UI/Text Chat/MarginContainer/VBoxContainer"]
-layout_mode = 2
-placeholder_text = "MESSAGE"
-clear_button_enabled = true
-
-[node name="Ambient sound" type="AudioStreamPlayer" parent="."]
+[node name="Ambient sound" type="AudioStreamPlayer" parent="WORLD SFX"]
 stream = ExtResource("23_fu53x")
 volume_db = 3.97452
 autoplay = true
 parameters/looping = true
 
-[node name="Random Sound2" parent="." instance=ExtResource("24_r824s")]
+[node name="Random Sound2" parent="WORLD SFX" instance=ExtResource("24_r824s")]
 stream = SubResource("AudioStreamRandomizer_iqylj")
 volume_db = -20.6843
 chance = 0.5
 
-[node name="Random Sound" parent="." instance=ExtResource("24_r824s")]
+[node name="Random Sound" parent="WORLD SFX" instance=ExtResource("24_r824s")]
 
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_helment_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_chest_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/PanelContainer/MarginContainer/Inventory/Armour" method="_on_pants_item_changed"]
-[connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Main Menu" to="UI/Pause Menu" method="_on_main_menu_pressed"]
-[connection signal="pressed" from="UI/Pause Menu/Pause Menu/MarginContainer/VBoxContainer/Settings" to="UI/Pause Menu" method="_on_settings_pressed"]
-[connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]
-[connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Fog" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_fog_toggled"]
-[connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Ssao" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_ssao_toggled"]
-[connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/SDFGI" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_sdfgi_toggled"]
-[connection signal="toggled" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TAA" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_taa_toggled"]
-[connection signal="text_submitted" from="UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/view_range" to="UI/Pause Menu/Settings/Grapthic Settings" method="_on_view_range_text_submitted"]
-[connection signal="toggled" from="UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/Headbob" to="UI/Pause Menu/Settings/Gameplay Settings" method="_on_headbob_toggled"]
-[connection signal="toggled" from="UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/varing fov" to="UI/Pause Menu/Settings/Gameplay Settings" method="_on_varing_fov_toggled"]
-[connection signal="text_submitted" from="UI/Text Chat/MarginContainer/VBoxContainer/message_edit" to="UI/Text Chat" method="_on_line_edit_text_submitted"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour" method="_on_helment_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour" method="_on_chest_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour" method="_on_pants_item_changed"]
+[connection signal="text_submitted" from="Player UI/Text Chat/MarginContainer/VBoxContainer/message_edit" to="Player UI/Text Chat" method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Main Menu" to="Player UI/Pause Menu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Settings" to="Player UI/Pause Menu" method="_on_settings_pressed"]
+[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]
+[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Fog" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_fog_toggled"]
+[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Ssao" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_ssao_toggled"]
+[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/SDFGI" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_sdfgi_toggled"]
+[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TAA" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_taa_toggled"]
+[connection signal="text_submitted" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/view_range" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_view_range_text_submitted"]
+[connection signal="toggled" from="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/Headbob" to="Player UI/Pause Menu/Settings/Gameplay Settings" method="_on_headbob_toggled"]
+[connection signal="toggled" from="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/varing fov" to="Player UI/Pause Menu/Settings/Gameplay Settings" method="_on_varing_fov_toggled"]
