@@ -115,7 +115,7 @@ func _makes_grass_die(raw_type: int) -> bool:
 
 
 func _random_tick_callback(pos: Vector3i, value: int) -> void:
-	print(value)
+	#print(value)
 	if value == VoxelLibraryResource.get_model_index_default("grass"):
 		var above := pos + Vector3i(0, 1, 0)
 		var above_v := _voxel_tool.get_voxel(above)
@@ -176,6 +176,7 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 		#print("creature")
 		if rng.randf() < 0.8:
 			var creature = _voxel_tool.get_voxel_metadata(pos)
+			
 			#print("creature? ", _voxel_tool.get_voxel_metadata(pos))
 			if creature == null:
 				return

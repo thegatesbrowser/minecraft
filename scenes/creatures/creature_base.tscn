@@ -83,6 +83,8 @@ debug_shape_custom_color = Color(1, 1, 0, 1)
 
 [node name="target" type="MeshInstance3D" parent="."]
 visible = false
+visibility_range_begin = 60.0
+visibility_range_fade_mode = 1
 mesh = SubResource("SphereMesh_wyi4v")
 surface_material_override/0 = SubResource("StandardMaterial3D_akaej")
 

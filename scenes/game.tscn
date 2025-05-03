@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=93 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/other/time.gd" id="4_dglu2"]
 [ext_resource type="VoxelGeneratorScript" uid="uid://c3hi068pr8l37" path="res://resources/generator.tres" id="4_eo0cp"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
+[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_p0te7"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
 [ext_resource type="Script" path="res://scripts/world/building_check.gd" id="8_na7qa"]
@@ -141,6 +142,8 @@ tonemap_mode = 2
 tonemap_white = 1.49
 ssr_fade_in = 0.15529
 ssao_enabled = true
+ssao_radius = 1.83
+ssao_intensity = 2.55
 ssil_intensity = 2.68
 sdfgi_use_occlusion = true
 glow_enabled = true
@@ -224,11 +227,11 @@ shadow_blur = 0.5
 
 [node name="Time" type="Node" parent="WorldEnvironment"]
 script = ExtResource("4_dglu2")
-speed = 0.01
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 run_stream_in_editor = false
-mesh_block_size = 32
+use_gpu_generation = true
+stream = ExtResource("5_p0te7")
 generator = ExtResource("4_eo0cp")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 script = ExtResource("7_dy7rt")
@@ -252,6 +255,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 128, 8)
 
 [node name="Player UI" type="Control" parent="."]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -281,7 +285,6 @@ text = "F - Text Chat
 
 [node name="Inventory holder" type="Control" parent="Player UI" node_paths=PackedStringArray("h_box_container")]
 process_mode = 3
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -690,6 +693,7 @@ text = "Varying FOV"
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -4
+visible = false
 
 [node name="ScreenCenterCross" type="CenterContainer" parent="Background"]
 anchors_preset = 15

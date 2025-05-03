@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=98 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=99 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
 [ext_resource type="Texture2D" uid="uid://4kefle857qqh" path="res://assets/textures.webp" id="3_ewiam"]
@@ -500,6 +500,13 @@ unique_name = &"fire"
 base_model = SubResource("VoxelBlockyModelMesh_7fnfm")
 resource_name = "fire"
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_huvcx"]
+render_priority = 0
+shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = 60.0
+shader_parameter/distance_fade_max = 50.0
+shader_parameter/grass_texture = ExtResource("15_2yhxf")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pt7dp"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
@@ -537,6 +544,8 @@ blend_shape_mode = 0
 
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_xmpic"]
 mesh = SubResource("ArrayMesh_v8pyf")
+material_override_0 = SubResource("ShaderMaterial_huvcx")
+material_override_1 = SubResource("ShaderMaterial_huvcx")
 collision_enabled_0 = false
 collision_enabled_1 = false
 
@@ -573,6 +582,7 @@ base_model = SubResource("VoxelBlockyModelCube_kwwuv")
 resource_name = "hell_stone"
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_ydxtk"]
+random_tickable = true
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_06gsb"]
 unique_name = &"creature_spawner"

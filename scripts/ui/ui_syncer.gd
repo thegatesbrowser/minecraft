@@ -23,12 +23,14 @@ func open_ui(position: Vector3) -> void:
 
 
 func ui_updated(index: int, item_path: String, amount: int, parent: String, health: float, rot: int) -> void:
+	#print("updated")
 	send_to_server.rpc(index,item_path,amount,parent,health,rot)
 
 
 @rpc("any_peer", "call_local")
 func send_to_server(index: int, item_path: String, amount: int, parent: String, health:float, rot: int) -> void:
 	if multiplayer.is_server():
+		#print("openui ",opened_ui)
 		if opened_ui == Vector3.ZERO: return
 		if !server_ui_info.has(str(opened_ui)): return
 		server_ui_info[str(opened_ui)].inventory[str(index)] = {
@@ -59,7 +61,7 @@ func check_server(position: Vector3) -> void:
 
 @rpc("any_peer", "call_local")
 func give_clients(server_data: Dictionary) -> void:
-	var ui: Control = load(server_data.scene).instantiate()
+	var ui = load(server_data.scene).instantiate()
 	inventory_holder.add_child(ui)
 	ui.open(server_data.inventory)
 	inventory_holder.show()

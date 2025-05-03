@@ -3631,6 +3631,12 @@ _subresources={
 "slice_99/start_frame": 0,
 "slices/amount": 0
 }
+},
+"materials": {
+"m_c25c530e-2862-e815-4f49-95dedfb78997": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/materials/fox.tres"
+}
 }
 }
 gltf/naming_version=1

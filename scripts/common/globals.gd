@@ -48,7 +48,7 @@ signal remove_portal_data(id:Vector3)
 
 # ui
 signal new_ui(position:Vector3,instance_path:String)
-signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,health: int)
+signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,health: int, rot:int)
 signal remove_ui(position:Vector3)
 var last_clicked_slot:Node
 var selected_slot:Slot ## the slot that is selected in the hotbar
