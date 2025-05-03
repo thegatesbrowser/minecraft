@@ -577,6 +577,12 @@ func mine_and_place(delta:float):
 					if hotbar_item != null:
 						coll.give(hotbar_item,name.to_int())
 						Globals.remove_item_from_hotbar.emit()
+						
+				elif coll.creature_resource.utility != null:
+					var util = coll.creature_resource.utility as Utilities
+					if util.has_ui:
+						print(coll.spawn_pos)
+						Globals.open_inventory.emit(coll.spawn_pos)
 		
 	if Input.is_action_just_pressed("Mine"):
 		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar

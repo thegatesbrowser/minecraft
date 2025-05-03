@@ -49,6 +49,7 @@ func custom_spawn(data: Array) -> Node:
 	creature.set_multiplayer_authority(id)
 	creature.name = str(id)
 	creature.position = spawn_position
+	creature.spawn_pos = spawn_position
 	creature.creature_resource = creature_resource
 	
 	create_viewer(id, creature)

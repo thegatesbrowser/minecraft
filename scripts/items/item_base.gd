@@ -14,3 +14,5 @@ class_name ItemBase
 @export var forgable:bool = false
 @export var forge_time:float = 2.0
 @export var output_item:ItemBase
+
+@export var value:int = 10

@@ -3,6 +3,7 @@ class_name Slot
 
 signal item_changed(index:int,item_path:String,amount:int,parent:String,health:float,rot:int)
 
+@export var locked:bool = false
 @export var pressed_panel: Panel
 
 @export var type: String = "inventory"
@@ -75,17 +76,18 @@ func _ready() -> void:
 
 
 func _on_pressed() -> void:
-	if Globals.paused:
-		if type == "hotbar":
+	if !locked:
+		if Globals.paused:
+			if type == "hotbar":
+				if Item_resource != null:
+					Globals.hotbar_slot_clicked.emit(self)
+					
+			
 			if Item_resource != null:
-				Globals.hotbar_slot_clicked.emit(self)
-				
-		
-		if Item_resource != null:
-			Globals.slot_clicked(self)
-		else:
-			if Globals.last_clicked_slot != null:
 				Globals.slot_clicked(self)
+			else:
+				if Globals.last_clicked_slot != null:
+					Globals.slot_clicked(self)
 
 
 func update_slot() -> void:

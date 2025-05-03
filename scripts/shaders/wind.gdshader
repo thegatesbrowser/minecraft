@@ -16,7 +16,7 @@ void fragment(){
 	ALBEDO = texture(grass_texture, UV).rgb;
 	ALPHA  = texture(grass_texture, UV).a;
 	ALPHA_SCISSOR_THRESHOLD = .9;
-	
+
 	// Distance Fade: Pixel Dither
 	  float fade_distance = length(VERTEX);
 

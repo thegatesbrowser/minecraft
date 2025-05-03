@@ -687,7 +687,6 @@ stream_0/stream = ExtResource("13_xnj4e")
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "fall_timer", "floor_ray", "skeleton_3d") groups=["Player"]]
 script = ExtResource("1")
 defualt_hand_model = ExtResource("2_w6sp7")
-WALK_SPEED = 100.0
 SPRINT_SPEED = 7.0
 CROUCH_SPEED = 1.0
 rotation_root = NodePath("RotationRoot")

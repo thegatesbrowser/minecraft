@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b7pkn8o3updul"]
+
+[ext_resource type="Texture2D" uid="uid://ce0jc1tvm65ru" path="res://assets/models/fox_Image_0.png" id="1_5qa58"]
+
+[resource]
+resource_name = "m_c25c530e-2862-e815-4f49-95dedfb78997"
+cull_mode = 2
+albedo_texture = ExtResource("1_5qa58")
+metallic_specular = 0.2
+texture_filter = 2
+distance_fade_mode = 2
+distance_fade_min_distance = 60.0
+distance_fade_max_distance = 50.0

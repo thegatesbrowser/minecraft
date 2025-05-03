@@ -10,8 +10,6 @@ class_name Creature
 @export var damage: int
 @export var speed: float = 5.0
 @export var coll_shape: Shape3D
-@export var walk_ani_name: String
-@export var idle_ani_name: String
 @export var mesh_name:String
 @export var hurt_sound:AudioStream
 @export var death_sound:AudioStream
@@ -30,3 +28,5 @@ class_name Creature
 @export var creature_name: String
 @export var texture: Texture
 @export var drop_items: Array[ItemBase] = []
+
+@export var utility:Utilities

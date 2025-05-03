@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_v7ur5"]
 script = ExtResource("3_7rw1i")
 has_ui = true
-ui_scene_path = "res://scenes/items/inventory.tscn"
+ui_scene_path = "res://scenes/ui/inventory.tscn"
 spawn_point = false
 portal = false
 
@@ -24,3 +24,4 @@ utility = SubResource("Resource_v7ur5")
 rotatable = true
 forgable = false
 forge_time = 2.0
+value = 10

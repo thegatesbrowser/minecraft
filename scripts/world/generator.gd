@@ -9,7 +9,6 @@ const CaveHeightmapCurve = preload("res://resources/cave_heightmap_curve.tres")
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const ItemLibrary  = preload("res://resources/items_library.tres")
 
-@export var noise:NoiseTexture2D
 var _array_mutex := Mutex.new()
 
 # TODO Don't hardcode, get by name from library somehow
@@ -34,10 +33,6 @@ var iron := preload("res://resources/items/iron_block.tres")
 var diamond := preload("res://resources/items/diamond_block.tres")
 
 @export var possible_worlds: Array[String]
-
-@export var desert_creatures: Array[Creature]
-@export var forest_creatures: Array[Creature]
-
 
 @export var biomes : Array[Biome]
 
@@ -94,10 +89,11 @@ func _init():
 	_heightmap_noise.frequency = 1.0 / 128.0
 	_heightmap_noise.fractal_octaves = 4
 	
-	HeatNoise.noise_type = FastNoiseLite.TYPE_PERLIN
-	HeatNoise.frequency = 0.0009
+	HeatNoise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	HeatNoise.frequency = 0.0001
 	HeatNoise.fractal_octaves = 5
 	HeatNoise.fractal_weighted_strength = 1
+	HeatNoise.fractal_gain = 0
 	
 
 	# IMPORTANT
@@ -135,28 +131,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 
 	# Ground
 	
-	temp = temp_data(origin_in_voxels.x,origin_in_voxels.z)
 	
-	if !biome:
-		_array_mutex.lock()
-		var test_biome =  get_biome(temp)
-		if test_biome != null:
-				biome =test_biome
-		_array_mutex.unlock()
-	else:
-		if biome:
-			if temp <= biome.min_temp:
-				_array_mutex.lock()
-				var test_biome =  get_biome(temp)
-				if test_biome != null:
-					biome =test_biome
-				_array_mutex.unlock()
-			elif temp >= biome.max_temp:
-				_array_mutex.lock()
-				var test_biome =  get_biome(temp)
-				if test_biome != null:
-					biome =test_biome
-				_array_mutex.unlock()
+	
+	
 				
 	
 	if origin_in_voxels.y > _heightmap_max_y:
@@ -182,6 +159,32 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			for x in block_size:
 				var height := _get_height_at(gx, gz)
 				
+				temp = temp_data(gx,gz)
+				
+				if !biome:
+					_array_mutex.lock()
+					var test_biome =  get_biome(temp)
+					if test_biome != null:
+							biome =test_biome
+					_array_mutex.unlock()
+				else:
+					if biome:
+						if temp <= biome.min_temp:
+							_array_mutex.lock()
+							var test_biome =  get_biome(temp)
+							if test_biome != null:
+								biome =test_biome
+							_array_mutex.unlock()
+						elif temp >= biome.max_temp:
+							_array_mutex.lock()
+							var test_biome =  get_biome(temp)
+							if test_biome != null:
+								biome =test_biome
+							_array_mutex.unlock()
+							
+				if biome == null:
+					return
+					
 				var relative_height := height - oy
 				
 				# Dirt and grass
@@ -214,14 +217,14 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 						
 						if relative_height < block_size:
 							
-							var plant_size = biome.plants.size() - 1
-							if biome.plants.size()  != 0:
+							if rng.randf() <= biome.plant_chance:
+								var plant_size = biome.plants.size() - 1
 								var plant = biome.plants[rng.randi_range(0,plant_size)]
 								
 								var foliage
+							
+								foliage = plant
 								
-								if rng.randf() <= biome.plant_chance:
-									foliage = plant
 								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
 							
 							#

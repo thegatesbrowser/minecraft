@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://clt3q2coc8mup"]
+
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_6j2q0"]
+[ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/ui/slot.tscn" id="2_62if8"]
+[ext_resource type="Script" path="res://scripts/ui/trading_ui.gd" id="2_sgsw1"]
+[ext_resource type="Resource" uid="uid://bh4f3xyyxfdql" path="res://resources/items_library.tres" id="3_8q0od"]
+
+[node name="Trading_UI" type="PanelContainer" node_paths=PackedStringArray("sell_slot", "buy_slot")]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_6j2q0")
+script = ExtResource("2_sgsw1")
+items_lib = ExtResource("3_8q0od")
+sell_slot = NodePath("MarginContainer/VBoxContainer/offer/Sell/Sell")
+buy_slot = NodePath("MarginContainer/VBoxContainer/offer/Buy/Buy")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Trading"
+horizontal_alignment = 1
+
+[node name="offer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 45
+
+[node name="Sell" type="VBoxContainer" parent="MarginContainer/VBoxContainer/offer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/offer/Sell"]
+layout_mode = 2
+text = "Sell"
+horizontal_alignment = 1
+
+[node name="Sell" parent="MarginContainer/VBoxContainer/offer/Sell" instance=ExtResource("2_62if8")]
+layout_mode = 2
+
+[node name="offer cost" type="Label" parent="MarginContainer/VBoxContainer/offer/Sell"]
+layout_mode = 2
+text = "$0"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/offer"]
+layout_mode = 2
+
+[node name="Buy" type="VBoxContainer" parent="MarginContainer/VBoxContainer/offer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/offer/Buy"]
+layout_mode = 2
+text = "Buy
+"
+horizontal_alignment = 1
+
+[node name="Buy" parent="MarginContainer/VBoxContainer/offer/Buy" instance=ExtResource("2_62if8")]
+layout_mode = 2
+locked = true
+
+[node name="buy cost" type="Label" parent="MarginContainer/VBoxContainer/offer/Buy"]
+layout_mode = 2
+text = "$0"
+horizontal_alignment = 1

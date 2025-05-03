@@ -1,18 +1,19 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=4 format=3 uid="uid://depbi3f8nq8v0"]
+[gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://depbi3f8nq8v0"]
 
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="1_0lo7b"]
 [ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/Glowtail.tres" id="1_8aweq"]
 [ext_resource type="Script" path="res://scripts/world/biome.gd" id="1_ugi3b"]
+[ext_resource type="Resource" uid="uid://c0itwwmcp2khv" path="res://resources/creatures/trader.tres" id="3_e7qn6"]
 
 [resource]
 script = ExtResource("1_ugi3b")
 min_temp = 11.0
 max_temp = 30.0
 biome_name = "desert"
-possible_creatures = Array[ExtResource("1_0lo7b")]([ExtResource("1_8aweq")])
+possible_creatures = Array[ExtResource("1_0lo7b")]([ExtResource("1_8aweq"), ExtResource("3_e7qn6")])
 plants = [&"reeds"]
 trees = false
-plant_chance = 1.45519e-11
+plant_chance = 0.1
 blocks = {
 "dirt_layer_block": "sand",
 "stone_layer_block": "stone",

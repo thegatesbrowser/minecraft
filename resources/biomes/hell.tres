@@ -10,9 +10,9 @@ min_temp = 31.0
 max_temp = 60.0
 biome_name = "Hell"
 possible_creatures = Array[ExtResource("1_5laei")]([ExtResource("2_i0kjt")])
-plants = []
+plants = [&"flower"]
 trees = false
-plant_chance = 1.0
+plant_chance = 1.45519e-11
 blocks = {
 "dirt_layer_block": "lava",
 "stone_layer_block": "stone",
