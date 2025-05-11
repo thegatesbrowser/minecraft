@@ -1,16 +1,18 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://dq8ewo1p7ux38"]
+[gd_resource type="Resource" script_class="Biome" load_steps=7 format=3 uid="uid://dq8ewo1p7ux38"]
 
 [ext_resource type="Script" path="res://scripts/world/biome.gd" id="1_7jarf"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="1_xn2j4"]
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_td8v1"]
 [ext_resource type="Resource" uid="uid://bgq1uw8gii0xc" path="res://resources/creatures/Sparrow.tres" id="3_w0f62"]
+[ext_resource type="Resource" uid="uid://c0itwwmcp2khv" path="res://resources/creatures/trader.tres" id="4_4uu1s"]
+[ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/Glowtail.tres" id="5_kslnp"]
 
 [resource]
 script = ExtResource("1_7jarf")
 min_temp = 0.0
 max_temp = 10.0
 biome_name = "forest"
-possible_creatures = Array[ExtResource("1_xn2j4")]([ExtResource("2_td8v1"), ExtResource("3_w0f62")])
+possible_creatures = Array[ExtResource("1_xn2j4")]([ExtResource("2_td8v1"), ExtResource("3_w0f62"), ExtResource("3_w0f62"), ExtResource("4_4uu1s"), ExtResource("2_td8v1"), ExtResource("5_kslnp")])
 plants = [&"tall_grass"]
 trees = true
 plant_chance = 0.3

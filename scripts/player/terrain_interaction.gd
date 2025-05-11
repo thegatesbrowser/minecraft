@@ -40,6 +40,8 @@ func _physics_process(_delta: float) -> void:
 	var origin = camera.get_global_transform().origin
 	var forward = -camera.get_global_transform().basis.z.normalized()
 	last_hit = voxel_tool.raycast(origin, forward, distance, 1)
+	#$"../../RotationRoot/Head/Camera3D/RayCast3D".global_position = origin
+	#$"../../RotationRoot/Head/Camera3D/RayCast3D".basis.z = forward
 
 	if last_hit != null:
 		
@@ -94,6 +96,19 @@ func place_block(type: StringName, player_pos: Vector3) -> void:
 
 ## Breaks the block and returns the type name
 func break_block() -> void:
+	
+	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
+	voxel_tool.value = AIR_TYPE
+	
+	var above_voxel:int = voxel_tool.get_voxel(last_hit.position + Vector3i(0,1,0))
+	
+	var voxel: int = voxel_tool.get_voxel(last_hit.position)
+	
+	if plants.has(above_voxel):
+		voxel_tool.do_point(last_hit.position + Vector3i(0,1,0))
+		
+	voxel_tool.do_point(last_hit.position)
+	
 	_break_block_server.rpc_id(1, last_hit.position)
 
 

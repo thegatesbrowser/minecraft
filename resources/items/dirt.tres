@@ -1,17 +1,18 @@
 [gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://c5ahbt0pwj3hk"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_3b7hd"]
-[ext_resource type="Texture2D" uid="uid://bw6w2bx360fad" path="res://assets/sounds/block/wooden_door/dirt.tres" id="1_vuhr6"]
+[ext_resource type="Texture2D" uid="uid://fm8g1pcdvcnu" path="res://assets/textures/items/Dirt.png" id="2_afhqg"]
 
 [resource]
 script = ExtResource("1_3b7hd")
-break_time = 0.4
+break_time = 0.9
 spawn_chance = 0.1
 spawn_size = 1
 spawn_height = 0.0
 unique_name = &"dirt"
-texture = ExtResource("1_vuhr6")
+texture = ExtResource("2_afhqg")
 max_stack = 64
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

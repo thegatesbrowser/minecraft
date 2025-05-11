@@ -10,12 +10,12 @@ config_version=5
 
 [application]
 
-config/name="Runestone"
+config/name="World Hoppers"
 config/tags=PackedStringArray("thegates")
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.3")
 run/flush_stdout_on_print=true
-config/icon="res://logo.webp"
+config/icon="res://assets/textures/items/Oak Log.png"
 
 [autoload]
 
@@ -27,6 +27,7 @@ GlobalAnimation="*res://scripts/common/animation.gd"
 TerrainHelper="*res://scripts/common/terrain_helper.gd"
 _CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
 SettingsManager="*res://SettingsManager.gd"
+BackendServer="*res://scripts/multiplayer/backend_server.gd"
 
 [debug]
 
@@ -62,6 +63,8 @@ BackendClient=""
 PlayersUI="saves the players ui"
 SoundManager=""
 Game=""
+NPCS=""
+CreatureContainer=""
 
 [input]
 
@@ -273,8 +276,6 @@ textures/canvas_textures/default_texture_filter=0
 textures/decals/filter=0
 environment/volumetric_fog/use_filter=0
 anti_aliasing/quality/msaa_2d=1
-anti_aliasing/quality/use_taa=true
-anti_aliasing/quality/use_debanding=true
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 environment/default_environment="res://Assets/default_env.tres"

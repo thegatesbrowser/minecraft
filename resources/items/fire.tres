@@ -19,3 +19,4 @@ max_stack = 64
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

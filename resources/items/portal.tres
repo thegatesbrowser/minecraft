@@ -24,3 +24,4 @@ utility = SubResource("Resource_vss83")
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

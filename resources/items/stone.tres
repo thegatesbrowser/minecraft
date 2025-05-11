@@ -1,17 +1,18 @@
 [gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://dxnjkyrqoqbq4"]
 
-[ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="1_2hqjt"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_lqmys"]
+[ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="2_v1j3i"]
 
 [resource]
 script = ExtResource("1_lqmys")
-break_time = 1.0
+break_time = 2.0
 spawn_chance = 0.1
 spawn_size = 1
 spawn_height = 0.0
 unique_name = &"stone"
-texture = ExtResource("1_2hqjt")
+texture = ExtResource("2_v1j3i")
 max_stack = 64
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

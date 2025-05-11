@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://ddnn87htgsb3u"]
 
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_6gcoq"]
-[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_tpyfn"]
+[ext_resource type="Texture2D" uid="uid://cf6c450ctftp2" path="res://assets/textures/items/Oak Plank.png" id="2_eaclc"]
 [ext_resource type="Resource" uid="uid://ds6640766cx5k" path="res://resources/items/axe_wood.tres" id="3_ujcum"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_q5w7c"]
 [ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="5_xs3mg"]
@@ -25,6 +25,6 @@ items_needed = {
 2: {
 "amount": 3,
 "name": "wood",
-"texture": ExtResource("2_tpyfn")
+"texture": ExtResource("2_eaclc")
 }
 }

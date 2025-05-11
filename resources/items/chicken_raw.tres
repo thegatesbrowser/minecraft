@@ -21,3 +21,4 @@ rotatable = false
 forgable = true
 forge_time = 2.0
 output_item = ExtResource("1_nhqes")
+value = 10

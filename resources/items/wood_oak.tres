@@ -1,12 +1,18 @@
 [gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://1826b5fcnlfo"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_4byef"]
-[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="2_84oc0"]
+[ext_resource type="Texture2D" uid="uid://cf6c450ctftp2" path="res://assets/textures/items/Oak Plank.png" id="2_73mi1"]
 
 [resource]
 script = ExtResource("1_4byef")
 break_time = 0.4
+spawn_chance = 0.1
+spawn_size = 1
+spawn_height = 0.0
 unique_name = &"wood_oak"
-texture = ExtResource("2_84oc0")
+texture = ExtResource("2_73mi1")
 max_stack = 64
-breaking_efficiency = 0.0
+rotatable = false
+forgable = false
+forge_time = 2.0
+value = 10

@@ -27,7 +27,7 @@
 [ext_resource type="Resource" uid="uid://c4g4nofmjg2jg" path="res://resources/items/diamond_block.tres" id="24_k8teb"]
 [ext_resource type="Resource" uid="uid://dvlxseu7sf1d4" path="res://resources/items/iron_block.tres" id="25_4203e"]
 [ext_resource type="Resource" uid="uid://2cgpe8xf3dkh" path="res://resources/items/bed.tres" id="26_xcwoa"]
-[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/forge.tres" id="27_jk2ju"]
+[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/fire pit.tres" id="27_jk2ju"]
 [ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="28_to4we"]
 [ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="29_mv412"]
 [ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="30_src1s"]

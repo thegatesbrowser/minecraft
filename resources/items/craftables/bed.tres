@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://bhvdh5jd8e1jh"]
 
-[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="1_6ol14"]
+[ext_resource type="Texture2D" uid="uid://h8nndohifc41" path="res://assets/textures/items/Oak Log.png" id="1_fnp6w"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_tke2w"]
-[ext_resource type="Texture2D" uid="uid://re2ygg8kfxdt" path="res://assets/textures/blocks/leaves_birch.png" id="2_dw1ax"]
+[ext_resource type="Texture2D" uid="uid://bs3c50kbfm68w" path="res://assets/textures/items/Leaf.png" id="2_33ko0"]
 [ext_resource type="Resource" uid="uid://2cgpe8xf3dkh" path="res://resources/items/bed.tres" id="3_affro"]
 [ext_resource type="Texture2D" uid="uid://d100dr2itcy2u" path="res://assets/textures/items/bed.png" id="5_y1ifp"]
 
@@ -16,11 +16,11 @@ items_needed = {
 1: {
 "amount": 3,
 "name": "log_oak",
-"texture": ExtResource("1_6ol14")
+"texture": ExtResource("1_fnp6w")
 },
 2: {
 "amount": 3,
 "name": "leaf_oak",
-"texture": ExtResource("2_dw1ax")
+"texture": ExtResource("2_33ko0")
 }
 }

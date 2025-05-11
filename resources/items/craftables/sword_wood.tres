@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://d1wsk3oj6hlel"]
+
+[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_g5gdl"]
+[ext_resource type="Texture2D" uid="uid://cf6c450ctftp2" path="res://assets/textures/items/Oak Plank.png" id="1_yrkef"]
+[ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="2_i1u7j"]
+[ext_resource type="Resource" uid="uid://b0uqkn1uxv3a8" path="res://resources/items/sword_wood.tres" id="3_0kikj"]
+[ext_resource type="Texture2D" uid="uid://dydljps6nsvy0" path="res://assets/textures/items/Wooden_Sword_JE2_BE2.webp" id="5_gxto2"]
+
+[resource]
+script = ExtResource("1_g5gdl")
+Name = "Sword Wood"
+texture = ExtResource("5_gxto2")
+output_item = ExtResource("3_0kikj")
+output_amount = 1
+items_needed = {
+1: {
+"amount": 4,
+"name": "wood",
+"texture": ExtResource("1_yrkef")
+},
+2: {
+"amount": 2,
+"name": "stick",
+"texture": ExtResource("2_i1u7j")
+}
+}

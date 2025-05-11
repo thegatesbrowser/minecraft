@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://w67gfj5ynnx3"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_sukvu"]
-[ext_resource type="Texture2D" uid="uid://cwyjj1uvhykqs" path="res://assets/textures/blocks/sandstone_top.png" id="2_pwenk"]
+[ext_resource type="Texture2D" uid="uid://c38jlnq2eub2t" path="res://assets/textures/items/Sand.png" id="2_deun3"]
 
 [resource]
 script = ExtResource("1_sukvu")
@@ -10,8 +10,9 @@ spawn_chance = 0.1
 spawn_size = 1
 spawn_height = 0.0
 unique_name = &"sand"
-texture = ExtResource("2_pwenk")
+texture = ExtResource("2_deun3")
 max_stack = 64
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

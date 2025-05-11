@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://8cg57dcdfxcl"
+path="res://.godot/imported/Sand Break.mp3-b62d62a25fd977c1ac5528a47be858c6.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/block/Sand Break.mp3"
+dest_files=["res://.godot/imported/Sand Break.mp3-b62d62a25fd977c1ac5528a47be858c6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

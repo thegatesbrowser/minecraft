@@ -1,17 +1,18 @@
 [gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bgful1da4rkm2"]
 
-[ext_resource type="Texture2D" uid="uid://djrvggh13sxxn" path="res://assets/atlas/grass.tres" id="1_ebg3a"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_xvy7c"]
+[ext_resource type="Texture2D" uid="uid://cylnevjm3cw6o" path="res://assets/textures/items/Grass.png" id="2_r1p67"]
 
 [resource]
 script = ExtResource("1_xvy7c")
-break_time = 0.4
+break_time = 0.9
 spawn_chance = 0.1
 spawn_size = 1
 spawn_height = 0.0
 unique_name = &"grass"
-texture = ExtResource("1_ebg3a")
+texture = ExtResource("2_r1p67")
 max_stack = 64
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

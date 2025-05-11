@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Creature" load_steps=12 format=3 uid="uid://bgq1uw8gii0xc"]
 
-[ext_resource type="PackedScene" uid="uid://4uc0qdkbo56e" path="res://assets/models/bird.glb" id="1_exrqk"]
+[ext_resource type="PackedScene" uid="uid://pxcswnn73ihf" path="res://scenes/creatures/Sparrow.tscn" id="1_4coyk"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_vipb4"]
 [ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="2_mblni"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="2_xpub8"]
@@ -32,15 +32,13 @@ stream_3/stream = ExtResource("5_71sg3")
 
 [resource]
 script = ExtResource("2_xpub8")
-body_scene = ExtResource("1_exrqk")
+body_scene = ExtResource("1_4coyk")
 max_health = 0
 attacks = false
 run_away_after_attack = false
 damage = 0
 speed = 5.0
 coll_shape = SubResource("BoxShape3D_3rn82")
-walk_ani_name = "fly"
-idle_ani_name = "fly"
 mesh_name = "Body"
 hurt_sound = SubResource("AudioStreamRandomizer_eoa4o")
 death_sound = SubResource("AudioStreamRandomizer_f8dwm")

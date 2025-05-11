@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/other/time.gd" id="4_dglu2"]
 [ext_resource type="VoxelGeneratorScript" uid="uid://c3hi068pr8l37" path="res://resources/generator.tres" id="4_eo0cp"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
-[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_p0te7"]
+[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_hshg0"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
 [ext_resource type="Script" path="res://scripts/world/building_check.gd" id="8_na7qa"]
@@ -56,7 +56,7 @@
 [ext_resource type="Resource" uid="uid://c4g4nofmjg2jg" path="res://resources/items/diamond_block.tres" id="43_csd2r"]
 [ext_resource type="Resource" uid="uid://dvlxseu7sf1d4" path="res://resources/items/iron_block.tres" id="44_w0mv8"]
 [ext_resource type="Resource" uid="uid://2cgpe8xf3dkh" path="res://resources/items/bed.tres" id="45_y2cgb"]
-[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/forge.tres" id="46_npkva"]
+[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/fire pit.tres" id="46_npkva"]
 [ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="47_2is4p"]
 [ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="48_hwqys"]
 [ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="49_6fhua"]
@@ -81,22 +81,17 @@ seamless = true
 color_ramp = SubResource("Gradient_3lj46")
 noise = SubResource("FastNoiseLite_shspi")
 
-[sub_resource type="Gradient" id="Gradient_u2lpl"]
-offsets = PackedFloat32Array(0.738197, 1)
+[sub_resource type="Gradient" id="Gradient_jhtma"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.5, 0.811321)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_mscg8"]
-noise_type = 2
-frequency = 0.0471
-fractal_type = 3
-cellular_distance_function = 3
-cellular_jitter = 1.00505
-domain_warp_enabled = true
-domain_warp_fractal_type = 0
-domain_warp_fractal_gain = 0.31635
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_c4tj7"]
+noise_type = 0
+frequency = 0.8735
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rseux"]
-color_ramp = SubResource("Gradient_u2lpl")
-noise = SubResource("FastNoiseLite_mscg8")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cagkv"]
+color_ramp = SubResource("Gradient_jhtma")
+noise = SubResource("FastNoiseLite_c4tj7")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1q1we"]
 shader = ExtResource("3_y2n02")
@@ -127,7 +122,7 @@ shader_parameter/stars_speed = 0.1
 shader_parameter/clouds_texture = SubResource("NoiseTexture2D_xxs0t")
 shader_parameter/clouds_distort_texture = SubResource("NoiseTexture2D_xxs0t")
 shader_parameter/clouds_noise_texture = SubResource("NoiseTexture2D_xxs0t")
-shader_parameter/stars_texture = SubResource("NoiseTexture2D_rseux")
+shader_parameter/stars_texture = SubResource("NoiseTexture2D_cagkv")
 
 [sub_resource type="Sky" id="Sky_m4him"]
 sky_material = SubResource("ShaderMaterial_1q1we")
@@ -159,10 +154,10 @@ volumetric_fog_density = 0.0129
 volumetric_fog_albedo = Color(0.654453, 0.823636, 0.866721, 1)
 volumetric_fog_detail_spread = 4.0
 volumetric_fog_ambient_inject = 0.96
+volumetric_fog_sky_affect = 0.541
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
-occlusion_enabled = false
 
 [sub_resource type="Resource" id="Resource_c0ten"]
 script = ExtResource("56_rtthk")
@@ -215,25 +210,26 @@ environment = SubResource("Environment_ca72k")
 [node name="rotation" type="Node3D" parent="WorldEnvironment"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 
-[node name="day" type="DirectionalLight3D" parent="WorldEnvironment/rotation"]
-shadow_enabled = true
-
 [node name="night" type="DirectionalLight3D" parent="WorldEnvironment/rotation"]
 visible = false
 light_energy = 0.0
+light_volumetric_fog_energy = 0.192
 shadow_enabled = true
 shadow_bias = 0.0
 shadow_blur = 0.5
+
+[node name="day" type="DirectionalLight3D" parent="WorldEnvironment/rotation"]
+shadow_enabled = true
+shadow_blur = 0.6
 
 [node name="Time" type="Node" parent="WorldEnvironment"]
 script = ExtResource("4_dglu2")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
-run_stream_in_editor = false
-use_gpu_generation = true
-stream = ExtResource("5_p0te7")
+stream = ExtResource("5_hshg0")
 generator = ExtResource("4_eo0cp")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
+gi_mode = 1
 script = ExtResource("7_dy7rt")
 
 [node name="VoxelTerrainMultiplayerSynchronizer" type="VoxelTerrainMultiplayerSynchronizer" parent="VoxelTerrain"]
@@ -255,7 +251,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 128, 8)
 
 [node name="Player UI" type="Control" parent="."]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -285,6 +280,7 @@ text = "F - Text Chat
 
 [node name="Inventory holder" type="Control" parent="Player UI" node_paths=PackedStringArray("h_box_container")]
 process_mode = 3
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -693,30 +689,27 @@ text = "Varying FOV"
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -4
-visible = false
 
-[node name="ScreenCenterCross" type="CenterContainer" parent="Background"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 48.0
-offset_right = 8.0
-offset_bottom = 48.0
+[node name="Label" type="Label" parent="Background"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -11.5
+offset_right = 5.0
+offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="Background/ScreenCenterCross"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.152941)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.117647)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 5
-theme_override_constants/shadow_outline_size = 10
-theme_override_font_sizes/font_size = 30
+theme_override_constants/shadow_outline_size = 6
+theme_override_font_sizes/font_size = 25
 text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="WORLD SFX" type="Node" parent="."]
 

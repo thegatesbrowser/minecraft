@@ -75,6 +75,7 @@ func _process(_delta: float) -> void:
 			interaction() ## checks for interactions
 			if is_interactable(): return
 		
+		var last_mine_pos:Vector3i
 		if timer.is_stopped():
 			if terrain_interaction.can_break():
 				var type = terrain_interaction.get_type()
@@ -99,13 +100,20 @@ func _process(_delta: float) -> void:
 				break_part.global_position = terrain_interaction.last_hit.position
 				break_part.emitting = true
 				break_part.show()
+				
 				timer.start()
+				if last_mine_pos == Vector3i.ZERO:
+					last_mine_pos = terrain_interaction.last_hit.position
+				elif last_mine_pos != terrain_interaction.last_hit.position:
+					timer.start()
+					
 				await timer.timeout
-
+				
 				if Input.is_action_pressed("Mine"):
 					if terrain_interaction.last_hit != null:
 						break_part.emitting = false
 						terrain_interaction.break_block()
+						last_mine_pos = Vector3i.ZERO
 	else:
 		break_part.emitting = false
 		timer.stop()

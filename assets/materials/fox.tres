@@ -6,7 +6,7 @@
 resource_name = "m_c25c530e-2862-e815-4f49-95dedfb78997"
 cull_mode = 2
 albedo_texture = ExtResource("1_5qa58")
-metallic_specular = 0.2
+metallic_specular = 0.1
 texture_filter = 2
 distance_fade_mode = 2
 distance_fade_min_distance = 60.0

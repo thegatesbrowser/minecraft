@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://m4j2psp0aswb" path="res://resources/items/iron.tres" id="1_6n85u"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_rw87v"]
-[ext_resource type="Texture2D" uid="uid://cy2c50wb274af" path="res://assets/textures/blocks/iron.tres" id="3_ca5j1"]
+[ext_resource type="Texture2D" uid="uid://cqa2klxem2vd0" path="res://assets/textures/items/Iron Block.png" id="3_n30kd"]
 
 [resource]
 script = ExtResource("2_rw87v")
@@ -11,9 +11,10 @@ spawn_chance = 0.3
 spawn_size = 1
 spawn_height = 0.0
 unique_name = &"iron"
-texture = ExtResource("3_ca5j1")
+texture = ExtResource("3_n30kd")
 max_stack = 64
 rotatable = false
 forgable = true
 forge_time = 2.0
 output_item = ExtResource("1_6n85u")
+value = 10

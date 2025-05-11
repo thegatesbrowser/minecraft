@@ -422,7 +422,7 @@ func hunger_update(_delta: float) -> void:
 				
 		if hunger <= 0:
 			#print("dying of hunger")
-			hit(1)
+			hit.rpc_id(get_multiplayer_authority(),1)
 			health_updated.emit(health)
 			
 		if _move_direction:

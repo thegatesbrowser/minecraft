@@ -15,3 +15,4 @@ holdable_mesh = SubResource("BoxMesh_rbi0u")
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

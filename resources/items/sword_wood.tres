@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=4 format=3 uid="uid://b0uqkn1uxv3a8"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=5 format=3 uid="uid://b0uqkn1uxv3a8"]
 
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="1_26bdr"]
+[ext_resource type="PackedScene" uid="uid://dhfixn00uwcgq" path="res://assets/models/tools/Wood/sword_wood.tscn" id="1_an1rw"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_56aca"]
 [ext_resource type="Texture2D" uid="uid://dydljps6nsvy0" path="res://assets/textures/items/Wooden_Sword_JE2_BE2.webp" id="3_aa82a"]
 
@@ -8,11 +9,14 @@
 script = ExtResource("1_26bdr")
 suitable_objects = Array[ExtResource("2_56aca")]([])
 breaking_efficiency = 0.0
-damage = 2
+damage = 3
 max_health = 5.0
 degrade_rate = 0.1
 unique_name = &""
 texture = ExtResource("3_aa82a")
 max_stack = 1
+holdable_mesh = ExtResource("1_an1rw")
+rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

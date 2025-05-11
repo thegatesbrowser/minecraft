@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 		#world_environment.environment.ambient_light_color = Color(0.14, 0.14, 0.14)
 		day.show()
 		night.hide()
-		world_environment.environment.volumetric_fog_albedo = Color.LIGHT_BLUE
+		world_environment.environment.volumetric_fog_albedo = Color(0.654,0.824,0.867)
 		#world_environment.environment.ambient_light_energy = 2.85
 	
 	

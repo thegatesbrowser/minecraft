@@ -1,20 +1,20 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://b44xmwqmnnj8j"]
 
-[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="1_amumb"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_bdc11"]
+[ext_resource type="Texture2D" uid="uid://cf6c450ctftp2" path="res://assets/textures/items/Oak Plank.png" id="1_gaw1a"]
 [ext_resource type="Resource" uid="uid://lxq2aq82pa5e" path="res://resources/items/chest.tres" id="2_gu3d5"]
-[ext_resource type="Texture2D" uid="uid://hl47wgp2cc8n" path="res://assets/atlas/chest.tres" id="3_00imx"]
+[ext_resource type="Texture2D" uid="uid://lpt6ruyflrwh" path="res://assets/textures/items/Chest.png" id="4_6qyfy"]
 
 [resource]
 script = ExtResource("1_bdc11")
 Name = "Chest"
-texture = ExtResource("3_00imx")
+texture = ExtResource("4_6qyfy")
 output_item = ExtResource("2_gu3d5")
 output_amount = 1
 items_needed = {
 1: {
 "amount": 8,
 "name": "wood",
-"texture": ExtResource("1_amumb")
+"texture": ExtResource("1_gaw1a")
 }
 }

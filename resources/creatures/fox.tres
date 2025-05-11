@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Creature" load_steps=15 format=3 uid="uid://dwphi1dev865q"]
 
-[ext_resource type="PackedScene" uid="uid://bknf4aa4fmqsg" path="res://assets/models/fox.glb" id="1_ohjhc"]
+[ext_resource type="PackedScene" uid="uid://lapvsp2lnu5y" path="res://scenes/creatures/fox.tscn" id="1_ebhm5"]
 [ext_resource type="AudioStream" uid="uid://b2kddj78qu34s" path="res://assets/sounds/other/Fox_death1.ogg" id="2_pi4oh"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_sffgm"]
 [ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="3_g1f5t"]
@@ -33,15 +33,13 @@ stream_3/stream = ExtResource("9_1nupn")
 
 [resource]
 script = ExtResource("3_ldbmh")
-body_scene = ExtResource("1_ohjhc")
+body_scene = ExtResource("1_ebhm5")
 max_health = 6
 attacks = true
 run_away_after_attack = false
 damage = 1
 speed = 6.5
 coll_shape = SubResource("BoxShape3D_e0a6d")
-walk_ani_name = "ArmatureAction"
-idle_ani_name = "idle"
 mesh_name = "Object_7"
 hurt_sound = SubResource("AudioStreamRandomizer_wx3dg")
 death_sound = SubResource("AudioStreamRandomizer_1uf8p")

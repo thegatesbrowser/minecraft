@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bpxj0rjcov7aj"
+path="res://.godot/imported/wood break.mp3-c3aa6719204880a6b5adec43b0985a94.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/block/wood break.mp3"
+dest_files=["res://.godot/imported/wood break.mp3-c3aa6719204880a6b5adec43b0985a94.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

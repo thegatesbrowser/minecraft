@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_kl6vd"]
 [ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="2_gx7ws"]
-[ext_resource type="Texture2D" uid="uid://k2xtmkwidrmg" path="res://assets/atlas/wood.tres" id="3_38nco"]
+[ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="3_5meyu"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="4_2r2mj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ekc5y"]
@@ -62,10 +62,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 12
 
 [node name="background texture" type="TextureRect" parent="CenterContainer"]
 modulate = Color(0, 0, 0, 0.0117647)
@@ -75,7 +75,7 @@ layout_mode = 2
 [node name="Image" type="TextureRect" parent="CenterContainer"]
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("3_38nco")
+texture = ExtResource("3_5meyu")
 expand_mode = 1
 stretch_mode = 5
 
