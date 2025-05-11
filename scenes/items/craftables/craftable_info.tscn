@@ -11,6 +11,8 @@ thickness = 2
 [node name="Craftable Info" type="PanelContainer" node_paths=PackedStringArray("name_label")]
 offset_right = 40.0
 offset_bottom = 40.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_g7vvm")
 step_text_s = ExtResource("2_ckuo2")
 name_label = NodePath("MarginContainer/VBoxContainer/name")
@@ -30,7 +32,7 @@ mouse_filter = 2
 
 [node name="name" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 31
+theme_override_font_sizes/font_size = 20
 text = "adafaw"
 horizontal_alignment = 1
 

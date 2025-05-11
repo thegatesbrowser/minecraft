@@ -166,7 +166,8 @@ func update(info) -> void:
 
 func slot_updated(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	if BackendClient.playerdata.Inventory == null:
-		Globals.save.emit()
-	else:
-		Globals.save_slot.emit(index,item_path,amount,parent,health,rot)
+	if !BackendClient.playerdata.is_empty():
+		if BackendClient.playerdata.Inventory == null:
+			Globals.save.emit()
+		else:
+			Globals.save_slot.emit(index,item_path,amount,parent,health,rot)

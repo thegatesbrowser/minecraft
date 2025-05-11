@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://d0aeff3omljv3"]
 
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_bfgg8"]
-[ext_resource type="Texture2D" uid="uid://duyinsscafeub" path="res://assets/atlas/stone.tres" id="2_euni2"]
+[ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="2_203lw"]
 [ext_resource type="Resource" uid="uid://dah3r6qldt8la" path="res://resources/items/pickaxe_stone.tres" id="3_qi6e3"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_6p30j"]
 [ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="5_x1j24"]
@@ -25,6 +25,6 @@ items_needed = {
 2: {
 "amount": 4,
 "name": "stone",
-"texture": ExtResource("2_euni2")
+"texture": ExtResource("2_203lw")
 }
 }

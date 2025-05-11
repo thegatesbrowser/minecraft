@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=8 format=3 uid="uid://cmku2fpockw70"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=9 format=3 uid="uid://cmku2fpockw70"]
 
 [ext_resource type="PackedScene" uid="uid://dgo6163ram0c2" path="res://assets/models/tools/Stone/shovel_stone.tscn" id="1_naicv"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_va8yg"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="3_fkbal"]
 [ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="4_qswqj"]
 [ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="5_v0lvd"]
+[ext_resource type="Resource" uid="uid://w67gfj5ynnx3" path="res://resources/items/sand.tres" id="6_hsknu"]
 [ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="6_kck3h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_00jok"]
@@ -13,10 +14,10 @@ region = Rect2(64, 0, 16, 16)
 
 [resource]
 script = ExtResource("2_va8yg")
-suitable_objects = Array[ExtResource("3_fkbal")]([ExtResource("4_qswqj"), ExtResource("5_v0lvd")])
-breaking_efficiency = 0.2
+suitable_objects = Array[ExtResource("3_fkbal")]([ExtResource("4_qswqj"), ExtResource("5_v0lvd"), ExtResource("6_hsknu")])
+breaking_efficiency = 0.4
 damage = 2
-max_health = 5.0
+max_health = 15.0
 degrade_rate = 0.1
 unique_name = &""
 texture = SubResource("AtlasTexture_00jok")
@@ -25,3 +26,4 @@ holdable_mesh = ExtResource("1_naicv")
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

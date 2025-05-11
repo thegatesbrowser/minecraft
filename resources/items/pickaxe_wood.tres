@@ -24,3 +24,4 @@ holdable_mesh = ExtResource("1_gvchh")
 rotatable = false
 forgable = false
 forge_time = 2.0
+value = 10

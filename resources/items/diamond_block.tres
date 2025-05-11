@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://bedai8b83g1cw" path="res://resources/items/diamond.tres" id="1_br88y"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_dbdck"]
-[ext_resource type="Texture2D" uid="uid://bsl0nqpw5vopk" path="res://assets/textures/blocks/diamond.tres" id="3_lenq3"]
+[ext_resource type="Texture2D" uid="uid://drkn7hlqn3paq" path="res://assets/textures/items/Diamond Block.png" id="3_pvosk"]
 
 [resource]
 script = ExtResource("2_dbdck")
@@ -11,9 +11,10 @@ spawn_chance = 0.1
 spawn_size = 1
 spawn_height = 0.0
 unique_name = &"diamond"
-texture = ExtResource("3_lenq3")
+texture = ExtResource("3_pvosk")
 max_stack = 64
 rotatable = false
 forgable = true
 forge_time = 2.0
 output_item = ExtResource("1_br88y")
+value = 10

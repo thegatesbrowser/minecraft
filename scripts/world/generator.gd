@@ -228,7 +228,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 								buffer.set_voxel(foliage, x, relative_height, z, _CHANNEL)
 							
 							#
-							if rng.randf() < 0.01:
+							if rng.randf() < 0.001:
 								buffer.set_voxel(CREATURE_SPAWNER,x,relative_height,z,_CHANNEL)
 								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),biome.possible_creatures.pick_random())
 								creatures_spawners.append(Vector3(x,relative_height,z))

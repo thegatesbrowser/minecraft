@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Creature" load_steps=15 format=3 uid="uid://cylxg4ja44lhh"]
 
-[ext_resource type="PackedScene" uid="uid://bm84k63fubxes" path="res://assets/models/glowtail.glb" id="1_oitx8"]
+[ext_resource type="PackedScene" uid="uid://ghab13gk0ro1" path="res://scenes/creatures/glowtail.tscn" id="1_hs20s"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_25jlh"]
 [ext_resource type="AudioStream" uid="uid://b2kddj78qu34s" path="res://assets/sounds/other/Fox_death1.ogg" id="2_yf1rt"]
 [ext_resource type="AudioStream" uid="uid://dbr3jim8fdk0q" path="res://assets/sounds/other/Fox_death2.ogg" id="3_jisxu"]
@@ -31,15 +31,13 @@ stream_3/stream = ExtResource("8_xtcw0")
 
 [resource]
 script = ExtResource("3_ub3wt")
-body_scene = ExtResource("1_oitx8")
+body_scene = ExtResource("1_hs20s")
 max_health = 10
 attacks = false
 run_away_after_attack = false
 damage = 0
 speed = 6.0
 coll_shape = SubResource("BoxShape3D_3pi47")
-walk_ani_name = "walk"
-idle_ani_name = "idle"
 mesh_name = "Cube"
 hurt_sound = SubResource("AudioStreamRandomizer_q6oy4")
 death_sound = SubResource("AudioStreamRandomizer_bdycu")

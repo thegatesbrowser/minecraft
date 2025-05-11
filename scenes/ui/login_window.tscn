@@ -91,17 +91,17 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 20
 theme_override_constants/shadow_outline_size = 105
 theme_override_font_sizes/font_size = 176
-text = "RUNESTONE"
+text = "World Hoppers"
 
 [node name="Splash" type="Label" parent="CenterContainer/Label"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.475
 anchor_right = 0.475
-offset_left = 129.1
-offset_top = 114.0
-offset_right = 729.1
-offset_bottom = 177.0
+offset_left = 466.05
+offset_top = 192.0
+offset_right = 1066.05
+offset_bottom = 255.0
 rotation = -0.350811
 pivot_offset = Vector2(300, 20)
 theme = ExtResource("1_exyan")

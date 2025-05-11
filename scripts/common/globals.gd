@@ -70,8 +70,6 @@ signal drop_item(item)
 signal start_hand_ani(ani_name)
 signal stop_hand_ani()
 
-@onready var waterfog = preload("res://assets/other/waterfog.tscn")
-
 # Backend
 var username:String
 signal save
@@ -203,10 +201,5 @@ func Spawn_creature(pos,creature):
 	spawn_creature.emit(pos,creature)
 
 func Add_water_fog(pos):
-	sync_water.rpc(pos)
-
-@rpc("any_peer","call_local")
-func sync_water(pos):
-	var water = waterfog.instantiate()
-	water.position = pos
-	get_tree().get_first_node_in_group("Game").call_deferred("add_child",water)
+	#sync_water.rpc(pos)
+	pass

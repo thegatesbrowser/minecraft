@@ -3,16 +3,21 @@ extends Node
 var Terrain:VoxelTerrain
 
 var passcode = "dqaduqiqbnmn1863841hjb"
+
+@export var creaturebase = preload("res://scenes/creatures/creature_base.tscn")
 @export var encrypt:bool = false
 @export var UIsave_path:String = "res://UISyncer.save"
+@export var Creature_save_path:String = "res://CreatureSave.save"
 @export var ItemManager:Node
 
 func _ready() -> void:
 	#Globals.save_player_ui.connect(save_player_ui)
 	Globals.save.connect(save_player_ui)
 	Globals.save_slot.connect(save_slot)
+	
 	if multiplayer.is_server():
 		load_inventory()
+		#load_creatures()
 		
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	Terrain = get_tree().get_first_node_in_group("VoxelTerrain")
@@ -31,6 +36,7 @@ func exit_tree() -> void:
 func save():
 	if multiplayer.is_server():
 		save_inventorys()
+	#save_creatures()
 	Terrain.save_modified_blocks()
 
 func save_inventorys():
@@ -102,7 +108,6 @@ func save_player_ui():
 				#var item = ui_data[i].item_path
 				#if item == "":
 					#continue
-pass
 
 func save_slot(index: int, item_path: String, amount: int,parent: String,health: int, rot:int):
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
@@ -144,3 +149,58 @@ func save_item(item:ItemBase, _buffer=[], size:Vector2 = Vector2.ZERO):
 	#Saver.save_item(item,buffer,image.get_size())
 	
 	#ItemManager.create_item.rpc_id(1,item_data,buffer,size)
+
+
+func save_creatures():
+	var save_file
+	
+	#if encrypt:
+		#save_file = FileAccess.open_encrypted_with_pass(Creature_save_path, FileAccess.WRITE,passcode)
+
+	save_file = FileAccess.open(Creature_save_path, FileAccess.WRITE)
+	
+	var nodes = get_tree().get_first_node_in_group("CreatureContainer").get_children()
+	
+	print(nodes)
+	for node in nodes:
+		# Check the node has a save function.
+		if !node.has_method("save"):
+			print("persistent node '%s' is missing a save() function, skipped" % node.name)
+
+		# Call the node's save function.
+		var node_data = node.call("save")
+
+		# JSON provides a static method to serialized JSON string.
+		var json_string = JSON.stringify(node_data)
+
+		# Store the save dictionary as a new line in the save file.
+		save_file.store_line(json_string)
+
+
+func load_creatures():
+	if not FileAccess.file_exists(Creature_save_path):
+		return # Error! We don't have a save to load.
+	var save_file
+	
+	#if encrypt:
+		#save_file = FileAccess.open_encrypted_with_pass(Creature_save_path, FileAccess.READ,passcode)
+	#else:
+	save_file = FileAccess.open(Creature_save_path, FileAccess.READ)
+		
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+
+		# Creates the helper class to interact with JSON.
+		var json = JSON.new()
+
+		# Check if there is any error while parsing the JSON string, skip in case of failure.
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+
+		# Get the data from the JSON object.
+		var node_data = json.data
+	
+		Globals.spawn_creature.emit(Vector3(node_data["x"],node_data["y"],node_data["z"]),load(node_data["creature_path"]))
+		

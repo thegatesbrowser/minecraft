@@ -24,6 +24,10 @@ func _ready() -> void:
 	for output in output_container.get_children():
 		if output is Slot:
 			output.item_changed.connect(change)
+			
+	for input in input_container.get_children():
+		if input is Slot:
+			input.item_changed.connect(change)
 
 
 func _process(_delta: float) -> void:
@@ -86,10 +90,10 @@ func open(server_details: Dictionary = {}) -> void:
 			update_client.rpc(server_details)
 
 
-func change(index: int, item_path: String, amount: int, parent:String,health:float) -> void:
+func change(index: int, item_path: String, amount: int, parent:String,health:float,rot:int) -> void:
 	if sync:
 		#print(index,"item ", item_path, parent)
-		Globals.sync_ui_change.emit(index,item_path,amount,parent,health)
+		Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
 
 
 @rpc("any_peer","call_local")
@@ -105,4 +109,5 @@ func update_client(info) -> void:
 				slot.Item_resource = load(info[i].item_path)
 				slot.health = info[i].health
 				slot.amount = info[i].amount
+				slot.rot =  info[i].rot
 				slot.update_slot()

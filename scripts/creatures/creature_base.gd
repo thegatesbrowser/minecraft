@@ -172,11 +172,11 @@ func hit(damage:int = 1):
 		if creature_resource.drop_items.size() != 0:
 			var drop_item = creature_resource.drop_items.pick_random()
 			Globals.spawn_item_inventory.emit(drop_item)
-		killed.rpc_id(1)
+		queue_free()
 
-@rpc("authority","call_local")
-func killed():
-	queue_free()
+#@rpc("authority","call_local")
+#func killed():
+	#queue_free()
 
 
 func _on_attack_range_body_entered(body: Node3D) -> void:
@@ -256,3 +256,14 @@ func give(item:ItemBase,id):
 	
 func show_debug():
 	$target.visible = !$target.visible
+
+
+func save() -> Dictionary:
+	var save = {
+		"creature_path":creature_resource.get_path(),
+		"x":global_position.x,
+		"y":global_position.y,
+		"z":global_position.z,
+		"health":health
+	}
+	return save

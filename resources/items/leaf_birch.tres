@@ -1,12 +1,18 @@
 [gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bk4meuo0rs246"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_wkt6y"]
-[ext_resource type="Texture2D" uid="uid://dbmwae8ialhej" path="res://assets/atlas/leaf2.tres" id="2_cd3we"]
+[ext_resource type="Texture2D" uid="uid://bs3c50kbfm68w" path="res://assets/textures/items/Leaf.png" id="2_a4e8x"]
 
 [resource]
 script = ExtResource("1_wkt6y")
 break_time = 0.4
+spawn_chance = 0.1
+spawn_size = 1
+spawn_height = 0.0
 unique_name = &"leaf_birch"
-texture = ExtResource("2_cd3we")
+texture = ExtResource("2_a4e8x")
 max_stack = 64
-breaking_efficiency = 0.0
+rotatable = false
+forgable = false
+forge_time = 2.0
+value = 10

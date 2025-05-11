@@ -69,6 +69,7 @@ theme_override_font_sizes/font_size = 13
 text = "DROP ALL"
 
 [node name="AddRandomItem" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "add random item *debug*"

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://dpkc8k2a64whr"]
 
-[ext_resource type="Texture2D" uid="uid://dt263alrd18sy" path="res://assets/textures/items/iron_ingot.png" id="1_snlfw"]
+[ext_resource type="Texture2D" uid="uid://btpo7f8axkpl" path="res://assets/textures/blocks/iron.png" id="1_k6pyq"]
 [ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="2_0stt5"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_iicld"]
 [ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/iron_armour.png" id="4_ti7rf"]
@@ -19,6 +19,6 @@ items_needed = {
 1: {
 "amount": 8,
 "name": "iron",
-"texture": ExtResource("1_snlfw")
+"texture": ExtResource("1_k6pyq")
 }
 }
