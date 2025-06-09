@@ -1,19 +1,15 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://d0aeff3omljv3"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://d0aeff3omljv3"]
 
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_bfgg8"]
 [ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="2_203lw"]
 [ext_resource type="Resource" uid="uid://dah3r6qldt8la" path="res://resources/items/pickaxe_stone.tres" id="3_qi6e3"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_6p30j"]
-[ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="5_x1j24"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pk8rj"]
-atlas = ExtResource("5_x1j24")
-region = Rect2(96, 0, 16, 16)
+[ext_resource type="Texture2D" uid="uid://ce84xbafqocjn" path="res://assets/textures/items/stone_pick.png" id="5_ye3lo"]
 
 [resource]
 script = ExtResource("4_6p30j")
 Name = "Pickaxe Stone"
-texture = SubResource("AtlasTexture_pk8rj")
+texture = ExtResource("5_ye3lo")
 output_item = ExtResource("3_qi6e3")
 output_amount = 1
 items_needed = {

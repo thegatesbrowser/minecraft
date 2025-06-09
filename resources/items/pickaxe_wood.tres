@@ -1,14 +1,10 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=7 format=3 uid="uid://djg543gibfvro"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=6 format=3 uid="uid://djg543gibfvro"]
 
 [ext_resource type="PackedScene" uid="uid://bwt4rh27es1y1" path="res://assets/models/tools/Wood/pickaxe_wood.tscn" id="1_gvchh"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="1_vhxk3"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_oevvb"]
 [ext_resource type="Resource" uid="uid://dxnjkyrqoqbq4" path="res://resources/items/stone.tres" id="3_h2yhv"]
-[ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="5_ky15j"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jg0um"]
-atlas = ExtResource("5_ky15j")
-region = Rect2(48, 1.45519e-11, 16, 16)
+[ext_resource type="Texture2D" uid="uid://bvoubdcucsbel" path="res://assets/textures/items/wood_pick.png" id="5_bwsir"]
 
 [resource]
 script = ExtResource("1_vhxk3")
@@ -18,7 +14,7 @@ damage = 2
 max_health = 5.0
 degrade_rate = 0.1
 unique_name = &""
-texture = SubResource("AtlasTexture_jg0um")
+texture = ExtResource("5_bwsir")
 max_stack = 1
 holdable_mesh = ExtResource("1_gvchh")
 rotatable = false

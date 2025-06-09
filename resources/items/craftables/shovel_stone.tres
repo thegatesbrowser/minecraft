@@ -1,19 +1,15 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://q0wwywxds52w"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://q0wwywxds52w"]
 
 [ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="1_84ma8"]
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="2_uiny5"]
 [ext_resource type="Resource" uid="uid://cmku2fpockw70" path="res://resources/items/shovel_stone.tres" id="3_wpi83"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_yv36w"]
-[ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="5_x7igi"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_56bm2"]
-atlas = ExtResource("5_x7igi")
-region = Rect2(64, 0, 16, 16)
+[ext_resource type="Texture2D" uid="uid://b4qi83eor6cgq" path="res://assets/textures/items/stone_shovel.png" id="5_rklwl"]
 
 [resource]
 script = ExtResource("4_yv36w")
 Name = "Shovel Stone"
-texture = SubResource("AtlasTexture_56bm2")
+texture = ExtResource("5_rklwl")
 output_item = ExtResource("3_wpi83")
 output_amount = 1
 items_needed = {

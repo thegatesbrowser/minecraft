@@ -14,7 +14,7 @@ var sound_manager
 var _terrian:VoxelTerrain
 var _terrian_tool:VoxelTool
 var last_hit:VoxelRaycastResult
-
+var voxel_pos:Vector3
 
 func _ready() -> void:
 	_terrian = get_tree().get_first_node_in_group("VoxelTerrain")
@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 		if floor_ray.is_colliding():
 			
 			var collide_point = floor_ray.get_collision_point() - Vector3(0,1,0)
-			var voxel_pos = round(collide_point)
+			voxel_pos = round(collide_point)
 			
 			if last_voxel_pos == voxel_pos: return
 			

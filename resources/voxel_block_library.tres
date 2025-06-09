@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=93 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=94 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
 [ext_resource type="Texture2D" uid="uid://b2q0kdc7iqkvx" path="res://assets/textures.png" id="3_1m38q"]
@@ -215,6 +215,19 @@ unique_name = &"tall_grass"
 base_model = SubResource("VoxelBlockyModelMesh_ot456")
 resource_name = "tall_grass"
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_li3q6"]
+transparency = 2
+alpha_scissor_threshold = 0.909
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("3_1m38q")
+metallic_specular = 0.2
+emission_enabled = true
+emission_energy_multiplier = 3.0
+emission_texture = ExtResource("3_1m38q")
+texture_filter = 0
+distance_fade_max_distance = 0.0
+
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_hjums"]
 atlas_size_in_tiles = Vector2i(12, 4)
 tile_left = Vector2i(9, 0)
@@ -223,7 +236,7 @@ tile_bottom = Vector2i(9, 0)
 tile_top = Vector2i(9, 0)
 tile_back = Vector2i(9, 0)
 tile_front = Vector2i(9, 0)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = SubResource("StandardMaterial3D_li3q6")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_nug11"]
 unique_name = &"glowstone"

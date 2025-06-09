@@ -33,7 +33,7 @@ stream_3/stream = ExtResource("5_71sg3")
 [resource]
 script = ExtResource("2_xpub8")
 body_scene = ExtResource("1_4coyk")
-max_health = 0
+max_health = 1
 attacks = false
 run_away_after_attack = false
 damage = 0

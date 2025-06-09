@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=92 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" path="res://scripts/other/time.gd" id="4_dglu2"]
 [ext_resource type="VoxelGeneratorScript" uid="uid://c3hi068pr8l37" path="res://resources/generator.tres" id="4_eo0cp"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
-[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_hshg0"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
 [ext_resource type="Script" path="res://scripts/world/building_check.gd" id="8_na7qa"]
@@ -222,11 +221,10 @@ shadow_blur = 0.5
 shadow_enabled = true
 shadow_blur = 0.6
 
-[node name="Time" type="Node" parent="WorldEnvironment"]
+[node name="Time" type="Node" parent="WorldEnvironment" groups=["saveE"]]
 script = ExtResource("4_dglu2")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
-stream = ExtResource("5_hshg0")
 generator = ExtResource("4_eo0cp")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 gi_mode = 1
@@ -241,13 +239,13 @@ script = ExtResource("8_na7qa")
 script = ExtResource("5_ekbqf")
 
 [node name="SpwanPoint" type="Node3D" parent="SpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 128, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 190, 8)
 
 [node name="SpwanPoint2" type="Node3D" parent="SpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 128, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 190, 8)
 
 [node name="SpwanPoint3" type="Node3D" parent="SpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 128, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 190, 8)
 
 [node name="Player UI" type="Control" parent="."]
 process_mode = 3

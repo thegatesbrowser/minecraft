@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=10 format=3 uid="uid://ds6640766cx5k"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=9 format=3 uid="uid://ds6640766cx5k"]
 
 [ext_resource type="PackedScene" uid="uid://c47doikncrvmt" path="res://assets/models/tools/Wood/axe_wood.tscn" id="1_ki4i5"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_wfc3b"]
@@ -7,11 +7,7 @@
 [ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="5_vfcjb"]
 [ext_resource type="Resource" uid="uid://cogc5ac14y0ad" path="res://resources/items/log_birch.tres" id="6_gsk5u"]
 [ext_resource type="Resource" uid="uid://d26i62gur1o23" path="res://resources/items/log_oak.tres" id="7_5xj0c"]
-[ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="8_pmm8g"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r64aj"]
-atlas = ExtResource("8_pmm8g")
-region = Rect2(32, 1.45519e-11, 16, 16)
+[ext_resource type="Texture2D" uid="uid://ccasg7geayc0n" path="res://assets/textures/items/wood_axe.png" id="8_afcta"]
 
 [resource]
 script = ExtResource("2_wfc3b")
@@ -21,7 +17,7 @@ damage = 2
 max_health = 5.0
 degrade_rate = 0.1
 unique_name = &""
-texture = SubResource("AtlasTexture_r64aj")
+texture = ExtResource("8_afcta")
 max_stack = 1
 holdable_mesh = ExtResource("1_ki4i5")
 rotatable = false

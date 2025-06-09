@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemTool" load_steps=9 format=3 uid="uid://cmku2fpockw70"]
+[gd_resource type="Resource" script_class="ItemTool" load_steps=8 format=3 uid="uid://cmku2fpockw70"]
 
 [ext_resource type="PackedScene" uid="uid://dgo6163ram0c2" path="res://assets/models/tools/Stone/shovel_stone.tscn" id="1_naicv"]
 [ext_resource type="Script" path="res://scripts/items/item_tool.gd" id="2_va8yg"]
@@ -6,11 +6,7 @@
 [ext_resource type="Resource" uid="uid://c5ahbt0pwj3hk" path="res://resources/items/dirt.tres" id="4_qswqj"]
 [ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="5_v0lvd"]
 [ext_resource type="Resource" uid="uid://w67gfj5ynnx3" path="res://resources/items/sand.tres" id="6_hsknu"]
-[ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="6_kck3h"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_00jok"]
-atlas = ExtResource("6_kck3h")
-region = Rect2(64, 0, 16, 16)
+[ext_resource type="Texture2D" uid="uid://b4qi83eor6cgq" path="res://assets/textures/items/stone_shovel.png" id="7_dv6wl"]
 
 [resource]
 script = ExtResource("2_va8yg")
@@ -20,7 +16,7 @@ damage = 2
 max_health = 15.0
 degrade_rate = 0.1
 unique_name = &""
-texture = SubResource("AtlasTexture_00jok")
+texture = ExtResource("7_dv6wl")
 max_stack = 1
 holdable_mesh = ExtResource("1_naicv")
 rotatable = false

@@ -360,6 +360,10 @@ script = ExtResource("34_s4tlk")
 encrypt = true
 ItemManager = NodePath("../ItemManager")
 
+[node name="Update" type="Timer" parent="Saver"]
+wait_time = 0.1
+autostart = true
+
 [node name="UI_Handler" type="Node" parent="."]
 script = ExtResource("37_0ju56")
 
@@ -437,3 +441,5 @@ uppercase = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[connection signal="timeout" from="Saver/Update" to="Saver" method="_on_update_timeout"]

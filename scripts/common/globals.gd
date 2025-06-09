@@ -54,10 +54,15 @@ var last_clicked_slot:Node
 var selected_slot:Slot ## the slot that is selected in the hotbar
 
 # inventory
+var hotbar_full:bool = false
+
 signal open_inventory(id)
 signal add_subinventory(id)
 signal remove_item_from_hotbar
+
 signal spawn_item_inventory(item)
+signal spawn_item_hotbar(item)
+
 signal check_amount_of_item(item)
 signal remove_item(item,amount)
 signal hotbar_slot_clicked(slot)
@@ -203,3 +208,8 @@ func Spawn_creature(pos,creature):
 func Add_water_fog(pos):
 	#sync_water.rpc(pos)
 	pass
+	
+func add_item_to_hotbar_or_inventory(item:ItemBase):
+	if hotbar_full: spawn_item_inventory.emit(item)
+	else:
+		spawn_item_hotbar.emit(item)

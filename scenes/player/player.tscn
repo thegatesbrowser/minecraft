@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=66 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -500,7 +500,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_6iggv"]
 resource_name = "attack"
-length = 0.17
+length = 0.32
 loop_mode = 2
 capture_included = true
 tracks/0/type = "value"
@@ -510,10 +510,10 @@ tracks/0/path = NodePath("Hand:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333),
-"transitions": PackedFloat32Array(0.87055, 0.25),
+"times": PackedFloat32Array(0, 0.133333, 0.266667),
+"transitions": PackedFloat32Array(0.87055, 1.6245, 2),
 "update": 2,
-"values": [Vector3(0, -1.5708, 2.59181), Vector3(0.191986, -1.35263, 2.90597)]
+"values": [Vector3(0, -1.5708, 2.59181), Vector3(0.191986, -1.35263, 2.90597), Vector3(-0.352556, -1.24093, 2.13803)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -610,6 +610,10 @@ tracks/1/keys = {
 "values": [Vector3(0.333, -0.536575, -0.225), Vector3(0.333, -0.507, -0.225)]
 }
 
+[sub_resource type="Animation" id="Animation_gg6wc"]
+resource_name = "pick up"
+length = 0.2
+
 [sub_resource type="Animation" id="Animation_stbf1"]
 resource_name = "walk"
 length = 0.4
@@ -645,6 +649,7 @@ _data = {
 "attack": SubResource("Animation_6iggv"),
 "eat": SubResource("Animation_wlwky"),
 "idle": SubResource("Animation_kn7ks"),
+"pick up": SubResource("Animation_gg6wc"),
 "walk": SubResource("Animation_stbf1")
 }
 

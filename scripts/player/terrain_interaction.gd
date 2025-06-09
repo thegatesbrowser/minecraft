@@ -139,6 +139,7 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 @rpc("any_peer","call_local")
 func get_voxel_meta(position:Vector3):
 	var meta = voxel_tool.get_voxel_metadata(position)
+	print("meta ", meta)
 	get_parent().rpc_id(multiplayer.get_remote_sender_id(),"receive_meta",meta,voxel_tool.get_voxel(position))
 	
 
@@ -204,7 +205,8 @@ func send_item(type: StringName) -> void:
 						
 	## gives the broken item to the player
 	var item = item_library.get_item(type)
-	Globals.spawn_item_inventory.emit(item)
+	#Globals.spawn_item_inventory.emit(item)
+	Globals.add_item_to_hotbar_or_inventory(item)
 
 
 @rpc("any_peer","call_local")

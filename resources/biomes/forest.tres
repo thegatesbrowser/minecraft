@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=7 format=3 uid="uid://dq8ewo1p7ux38"]
+[gd_resource type="Resource" script_class="Biome" load_steps=9 format=3 uid="uid://dq8ewo1p7ux38"]
 
 [ext_resource type="Script" path="res://scripts/world/biome.gd" id="1_7jarf"]
+[ext_resource type="Curve" uid="uid://cvrt8qtqhadv1" path="res://resources/heightmap_curve.tres" id="1_vcudw"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="1_xn2j4"]
+[ext_resource type="FastNoiseLite" uid="uid://8dlrjkx8v1k5" path="res://resources/forest.tres" id="2_adedl"]
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_td8v1"]
 [ext_resource type="Resource" uid="uid://bgq1uw8gii0xc" path="res://resources/creatures/Sparrow.tres" id="3_w0f62"]
 [ext_resource type="Resource" uid="uid://c0itwwmcp2khv" path="res://resources/creatures/trader.tres" id="4_4uu1s"]
@@ -15,7 +17,10 @@ biome_name = "forest"
 possible_creatures = Array[ExtResource("1_xn2j4")]([ExtResource("2_td8v1"), ExtResource("3_w0f62"), ExtResource("3_w0f62"), ExtResource("4_4uu1s"), ExtResource("2_td8v1"), ExtResource("5_kslnp")])
 plants = [&"tall_grass"]
 trees = true
-plant_chance = 0.3
+tree_chance = 1.0
+plant_chance = 1.45519e-11
+heightmap = ExtResource("1_vcudw")
+noise = ExtResource("2_adedl")
 blocks = {
 "dirt_layer_block": "dirt",
 "stone_layer_block": "stone",

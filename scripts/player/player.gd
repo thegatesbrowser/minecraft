@@ -4,9 +4,11 @@ class_name Player
 signal hunger_updated(hunger)
 signal health_updated(health)
 
+var speed_mode = false
 var start_position:Vector3
 var spawn_position: Vector3
 var your_id
+var _agrid: VoxelAStarGrid3D = null
 
 @export var defualt_hand_model:PackedScene
 
@@ -108,6 +110,13 @@ var health
 var spawn_point_set := {}
 
 func _ready() -> void:
+	_agrid = VoxelAStarGrid3D.new()
+	# set _terrain that is the main VoxelTerrain
+	
+
+	# little aabb box of 20 by 10 by 20
+	
+	
 	backendclient = get_tree().get_first_node_in_group("BackendClient")
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.spawn_bullet.connect(spawn_bullet)
@@ -135,27 +144,32 @@ func _ready() -> void:
 		minecraft_player.show()
 		return
 	else:
-		hand.show()
-		minecraft_player.hide()
-	
-	Console.add_command("respawn", self, 'death')\
+		Console.add_command("respawn", self, 'death')\
 		.set_description("makes the player position the spawn position).")\
 		.register()
 	
-	Console.add_command("ping", self, 'show_ping')\
-		.set_description("shows the ping).")\
-		.register()
+		Console.add_command("ping", self, 'show_ping')\
+			.set_description("shows the ping).")\
+			.register()
+			
+		Console.add_command("pos", self, 'show_pos')\
+			.set_description("shows the position of the player).")\
+			.register()
 		
-	Console.add_command("pos", self, 'show_pos')\
-		.set_description("shows the position of the player).")\
-		.register()
+		Console.add_command("player_flying", self, 'toggle_flying')\
+			.set_description("Enables the player to fly (or disables flight).")\
+			.register()
+		Console.add_command("player_clipping", self, 'toggle_clipping')\
+			.set_description("Enables the player to clip through the world (or disables clipping).")\
+			.register()
+			
+		Console.add_command("speed", self, '_speed_mode')\
+			.set_description("Enables the player to go speedy).")\
+			.register()
 	
-	Console.add_command("player_flying", self, 'toggle_flying')\
-		.set_description("Enables the player to fly (or disables flight).")\
-		.register()
-	Console.add_command("player_clipping", self, 'toggle_clipping')\
-		.set_description("Enables the player to clip through the world (or disables clipping).")\
-		.register()
+		hand.show()
+		minecraft_player.hide()
+	
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # TODO: Move to mouse mode
 	
@@ -351,8 +365,13 @@ func _exit_tree():
 	Console.remove_command("player_clipping")
 
 func add_item_to_hand(item: ItemBase, scene:PackedScene) -> void:
+	#var hand_empty:bool = true
+	#
+	#if hand.get_child_count() != 0:
+		#hand_empty = false
+		
 	for i in hand.get_children():
-			i.queue_free()
+		i.queue_free()
 			
 	if item != null:
 		
@@ -361,18 +380,25 @@ func add_item_to_hand(item: ItemBase, scene:PackedScene) -> void:
 			var weapon = weapon_base.instantiate()
 			weapon.weapon_resource = item
 			hand.add_child(weapon)
+			#if hand_ani:
+				#hand_ani.play("pick up")
 			
 		elif item is ItemTool:
 			var tool = item.holdable_mesh.instantiate()
 			hand.add_child(tool)
+			#if hand_ani:
+				#hand_ani.play("pick up")
 		else:
 			var mesh_instance = MeshInstance3D.new()
 			mesh_instance.mesh = item.holdable_mesh
 			hand.add_child(mesh_instance)
+			#if hand_ani:
+				#hand_ani.play("pick up")
 	else:
 		var holdable_mesh = scene.instantiate()
 		hand.add_child(holdable_mesh) 
-
+		#if hand_ani:
+			#hand_ani.play("pick up")
 
 func remove_item_in_hand() -> void:
 		
@@ -496,20 +522,22 @@ func normal_movement(delta:float):
 		if _move_direction:
 			if ANI.current_animation != "waling":
 				ANI.play("waling")
-			if hand_ani.current_animation != "attack":
-				if hand_ani.current_animation != "eat":
-					if hand_ani.current_animation != "walk":
-						hand_ani.play("walk")
+			if hand_ani.current_animation != "pick up":
+				if hand_ani.current_animation != "attack":
+					if hand_ani.current_animation != "eat":
+						if hand_ani.current_animation != "walk":
+							hand_ani.play("walk")
 			velocity.x = _move_direction.x * speed
 			velocity.z = _move_direction.z * speed
 		else:
 			if ANI.current_animation != "idle":
 				ANI.play("idle")
 				
-			if hand_ani.current_animation != "attack":
-				if hand_ani.current_animation != "eat":
-					if hand_ani.current_animation != "idle":
-						hand_ani.play("idle")
+			if hand_ani.current_animation != "pick up":
+				if hand_ani.current_animation != "attack":
+					if hand_ani.current_animation != "eat":
+						if hand_ani.current_animation != "idle":
+							hand_ani.play("idle")
 					
 			velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 7.0)
 			velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 7.0)
@@ -554,7 +582,29 @@ func flying_movement(delta:float):
 		velocity.x = lerp(velocity.x, _move_direction.x * speed, delta * 7.0)
 		velocity.z = lerp(velocity.z, _move_direction.z * speed, delta * 7.0)
 		
+		
+	
 func mine_and_place(delta:float):
+	if Input.is_action_just_pressed("Middle Mouse"):
+		var aabb := AABB(floor(global_position), Vector3()).grow(50)
+		_agrid.set_terrain(TerrainHelper.get_terrain_tool())
+		_agrid.set_region(aabb)
+		
+		var path = _agrid.find_path(terrain_interation.last_hit.position + Vector3i(0,1,0), terrain_interation.last_hit.position + Vector3i(0,1,2)) 
+		print('path ', path)
+		
+
+
+
+## I'm using _unhandled_input just to trigger the find_path
+#func _unhandled_input(event: InputEvent):
+	#if event is InputEventKey:
+		#if event.pressed:
+			#match event.keycode:
+				#KEY_UP:
+					## y = 6 because my terrain ground is at y = 5
+					#
+					
 	if Input.is_action_pressed("Mine"):
 		if hand_ani.current_animation != "attack":
 			if hand_ani.current_animation != "eat":
@@ -631,12 +681,21 @@ func swimming_movement(delta:float) -> void:
 		velocity.y = lerp(velocity.y,0.0,.1)
 		
 	if _move_direction:
-		if ANI.current_animation != "waling":
-				ANI.play("waling")
+		if hand_ani.current_animation != "pick up":
+			if ANI.current_animation != "waling":
+					ANI.play("waling")
 		velocity.x = _move_direction.x * SWIMMING_SPEED
 		velocity.z = _move_direction.z * SWIMMING_SPEED
 	else:
-		if ANI.current_animation != "idle":
-				ANI.play("idle")
+		if hand_ani.current_animation != "pick up":
+			if ANI.current_animation != "idle":
+					ANI.play("idle")
 		velocity.x = lerp(velocity.x, _move_direction.x * SWIMMING_SPEED, delta * 7.0)
 		velocity.z = lerp(velocity.z, _move_direction.z * SWIMMING_SPEED, delta * 7.0)
+
+func _speed_mode():
+	speed_mode = !speed_mode
+	if speed_mode:
+		WALK_SPEED = 100
+	else:
+		WALK_SPEED = 5.0

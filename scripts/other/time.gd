@@ -7,7 +7,9 @@ extends Node
 @onready var rotation: Node3D = $"../rotation"
 @onready var world_environment: WorldEnvironment = $".."
 
-
+#func _ready() -> void:
+	#multiplayer.peer_connected.connect(_on_peer_connected)
+	
 func _process(delta: float) -> void:
 	
 	rotation.rotation_degrees.x += speed
@@ -30,3 +32,10 @@ func _process(delta: float) -> void:
 		#world_environment.environment.ambient_light_energy = 2.85
 	
 	
+func save():
+	var save_dict = {
+			"type":"sun_rot",
+			"rot":rotation.rotation_degrees.x,
+			"change_object":rotation.get_path()
+		}
+	return save_dict
