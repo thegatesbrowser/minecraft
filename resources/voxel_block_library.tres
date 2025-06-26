@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=94 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=91 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
 [ext_resource type="Texture2D" uid="uid://b2q0kdc7iqkvx" path="res://assets/textures.png" id="3_1m38q"]
@@ -12,8 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://gamdwyj2ov1x" path="res://assets/textures/blocks/double_plant_fern_top.png" id="9_ixyq0"]
 [ext_resource type="Texture2D" uid="uid://bj0k37nqmn31y" path="res://assets/textures/blocks/lapis_block.png" id="10_yc1ft"]
 [ext_resource type="Material" uid="uid://dhbknp6n7qomp" path="res://assets/materials/fire.tres" id="11_4llsq"]
-[ext_resource type="Material" uid="uid://cx2mk4yr0hlsc" path="res://assets/materials/water.tres" id="12_ak4xr"]
-[ext_resource type="ArrayMesh" uid="uid://cxjrveygv4jms" path="res://assets/models/water.obj" id="12_uh5b6"]
+[ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="12_tb762"]
 [ext_resource type="Texture2D" uid="uid://c4qc2xe8j6hkv" path="res://assets/textures/blocks/reeds.png" id="15_2yhxf"]
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_54jvr"]
@@ -419,98 +418,76 @@ unique_name = &"portal"
 base_model = SubResource("VoxelBlockyModelCube_jvmn8")
 resource_name = "portal"
 
-[sub_resource type="Gradient" id="Gradient_iv2e2"]
-interpolation_mode = 2
+[sub_resource type="Gradient" id="Gradient_w176c"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_qg4x2"]
-noise_type = 5
-seed = 655
-frequency = 0.0185
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_epe23"]
+seed = 1
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pkdbj"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3uuik"]
 seamless = true
-as_normal_map = true
-bump_strength = 15.5
-color_ramp = SubResource("Gradient_iv2e2")
-noise = SubResource("FastNoiseLite_qg4x2")
+color_ramp = SubResource("Gradient_w176c")
+noise = SubResource("FastNoiseLite_epe23")
 
-[sub_resource type="Gradient" id="Gradient_1u1ew"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ju7b3"]
+seamless = true
+color_ramp = SubResource("Gradient_w176c")
+noise = SubResource("FastNoiseLite_epe23")
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ior6e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uc221"]
+render_priority = 0
+shader = ExtResource("12_tb762")
+shader_parameter/beer_factor = 0.8
+shader_parameter/foam_distance = 0.0181
+shader_parameter/foam_max_distance = 0.4
+shader_parameter/foam_min_distance = 0.04
+shader_parameter/foam_color = Color(1, 1, 1, 1)
+shader_parameter/surface_noise_tiling = Vector2(1, 4)
+shader_parameter/surface_noise_scroll = Vector3(0.03, 0.03, 0)
+shader_parameter/surface_noise_cutoff = 0.777
+shader_parameter/surface_distortion_amount = 0.27
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
+shader_parameter/_DepthMaxDistance = 0.833
+shader_parameter/_DepthFactor = 1.0
+shader_parameter/surfaceNoise = SubResource("NoiseTexture2D_ju7b3")
+shader_parameter/distortNoise = SubResource("NoiseTexture2D_3uuik")
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_430wd"]
-color_ramp = SubResource("Gradient_1u1ew")
-noise = SubResource("FastNoiseLite_ior6e")
+[sub_resource type="PlaneMesh" id="PlaneMesh_2cjmj"]
+material = SubResource("ShaderMaterial_uc221")
+size = Vector2(1, 1)
+subdivide_width = 80
+subdivide_depth = 80
+center_offset = Vector3(0.5, 1, 0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gkv4t"]
-diffuse_mode = 3
-specular_mode = 1
-albedo_color = Color(0.156863, 0.4, 1, 1)
-metallic = 0.39
-metallic_specular = 1.0
-roughness = 0.0
-normal_enabled = true
-normal_scale = 8.57
-normal_texture = SubResource("NoiseTexture2D_pkdbj")
-refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_430wd")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_618cp"]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_qshtb"]
-_surfaces = [{
-"aabb": AABB(-1, 0, 0, 1, 1, 1),
-"attribute_data": PackedByteArray("/5////9f////n/+//1//v/+f/7//X/+//5//f/9f/3//n/9//1//f/+f/z//X/8//5//P/9f/z//nwAA/18AAP9f/3//H/9//1//P/8f/z//3/9//5//f//f/z//n/8//5////9f////n/+//1//v/+f/7//X/+//5//f/9f/3//n/9//1//f/+f/z//X/8//5//P/9f/z//nwAA/18AAP9f/3//H/9//1//P/8f/z//3/9//5//f//f/z//n/8/"),
-"format": 34896613399,
-"index_count": 72,
-"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACgAJAAsADAANAA4ADgANAA8AEAARABIAEgARABMAFAAVABYAFgAVABcAGAAZABoAGgAZABsAHAAdAB4AHgAdAB8AIAAhACIAIgAhACMAJAAlACYAJgAlACcAKAApACoAKgApACsALAAtAC4ALgAtAC8A"),
-"material": ExtResource("12_ak4xr"),
-"name": "Cube.001",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 48,
-"vertex_data": PackedByteArray("LQnR9tH2VNUtCS0J0fZU1S0J0fYtCVTVLQktCS0JVNUtCdH2LQn//y0JLQktCf//0fbR9i0J///R9i0JLQn//9H20fYtCVTV0fYtCS0JVNXR9tH20fZU1dH2LQnR9lTV0fbR9tH2/7/R9i0J0fb/vy0J0fbR9v+/LQktCdH2/7/R9i0JLQn/vy0JLQktCf+/0fYtCdH2/78tCS0J0fb/vy0J0fYtCf//0fbR9i0J//8tCdH20fb//9H20fbR9v//AAD/////VNUAAAAA//9U1QAA//8AAFTVAAAAAAAAVNUAAP//AAD//wAAAAAAAP///////wAA/////wAAAAD///////8AAFTV//8AAAAAVNX///////9U1f//AAD//1TV/////////7///wAA////vwAA//////+/AAAAAP///7///wAAAAD/vwAAAAAAAP+///8AAP///78AAAAA////vwAA//8AAP///////wAA//8AAP//////////////////VNVU1VTVVNVU1VTVVNVU1f+//7//v/+//7//v/+//7+qKqoqqiqqKqoqqiqqKqoq/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/VNVU1VTVVNVU1VTVVNVU1f+//7//v/+//7//v/+//7+qKqoqqiqqKqoqqiqqKqoq/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
-}, {
-"aabb": AABB(-1, 1.01302, 0, 1, 1e-05, 1),
-"attribute_data": PackedByteArray("/////wAA/////wAAAAAAAA=="),
-"format": 34896613399,
-"index_count": 6,
-"index_data": PackedByteArray("AAABAAIAAgABAAMA"),
-"material": SubResource("StandardMaterial3D_618cp"),
-"name": "Plane",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 4,
-"vertex_data": PackedByteArray("//8AAP///78AAAAA////v///AAAAAP+/AAAAAAAA/7////9/////f////3////9/")
-}]
-blend_shape_mode = 0
-
-[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_hiny3"]
-mesh = SubResource("ArrayMesh_qshtb")
+[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_ntd22"]
+mesh = SubResource("PlaneMesh_2cjmj")
 culls_neighbors = false
+random_tickable = true
 collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 1, 1, 1)])
 collision_mask = 2
-material_override_0 = ExtResource("12_ak4xr")
-material_override_1 = SubResource("StandardMaterial3D_gkv4t")
 collision_enabled_0 = false
-collision_enabled_1 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_ksnuf"]
 unique_name = &"water_top"
-base_model = SubResource("VoxelBlockyModelMesh_hiny3")
+base_model = SubResource("VoxelBlockyModelMesh_ntd22")
 resource_name = "water_top"
 
-[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_ilsuq"]
-mesh = ExtResource("12_uh5b6")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7sq8j"]
+transparency = 2
+alpha_scissor_threshold = 1.0
+alpha_antialiasing_mode = 0
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_ndvd3"]
 culls_neighbors = false
-collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 1, 1, 1)])
+random_tickable = true
 collision_mask = 2
-material_override_0 = ExtResource("12_ak4xr")
+material_override_0 = SubResource("StandardMaterial3D_7sq8j")
 collision_enabled_0 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_bef3u"]
 unique_name = &"water_full"
-base_model = SubResource("VoxelBlockyModelMesh_ilsuq")
+base_model = SubResource("VoxelBlockyModelCube_ndvd3")
 resource_name = "water_full"
 
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_7fnfm"]

@@ -153,6 +153,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 	temp = temp_data(origin_in_voxels.x,origin_in_voxels.z)
 	temp = round(temp)
 	await select_biome(temp)
+	#print(biome.biome_name)
 	
 	if origin_in_voxels.y > _heightmap_max_y:
 		buffer.fill(AIR, _CHANNEL)
@@ -201,9 +202,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 							if pos.x >= 0:
 								if pos.z >= 0:
 									buffer.fill_area(VoxelLibrary.get_model_index_default(ore.unique_name),Vector3(pos.x,pos.y,pos.z),Vector3(pos.x +1,pos.y + 1,pos.z+ 1),_CHANNEL)
-									
-					buffer.fill_area(biome.blocks.dirt_layer_block,
-						Vector3(x, 0, z), Vector3(x , block_size, z ), _CHANNEL)
+									#
+					buffer.fill_area(biome.blocks.stone_layer_block,
+						Vector3(x, 0, z), Vector3(x + 1, block_size, z +1), _CHANNEL)
 						
 				elif relative_height > 0:
 					buffer.fill_area(biome.blocks.stone_layer_block,
@@ -241,18 +242,23 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 								
 								#
 					##
-				## Water
-				#if height < 0 and oy < 0:
-					#var start_relative_height := 0
-					#if relative_height > 0:
-						#start_relative_height = relative_height
-					#buffer.fill_area(WATER_FULL,
-						#Vector3(x, start_relative_height, z), 
-						#Vector3(x + 1, block_size, z + 1), _CHANNEL)
+				
+				if height < 0 and oy < 0:
+					var start_relative_height := 0
+					if relative_height > 0:
+						start_relative_height = relative_height
+					buffer.fill_area(WATER_FULL,
+						Vector3(x, start_relative_height, z), 
+						Vector3(x + 1, block_size -1, z + 1), _CHANNEL)
+					if oy + block_size == 0:
+						buffer.set_voxel(WATER_TOP,x,block_size - 1,z)
 					#if oy + block_size == 0:
-						## Surface block
-						#buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
-						
+						# Surface block
+						#buffer.fill_area(WATER_TOP,Vector3(x + 1,block_size, z + 1),Vector3(x + 2,block_size -1, z + 2),_CHANNEL)
+						#buffer.fill_area(WATER_TOP,
+						#Vector3(x,  block_size, z), 
+						#Vector3(x + 1, block_size + 1, z + 1), _CHANNEL)
+						#
 				gx += 1
 
 			gz += 1
@@ -333,9 +339,11 @@ func _get_tree_instances_in_chunk(
 		pos += cpos * chunk_size
 		pos.y = _get_height_at(pos.x, pos.z)
 		
-		if allows_trees(pos):
-			if pos.y > 0:
+		
+		if pos.y > 0:
+			if allows_trees(pos):
 				pos -= offset
+				
 				var si := rng.randi() % len(_tree_structures)
 				var structure : Structure = _tree_structures[si]
 				tree_instances.append([pos.round(), structure])
@@ -420,4 +428,6 @@ func allows_trees(chunk_pos) -> bool:
 			return true
 		else:
 			return false
+	else:
+		print("error no biome")
 	return false

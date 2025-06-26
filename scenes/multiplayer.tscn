@@ -351,14 +351,12 @@ UI = NodePath("portal_url")
 [node name="portal_url" parent="PortalManager" instance=ExtResource("35_fu1ca")]
 visible = false
 
-[node name="UISyncer" type="Node" parent="." node_paths=PackedStringArray("inventory_holder") groups=["UISyncer"]]
+[node name="UISyncer" type="Node" parent="." groups=["UISyncer"]]
 script = ExtResource("38_ig7nw")
-inventory_holder = NodePath("../Game/Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory")
 
-[node name="Saver" type="Node" parent="." node_paths=PackedStringArray("ItemManager")]
+[node name="Saver" type="Node" parent="."]
 script = ExtResource("34_s4tlk")
 encrypt = true
-ItemManager = NodePath("../ItemManager")
 
 [node name="Update" type="Timer" parent="Saver"]
 wait_time = 0.1
@@ -369,8 +367,6 @@ script = ExtResource("37_0ju56")
 
 [node name="RandomTick" type="Node" parent="."]
 script = ExtResource("44_caq2v")
-
-[node name="ItemManager" type="Node" parent="."]
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "loading") groups=["PlayerSpawner"]]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")

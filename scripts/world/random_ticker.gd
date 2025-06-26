@@ -17,6 +17,28 @@ var rng = RandomNumberGenerator.new()
 @export var burnables: Array[int]
 var plant_voxels = []
 
+
+var water_dirs: Array[Vector3i] = [
+	Vector3(-1, 0, 0),
+	Vector3(1, 0, 0),
+	Vector3(0, 0, -1),
+	Vector3(0, 0, 1),
+	Vector3(-1, 0, -1),
+	Vector3(1, 0, -1),
+	Vector3(-1, 0, 1),
+	Vector3(1, 0, 1),
+
+	Vector3(-1, -1, 0),
+	Vector3(1, -1, 0),
+	Vector3(0, -1, -1),
+	Vector3(0, -1, 1),
+	Vector3(-1, -1, -1),
+	Vector3(1, -1, -1),
+	Vector3(-1, -1, 1),
+	Vector3(1, -1, 1)
+]
+
+
 var _grass_dirs: Array[Vector3i] = [
 	Vector3(-1, 0, 0),
 	Vector3(1, 0, 0),
@@ -182,3 +204,26 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 				return
 			Globals.spawn_creature.emit(pos + Vector3i(0,1,0),creature)
 			_voxel_tool.do_point(pos)
+			
+	#if water(value):
+		#print("water")
+		#for di in len(water_dirs):
+			#var npos := pos + water_dirs[di]
+			#var nv := _voxel_tool.get_voxel(npos)
+			#if nv == VoxelLibraryResource.get_model_index_default("air"):
+				#var above_neighbor := _voxel_tool.get_voxel(npos + Vector3i(0, 1, 0))
+				#if water(above_neighbor):
+					#_voxel_tool.set_voxel(npos, VoxelLibraryResource.get_model_index_default("water_full"))
+				#else:
+					#_voxel_tool.set_voxel(npos, VoxelLibraryResource.get_model_index_default("water_top"))
+				#
+				#_terrain.save_block(npos)
+		#
+		
+func water(v:int):
+	var _is_water:bool = false
+	if v == VoxelLibraryResource.get_model_index_default("water_full"):
+		_is_water = true
+	if v == VoxelLibraryResource.get_model_index_default("water_top"):
+		_is_water = true
+	return _is_water

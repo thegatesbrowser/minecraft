@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=109 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
 [ext_resource type="Script" path="res://scripts/world/building_check.gd" id="8_na7qa"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
+[ext_resource type="Script" path="res://scripts/world/water.gd" id="10_riapq"]
 [ext_resource type="PackedScene" uid="uid://b4ef0j31tttko" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
 [ext_resource type="PackedScene" uid="uid://dwwv5ywawdbba" path="res://scenes/ui/crafting_ui.tscn" id="12_151fq"]
 [ext_resource type="PackedScene" uid="uid://cog3w5pk86koo" path="res://scenes/ui/selection_buttons.tscn" id="12_qvgc7"]
@@ -70,6 +71,8 @@
 [ext_resource type="Script" path="res://scripts/ui/gameplay_settings.gd" id="66_h5gdj"]
 [ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="69_713dd"]
 [ext_resource type="AudioStream" uid="uid://sx4737eqqk7h" path="res://assets/sounds/ambient/Soulsand_valley_wind3.ogg" id="70_eg5sl"]
+[ext_resource type="ArrayMesh" uid="uid://db0xmf22abm26" path="res://assets/models/water_top.obj" id="71_dltqe"]
+[ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="73_5hh30"]
 
 [sub_resource type="Gradient" id="Gradient_3lj46"]
 
@@ -144,10 +147,12 @@ glow_enabled = true
 glow_intensity = 5.83
 glow_strength = 0.96
 glow_bloom = 0.06
-fog_light_color = Color(0.815686, 0.843137, 0.866667, 1)
-fog_sun_scatter = 1.0
-fog_density = 0.0001
-fog_sky_affect = 0.0
+fog_mode = 1
+fog_light_color = Color(1.1792e-06, 0.115185, 0.364538, 0.749)
+fog_density = 0.3
+fog_height_density = 0.06
+fog_depth_curve = 0.000178722
+fog_depth_begin = 0.0
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0129
 volumetric_fog_albedo = Color(0.654453, 0.823636, 0.866721, 1)
@@ -199,11 +204,87 @@ stream_1/weight = 0.5
 stream_2/stream = ExtResource("69_713dd")
 stream_3/stream = ExtResource("70_eg5sl")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ttdb"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_mkvxg"]
+colors = PackedColorArray(0, 0.317647, 0.788235, 0.552941, 0, 0.317647, 0.788235, 0.815686)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ew0rs"]
+frequency = 0.0642
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e6wwk"]
+seamless = true
+color_ramp = SubResource("Gradient_mkvxg")
+noise = SubResource("FastNoiseLite_ew0rs")
+
+[sub_resource type="Gradient" id="Gradient_1g53r"]
+offsets = PackedFloat32Array(0.0562771, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o60ud"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s5xgf"]
+seamless = true
+as_normal_map = true
+color_ramp = SubResource("Gradient_1g53r")
+noise = SubResource("FastNoiseLite_o60ud")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e4ydk"]
+transparency = 1
+albedo_texture = SubResource("NoiseTexture2D_e6wwk")
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.0
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_s5xgf")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ni0ro"]
+size = Vector2(2.03975, 2)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="Gradient" id="Gradient_w176c"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_epe23"]
+seed = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3uuik"]
+seamless = true
+color_ramp = SubResource("Gradient_w176c")
+noise = SubResource("FastNoiseLite_epe23")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ju7b3"]
+seamless = true
+color_ramp = SubResource("Gradient_w176c")
+noise = SubResource("FastNoiseLite_epe23")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uc221"]
+render_priority = 0
+shader = ExtResource("73_5hh30")
+shader_parameter/beer_factor = 0.8
+shader_parameter/foam_distance = 0.0181
+shader_parameter/foam_max_distance = 0.4
+shader_parameter/foam_min_distance = 0.04
+shader_parameter/foam_color = Color(1, 1, 1, 1)
+shader_parameter/surface_noise_tiling = Vector2(1, 4)
+shader_parameter/surface_noise_scroll = Vector3(0.03, 0.03, 0)
+shader_parameter/surface_noise_cutoff = 0.777
+shader_parameter/surface_distortion_amount = 0.27
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
+shader_parameter/_DepthMaxDistance = 0.833
+shader_parameter/_DepthFactor = 1.0
+shader_parameter/surfaceNoise = SubResource("NoiseTexture2D_ju7b3")
+shader_parameter/distortNoise = SubResource("NoiseTexture2D_3uuik")
+
 [node name="Game" type="Node3D" groups=["Game"]]
 script = ExtResource("1")
 creature_s = ExtResource("2_pgqmj")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["Enviroment"]]
 environment = SubResource("Environment_ca72k")
 
 [node name="rotation" type="Node3D" parent="WorldEnvironment"]
@@ -235,17 +316,20 @@ script = ExtResource("7_dy7rt")
 [node name="Building Check" type="Node" parent="VoxelTerrain"]
 script = ExtResource("8_na7qa")
 
+[node name="Water" type="Node" parent="VoxelTerrain" groups=["Water Updater"]]
+script = ExtResource("10_riapq")
+
 [node name="SpawnPoints" type="Node3D" parent="."]
 script = ExtResource("5_ekbqf")
 
 [node name="SpwanPoint" type="Node3D" parent="SpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 190, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 120, 8)
 
 [node name="SpwanPoint2" type="Node3D" parent="SpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 190, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 120, 8)
 
 [node name="SpwanPoint3" type="Node3D" parent="SpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 190, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 120, 8)
 
 [node name="Player UI" type="Control" parent="."]
 process_mode = 3
@@ -289,7 +373,7 @@ grow_vertical = 2
 pivot_offset = Vector2(960, 540)
 mouse_filter = 2
 script = ExtResource("3_fe1qo")
-h_box_container = NodePath("PanelContainer/MarginContainer/VBoxContainer/Inventory")
+h_box_container = NodePath("PanelContainer/MarginContainer/INV/Inventory")
 
 [node name="PanelContainer" type="PanelContainer" parent="Player UI/Inventory holder"]
 layout_mode = 1
@@ -312,51 +396,51 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer"]
+[node name="INV" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Inventory" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory" node_paths=PackedStringArray("slot_holder")]
+[node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory" node_paths=PackedStringArray("slot_holder")]
 layout_mode = 2
 script = ExtResource("13_wsp3s")
 slot_holder = NodePath("MarginContainer/Slot_Holder")
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer"]
+[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Helment" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Helment" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "helment"
 background_texture = ExtResource("15_kdnva")
 
-[node name="Chest" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Chest" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "chest_plate"
 background_texture = ExtResource("16_jipce")
 
-[node name="Pants" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Pants" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "pants"
 background_texture = ExtResource("17_vqxny")
 
-[node name="Inventory" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
+[node name="Inventory" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 sync = false
 items_library = SubResource("Resource_c0ten")
 
-[node name="Crafting Menu" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input_1", "input_2", "output_slot")]
+[node name="Crafting Menu" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV" node_paths=PackedStringArray("input_1", "input_2", "output_slot")]
 visible = false
 layout_mode = 2
 script = ExtResource("55_ri7k6")
@@ -365,41 +449,41 @@ input_1 = NodePath("MarginContainer/HBoxContainer/Slot")
 input_2 = NodePath("MarginContainer/HBoxContainer/Slot2")
 output_slot = NodePath("MarginContainer/HBoxContainer/Slot3")
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Crafting Menu"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Crafting Menu/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Slot" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
+[node name="Slot" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 
-[node name="Slot2" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
+[node name="Slot2" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 
-[node name="VSeparator" type="VSeparator" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Crafting Menu/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 40
 theme_override_styles/separator = SubResource("StyleBoxLine_xhoya")
 
-[node name="Label" type="Label" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Crafting Menu/MarginContainer/HBoxContainer"]
 layout_mode = 2
 text = "="
 
-[node name="VSeparator2" type="VSeparator" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
+[node name="VSeparator2" type="VSeparator" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Crafting Menu/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 40
 theme_override_styles/separator = SubResource("StyleBoxLine_xhoya")
 
-[node name="Slot3" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
+[node name="Slot3" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 
-[node name="Crafting" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
+[node name="Crafting" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
 layout_mode = 2
 theme = ExtResource("3_v2bsq")
 send_to_inventory = NodePath("../Inventory/Inventory")
@@ -724,9 +808,21 @@ chance = 0.5
 
 [node name="Random Sound" parent="WORLD SFX" instance=ExtResource("24_r824s")]
 
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour" method="_on_helment_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour" method="_on_chest_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/PanelContainer/MarginContainer/VBoxContainer/Inventory/Armour" method="_on_pants_item_changed"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = ExtResource("71_dltqe")
+surface_material_override/0 = SubResource("StandardMaterial3D_2ttdb")
+surface_material_override/1 = SubResource("StandardMaterial3D_e4ydk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.997377, 0)
+visible = false
+mesh = SubResource("PlaneMesh_ni0ro")
+surface_material_override/0 = SubResource("ShaderMaterial_uc221")
+
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_helment_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_chest_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_pants_item_changed"]
 [connection signal="text_submitted" from="Player UI/Text Chat/MarginContainer/VBoxContainer/message_edit" to="Player UI/Text Chat" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Main Menu" to="Player UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Settings" to="Player UI/Pause Menu" method="_on_settings_pressed"]

@@ -28,6 +28,7 @@ TerrainHelper="*res://scripts/common/terrain_helper.gd"
 _CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
 SettingsManager="*res://SettingsManager.gd"
 BackendServer="*res://scripts/multiplayer/backend_server.gd"
+ItemManager="*res://scripts/ui/item_manager.gd"
 
 [debug]
 
@@ -66,6 +67,8 @@ Game=""
 NPCS=""
 CreatureContainer=""
 saveE="save event group"
+Enviroment=""
+"Water Updater"="updates the water"
 
 [input]
 

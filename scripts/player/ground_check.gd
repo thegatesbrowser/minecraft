@@ -13,6 +13,7 @@ var last_voxel_pos:Vector3
 var sound_manager
 var _terrian:VoxelTerrain
 var _terrian_tool:VoxelTool
+var _environment: WorldEnvironment
 var last_hit:VoxelRaycastResult
 var voxel_pos:Vector3
 
@@ -20,7 +21,7 @@ func _ready() -> void:
 	_terrian = get_tree().get_first_node_in_group("VoxelTerrain")
 	_terrian_tool = _terrian.get_voxel_tool()
 	sound_manager = get_tree().get_first_node_in_group("SoundManager")
-	
+	_environment = get_tree().get_first_node_in_group("Enviroment")
 
 
 func _process(delta: float) -> void:
@@ -46,14 +47,17 @@ func _process(delta: float) -> void:
 					sfx.rpc(voxel_name,voxel_pos)
 		var origin = head_ray.global_position
 		var forward = Vector3.DOWN
+		
 		last_hit = _terrian_tool.raycast(origin, forward, 1 ,2)
 		
 		if last_hit != null:
+			
 			player.swimming = true
+			_environment.environment.fog_enabled = true
 			
 		else:
 			player.swimming = false
-				
+			_environment.environment.fog_enabled = false
 				
 
 @rpc("any_peer","call_local")

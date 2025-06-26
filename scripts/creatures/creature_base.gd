@@ -132,7 +132,7 @@ func _physics_process(delta: float) -> void:
 				velocity.y += 10
 			
 		
-	rotation_root.look_at(look_at_target)
+	rotation_root.look_at(look_at_target + Vector3(0,0.01,0))
 		
 	move_and_slide()
 	

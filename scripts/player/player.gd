@@ -67,7 +67,7 @@ var found_ground:bool = false
 var swimming:bool = false
 var crouching:bool = false
 var speed: float
-var gravity = 16.5
+var gravity = 22.5
 var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
 var is_flying: bool
@@ -225,7 +225,11 @@ func _physics_process(delta: float) -> void:
 		var inventory = get_tree().get_first_node_in_group("Main Inventory")
 		your_id = get_multiplayer_authority()
 	
-	if !is_flying and found_ground:
+	if swimming:
+		fall_timer.stop()
+		fall_time = 0.0
+		
+	if !is_flying and found_ground and !swimming:
 		# Add the gravity.
 		if not is_on_floor():
 			if fall_timer.is_stopped():
@@ -667,19 +671,33 @@ func mine_and_place(delta:float):
 					
 					
 func swimming_movement(delta:float) -> void:
+	
+	
+		
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
 	_move_direction = (rotation_root.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if camera.rotation.x > max_flying_margin:
+		if !Input.is_action_pressed("Jump"):
 			velocity.y = camera.rotation.x * SWIMMING_SPEED * 2
+		else:
+			velocity.y = JUMP_VELOCITY
 	else:
-		velocity.y = lerp(velocity.y,0.0,.1)
+		if !Input.is_action_pressed("Jump"):
+			velocity.y = lerp(velocity.y,0.0,.1)
+		else:
+			velocity.y = JUMP_VELOCITY
 		
 	if  camera.rotation.x < min_flying_margin:
-		velocity.y = camera.rotation.x * SWIMMING_SPEED * 2
-		
+		if !Input.is_action_pressed("Jump"):
+			velocity.y = camera.rotation.x * SWIMMING_SPEED * 2
+		else:
+			velocity.y = JUMP_VELOCITY
 	else:
-		velocity.y = lerp(velocity.y,0.0,.1)
-		
+		if !Input.is_action_pressed("Jump"):
+			velocity.y = lerp(velocity.y,0.0,.1)
+		else:
+			velocity.y = JUMP_VELOCITY
+			
 	if _move_direction:
 		if hand_ani.current_animation != "pick up":
 			if ANI.current_animation != "waling":
@@ -690,9 +708,19 @@ func swimming_movement(delta:float) -> void:
 		if hand_ani.current_animation != "pick up":
 			if ANI.current_animation != "idle":
 					ANI.play("idle")
+		
 		velocity.x = lerp(velocity.x, _move_direction.x * SWIMMING_SPEED, delta * 7.0)
 		velocity.z = lerp(velocity.z, _move_direction.z * SWIMMING_SPEED, delta * 7.0)
-
+	#if Input.is_action_pressed("Jump") and is_on_floor():
+			#velocity.y = JUMP_VELOCITY
+			
+		
+	## Auto jump
+	var moving_forward = input_dir.y < 0
+	if can_autojump and moving_forward and is_on_floor():
+		if auto_jump.is_colliding() and !can_auto_jump_check.is_colliding():
+			velocity.y = JUMP_VELOCITY
+			
 func _speed_mode():
 	speed_mode = !speed_mode
 	if speed_mode:
