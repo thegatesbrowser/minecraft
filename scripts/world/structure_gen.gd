@@ -3,7 +3,7 @@ const Item_LIB = preload("res://resources/items_library.tres")
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
 
-var files:Array[String] = ["C:/cooper/godot projects/minecraft/assets/custom structures/1.save","C:/cooper/godot projects/minecraft/assets/custom structures/2.save","C:/cooper/godot projects/minecraft/assets/custom structures/3.save"]
+var files:Array[String] = ["res://assets/custom structures/1.save","res://assets/custom structures/2.save","res://assets/custom structures/3.save"]
 var possible_worlds:Array[String]
 
 var channel := VoxelBuffer.CHANNEL_TYPE

@@ -74,23 +74,31 @@ var rng = RandomNumberGenerator.new()
 #var _trees_min_y := 0
 #var _trees_max_y := 0
 
-func _init():
-	# TODO Even this must be based on a seed, but I'm lazy
-	var tree_generator = TreeGenerator.new()
-	var customGen = StructureGen.new()
-	
-	customGen.possible_worlds = possible_worlds
-	
-	tree_generator.log_type = LOG
-	tree_generator.leaves_type = OAK_LEAVES
-	for i in 16:
-		var s = tree_generator.generate()
-		_tree_structures.append(s)
-		
-	for i in 3:
-		var s = customGen.generate()
-		_custom_structures.append(s)
 
+func _init():
+	call_deferred("ready")
+	# TODO Even this must be based on a seed, but I'm lazy
+	
+	
+	if is_server():
+		var tree_generator = TreeGenerator.new()
+	
+	
+		tree_generator.log_type = LOG
+		tree_generator.leaves_type = OAK_LEAVES
+		
+		for i in 16:
+			var s = tree_generator.generate()
+			_tree_structures.append(s)
+			
+		var customGen = StructureGen.new()
+		
+		customGen.possible_worlds = possible_worlds
+		
+		for i in 3:
+			var s = customGen.generate()
+			_custom_structures.append(s)
+	
 	var tallest_tree_height = 0
 	for structure in _tree_structures:
 		var h = int(structure.voxels.get_size().y)
@@ -431,3 +439,7 @@ func allows_trees(chunk_pos) -> bool:
 	else:
 		print("error no biome")
 	return false
+
+static func is_server() -> bool:
+	var args = OS.get_cmdline_args() + OS.get_cmdline_user_args()
+	return "--server" in args
