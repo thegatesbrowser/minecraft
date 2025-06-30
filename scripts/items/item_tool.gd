@@ -1,6 +1,7 @@
 extends ItemBase
 class_name ItemTool
 
+@export var use_animation: Animation
 @export var suitable_objects: Array[ItemBlock]
 @export var breaking_efficiency: float
 @export var damage: int = 2

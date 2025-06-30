@@ -3,6 +3,7 @@ extends VoxelGeneratorScript
 
 const Structure = preload("res://scripts/world/structure.gd")
 const TreeGenerator = preload("res://scripts/world/tree_generator.gd")
+const StructureGen = preload("res://scripts/world/structure_gen.gd")
 const HeightmapCurve = preload("res://resources/heightmap_curve.tres")
 const HeatCurve = preload("res://resources/HeatCurve.tres")
 const CaveHeightmapCurve = preload("res://resources/cave_heightmap_curve.tres")
@@ -32,7 +33,7 @@ var CACTUS = VoxelLibrary.get_model_index_default("cactus")
 var iron := preload("res://resources/items/iron_block.tres")
 var diamond := preload("res://resources/items/diamond_block.tres")
 
-@export var possible_worlds: Array[String]
+@export var possible_worlds:Array[String] = ["https://thegates.io/worlds/devs/snap_games_studio/minecraft_world2.gate"]
 
 @export var biomes : Array[Biome]
 
@@ -59,29 +60,51 @@ const _moore_dirs = [
 
 
 var _tree_structures := []
+var _custom_structures := []
 
 var _heightmap_min_y := int(HeightmapCurve.min_value)
 var _heightmap_max_y := int(HeightmapCurve.max_value)
 var _heightmap_range := 0
 var _heightmap_noise := FastNoiseLite.new()
+
 var _trees_min_y := 0
 var _trees_max_y := 0
 
+var rng = RandomNumberGenerator.new()
+#var _trees_min_y := 0
+#var _trees_max_y := 0
+
 
 func _init():
+	call_deferred("ready")
 	# TODO Even this must be based on a seed, but I'm lazy
-	var tree_generator = TreeGenerator.new()
-	tree_generator.log_type = LOG
-	tree_generator.leaves_type = OAK_LEAVES
-	for i in 16:
-		var s = tree_generator.generate()
-		_tree_structures.append(s)
-
+	
+	
+	if is_server():
+		var tree_generator = TreeGenerator.new()
+	
+	
+		tree_generator.log_type = LOG
+		tree_generator.leaves_type = OAK_LEAVES
+		
+		for i in 16:
+			var s = tree_generator.generate()
+			_tree_structures.append(s)
+			
+		var customGen = StructureGen.new()
+		
+		customGen.possible_worlds = possible_worlds
+		
+		for i in 3:
+			var s = customGen.generate()
+			_custom_structures.append(s)
+	
 	var tallest_tree_height = 0
 	for structure in _tree_structures:
 		var h = int(structure.voxels.get_size().y)
 		if tallest_tree_height < h:
 			tallest_tree_height = h
+			
 	_trees_min_y = _heightmap_min_y
 	_trees_max_y = _heightmap_max_y + tallest_tree_height
 
@@ -90,12 +113,12 @@ func _init():
 	_heightmap_noise.fractal_octaves = 4
 	
 	HeatNoise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-	HeatNoise.frequency = 0.0001
+	HeatNoise.frequency = 0.001
 	HeatNoise.fractal_octaves = 5
 	HeatNoise.fractal_weighted_strength = 1
 	HeatNoise.fractal_gain = 0
 	
-
+	rng.seed = _get_chunk_seed_2d(Vector3(1,1,1))
 	# IMPORTANT
 	# If we don't do this `Curve` could bake itself when interpolated,
 	# and this causes crashes when used in multiple threads
@@ -135,6 +158,10 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 	
 	
 				
+	temp = temp_data(origin_in_voxels.x,origin_in_voxels.z)
+	temp = round(temp)
+	await select_biome(temp)
+	#print(biome.biome_name)
 	
 	if origin_in_voxels.y > _heightmap_max_y:
 		buffer.fill(AIR, _CHANNEL)
@@ -145,7 +172,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 	## BedRock
 	#elif origin_in_voxels.y + block_size < _heightmap_min_y:
 		#buffer.fill(STONE, _CHANNEL)
-
+		
+	
+	
 	else:
 		var rng := RandomNumberGenerator.new()
 		rng.seed = _get_chunk_seed_2d(chunk_pos)
@@ -159,29 +188,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			for x in block_size:
 				var height := _get_height_at(gx, gz)
 				
-				temp = temp_data(gx,gz)
 				
-				if !biome:
-					_array_mutex.lock()
-					var test_biome =  get_biome(temp)
-					if test_biome != null:
-							biome =test_biome
-					_array_mutex.unlock()
-				else:
-					if biome:
-						if temp <= biome.min_temp:
-							_array_mutex.lock()
-							var test_biome =  get_biome(temp)
-							if test_biome != null:
-								biome =test_biome
-							_array_mutex.unlock()
-						elif temp >= biome.max_temp:
-							_array_mutex.lock()
-							var test_biome =  get_biome(temp)
-							if test_biome != null:
-								biome =test_biome
-							_array_mutex.unlock()
-							
+				
+				
 				if biome == null:
 					return
 					
@@ -201,9 +210,9 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 							if pos.x >= 0:
 								if pos.z >= 0:
 									buffer.fill_area(VoxelLibrary.get_model_index_default(ore.unique_name),Vector3(pos.x,pos.y,pos.z),Vector3(pos.x +1,pos.y + 1,pos.z+ 1),_CHANNEL)
-									
-					buffer.fill_area(biome.blocks.dirt_layer_block,
-						Vector3(x, 0, z), Vector3(x , block_size, z ), _CHANNEL)
+									#
+					buffer.fill_area(biome.blocks.stone_layer_block,
+						Vector3(x, 0, z), Vector3(x + 1, block_size, z +1), _CHANNEL)
 						
 				elif relative_height > 0:
 					buffer.fill_area(biome.blocks.stone_layer_block,
@@ -232,34 +241,69 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 								buffer.set_voxel(CREATURE_SPAWNER,x,relative_height,z,_CHANNEL)
 								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),biome.possible_creatures.pick_random())
 								creatures_spawners.append(Vector3(x,relative_height,z))
-							elif rng.randf() < 0.000001:
-		
-								buffer.set_voxel(PORTAl,x,relative_height,z,_CHANNEL)
-								var worlds = possible_worlds.size() - 1
-								var world = possible_worlds[rng.randi_range(0,worlds)]
-								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),world)
+							#elif rng.randf() < 0.00001:
+		#
+								#buffer.set_voxel(PORTAl,x,relative_height,z,_CHANNEL)
+								#var worlds = possible_worlds.size() - 1
+								#var world = possible_worlds[rng.randi_range(0,worlds)]
+								#buffer.set_voxel_metadata(Vector3i(x,relative_height,z),world)
 								
 								#
 					##
-				## Water
-				#if height < 0 and oy < 0:
-					#var start_relative_height := 0
-					#if relative_height > 0:
-						#start_relative_height = relative_height
-					#buffer.fill_area(WATER_FULL,
-						#Vector3(x, start_relative_height, z), 
-						#Vector3(x + 1, block_size, z + 1), _CHANNEL)
+				
+				if height < 0 and oy < 0:
+					var start_relative_height := 0
+					if relative_height > 0:
+						start_relative_height = relative_height
+					buffer.fill_area(WATER_FULL,
+						Vector3(x, start_relative_height, z), 
+						Vector3(x + 1, block_size -1, z + 1), _CHANNEL)
+					if oy + block_size == 0:
+						buffer.set_voxel(WATER_TOP,x,block_size - 1,z)
 					#if oy + block_size == 0:
-						## Surface block
-						#buffer.set_voxel(WATER_TOP, x, block_size - 1, z, _CHANNEL)
-						
+						# Surface block
+						#buffer.fill_area(WATER_TOP,Vector3(x + 1,block_size, z + 1),Vector3(x + 2,block_size -1, z + 2),_CHANNEL)
+						#buffer.fill_area(WATER_TOP,
+						#Vector3(x,  block_size, z), 
+						#Vector3(x + 1, block_size + 1, z + 1), _CHANNEL)
+						#
 				gx += 1
 
 			gz += 1
+			
+	# Custom Structures
+	
+	if origin_in_voxels.y <= _heightmap_max_y and origin_in_voxels.y + block_size >= _heightmap_min_y:
+		var voxel_tool := buffer.get_voxel_tool()
+		var structure_instances := []
+			
+		_get_structure_instances_in_chunk(chunk_pos, origin_in_voxels, block_size, structure_instances)
+	
+		# Relative to current block
+		var block_aabb := AABB(Vector3(), buffer.get_size() + Vector3i(1, 1, 1))
 
+		for dir in _moore_dirs:
+			var ncpos : Vector3 = (chunk_pos + dir).round()
+			_get_structure_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
+
+		for structure_instance in structure_instances:
+			var pos : Vector3 = structure_instance[0]
+			var structure : Structure = structure_instance[1]
+			var lower_corner_pos := pos - structure.offset
+			var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
+			
+			if aabb.intersects(block_aabb):
+					
+				voxel_tool.paste_masked(lower_corner_pos, 
+					structure.voxels,VoxelBuffer.CHANNEL_TYPE,
+					# Masking
+					VoxelBuffer.CHANNEL_TYPE, AIR)
+						
+				
 	# Trees
 
 	if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
+		#if rng.randf() < biome.tree_chance:
 		var voxel_tool := buffer.get_voxel_tool()
 		var structure_instances := []
 			
@@ -278,14 +322,13 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			var lower_corner_pos := pos - structure.offset
 			var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
 			
-			if aabb.intersects(block_aabb) and biome.trees:
-					
+			if aabb.intersects(block_aabb):
+				#print(structure.voxels)
 				voxel_tool.paste_masked(lower_corner_pos, 
 					structure.voxels,VoxelBuffer.CHANNEL_TYPE,
 					# Masking
 					VoxelBuffer.CHANNEL_TYPE, AIR)
-					
-			
+						
 
 			
 	buffer.compress_uniform_channels()
@@ -298,6 +341,26 @@ func _get_tree_instances_in_chunk(
 		
 	var rng := RandomNumberGenerator.new()
 	rng.seed = _get_chunk_seed_2d(cpos)
+	
+	for i in 4:
+		var pos := Vector3(rng.randi() % chunk_size, 0, rng.randi() % chunk_size)
+		pos += cpos * chunk_size
+		pos.y = _get_height_at(pos.x, pos.z)
+		
+		
+		if pos.y > 0:
+			if allows_trees(pos):
+				pos -= offset
+				
+				var si := rng.randi() % len(_tree_structures)
+				var structure : Structure = _tree_structures[si]
+				tree_instances.append([pos.round(), structure])
+
+func _get_structure_instances_in_chunk(
+	cpos: Vector3, offset: Vector3, chunk_size: int, tree_instances: Array):
+		
+	var rng := RandomNumberGenerator.new()
+	rng.seed = _get_chunk_seed_2d(cpos)
 
 	for i in 4:
 		var pos := Vector3(rng.randi() % chunk_size, 0, rng.randi() % chunk_size)
@@ -306,11 +369,12 @@ func _get_tree_instances_in_chunk(
 		
 		if pos.y > 0:
 			pos -= offset
-			var si := rng.randi() % len(_tree_structures)
-			var structure : Structure = _tree_structures[si]
-			tree_instances.append([pos.round(), structure])
-
-
+			var si := rng.randi() % len(_custom_structures)
+			var structure : Structure = _custom_structures[si]
+			#print(structure.spawn_chance)
+			if rng.randf() < structure.spawn_chance:
+				tree_instances.append([pos.round(), structure])
+			
 #static func get_chunk_seed(cpos: Vector3) -> int:
 #	return cpos.x ^ (13 * int(cpos.y)) ^ (31 * int(cpos.z))
 
@@ -324,8 +388,35 @@ func temp_data(x: int, z: int) -> int:
 	return int(HeatCurve.sample_baked(t))
 
 func _get_height_at(x: int, z: int) -> int:
-	var t = 0.5 + 0.5 * _heightmap_noise.get_noise_2d(x, z)
-	return int(HeightmapCurve.sample_baked(t))
+	var noise = biome.noise
+	var t = 0.5 + 0.5 * noise.get_noise_2d(x, z)
+	var curve = biome.heightmap
+	return int(curve.sample_baked(t))
+	
+	
+func select_biome(temp):
+	
+	if !biome:
+		_array_mutex.lock()
+		var test_biome =  get_biome(temp)
+		if test_biome != null:
+				biome = test_biome
+		_array_mutex.unlock()
+	else:
+		if biome:
+			if temp <= biome.min_temp:
+				_array_mutex.lock()
+				var test_biome =  get_biome(temp)
+				if test_biome != null:
+					biome =test_biome
+				_array_mutex.unlock()
+			elif temp >= biome.max_temp:
+				_array_mutex.lock()
+				var test_biome =  get_biome(temp)
+				if test_biome != null:
+					biome =test_biome
+				_array_mutex.unlock()
+				
 	
 func get_biome(temp:float) -> Biome:
 	var return_biome:Biome
@@ -333,5 +424,22 @@ func get_biome(temp:float) -> Biome:
 		if temp >= _biome.min_temp and temp <= _biome.max_temp:
 			return_biome = _biome
 			return_biome.create_voxels_ids()
+	
 	return return_biome
 	
+	
+func allows_trees(chunk_pos) -> bool:
+	var temp = temp_data(chunk_pos.x,chunk_pos.z)
+	var b = get_biome(temp)
+	if b:
+		if b.trees:
+			return true
+		else:
+			return false
+	else:
+		print("error no biome")
+	return false
+
+static func is_server() -> bool:
+	var args = OS.get_cmdline_args() + OS.get_cmdline_user_args()
+	return "--server" in args

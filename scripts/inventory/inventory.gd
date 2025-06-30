@@ -22,6 +22,10 @@ var inventory = []
 
 
 func _ready() -> void:
+	print("INV")
+	#var data = save()
+	#Globals.add_meta_data.rpc(id,data)
+		
 	if is_in_group("Main Inventory"):
 		Console.add_command("item", self, '_on_add_random_item_pressed')\
 		.set_description("spawns random item).")\
@@ -181,18 +185,30 @@ func check_slots():
 
 
 func open(server_details:= {}):
-	show()
-	if sync:
-		for i in items_collection.get_children():
-			i.Item_resource = null
-			i.update_slot()
-		if !server_details.is_empty():
-			update_client.rpc(server_details)
+	pass
+	#print("details ",server_details)
+	#show()
+	#if sync:
+		#for i in items_collection.get_children():
+			#i.Item_resource = null
+			#i.update_slot()
+		#if !server_details.is_empty():
+			#update_client.rpc(server_details)
 
 
 func change(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	if sync:
-		Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
+		pass
+		var _save = save()
+		var data = JSON.stringify(_save)
+		#var terrian = get_tree().get_first_node_in_group("VoxelTerrain") as VoxelTerrain
+		#terrian.get_voxel_tool().set_voxel_metadata(id,data)
+		Globals.live_ui(id,data,multiplayer.get_unique_id())
+		Globals.sync_add_metadata.emit(id,data)
+		
+		#update.rpc(id,data)
+		#Globals.add_meta_data.rpc()
+		#Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
 	else:
 		var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 		if BackendClient.playerdata.Inventory == null:
@@ -200,21 +216,51 @@ func change(index: int, item_path: String, amount: int,parent:String,health:floa
 		else:
 			Globals.save_slot.emit(index,item_path,amount,parent,health,rot)
 			
-@rpc("any_peer","call_local")
-func update_client(info):
-	for i in info:
+func open_with_meta(data):
+	show()
+	print("new details ",data)
+	for i in data:
 		
-		var slot = find_child(info[i].parent).get_child(i.to_int())
+		var slot = find_child(data[i].parent).get_child(i.to_int())
 		
-		if info[i].item_path != "":
-			slot.Item_resource = load(info[i].item_path)
+		if data[i].item_path != "":
+			slot.Item_resource = load(data[i].item_path)
 		else:
 			slot.Item_resource = null
 			
-		slot.health = info[i].health
-		slot.amount = info[i].amount
-		slot.rot = info[i].rot
+		slot.health = data[i].health
+		slot.amount = data[i].amount
+		slot.rot = data[i].rot
 		slot.update_slot()
+			
+			
+@rpc("any_peer")
+func update(pos,data):
+	Globals.sync_change_open.emit(pos,data)
+	
+@rpc("any_peer","call_local")
+func add_meta_data(data):
+	
+	print("data",data)
+	TerrainHelper.get_terrain_tool().get_voxel_tool().set_voxel_metadata(id,data)
+	print(" change",TerrainHelper.get_terrain_tool().get_voxel_tool().get_voxel_metadata(id))
+	
+@rpc("any_peer","call_local")
+func update_client(info):
+	#for i in info:
+		#
+		#var slot = find_child(info[i].parent).get_child(i.to_int())
+		#
+		#if info[i].item_path != "":
+			#slot.Item_resource = load(info[i].item_path)
+		#else:
+			#slot.Item_resource = null
+			#
+		#slot.health = info[i].health
+		#slot.amount = info[i].amount
+		#slot.rot = info[i].rot
+		#slot.update_slot()
+	pass
 
 func pack_items(items:Array[String]):
 	for item in items:

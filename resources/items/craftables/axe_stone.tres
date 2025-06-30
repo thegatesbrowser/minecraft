@@ -1,19 +1,15 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=7 format=3 uid="uid://cqmhwea1gfd5r"]
+[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://cqmhwea1gfd5r"]
 
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="1_p37o7"]
 [ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="2_xhc5r"]
 [ext_resource type="Resource" uid="uid://dg2gha7cp48ki" path="res://resources/items/axe_stone.tres" id="3_qlpc3"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_orl38"]
-[ext_resource type="Texture2D" uid="uid://c67tq3xhwpumx" path="res://assets/tools.png" id="5_0b7ch"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5m7j5"]
-atlas = ExtResource("5_0b7ch")
-region = Rect2(80, 0, 16, 16)
+[ext_resource type="Texture2D" uid="uid://2aoyiogd32x5" path="res://assets/textures/items/stone_axe.png" id="5_11115"]
 
 [resource]
 script = ExtResource("4_orl38")
 Name = "Axe Stone"
-texture = SubResource("AtlasTexture_5m7j5")
+texture = ExtResource("5_11115")
 output_item = ExtResource("3_qlpc3")
 output_amount = 1
 items_needed = {

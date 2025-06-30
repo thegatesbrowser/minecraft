@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=4 format=3 uid="uid://depbi3f8nq8v0"]
+[gd_resource type="Resource" script_class="Biome" load_steps=6 format=3 uid="uid://depbi3f8nq8v0"]
 
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="1_0lo7b"]
 [ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/Glowtail.tres" id="1_8aweq"]
+[ext_resource type="FastNoiseLite" uid="uid://8dlrjkx8v1k5" path="res://resources/forest.tres" id="1_8xhp7"]
+[ext_resource type="Curve" uid="uid://cvrt8qtqhadv1" path="res://resources/heightmap_curve.tres" id="1_ij41s"]
 [ext_resource type="Script" path="res://scripts/world/biome.gd" id="1_ugi3b"]
 
 [resource]
@@ -12,7 +14,10 @@ biome_name = "desert"
 possible_creatures = Array[ExtResource("1_0lo7b")]([ExtResource("1_8aweq")])
 plants = [&"reeds"]
 trees = false
-plant_chance = 0.1
+tree_chance = 0.1
+plant_chance = 0.3
+heightmap = ExtResource("1_ij41s")
+noise = ExtResource("1_8xhp7")
 blocks = {
 "dirt_layer_block": "sand",
 "stone_layer_block": "stone",

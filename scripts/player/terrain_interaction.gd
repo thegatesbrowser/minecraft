@@ -22,6 +22,35 @@ var last_hit: VoxelRaycastResult
 
 var last_ping_time: float
 
+var _dirs: Array[Vector3] = [
+	Vector3(-1, 0, 0),
+	Vector3(1, 0, 0),
+	Vector3(0, 0, -1),
+	Vector3(0, 0, 1),
+	Vector3(-1, 0, -1),
+	Vector3(1, 0, -1),
+	Vector3(-1, 0, 1),
+	Vector3(1, 0, 1),
+	
+	Vector3(-1, 1, 0),
+	Vector3(1, 1, 0),
+	Vector3(0, 1, -1),
+	Vector3(0, 1, 1),
+	Vector3(-1, 1, -1),
+	Vector3(1, 1, -1),
+	Vector3(-1, 1, 1),
+	Vector3(1, 1, 1),
+
+	Vector3(-1, -1, 0),
+	Vector3(1, -1, 0),
+	Vector3(0, -1, -1),
+	Vector3(0, -1, 1),
+	Vector3(-1, -1, -1),
+	Vector3(1, -1, -1),
+	Vector3(-1, -1, 1),
+	Vector3(1, -1, 1)
+]
+
 
 func _ready() -> void:
 	plants = [voxel_blocky_type_library.get_model_index_default("tall_grass"),voxel_blocky_type_library.get_model_index_default("fern"),voxel_blocky_type_library.get_model_index_default("flower"),voxel_blocky_type_library.get_model_index_default("reeds")]
@@ -139,6 +168,7 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 @rpc("any_peer","call_local")
 func get_voxel_meta(position:Vector3):
 	var meta = voxel_tool.get_voxel_metadata(position)
+	print("meta ", meta)
 	get_parent().rpc_id(multiplayer.get_remote_sender_id(),"receive_meta",meta,voxel_tool.get_voxel(position))
 	
 
@@ -172,7 +202,14 @@ func _break_block_server(position: Vector3) -> void:
 				
 			elif item.utility.spawn_point:
 				remove_spawn_point.rpc(position)
-	
+				
+	for di in len(_dirs):
+		var npos := position + _dirs[di]
+		var nv := voxel_tool.get_voxel(npos)
+		if water(nv):
+			var water_m = get_tree().get_first_node_in_group("Water Updater")
+			water_m.schedule(npos)
+		
 	_block_broken_local.rpc_id(get_multiplayer_authority(), array[0])
 
 
@@ -204,7 +241,8 @@ func send_item(type: StringName) -> void:
 						
 	## gives the broken item to the player
 	var item = item_library.get_item(type)
-	Globals.spawn_item_inventory.emit(item)
+	#Globals.spawn_item_inventory.emit(item)
+	Globals.add_item_to_hotbar_or_inventory(item)
 
 
 @rpc("any_peer","call_local")
@@ -246,7 +284,13 @@ func remove_spawn_point(pos: Vector3) -> void:
 	if player.spawn_position == pos + Vector3(0,1,0):
 		player.spawn_position = player.start_position
 
-	
+func water(v:int):
+	var _is_water:bool = false
+	if v == voxel_blocky_type_library.get_model_index_default("water_full"):
+		_is_water = true
+	if v ==  voxel_blocky_type_library.get_model_index_default("water_top"):
+		_is_water = true
+	return _is_water
 
 func get_direction(player_pos:Vector3, place_pos:Vector3):
 	var dir = place_pos.direction_to(player_pos)

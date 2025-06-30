@@ -11,6 +11,7 @@ var buttons
 var keys
 
 func _ready() -> void:
+	Globals.spawn_item_hotbar.connect(spawn_item_hotbar)
 	Globals.remove_item_from_hotbar.connect(remove)
 	buttons = slots.get_children()
 	
@@ -163,6 +164,10 @@ func update(info) -> void:
 		slot.amount = info[i].amount
 		slot.rot = info[i].rot
 		slot.update_slot()
+		
+	Globals.hotbar_full = hotbar_full()
+		
+		
 
 func slot_updated(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
@@ -171,3 +176,25 @@ func slot_updated(index: int, item_path: String, amount: int,parent:String,healt
 			Globals.save.emit()
 		else:
 			Globals.save_slot.emit(index,item_path,amount,parent,health,rot)
+	
+
+func spawn_item_hotbar(item:ItemBase) -> void:
+	for slot in slots.get_children():
+		if slot.Item_resource == null:
+			slot.Item_resource = item
+			slot.update_slot()
+			break
+		elif slot.Item_resource == item:
+			if slot.Item_resource.max_stack >= slot.amount:
+				#return
+				slot.amount += 1
+				slot.update_slot()
+				break
+				
+func hotbar_full() -> bool:
+	var full:bool = true
+	for slot in slots.get_children():
+		if slot.Item_resource == null:
+			full = false
+			#return true
+	return full

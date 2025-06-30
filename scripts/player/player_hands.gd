@@ -68,11 +68,15 @@ func _process(_delta: float) -> void:
 								Globals.remove_item_in_hand.emit()
 								hand_ani.stop()
 
-	
+	if Input.is_action_just_pressed("Mine"):
+		if !get_parent().crouching:
+			interaction() ## checks for interactions
+			if is_interactable(): return
+				
 	if Input.is_action_pressed("Mine"):
 		
 		if !get_parent().crouching:
-			interaction() ## checks for interactions
+			#interaction() ## checks for interactions
 			if is_interactable(): return
 		
 		var last_mine_pos:Vector3i
@@ -114,6 +118,9 @@ func _process(_delta: float) -> void:
 						break_part.emitting = false
 						terrain_interaction.break_block()
 						last_mine_pos = Vector3i.ZERO
+						
+		
+		
 	else:
 		break_part.emitting = false
 		timer.stop()
@@ -145,7 +152,12 @@ func interaction() -> void:
 	
 	if item.utility != null:
 		if item.utility.has_ui:
-			Globals.open_inventory.emit(terrain_interaction.last_hit.position)
+			get_voxel_meta.rpc_id(1,terrain_interaction.last_hit.position)
+			
+			
+			#var meta_data = terrain_interaction.get_voxel_meta(terrain_interaction.last_hit.position)
+			#terrain_interaction.get_voxel_meta(terrain_interaction.last_hit.position)
+			#Globals.open_inventory.emit(terrain_interaction.last_hit.position)
 			
 		if item.utility.spawn_point:
 			get_parent().spawn_position = terrain_interaction.last_hit.position + Vector3i(0,1,0)
@@ -170,9 +182,36 @@ func drop(owner_id: int ,item: ItemBase ,amount := 1) -> void:
 func sync_drop(item_path: String, pos: Vector3 ,amount := 1) -> void:
 	Globals.add_object.emit([1,pos,"res://scenes/items/dropped_item.tscn",item_path,amount])
 
+@rpc("any_peer","call_local")
+func get_voxel_meta(position:Vector3):
+	var meta = voxel_tool.get_voxel_metadata(position)
+	var type = voxel_tool.get_voxel(position)
+	receive_meta.rpc_id(multiplayer.get_remote_sender_id(),meta,type,position)
+	#receive_meta(meta,type,position)
 
 @rpc("any_peer","call_local")
-func receive_meta(meta_data, type:int):
-	print(meta_data)
+func receive_meta(meta_data, type:int, position:Vector3):
+	var item_name = voxel_library.get_type_name_and_attributes_from_model_index(type)[0]
+	var item = items_library.get_item(item_name)
+		
+	print("receive ",meta_data, "type ",type)
 	if type == voxel_library.get_model_index_default("portal"):
 		Globals.enter_portal.emit(meta_data)
+		
+	if item_name == "chest":
+		print("chest")
+		#var meta = voxel_tool.get_voxel_metadata(terrain_interaction.last_hit.position)
+		print("open ",position)
+		var ui = load(item.utility.ui_scene_path).instantiate()
+		ui.id = position
+		var holder = get_node("/root/Main").find_child("Inventory")
+		holder.add_child(ui)
+		var ui_holder = get_node("/root/Main").find_child("Inventory holder")
+		
+		if meta_data != null:
+			ui.open_with_meta(JSON.parse_string(meta_data))
+		#else:
+			#ui.open()
+			
+		ui_holder.open_inventory(position)
+	

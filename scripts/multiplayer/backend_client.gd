@@ -3,8 +3,8 @@ extends Node
 @export var debug_ui:Control
 @export var login_window = preload("res://scenes/ui/login_window.tscn")
 @export var PlayerInfo:RichTextLabel
-#@export var address:String = "ws://127.0.0.1:8819"
-@export var address:String = "ws://188.245.188.59:8819"
+@export var address:String = "ws://127.0.0.1:8819"
+#@export var address:String = "ws://188.245.188.59:8819"
 
 var LoginWindow
 var peer = WebSocketMultiplayerPeer.new()

@@ -3,6 +3,7 @@ class_name CreatureBase
 
 var look_at_target:Vector3
 var spawn_pos:Vector3
+var pathfinding:VoxelAStarGrid3D = VoxelAStarGrid3D.new()
 
 @export var creature_resource: Creature
 
@@ -69,6 +70,7 @@ var is_despawning: bool = false
 func _ready() -> void:
 	if Connection.is_server():
 		terrain = TerrainHelper.get_terrain_tool()
+		pathfinding.set_terrain(terrain)
 	else:
 		#_synchronizer.delta_synchronized.connect(on_synchronized)
 		#_synchronizer.synchronized.connect(on_synchronized)
@@ -130,7 +132,7 @@ func _physics_process(delta: float) -> void:
 				velocity.y += 10
 			
 		
-	rotation_root.look_at(look_at_target)
+	rotation_root.look_at(look_at_target + Vector3(0,0.01,0))
 		
 	move_and_slide()
 	

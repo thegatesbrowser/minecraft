@@ -15,7 +15,7 @@ func enter_portal(url:String):
 	print("enter",url)
 	if get_tree().has_method("send_command"):
 		
-		get_tree().send_command("open_gate", url)
+		get_tree().send_command("open_gate", [url])
 
 #func add_new_portal(id: Vector3) -> void:
 	#send_to_server.rpc_id(1,id)

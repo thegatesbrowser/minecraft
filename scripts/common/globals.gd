@@ -52,12 +52,19 @@ signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,
 signal remove_ui(position:Vector3)
 var last_clicked_slot:Node
 var selected_slot:Slot ## the slot that is selected in the hotbar
+signal sync_add_metadata(pos,metadata)
+signal sync_change_open(position,data,id)
 
 # inventory
+var hotbar_full:bool = false
+
 signal open_inventory(id)
 signal add_subinventory(id)
 signal remove_item_from_hotbar
+
 signal spawn_item_inventory(item)
+signal spawn_item_hotbar(item)
+
 signal check_amount_of_item(item)
 signal remove_item(item,amount)
 signal hotbar_slot_clicked(slot)
@@ -77,6 +84,7 @@ signal save_slot(index: int, item_path: String, amount: int,parent: String,healt
 signal send_to_server(data:Dictionary)
 signal send_slot_data(data:Dictionary)
 
+var Inventory_holder:Inventory_Holder
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
@@ -203,3 +211,17 @@ func Spawn_creature(pos,creature):
 func Add_water_fog(pos):
 	#sync_water.rpc(pos)
 	pass
+	
+func add_item_to_hotbar_or_inventory(item:ItemBase):
+	if hotbar_full: spawn_item_inventory.emit(item)
+	else:
+		spawn_item_hotbar.emit(item)
+
+@rpc("any_peer","call_local")
+func add_meta_data(pos:Vector3,data):
+	TerrainHelper.get_terrain_tool().get_voxel_tool().set_voxel_metadata(pos,data)
+	print("added meta at ",pos, " with ",data)
+
+@rpc("any_peer")
+func live_ui(pos,data,id):
+	Globals.sync_change_open.emit(pos,data,id)

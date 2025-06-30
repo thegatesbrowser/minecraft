@@ -8,10 +8,13 @@ var opened_ui:Vector3 ## tells the server which ui is opened
 
 
 func _ready() -> void:
-	Globals.remove_ui.connect(remove_ui)
-	Globals.open_inventory.connect(open_ui)
-	Globals.new_ui.connect(new_ui)
-	Globals.sync_ui_change.connect(ui_updated)
+	Globals.sync_add_metadata.connect(add_metadata)
+	#Globals.sync_change_open.connect(sync_change_open)
+	#
+	#Globals.remove_ui.connect(remove_ui)
+	#Globals.open_inventory.connect(open_ui)
+	#Globals.new_ui.connect(new_ui)
+	#Globals.sync_ui_change.connect(ui_updated)
 
 
 func new_ui(position: Vector3, scene_path: String) -> void:
@@ -56,13 +59,15 @@ func check_server(position: Vector3) -> void:
 	#print(server_ui_info.has(position)," ", str(position),"  ", server_ui_info)
 	if !server_ui_info.has(str(position)): return
 	var server_data: Dictionary = server_ui_info[str(position)]
-	give_clients.rpc_id(multiplayer.get_remote_sender_id(), server_data)
+	give_clients.rpc_id(multiplayer.get_remote_sender_id(), server_data, position)
 
 
 @rpc("any_peer", "call_local")
-func give_clients(server_data: Dictionary) -> void:
+func give_clients(server_data: Dictionary, position:Vector3) -> void:
 	var ui = load(server_data.scene).instantiate()
+	ui.id = position
 	inventory_holder.add_child(ui)
+	
 	ui.open(server_data.inventory)
 	inventory_holder.show()
 	#print(server_data.inventory)
@@ -84,3 +89,12 @@ func save():
 			"server_ui_info":server_ui_info
 		}
 		return save_dict
+
+func add_metadata(pos,metadata):
+	sync_add_metadata.rpc_id(1,pos,metadata)
+	
+	
+@rpc("any_peer","call_local")
+func sync_add_metadata(pos,metadata):
+	var t = get_tree().get_first_node_in_group("VoxelTerrain") as VoxelTerrain
+	t.get_voxel_tool().set_voxel_metadata(pos,metadata)

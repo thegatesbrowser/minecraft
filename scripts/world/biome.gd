@@ -13,8 +13,11 @@ const voxel_library = preload("res://resources/voxel_block_library.tres")
 
 @export var plants : Array = ["tall_grass"]
 @export var trees:bool = true
+@export var tree_chance:float = 1.0
 @export var plant_chance:float = 1.0
 
+@export var heightmap:Curve
+@export var noise:FastNoiseLite
 
 @export var blocks: Dictionary = {
 	"surface_block": "grass",
