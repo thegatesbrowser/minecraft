@@ -1,2 +1,14 @@
-{"creature_path":"res://resources/creatures/Sparrow.tres","health":1,"x":-206.177322387695,"y":31.703405380249,"z":455.451538085938}
-{"creature_path":"res://resources/creatures/Sparrow.tres","health":1,"x":-241.144485473633,"y":28.7023448944092,"z":560.963562011719}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":91.8703460693359,"y":-99105.0078125,"z":91.5108413696289}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":95.2857360839844,"y":-362028.875,"z":-17.0947761535645}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":53.1435203552246,"y":-99104.0390625,"z":99.3569946289063}
+{"creature_path":"res://resources/creatures/Sparrow.tres","health":1,"x":41.884937286377,"y":28.0206527709961,"z":-6.64144802093506}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":-62.9734306335449,"y":-352794.65625,"z":144.101577758789}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":-53.7159385681152,"y":-350272.0625,"z":-79.3571472167969}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":-112.87141418457,"y":21.7849521636963,"z":-71.719367980957}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":-47.7715187072754,"y":-345175.75,"z":150.719055175781}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":80.7402420043945,"y":-268443,"z":-18.2992763519287}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":138.713241577148,"y":-265889.9375,"z":-39.2443771362305}
+{"creature_path":"res://resources/creatures/fox.tres","health":6,"x":-59.5353660583496,"y":3.44272494316101,"z":59.4149322509766}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":-31.4488048553467,"y":-256319.40625,"z":40.5498733520508}
+{"creature_path":"res://resources/creatures/Glowtail.tres","health":10,"x":-125.398956298828,"y":-101387.2734375,"z":57.0754699707031}
+{"creature_path":"res://resources/creatures/Sparrow.tres","health":1,"x":9.90186214447021,"y":4,"z":42.1315498352051}

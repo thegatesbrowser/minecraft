@@ -2,6 +2,7 @@
 # such as growth of grass and crops, fire etc.
 extends Node
 
+const ItemLib = preload('res://resources/items_library.tres')
 const VoxelLibraryResource = preload("res://resources/voxel_block_library.tres")
 
 # Takes effect in a large radius around the player
@@ -100,6 +101,8 @@ var _fire_dirs: Array[Vector3i] = [
 	Vector3(0,1,0),
 ]
 
+func _init() -> void:
+	ItemLib.init_items()
 
 func _ready():
 	if not Connection.is_server(): return
@@ -138,6 +141,10 @@ func _makes_grass_die(raw_type: int) -> bool:
 
 func _random_tick_callback(pos: Vector3i, value: int) -> void:
 	#print(value)
+	var type = VoxelLibraryResource.get_type_name_and_attributes_from_model_index(value)[0]
+	if ItemLib.types.has(type) == false: return
+	var item = ItemLib.get_item(type)
+	
 	if value == VoxelLibraryResource.get_model_index_default("grass"):
 		var above := pos + Vector3i(0, 1, 0)
 		var above_v := _voxel_tool.get_voxel(above)
@@ -204,7 +211,20 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 				return
 			Globals.spawn_creature.emit(pos + Vector3i(0,1,0),creature)
 			_voxel_tool.do_point(pos)
+	#print(value)
+	if item is ItemPlant:
+		var above := pos + Vector3i(0, 1, 0)
+		var above_v := _voxel_tool.get_voxel(above)
+		# Spread
+		var rng = RandomNumberGenerator.new()
+		print("plant")
+		if rng.randf() < 0.4:
+			if item.next_plant_stage != null:
+				
+				var new_voxel = item.next_plant_stage.unique_name
+				_voxel_tool.set_voxel(pos, VoxelLibraryResource.get_model_index_default(new_voxel))
 			
+		
 	#if water(value):
 		#print("water")
 		#for di in len(water_dirs):

@@ -76,7 +76,7 @@ var rng = RandomNumberGenerator.new()
 
 
 func _init():
-	call_deferred("ready")
+	#call_deferred("ready")
 	# TODO Even this must be based on a seed, but I'm lazy
 	
 	

@@ -18,7 +18,8 @@ func _ready() -> void:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Hotbar != null:
-			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			#update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			pass
 			
 	for slot in buttons:
 		slot.item_changed.connect(slot_updated)
@@ -75,6 +76,10 @@ func _press_key(i: int) -> void:
 			Globals.current_block = buttons[current_key].Item_resource.unique_name
 			Globals.can_build = true 
 			Globals.custom_block = &""
+		#elif buttons[current_key].Item_resource is ItemPlant:
+			#Globals.current_block = buttons[current_key].Item_resource.unique_name
+			#Globals.can_build = true 
+			#Globals.custom_block = &""
 		elif buttons[current_key].Item_resource is ItemTool:
 			Globals.can_build = false
 			Globals.custom_block = buttons[current_key].Item_resource.unique_name

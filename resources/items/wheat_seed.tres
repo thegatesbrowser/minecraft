@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemPlant" load_steps=5 format=3 uid="uid://bjxmpky4bm43a"]
+
+[ext_resource type="Resource" uid="uid://bdgeb6sqe2tl" path="res://resources/items/wheat.tres" id="1_376ov"]
+[ext_resource type="Script" path="res://scripts/items/item_plant.gd" id="1_w2scu"]
+
+[sub_resource type="Gradient" id="Gradient_ncmdc"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_glnoo"]
+gradient = SubResource("Gradient_ncmdc")
+
+[resource]
+script = ExtResource("1_w2scu")
+next_plant_stage = ExtResource("1_376ov")
+time_to_grow = 1.0
+break_time = 0.4
+spawn_chance = 0.1
+spawn_size = 1
+spawn_height = 0.0
+unique_name = &"wheat_seed"
+texture = SubResource("GradientTexture1D_glnoo")
+max_stack = 64
+rotatable = false
+forgable = false
+forge_time = 2.0
+value = 10

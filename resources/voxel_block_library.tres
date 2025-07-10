@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=91 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=98 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
 [ext_resource type="Texture2D" uid="uid://b2q0kdc7iqkvx" path="res://assets/textures.png" id="3_1m38q"]
@@ -462,7 +462,6 @@ center_offset = Vector3(0.5, 1, 0.5)
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_ntd22"]
 mesh = SubResource("PlaneMesh_2cjmj")
 culls_neighbors = false
-random_tickable = true
 collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 1, 1, 1)])
 collision_mask = 2
 collision_enabled_0 = false
@@ -480,7 +479,6 @@ albedo_color = Color(1, 1, 1, 0)
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_ndvd3"]
 culls_neighbors = false
-random_tickable = true
 collision_mask = 2
 material_override_0 = SubResource("StandardMaterial3D_7sq8j")
 collision_enabled_0 = false
@@ -564,6 +562,56 @@ unique_name = &"creature_spawner"
 base_model = SubResource("VoxelBlockyModelEmpty_ydxtk")
 resource_name = "creature_spawner"
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_234e5"]
+render_priority = 0
+shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = null
+shader_parameter/distance_fade_max = null
+shader_parameter/grass_texture = ExtResource("8_es8ej")
+
+[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_qp5gf"]
+mesh = ExtResource("4_vwypi")
+random_tickable = true
+material_override_0 = SubResource("ShaderMaterial_234e5")
+collision_enabled_0 = false
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_o5re0"]
+unique_name = &"wheat"
+base_model = SubResource("VoxelBlockyModelMesh_qp5gf")
+resource_name = "wheat"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ebx1x"]
+render_priority = 0
+shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = null
+shader_parameter/distance_fade_max = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ygas7"]
+_surfaces = [{
+"aabb": AABB(0.146447, -0.1, 0.146447, 0.707106, 1, 0.707106),
+"attribute_data": PackedByteArray("AAD//wAAAAD///////8AAAAA//8AAAAA////////AAA="),
+"format": 34896613399,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcA"),
+"material": SubResource("ShaderMaterial_ebx1x"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("//8AAP///9//////////3wAAAAAAAP/fAAD//wAA/98AAAAA////nwAA//////+f//8AAAAA/5//////AAD/n/9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_iqsnf"]
+mesh = SubResource("ArrayMesh_ygas7")
+random_tickable = true
+collision_enabled_0 = false
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_xg2os"]
+unique_name = &"wheat_seed"
+base_model = SubResource("VoxelBlockyModelMesh_iqsnf")
+resource_name = "wheat_seed"
+
 [resource]
-types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_06gsb")])
-_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]")
+types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_06gsb"), SubResource("VoxelBlockyType_o5re0"), SubResource("VoxelBlockyType_xg2os")])
+_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]", "wheat", "wheat_seed")

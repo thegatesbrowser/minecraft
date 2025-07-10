@@ -108,12 +108,15 @@ func get_type() -> StringName:
 
 
 ## Places a block with the given type
-func place_block(type: StringName, player_pos: Vector3) -> void:
+func place_block(type: StringName, player_pos: Vector3 = Vector3.ZERO) -> void:
 	_place_block_server.rpc_id(1, type, last_hit.previous_position, player_pos)
-
+	
 	var item = item_library.get_item(type)
 	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
+	
+	#if item is ItemPlant:
+		#plant_start_growth(item,last_hit.previous_position)
 	
 	if item.rotatable:
 		## make the block rotation towards the player when placed
@@ -122,6 +125,8 @@ func place_block(type: StringName, player_pos: Vector3) -> void:
 		voxel_tool.value = voxel_blocky_type_library.get_model_index_default(type)
 	
 	voxel_tool.do_point(last_hit.previous_position)
+
+#func place_block_
 
 ## Breaks the block and returns the type name
 func break_block() -> void:
@@ -142,9 +147,11 @@ func break_block() -> void:
 
 
 @rpc("reliable", "authority")
-func _place_block_server(type: StringName, position: Vector3, player_pos: Vector3) -> void:
+func _place_block_server(type: StringName, position: Vector3, player_pos: Vector3 = Vector3.ZERO) -> void:
 	var item = item_library.get_item(type)
 	
+	#if item is ItemPlant:
+		#voxel_tool.set_voxel_metadata(position,{"time_left":item.time_to_grow,"type",type})
 	#print("player pos ", player_pos)
 	if item.utility != null:
 		if item.utility.has_ui:
@@ -153,6 +160,7 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 		elif item.utility.portal:
 			Globals.create_portal.emit(position)
 			open_portal_ui.rpc_id(multiplayer.get_remote_sender_id(),position)
+			
 	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	
@@ -307,3 +315,9 @@ func get_direction(player_pos:Vector3, place_pos:Vector3):
 			return VoxelBlockyAttributeDirection.DIR_NEGATIVE_Z
 		else:
 			return VoxelBlockyAttributeDirection.DIR_POSITIVE_Z
+
+#func plant_start_growth(plant:ItemPlant,position:Vector3):
+	#var growth_timer = get_tree().create_timer(plant.time_to_grow)
+	#await growth_timer.timeout
+	#_place_block_server.rpc_id(1,plant.next_plant_stage.unique_name,position)
+	#place_block(plant.next_plant_stage.unique_name)
