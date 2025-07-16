@@ -14,6 +14,7 @@ unique_name = &"iron"
 texture = ExtResource("3_n30kd")
 max_stack = 64
 rotatable = false
+drop_items = Array[StringName]([&"iron"])
 forgable = true
 forge_time = 2.0
 output_item = ExtResource("1_6n85u")

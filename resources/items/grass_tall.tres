@@ -13,5 +13,7 @@ unique_name = &"tall_grass"
 texture = ExtResource("2_3dlfr")
 max_stack = 64
 rotatable = false
+drop_items = Array[StringName]([&"wheat_seed"])
 forgable = false
 forge_time = 2.0
+value = 10

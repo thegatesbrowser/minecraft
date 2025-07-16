@@ -13,5 +13,7 @@ unique_name = &"glowstone"
 texture = ExtResource("2_1eefx")
 max_stack = 64
 rotatable = false
+drop_items = Array[StringName]([&"glowstone"])
 forgable = false
 forge_time = 2.0
+value = 10

@@ -89,7 +89,33 @@ func create_viewer(id: int, player: Player) -> void:
 
 func on_spawned(node: Node) -> void:
 	player_spawned.emit(node.get_multiplayer_authority(), node)
-
+	
+	var player = players[multiplayer.get_unique_id()].player
+	
+	Console.add_command("respawn", player, 'death')\
+		.set_description("makes the player position the spawn position).")\
+		.register()
+	
+	Console.add_command("ping", player, 'show_ping')\
+		.set_description("shows the ping).")\
+		.register()
+		
+	Console.add_command("pos", player, 'show_pos')\
+		.set_description("shows the position of the player).")\
+		.register()
+	
+	Console.add_command("player_flying", player, 'toggle_flying')\
+		.set_description("Enables the player to fly (or disables flight).")\
+		.register()
+	Console.add_command("player_clipping", player, 'toggle_clipping')\
+		.set_description("Enables the player to clip through the world (or disables clipping).")\
+		.register()
+		
+	Console.add_command("speed", player, '_speed_mode')\
+		.set_description("Enables the player to go speedy).")\
+		.register()
+	
+	#print(node.get_multiplayer_authority())
 
 func on_despawned(node: Node) -> void:
 	player_despawned.emit(node.get_multiplayer_authority())

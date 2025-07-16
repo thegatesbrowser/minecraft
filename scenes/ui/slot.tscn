@@ -13,22 +13,31 @@ shader_parameter/thickness = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xyujq"]
 bg_color = Color(0, 0, 0, 0.529412)
+corner_radius_top_left = 325
+corner_radius_top_right = 325
+corner_radius_bottom_right = 325
+corner_radius_bottom_left = 325
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqeng"]
 bg_color = Color(0, 1, 0.0333333, 1)
+corner_radius_top_left = 325
+corner_radius_top_right = 325
+corner_radius_bottom_right = 325
+corner_radius_bottom_left = 325
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]
 bg_color = Color(0, 0, 0, 0.572549)
-border_color = Color(0.176, 0.176, 0.176, 0.632)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.8)
 corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
-shadow_color = Color(0, 0, 0, 0.152941)
-shadow_size = 2
-shadow_offset = Vector2(3, 3)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bokx8"]
@@ -86,7 +95,7 @@ size_flags_vertical = 8
 theme_override_styles/background = SubResource("StyleBoxFlat_xyujq")
 theme_override_styles/fill = SubResource("StyleBoxFlat_jqeng")
 max_value = 5.0
-value = 1.0
+value = 0.77
 show_percentage = false
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -107,18 +116,19 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -23.0
-offset_top = -44.0
-offset_right = -2.0
+offset_left = -43.0
+offset_top = -37.0
+offset_right = -7.0
+offset_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("4_2r2mj")
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 15
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.360784)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.333333)
+theme_override_constants/shadow_outline_size = 10
+theme_override_font_sizes/font_size = 20
+text = "64"
+horizontal_alignment = 2
 
 [node name="health" type="Label" parent="."]
 visible = false
@@ -132,11 +142,11 @@ grow_horizontal = 0
 theme = ExtResource("4_2r2mj")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 15
 text = "1"
 horizontal_alignment = 1
 
 [node name="rot" type="Label" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -153,6 +163,7 @@ horizontal_alignment = 1
 
 [node name="pressed" type="Panel" parent="."]
 show_behind_parent = true
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

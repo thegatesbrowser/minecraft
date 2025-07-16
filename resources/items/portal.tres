@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="ItemBlock" load_steps=5 format=3 uid="uid://cn8nqiie237mj"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_a26th"]
-[ext_resource type="Script" path="res://scripts/other/utilities.gd" id="2_cmbb3"]
 [ext_resource type="Texture2D" uid="uid://b0omyudpmrpm4" path="res://assets/textures/items/portal.png" id="2_smnnp"]
+[ext_resource type="Script" path="res://scripts/items/utilities.gd" id="3_318gj"]
 
 [sub_resource type="Resource" id="Resource_vss83"]
-script = ExtResource("2_cmbb3")
+script = ExtResource("3_318gj")
 has_ui = false
 ui_scene_path = ""
 spawn_point = false
@@ -22,6 +22,7 @@ texture = ExtResource("2_smnnp")
 max_stack = 64
 utility = SubResource("Resource_vss83")
 rotatable = false
+drop_items = Array[StringName]([&"portal"])
 forgable = false
 forge_time = 2.0
 value = 10

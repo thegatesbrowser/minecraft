@@ -184,16 +184,16 @@ func check_slots():
 				inventory.append(i.Item_resource.unique_name)
 
 
-func open(server_details:= {}):
-	pass
-	#print("details ",server_details)
-	#show()
-	#if sync:
-		#for i in items_collection.get_children():
-			#i.Item_resource = null
-			#i.update_slot()
-		#if !server_details.is_empty():
-			#update_client.rpc(server_details)
+#func open(server_details:= {}):
+	#pass
+	##print("details ",server_details)
+	##show()
+	##if sync:
+		##for i in items_collection.get_children():
+			##i.Item_resource = null
+			##i.update_slot()
+		##if !server_details.is_empty():
+			##update_client.rpc(server_details)
 
 
 func change(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
@@ -218,7 +218,7 @@ func change(index: int, item_path: String, amount: int,parent:String,health:floa
 			
 func open_with_meta(data):
 	show()
-	print("new details ",data)
+	#print("new details ",data)
 	for i in data:
 		
 		var slot = find_child(data[i].parent).get_child(i.to_int())
@@ -244,22 +244,21 @@ func add_meta_data(data):
 	print("data",data)
 	TerrainHelper.get_terrain_tool().get_voxel_tool().set_voxel_metadata(id,data)
 	print(" change",TerrainHelper.get_terrain_tool().get_voxel_tool().get_voxel_metadata(id))
-	
-@rpc("any_peer","call_local")
+
 func update_client(info):
-	#for i in info:
-		#
-		#var slot = find_child(info[i].parent).get_child(i.to_int())
-		#
-		#if info[i].item_path != "":
-			#slot.Item_resource = load(info[i].item_path)
-		#else:
-			#slot.Item_resource = null
-			#
-		#slot.health = info[i].health
-		#slot.amount = info[i].amount
-		#slot.rot = info[i].rot
-		#slot.update_slot()
+	for i in info:
+		
+		var slot = find_child(info[i].parent).get_child(i.to_int())
+		
+		if info[i].item_path != "":
+			slot.Item_resource = load(info[i].item_path)
+		else:
+			slot.Item_resource = null
+			
+		slot.health = info[i].health
+		slot.amount = info[i].amount
+		slot.rot = info[i].rot
+		slot.update_slot()
 	pass
 
 func pack_items(items:Array[String]):

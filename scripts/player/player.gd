@@ -144,29 +144,6 @@ func _ready() -> void:
 		minecraft_player.show()
 		return
 	else:
-		Console.add_command("respawn", self, 'death')\
-		.set_description("makes the player position the spawn position).")\
-		.register()
-	
-		Console.add_command("ping", self, 'show_ping')\
-			.set_description("shows the ping).")\
-			.register()
-			
-		Console.add_command("pos", self, 'show_pos')\
-			.set_description("shows the position of the player).")\
-			.register()
-		
-		Console.add_command("player_flying", self, 'toggle_flying')\
-			.set_description("Enables the player to fly (or disables flight).")\
-			.register()
-		Console.add_command("player_clipping", self, 'toggle_clipping')\
-			.set_description("Enables the player to clip through the world (or disables clipping).")\
-			.register()
-			
-		Console.add_command("speed", self, '_speed_mode')\
-			.set_description("Enables the player to go speedy).")\
-			.register()
-	
 		hand.show()
 		minecraft_player.hide()
 	
@@ -505,7 +482,6 @@ func _on_update_timeout() -> void:
 		save_data()
 
 func normal_movement(delta:float):
-	
 	# Handle Sprint.
 	if Input.is_action_pressed("Sprint"):
 		speed = SPRINT_SPEED

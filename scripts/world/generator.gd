@@ -76,7 +76,7 @@ var rng = RandomNumberGenerator.new()
 
 
 func _init():
-	call_deferred("ready")
+	#call_deferred("ready")
 	# TODO Even this must be based on a seed, but I'm lazy
 	
 	
@@ -241,13 +241,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 								buffer.set_voxel(CREATURE_SPAWNER,x,relative_height,z,_CHANNEL)
 								buffer.set_voxel_metadata(Vector3i(x,relative_height,z),biome.possible_creatures.pick_random())
 								creatures_spawners.append(Vector3(x,relative_height,z))
-							#elif rng.randf() < 0.00001:
-		#
-								#buffer.set_voxel(PORTAl,x,relative_height,z,_CHANNEL)
-								#var worlds = possible_worlds.size() - 1
-								#var world = possible_worlds[rng.randi_range(0,worlds)]
-								#buffer.set_voxel_metadata(Vector3i(x,relative_height,z),world)
-								
+			
 								#
 					##
 				
@@ -260,13 +254,7 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 						Vector3(x + 1, block_size -1, z + 1), _CHANNEL)
 					if oy + block_size == 0:
 						buffer.set_voxel(WATER_TOP,x,block_size - 1,z)
-					#if oy + block_size == 0:
-						# Surface block
-						#buffer.fill_area(WATER_TOP,Vector3(x + 1,block_size, z + 1),Vector3(x + 2,block_size -1, z + 2),_CHANNEL)
-						#buffer.fill_area(WATER_TOP,
-						#Vector3(x,  block_size, z), 
-						#Vector3(x + 1, block_size + 1, z + 1), _CHANNEL)
-						#
+					
 				gx += 1
 
 			gz += 1

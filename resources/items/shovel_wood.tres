@@ -20,6 +20,7 @@ texture = ExtResource("7_dj0qq")
 max_stack = 1
 holdable_mesh = ExtResource("1_oikl5")
 rotatable = false
+drop_items = Array[StringName]([])
 forgable = false
 forge_time = 2.0
 value = 10

@@ -9,9 +9,6 @@ signal change_block(global_pos: Vector3, chunk_id: Vector2, type: int)
 var player: Player
 var is_fullscreen: bool = false
 
-func _ready() -> void:
-	pass
-
 func _process(_delta: float) -> void:
 	if Connection.is_server() or player == null: return
 	

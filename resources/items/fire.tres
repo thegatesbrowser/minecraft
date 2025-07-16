@@ -17,6 +17,7 @@ unique_name = &"fire"
 texture = SubResource("GradientTexture2D_8b0mp")
 max_stack = 64
 rotatable = false
+drop_items = Array[StringName]([])
 forgable = false
 forge_time = 2.0
 value = 10
