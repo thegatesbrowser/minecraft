@@ -13,6 +13,7 @@ unique_name = &"grass"
 texture = ExtResource("2_r1p67")
 max_stack = 64
 rotatable = false
+drop_items = Array[StringName]([&"grass"])
 forgable = false
 forge_time = 2.0
 value = 10

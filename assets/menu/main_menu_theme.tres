@@ -50,15 +50,10 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug056"]
 bg_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.176419, 0.176419, 0.176419, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 shadow_color = Color(0, 0, 0, 0.152941)
 shadow_size = 2
 shadow_offset = Vector2(3, 3)

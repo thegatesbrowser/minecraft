@@ -14,6 +14,7 @@ unique_name = &"log_oak"
 texture = ExtResource("3_u36qx")
 max_stack = 64
 rotatable = false
+drop_items = Array[StringName]([&"log_oak"])
 forgable = true
 forge_time = 2.0
 output_item = ExtResource("1_1xnot")

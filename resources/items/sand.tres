@@ -13,6 +13,7 @@ unique_name = &"sand"
 texture = ExtResource("2_deun3")
 max_stack = 64
 rotatable = false
+drop_items = Array[StringName]([&"sand"])
 forgable = false
 forge_time = 2.0
 value = 10

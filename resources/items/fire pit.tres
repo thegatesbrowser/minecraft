@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_mmwns"]
 [ext_resource type="Texture2D" uid="uid://b7ihfj3ynsmyg" path="res://assets/textures/blocks/fire.png" id="2_vwgrf"]
-[ext_resource type="Script" path="res://scripts/other/utilities.gd" id="3_ppqto"]
+[ext_resource type="Script" path="res://scripts/items/utilities.gd" id="3_kbcmo"]
 
 [sub_resource type="Resource" id="Resource_xr3qy"]
-script = ExtResource("3_ppqto")
+script = ExtResource("3_kbcmo")
 has_ui = true
 ui_scene_path = "res://scenes/ui/furnace_ui.tscn"
 spawn_point = false
@@ -22,6 +22,7 @@ texture = ExtResource("2_vwgrf")
 max_stack = 64
 utility = SubResource("Resource_xr3qy")
 rotatable = true
+drop_items = Array[StringName]([&"charcoal"])
 forgable = false
 forge_time = 2.0
 value = 10

@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=99 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -10,8 +10,6 @@
 [ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_d33r5"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
-[ext_resource type="Script" path="res://scripts/world/voxel_terrain.gd" id="7_dy7rt"]
-[ext_resource type="Script" path="res://scripts/world/building_check.gd" id="8_na7qa"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
 [ext_resource type="Script" path="res://scripts/world/water.gd" id="10_riapq"]
 [ext_resource type="PackedScene" uid="uid://b4ef0j31tttko" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
@@ -21,10 +19,10 @@
 [ext_resource type="Script" path="res://scripts/ui/armour_holder.gd" id="13_wsp3s"]
 [ext_resource type="Script" path="res://scripts/ui/stats_ui_update.gd" id="14_ho63k"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/ui/slot.tscn" id="14_ihskq"]
-[ext_resource type="Texture2D" uid="uid://ck5pnmgsl8f7j" path="res://assets/textures/items/leather_helmet.png" id="15_kdnva"]
+[ext_resource type="Texture2D" uid="uid://dfq1xsxxwwqdp" path="res://assets/textures/items/iron_helment.tres" id="15_gb3gv"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="15_uiy3n"]
-[ext_resource type="Texture2D" uid="uid://dp2u2uccah4f8" path="res://assets/textures/items/leather_chestplate.png" id="16_jipce"]
-[ext_resource type="Texture2D" uid="uid://psbdqd3q4naj" path="res://assets/textures/items/leather_leggings.png" id="17_vqxny"]
+[ext_resource type="Texture2D" uid="uid://yws3kjk5m1nh" path="res://assets/textures/items/iron_chestplate.tres" id="16_cnchn"]
+[ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/iron_armour.png" id="17_lk0tq"]
 [ext_resource type="Script" path="res://scripts/ui/input_settings.gd" id="18_1gacs"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="20_j2a6v"]
 [ext_resource type="Script" path="res://scripts/ui/grapthic_settings.gd" id="21_8u2nj"]
@@ -36,10 +34,10 @@
 [ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="24_0bstr"]
 [ext_resource type="PackedScene" uid="uid://7bxiyo4hesal" path="res://scenes/other/random_sound.tscn" id="24_r824s"]
 [ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="25_5i73i"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="26_6dvgg"]
 [ext_resource type="Resource" uid="uid://bbwu7wqguky81" path="res://resources/items/leaf_oak.tres" id="26_foygn"]
 [ext_resource type="Resource" uid="uid://bk4meuo0rs246" path="res://resources/items/leaf_birch.tres" id="27_mupgd"]
 [ext_resource type="Script" path="res://scripts/multiplayer/chat.gd" id="27_yvp68"]
-[ext_resource type="Resource" uid="uid://d3ecx624ljcyc" path="res://resources/items/glass.tres" id="28_g6gey"]
 [ext_resource type="Resource" uid="uid://d26i62gur1o23" path="res://resources/items/log_oak.tres" id="29_hm8td"]
 [ext_resource type="Resource" uid="uid://cogc5ac14y0ad" path="res://resources/items/log_birch.tres" id="30_jvpgd"]
 [ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="31_obhup"]
@@ -72,8 +70,6 @@
 [ext_resource type="Script" path="res://scripts/ui/gameplay_settings.gd" id="66_h5gdj"]
 [ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="69_713dd"]
 [ext_resource type="AudioStream" uid="uid://sx4737eqqk7h" path="res://assets/sounds/ambient/Soulsand_valley_wind3.ogg" id="70_eg5sl"]
-[ext_resource type="ArrayMesh" uid="uid://db0xmf22abm26" path="res://assets/models/water_top.obj" id="71_dltqe"]
-[ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="73_5hh30"]
 
 [sub_resource type="Gradient" id="Gradient_3lj46"]
 
@@ -164,24 +160,68 @@ volumetric_fog_sky_affect = 0.541
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nskl3"]
+bg_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhmo7"]
+atlas = ExtResource("17_lk0tq")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ku4ms"]
+color = Color(0, 0, 0, 0)
+vertical = true
+
+[sub_resource type="Resource" id="Resource_iwo8c"]
+script = ExtResource("26_6dvgg")
+break_time = 10.0
+spawn_chance = 0.1
+spawn_size = 1
+spawn_height = 0.0
+unique_name = &"glass"
+max_stack = 64
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+value = 10
+
 [sub_resource type="Resource" id="Resource_c0ten"]
 script = ExtResource("56_rtthk")
-items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), ExtResource("28_g6gey"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), ExtResource("38_met67"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
+items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), SubResource("Resource_iwo8c"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), ExtResource("38_met67"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xhoya"]
 color = Color(0, 0, 0, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_211ce"]
-bg_color = Color(0, 0, 0, 0.168)
+[sub_resource type="Gradient" id="Gradient_88jip"]
+colors = PackedColorArray(0, 0, 0, 0.607843, 0, 0, 0, 0.176471)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ouh7k"]
-bg_color = Color(1, 0, 0, 1)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xayh1"]
+gradient = SubResource("Gradient_88jip")
+width = 832
+height = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wwb2f"]
-bg_color = Color(0, 0, 0, 0.168)
+[sub_resource type="Gradient" id="Gradient_pftdw"]
+colors = PackedColorArray(1, 0, 0, 1, 0.29, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ai7gg"]
-bg_color = Color(0.333054, 0.119308, 2.40654e-08, 1)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_okasu"]
+gradient = SubResource("Gradient_pftdw")
+width = 832
+height = 10
+fill = 1
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5s26x"]
+gradient = SubResource("Gradient_88jip")
+width = 832
+height = 10
+
+[sub_resource type="Gradient" id="Gradient_g6j5x"]
+colors = PackedColorArray(0.53, 0.2385, 0, 1, 0.278771, 0.119053, 0.0862587, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nnvyx"]
+gradient = SubResource("Gradient_g6j5x")
+width = 832
+height = 10
+fill = 1
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
@@ -204,82 +244,6 @@ stream_1/stream = SubResource("AudioStreamMP3_1rm4i")
 stream_1/weight = 0.5
 stream_2/stream = ExtResource("69_713dd")
 stream_3/stream = ExtResource("70_eg5sl")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ttdb"]
-transparency = 2
-alpha_scissor_threshold = 0.5
-alpha_antialiasing_mode = 0
-albedo_color = Color(1, 1, 1, 0)
-
-[sub_resource type="Gradient" id="Gradient_mkvxg"]
-colors = PackedColorArray(0, 0.317647, 0.788235, 0.552941, 0, 0.317647, 0.788235, 0.815686)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ew0rs"]
-frequency = 0.0642
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e6wwk"]
-seamless = true
-color_ramp = SubResource("Gradient_mkvxg")
-noise = SubResource("FastNoiseLite_ew0rs")
-
-[sub_resource type="Gradient" id="Gradient_1g53r"]
-offsets = PackedFloat32Array(0.0562771, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_o60ud"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s5xgf"]
-seamless = true
-as_normal_map = true
-color_ramp = SubResource("Gradient_1g53r")
-noise = SubResource("FastNoiseLite_o60ud")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e4ydk"]
-transparency = 1
-albedo_texture = SubResource("NoiseTexture2D_e6wwk")
-metallic = 1.0
-metallic_specular = 1.0
-roughness = 0.0
-normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_s5xgf")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_ni0ro"]
-size = Vector2(2.03975, 2)
-subdivide_width = 100
-subdivide_depth = 100
-
-[sub_resource type="Gradient" id="Gradient_w176c"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_epe23"]
-seed = 1
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3uuik"]
-seamless = true
-color_ramp = SubResource("Gradient_w176c")
-noise = SubResource("FastNoiseLite_epe23")
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ju7b3"]
-seamless = true
-color_ramp = SubResource("Gradient_w176c")
-noise = SubResource("FastNoiseLite_epe23")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uc221"]
-render_priority = 0
-shader = ExtResource("73_5hh30")
-shader_parameter/beer_factor = 0.8
-shader_parameter/foam_distance = 0.0181
-shader_parameter/foam_max_distance = 0.4
-shader_parameter/foam_min_distance = 0.04
-shader_parameter/foam_color = Color(1, 1, 1, 1)
-shader_parameter/surface_noise_tiling = Vector2(1, 4)
-shader_parameter/surface_noise_scroll = Vector3(0.03, 0.03, 0)
-shader_parameter/surface_noise_cutoff = 0.777
-shader_parameter/surface_distortion_amount = 0.27
-shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
-shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
-shader_parameter/_DepthMaxDistance = 0.833
-shader_parameter/_DepthFactor = 1.0
-shader_parameter/surfaceNoise = SubResource("NoiseTexture2D_ju7b3")
-shader_parameter/distortNoise = SubResource("NoiseTexture2D_3uuik")
 
 [node name="Game" type="Node3D" groups=["Game"]]
 script = ExtResource("1")
@@ -311,12 +275,8 @@ stream = ExtResource("5_d33r5")
 generator = ExtResource("4_eo0cp")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 gi_mode = 1
-script = ExtResource("7_dy7rt")
 
 [node name="VoxelTerrainMultiplayerSynchronizer" type="VoxelTerrainMultiplayerSynchronizer" parent="VoxelTerrain"]
-
-[node name="Building Check" type="Node" parent="VoxelTerrain"]
-script = ExtResource("8_na7qa")
 
 [node name="Water" type="Node" parent="VoxelTerrain" groups=["Water Updater"]]
 script = ExtResource("10_riapq")
@@ -347,6 +307,29 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("3_v2bsq")
 
+[node name="Label" type="Label" parent="Player UI"]
+z_index = -13
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -17.5
+offset_right = 12.0
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.117647)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 6
+theme_override_font_sizes/font_size = 25
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="prombt" type="Label" parent="Player UI"]
 layout_mode = 1
 anchors_preset = 3
@@ -359,7 +342,8 @@ offset_top = -59.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("3_v2bsq")
-text = "F - Text Chat
+text = "T - Text Chat
+E - Inventory
 ~ - Pause Menu"
 
 [node name="Inventory holder" type="Control" parent="Player UI" node_paths=PackedStringArray("h_box_container")]
@@ -384,19 +368,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -340.0
-offset_top = -252.0
-offset_right = 340.0
-offset_bottom = 252.0
+offset_left = -332.5
+offset_top = -207.5
+offset_right = 332.5
+offset_bottom = 207.5
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
+theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
 [node name="INV" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer"]
 layout_mode = 2
@@ -408,34 +391,33 @@ alignment = 1
 
 [node name="Armour" type="PanelContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory" node_paths=PackedStringArray("slot_holder")]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nskl3")
 script = ExtResource("13_wsp3s")
-slot_holder = NodePath("MarginContainer/Slot_Holder")
+slot_holder = NodePath("MarginContainer/VBoxContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_top = 64
 
-[node name="Slot_Holder" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer"]
 layout_mode = 2
-alignment = 1
 
-[node name="Helment" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Slot" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/VBoxContainer" instance=ExtResource("14_ihskq")]
 layout_mode = 2
-type = "helment"
-background_texture = ExtResource("15_kdnva")
+background_texture = ExtResource("15_gb3gv")
 
-[node name="Chest" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Slot2" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/VBoxContainer" instance=ExtResource("14_ihskq")]
 layout_mode = 2
-type = "chest_plate"
-background_texture = ExtResource("16_jipce")
+background_texture = ExtResource("16_cnchn")
 
-[node name="Pants" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder" instance=ExtResource("14_ihskq")]
+[node name="Slot3" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/VBoxContainer" instance=ExtResource("14_ihskq")]
 layout_mode = 2
-type = "pants"
-background_texture = ExtResource("17_vqxny")
+background_texture = SubResource("AtlasTexture_fhmo7")
+
+[node name="VSeparator" type="VSeparator" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxLine_ku4ms")
 
 [node name="Inventory" parent="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
@@ -520,27 +502,20 @@ offset_right = 416.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="healthbar" type="ProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
-custom_minimum_size = Vector2(1.45519e-11, 10)
+[node name="healthbar" type="TextureProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
+custom_minimum_size = Vector2(832, 10)
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_styles/background = SubResource("StyleBoxFlat_211ce")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ouh7k")
-step = 1.0
-value = 100.0
-show_percentage = false
+value = 50.0
+texture_under = SubResource("GradientTexture2D_xayh1")
+texture_progress = SubResource("GradientTexture2D_okasu")
 metadata/_edit_use_anchors_ = true
 
-[node name="hungerbar" type="ProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
+[node name="hungerbar" type="TextureProgressBar" parent="Player UI/stats_ui_update/HBoxContainer"]
 custom_minimum_size = Vector2(1.45519e-11, 10)
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_styles/background = SubResource("StyleBoxFlat_wwb2f")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ai7gg")
 value = 100.0
-show_percentage = false
+texture_under = SubResource("GradientTexture2D_5s26x")
+texture_progress = SubResource("GradientTexture2D_nnvyx")
 metadata/_edit_use_anchors_ = true
 
 [node name="Hotbar" parent="Player UI" groups=["Hotbar"] instance=ExtResource("12_qvgc7")]
@@ -597,16 +572,9 @@ settings = NodePath("Settings")
 
 [node name="Buttons" type="PanelContainer" parent="Player UI/Pause Menu"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -106.0
-offset_top = -67.0
-offset_right = 106.0
-offset_bottom = 67.0
-grow_horizontal = 2
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 202.0
 grow_vertical = 2
 pivot_offset = Vector2(106, 540)
 theme = ExtResource("3_v2bsq")
@@ -656,10 +624,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_v2bsq")
-current_tab = 1
+current_tab = 0
 
 [node name="InputSettings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_q5s33")
 script = ExtResource("18_1gacs")
@@ -691,6 +658,7 @@ mouse_filter = 1
 text = "reset to default"
 
 [node name="Grapthic Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings" node_paths=PackedStringArray("enviorment")]
+visible = false
 layout_mode = 2
 script = ExtResource("21_8u2nj")
 enviorment = NodePath("../../../../WorldEnvironment")
@@ -771,30 +739,6 @@ layout_mode = 2
 button_pressed = true
 text = "Varying FOV"
 
-[node name="Background" type="CanvasLayer" parent="."]
-layer = -4
-
-[node name="Label" type="Label" parent="Background"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -5.0
-offset_top = -11.5
-offset_right = 5.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.117647)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_constants/shadow_outline_size = 6
-theme_override_font_sizes/font_size = 25
-text = "+"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="WORLD SFX" type="Node" parent="."]
 
 [node name="Ambient sound" type="AudioStreamPlayer" parent="WORLD SFX"]
@@ -810,21 +754,9 @@ chance = 0.5
 
 [node name="Random Sound" parent="WORLD SFX" instance=ExtResource("24_r824s")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-mesh = ExtResource("71_dltqe")
-surface_material_override/0 = SubResource("StandardMaterial3D_2ttdb")
-surface_material_override/1 = SubResource("StandardMaterial3D_e4ydk")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.997377, 0)
-visible = false
-mesh = SubResource("PlaneMesh_ni0ro")
-surface_material_override/0 = SubResource("ShaderMaterial_uc221")
-
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder/Helment" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_helment_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder/Chest" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_chest_item_changed"]
-[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/Slot_Holder/Pants" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_pants_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/VBoxContainer/Slot" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_helment_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/VBoxContainer/Slot2" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_chest_item_changed"]
+[connection signal="item_changed" from="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour/MarginContainer/VBoxContainer/Slot3" to="Player UI/Inventory holder/PanelContainer/MarginContainer/INV/Inventory/Armour" method="_on_pants_item_changed"]
 [connection signal="text_submitted" from="Player UI/Text Chat/MarginContainer/VBoxContainer/message_edit" to="Player UI/Text Chat" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Main Menu" to="Player UI/Pause Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Settings" to="Player UI/Pause Menu" method="_on_settings_pressed"]

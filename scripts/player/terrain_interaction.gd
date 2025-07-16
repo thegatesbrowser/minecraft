@@ -198,8 +198,9 @@ func _break_block_server(position: Vector3) -> void:
 	
 	if array[0] != "air":
 		var item = item_library.get_item(array[0])
-	
-		send_item.rpc_id(multiplayer.get_remote_sender_id(),array[0])
+		
+		for drop_item in item.drop_items:
+			send_item.rpc_id(multiplayer.get_remote_sender_id(),drop_item)
 		
 		if item.utility != null:
 			if item.utility.has_ui:

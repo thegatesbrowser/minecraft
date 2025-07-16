@@ -35,7 +35,8 @@ func _process(_delta: float) -> void:
 		
 		if Item_resource is ItemFood:
 			if Item_resource.rot_step_textures.size() >= rot:
-				image.texture = Item_resource.rot_step_textures[rot]
+				if Item_resource.rot_step_textures.size() != 0:
+					image.texture = Item_resource.rot_step_textures[rot]
 			else:
 				Item_resource = null
 				update_slot()
@@ -100,9 +101,10 @@ func update_slot() -> void:
 		if Item_resource is ItemFood:
 			max_rot = Item_resource.max_rot_steps
 			rot_label.text = str(rot)
-			rot_label.show()
+			#rot_label.show()
 		else:
-			rot_label.hide()
+			#rot_label.hide()
+			pass
 		
 		item_changed.emit(index,Item_resource.get_path(),amount,get_parent().name,health,rot)
 		

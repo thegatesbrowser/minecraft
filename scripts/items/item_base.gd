@@ -9,6 +9,7 @@ class_name ItemBase
 
 @export var utility: Utilities
 @export var rotatable:bool = false
+@export var drop_items:Array[StringName]
 
 @export_category('forging')
 @export var forgable:bool = false

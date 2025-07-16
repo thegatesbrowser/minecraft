@@ -217,7 +217,7 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 		var above_v := _voxel_tool.get_voxel(above)
 		# Spread
 		var rng = RandomNumberGenerator.new()
-		print("plant")
+		#print("plant")
 		if rng.randf() < 0.4:
 			if item.next_plant_stage != null:
 				

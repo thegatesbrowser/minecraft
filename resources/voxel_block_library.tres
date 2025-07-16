@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=98 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=101 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
 [ext_resource type="Texture2D" uid="uid://b2q0kdc7iqkvx" path="res://assets/textures.png" id="3_1m38q"]
@@ -14,6 +14,8 @@
 [ext_resource type="Material" uid="uid://dhbknp6n7qomp" path="res://assets/materials/fire.tres" id="11_4llsq"]
 [ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="12_tb762"]
 [ext_resource type="Texture2D" uid="uid://c4qc2xe8j6hkv" path="res://assets/textures/blocks/reeds.png" id="15_2yhxf"]
+[ext_resource type="Texture2D" uid="uid://c3pdydgbmeasd" path="res://assets/textures/blocks/wheatpng.png" id="15_neqns"]
+[ext_resource type="Texture2D" uid="uid://cp3y4uihouojd" path="res://assets/textures/blocks/wheat_seeds.png" id="16_gn5r2"]
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_54jvr"]
 
@@ -206,6 +208,7 @@ shader_parameter/grass_texture = ExtResource("4_q5um5")
 mesh = ExtResource("4_vwypi")
 culls_neighbors = false
 lod_skirts_enabled = false
+collision_aabbs = Array[AABB]([AABB(1.45519e-11, -0.4, 1.45519e-11, 1, 0.2, 1)])
 material_override_0 = SubResource("ShaderMaterial_xr8t2")
 collision_enabled_0 = false
 
@@ -567,11 +570,12 @@ render_priority = 0
 shader = ExtResource("7_ssghj")
 shader_parameter/distance_fade_min = null
 shader_parameter/distance_fade_max = null
-shader_parameter/grass_texture = ExtResource("8_es8ej")
+shader_parameter/grass_texture = ExtResource("15_neqns")
 
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_qp5gf"]
 mesh = ExtResource("4_vwypi")
 random_tickable = true
+collision_aabbs = Array[AABB]([AABB(1.45519e-11, -0.4, 1.45519e-11, 1, 0.2, 1)])
 material_override_0 = SubResource("ShaderMaterial_234e5")
 collision_enabled_0 = false
 
@@ -579,6 +583,13 @@ collision_enabled_0 = false
 unique_name = &"wheat"
 base_model = SubResource("VoxelBlockyModelMesh_qp5gf")
 resource_name = "wheat"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pwm5b"]
+render_priority = 0
+shader = ExtResource("7_ssghj")
+shader_parameter/distance_fade_min = null
+shader_parameter/distance_fade_max = null
+shader_parameter/grass_texture = ExtResource("16_gn5r2")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebx1x"]
 render_priority = 0
@@ -605,6 +616,8 @@ blend_shape_mode = 0
 [sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_iqsnf"]
 mesh = SubResource("ArrayMesh_ygas7")
 random_tickable = true
+collision_aabbs = Array[AABB]([AABB(1.45519e-11, -0.4, 1.45519e-11, 1, 0.2, 1)])
+material_override_0 = SubResource("ShaderMaterial_pwm5b")
 collision_enabled_0 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_xg2os"]

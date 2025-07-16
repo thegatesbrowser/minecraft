@@ -21,6 +21,7 @@ var input_actions = {
 	"Inventory": "Inventory",
 	"console_toggle": "Console",
 	"chat": "Text Chat",
+	"Drop": "Drop Item"
 }
 
 

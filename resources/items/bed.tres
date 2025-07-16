@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_kvhy5"]
 [ext_resource type="Texture2D" uid="uid://d100dr2itcy2u" path="res://assets/textures/items/bed.png" id="2_gwas6"]
-[ext_resource type="Script" path="res://scripts/other/utilities.gd" id="2_k0s54"]
+[ext_resource type="Script" path="res://scripts/items/utilities.gd" id="3_qjji7"]
 
 [sub_resource type="Resource" id="Resource_8u72f"]
-script = ExtResource("2_k0s54")
+script = ExtResource("3_qjji7")
 has_ui = false
 ui_scene_path = ""
 spawn_point = true
@@ -22,6 +22,7 @@ texture = ExtResource("2_gwas6")
 max_stack = 64
 utility = SubResource("Resource_8u72f")
 rotatable = false
+drop_items = Array[StringName]([&"bed"])
 forgable = false
 forge_time = 2.0
 value = 10

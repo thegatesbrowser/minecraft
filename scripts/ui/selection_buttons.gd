@@ -18,7 +18,7 @@ func _ready() -> void:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Hotbar != null:
-			#update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
 			pass
 			
 	for slot in buttons:
