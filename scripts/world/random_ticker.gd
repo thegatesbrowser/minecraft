@@ -201,16 +201,16 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 		if found_burnable == false:
 			_voxel_tool.set_voxel(pos, VoxelLibraryResource.get_model_index_default("air"))
 	
-	if value == VoxelLibraryResource.get_model_index_default("creature_spawner"):
-		#print("creature")
-		if rng.randf() < 0.8:
-			var creature = _voxel_tool.get_voxel_metadata(pos)
-			
-			#print("creature? ", _voxel_tool.get_voxel_metadata(pos))
-			if creature == null:
-				return
-			Globals.spawn_creature.emit(pos + Vector3i(0,1,0),creature)
-			_voxel_tool.do_point(pos)
+	#if value == VoxelLibraryResource.get_model_index_default("creature_spawner"):
+		##print("creature")
+		#if rng.randf() < 0.8:
+			#var creature = _voxel_tool.get_voxel_metadata(pos)
+			#
+			##print("creature? ", _voxel_tool.get_voxel_metadata(pos))
+			#if creature == null:
+				#return
+			#Globals.spawn_creature.emit(pos + Vector3i(0,1,0),creature)
+			#_voxel_tool.do_point(pos)
 	#print(value)
 	if item is ItemPlant:
 		var above := pos + Vector3i(0, 1, 0)
