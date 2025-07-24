@@ -95,9 +95,7 @@ func _init():
 		
 		customGen.possible_worlds = possible_worlds
 		
-		for i in 3:
-			var s = customGen.generate()
-			_custom_structures.append(s)
+		_custom_structures = customGen.generate()
 	
 	var tallest_tree_height = 0
 	for structure in _tree_structures:

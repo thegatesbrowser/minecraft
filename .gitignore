@@ -3,6 +3,7 @@
 .DS_Store
 ~*
 *.tmp
+*.db
 
 # Visual Studio 2017 and Visual Studio Code workspace folder
 /.vs
