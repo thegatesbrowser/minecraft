@@ -137,6 +137,7 @@ resource_name = "wood_birch"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_age8u"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = 60.0
 shader_parameter/distance_fade_max = 50.0
 shader_parameter/grass_texture = ExtResource("3_1m38q")
@@ -161,6 +162,7 @@ resource_name = "leaf_oak"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kw4kd"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = 60.0
 shader_parameter/distance_fade_max = 50.0
 shader_parameter/grass_texture = ExtResource("3_1m38q")
@@ -200,6 +202,7 @@ resource_name = "sand"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xr8t2"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = 60.0
 shader_parameter/distance_fade_max = 50.0
 shader_parameter/grass_texture = ExtResource("4_q5um5")
@@ -370,6 +373,7 @@ resource_name = "chest"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2snh6"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = null
 shader_parameter/distance_fade_max = null
 shader_parameter/grass_texture = ExtResource("8_es8ej")
@@ -389,6 +393,7 @@ resource_name = "flower"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qo2p1"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = null
 shader_parameter/distance_fade_max = null
 shader_parameter/grass_texture = ExtResource("9_ixyq0")
@@ -506,6 +511,7 @@ resource_name = "fire"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_huvcx"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = 60.0
 shader_parameter/distance_fade_max = 50.0
 shader_parameter/grass_texture = ExtResource("15_2yhxf")
@@ -513,6 +519,7 @@ shader_parameter/grass_texture = ExtResource("15_2yhxf")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pt7dp"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = 50.0
 shader_parameter/distance_fade_max = 60.0
 shader_parameter/grass_texture = ExtResource("15_2yhxf")
@@ -568,6 +575,7 @@ resource_name = "creature_spawner"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_234e5"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = null
 shader_parameter/distance_fade_max = null
 shader_parameter/grass_texture = ExtResource("15_neqns")
@@ -587,6 +595,7 @@ resource_name = "wheat"
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pwm5b"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = null
 shader_parameter/distance_fade_max = null
 shader_parameter/grass_texture = ExtResource("16_gn5r2")
@@ -594,6 +603,7 @@ shader_parameter/grass_texture = ExtResource("16_gn5r2")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebx1x"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
+shader_parameter/trans = true
 shader_parameter/distance_fade_min = null
 shader_parameter/distance_fade_max = null
 

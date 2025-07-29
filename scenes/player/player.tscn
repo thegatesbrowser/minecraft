@@ -1,10 +1,8 @@
-[gd_scene load_steps=66 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=67 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
 [ext_resource type="PackedScene" uid="uid://cgaf0un1khsvl" path="res://assets/models/Hand.tscn" id="2_w6sp7"]
-[ext_resource type="PackedScene" uid="uid://cqk7bidvb6vqn" path="res://scenes/items/weapons/bullet.tscn" id="2_y2grk"]
-[ext_resource type="PackedScene" uid="uid://cx2ae4w7whc6p" path="res://scenes/items/weapons/weapon_base.tscn" id="3_jtlx2"]
 [ext_resource type="Script" path="res://scripts/player/player_hands.gd" id="4_064gd"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_5801w"]
 [ext_resource type="Resource" uid="uid://bh4f3xyyxfdql" path="res://resources/items_library.tres" id="5_qnsii"]
@@ -19,8 +17,18 @@
 [ext_resource type="AudioStream" uid="uid://brsc44tm3my31" path="res://assets/sounds/other/Eat1.ogg" id="13_y6cgu"]
 [ext_resource type="Texture2D" uid="uid://ftfi0mih6i5" path="res://assets/models/runestone player_right leg 1 Base Color.png" id="14_3wkw4"]
 [ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="14_322f3"]
+[ext_resource type="PackedScene" uid="uid://82s1wrisejgt" path="res://assets/models/tools/Weapons/dagger.tscn" id="14_haqbj"]
 [ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="15_qijyr"]
 [ext_resource type="AudioStream" uid="uid://d2u44d524q4pt" path="res://assets/sounds/block/hurt.mp3" id="19_mt6y7"]
+[ext_resource type="Shader" path="res://scripts/shaders/Vignette .gdshader" id="22_nolos"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hrvx"]
+shader = ExtResource("22_nolos")
+shader_parameter/inner_radius = 1.0
+shader_parameter/outer_radius = 1.0
+shader_parameter/vignette_strength = 1.0
+shader_parameter/dither_strength = 1.45519e-11
+shader_parameter/vignette_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(0.8, 1.8, 1.5)
@@ -676,6 +684,9 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath(".:_rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath(".:camera_transform")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_c0y12"]
 random_volume_offset_db = 2.45
@@ -689,11 +700,12 @@ random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("13_xnj4e")
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "fall_timer", "floor_ray", "skeleton_3d") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hit_shader", "rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "fall_timer", "floor_ray", "skeleton_3d") groups=["Player"]]
 script = ExtResource("1")
 defualt_hand_model = ExtResource("2_w6sp7")
 SPRINT_SPEED = 7.0
 CROUCH_SPEED = 1.0
+hit_shader = NodePath("hit shader")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/runestone player/AnimationPlayer")
 hit_sfx = NodePath("hit")
@@ -706,12 +718,19 @@ camera_shake = NodePath("RotationRoot/Head/CameraShake3DNode")
 fall_timer = NodePath("Fall_time")
 floor_ray = NodePath("floor")
 skeleton_3d = NodePath("RotationRoot/runestone player/Player/Skeleton3D")
-bullet_scene = ExtResource("2_y2grk")
-weapon_base = ExtResource("3_jtlx2")
 fall_hurt_height = 3.0
 hunger_update_time = 15.0
 hunger_step = 0.05
 max_health = 20
+
+[node name="hit shader" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_3hrvx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "hand_ani", "camera")]
 script = ExtResource("4_064gd")
@@ -1049,6 +1068,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.475605, -0.61644)
 
 [node name="Hand" type="Node3D" parent="RotationRoot/Head/Camera3D"]
 transform = Transform3D(3.08654e-06, 1.89145e-06, -1, 0.522502, -0.852638, 0, -0.852638, -0.522502, -3.61999e-06, 0.333, -0.536575, -0.225)
+
+[node name="MeshInstance3D" parent="RotationRoot/Head/Camera3D/Hand" instance=ExtResource("14_haqbj")]
 
 [node name="HandAni" type="AnimationPlayer" parent="RotationRoot/Head"]
 root_node = NodePath("../Camera3D")

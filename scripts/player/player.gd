@@ -36,6 +36,7 @@ var fall_time:float = 0.0
 @export var start_interpolate := false
 
 @export_group("NODES")
+@export var hit_shader:ColorRect
 @export var rotation_root: Node3D
 @export var ANI: AnimationPlayer
 @export var hit_sfx: AudioStreamPlayer3D
@@ -72,6 +73,9 @@ var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
 var is_flying: bool
 
+
+@export var camera_transform:Transform3D
+
 @onready var drop_node: Node3D = $RotationRoot/Head/Camera3D/Drop_node
 
 @onready var camera = $RotationRoot/Head/Camera3D
@@ -82,10 +86,6 @@ var is_flying: bool
 @onready var _move_direction := Vector3.ZERO
 
 @onready var hand = $RotationRoot/Head/Camera3D/Hand
-
-# Weapons
-@export var bullet_scene: PackedScene
-@export var weapon_base: PackedScene
 
 @export_group("SYNC PROPERTIES")
 @export var _position: Vector3
@@ -119,7 +119,6 @@ func _ready() -> void:
 	
 	backendclient = get_tree().get_first_node_in_group("BackendClient")
 	Globals.hunger_points_gained.connect(hunger_points_gained)
-	Globals.spawn_bullet.connect(spawn_bullet)
 	Globals.max_health = max_health
 	Globals.paused = true
 	spawn_position = start_position
@@ -172,6 +171,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
+	
+	camera_transform = camera.global_transform
 	
 	if found_ground == false:
 		var ClientServer = get_tree().get_first_node_in_group("BackendClient")
@@ -357,14 +358,7 @@ func add_item_to_hand(item: ItemBase, scene:PackedScene) -> void:
 	if item != null:
 		
 			
-		if item is ItemWeapon:
-			var weapon = weapon_base.instantiate()
-			weapon.weapon_resource = item
-			hand.add_child(weapon)
-			#if hand_ani:
-				#hand_ani.play("pick up")
-			
-		elif item is ItemTool:
+		if item is ItemTool:
 			var tool = item.holdable_mesh.instantiate()
 			hand.add_child(tool)
 			#if hand_ani:
@@ -394,24 +388,21 @@ func hit(damage: int = 1) -> void:
 	
 	if damage - Globals.protection < 0:
 		damage = 0
-		
+	
+	
 	health -= damage
+	
 	hit_sfx.play()
 	camera_shake._shake()
 	if health <= 0:
 		death()
+	if damage != 0:
+		var mat = hit_shader.get_material() as ShaderMaterial
+		var tween = create_tween()
+		tween.tween_property(mat,"shader_parameter/inner_radius",.2,.4)
+		tween.tween_property(mat,"shader_parameter/inner_radius", 1,1)
+		
 	print("hit")
-
-
-func spawn_bullet() -> void:
-	if is_multiplayer_authority():
-		sync_bullet.rpc(camera.global_transform)
-
-
-@rpc("any_peer","call_local")
-func sync_bullet(transform_: Transform3D) -> void:
-	Globals.add_object.emit([1,transform_,"res://scenes/items/weapons/bullet.tscn"])
-
 
 func hunger_update(_delta: float) -> void:
 	if _move_direction:
@@ -565,26 +556,9 @@ func flying_movement(delta:float):
 		
 	
 func mine_and_place(delta:float):
-	if Input.is_action_just_pressed("Middle Mouse"):
-		var aabb := AABB(floor(global_position), Vector3()).grow(50)
-		_agrid.set_terrain(TerrainHelper.get_terrain_tool())
-		_agrid.set_region(aabb)
-		
-		var path = _agrid.find_path(terrain_interation.last_hit.position + Vector3i(0,1,0), terrain_interation.last_hit.position + Vector3i(0,1,2)) 
-		print('path ', path)
-		
+	var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
+	var hotbar_item:ItemBase = hotbar.get_current().Item_resource
 
-
-
-## I'm using _unhandled_input just to trigger the find_path
-#func _unhandled_input(event: InputEvent):
-	#if event is InputEventKey:
-		#if event.pressed:
-			#match event.keycode:
-				#KEY_UP:
-					## y = 6 because my terrain ground is at y = 5
-					#
-					
 	if Input.is_action_pressed("Mine"):
 		if hand_ani.current_animation != "attack":
 			if hand_ani.current_animation != "eat":
@@ -596,8 +570,6 @@ func mine_and_place(delta:float):
 					hand_ani.play("RESET")
 			
 	if Input.is_action_just_pressed("Build"):
-		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
-		var hotbar_item = hotbar.get_current().Item_resource
 		
 		if ray.is_colliding():
 			var coll = ray.get_collider()
@@ -615,8 +587,6 @@ func mine_and_place(delta:float):
 						Globals.open_inventory.emit(coll.spawn_pos)
 		
 	if Input.is_action_just_pressed("Mine"):
-		var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
-		var hotbar_item = hotbar.get_current().Item_resource
 		#print(hotbar.get_current().Item_resource)
 		
 		if ray.is_colliding():
@@ -644,12 +614,18 @@ func mine_and_place(delta:float):
 						coll.hit.rpc_id(coll.get_multiplayer_authority())
 				else:
 					coll.hit.rpc_id(coll.get_multiplayer_authority())
+	
+	if Input.is_action_just_released("Mine"):
+		if hotbar_item is ItemTool:
+			if hotbar_item.projectable:
+				if hotbar_item.throws_self:
+					var current_slot = hotbar.get_current() as Slot
+					current_slot.amount -= 1
+					spawn_throwable.rpc_id(1,[your_id,camera_transform,"res://scenes/items/weapons/projectile.tscn",hotbar_item.projectile_item.get_path()])
 					
 					
 func swimming_movement(delta:float) -> void:
-	
-	
-		
+
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
 	_move_direction = (rotation_root.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if camera.rotation.x > max_flying_margin:
@@ -703,3 +679,7 @@ func _speed_mode():
 		WALK_SPEED = 100
 	else:
 		WALK_SPEED = 5.0
+		
+@rpc("any_peer","call_local")
+func spawn_throwable(data):
+	Globals.add_object.emit(data)

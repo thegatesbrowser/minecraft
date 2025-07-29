@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=101 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -7,7 +7,6 @@
 [ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="3_y2n02"]
 [ext_resource type="Script" path="res://scripts/other/time.gd" id="4_dglu2"]
 [ext_resource type="VoxelGeneratorScript" uid="uid://c3hi068pr8l37" path="res://resources/generator.tres" id="4_eo0cp"]
-[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_2ke2t"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
@@ -44,10 +43,11 @@
 [ext_resource type="Resource" uid="uid://mv1twiklruq5" path="res://resources/items/shovel_wood.tres" id="32_vk3kx"]
 [ext_resource type="Resource" uid="uid://ds6640766cx5k" path="res://resources/items/axe_wood.tres" id="33_rjf64"]
 [ext_resource type="Resource" uid="uid://djg543gibfvro" path="res://resources/items/pickaxe_wood.tres" id="34_8kp1m"]
+[ext_resource type="Texture2D" uid="uid://cs0w8nddhqtjw" path="res://assets/textures/items/bow.tres" id="35_5smw1"]
 [ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="35_idi8l"]
+[ext_resource type="PackedScene" uid="uid://d2ulg3076tk5l" path="res://assets/models/tools/Other/bow.tscn" id="36_5sg12"]
 [ext_resource type="Resource" uid="uid://bkg02u1wtw0q3" path="res://resources/items/grass_tall.tres" id="36_n2q1h"]
 [ext_resource type="Resource" uid="uid://lxq2aq82pa5e" path="res://resources/items/chest.tres" id="37_v5ery"]
-[ext_resource type="Resource" uid="uid://c2c8qekfermsb" path="res://resources/items/bow.tres" id="38_met67"]
 [ext_resource type="Resource" uid="uid://dah3r6qldt8la" path="res://resources/items/pickaxe_stone.tres" id="39_w83em"]
 [ext_resource type="Resource" uid="uid://dg2gha7cp48ki" path="res://resources/items/axe_stone.tres" id="40_63iuy"]
 [ext_resource type="Resource" uid="uid://cmku2fpockw70" path="res://resources/items/shovel_stone.tres" id="41_4caau"]
@@ -185,9 +185,39 @@ forgable = false
 forge_time = 2.0
 value = 10
 
+[sub_resource type="GDScript" id="GDScript_nv0iq"]
+script/source = "extends ItemBase
+class_name ItemWeapon
+
+@export var damage: int
+@export var weapon_model: PackedScene
+@export var needs_ammo: bool
+
+@export var ammo_name: StringName = \"Ammo\"
+@export var shoots: bool
+@export var fire_rate: float
+"
+
+[sub_resource type="Resource" id="Resource_32ko8"]
+script = SubResource("GDScript_nv0iq")
+damage = 1
+weapon_model = ExtResource("36_5sg12")
+needs_ammo = true
+ammo_name = &"arrow"
+shoots = true
+fire_rate = 0.3
+unique_name = &"bow"
+texture = ExtResource("35_5smw1")
+max_stack = 1
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+value = 10
+
 [sub_resource type="Resource" id="Resource_c0ten"]
 script = ExtResource("56_rtthk")
-items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), SubResource("Resource_iwo8c"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), ExtResource("38_met67"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
+items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), SubResource("Resource_iwo8c"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), SubResource("Resource_32ko8"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xhoya"]
 color = Color(0, 0, 0, 0)
@@ -271,7 +301,6 @@ shadow_blur = 0.6
 script = ExtResource("4_dglu2")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
-stream = ExtResource("5_2ke2t")
 generator = ExtResource("4_eo0cp")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 gi_mode = 1

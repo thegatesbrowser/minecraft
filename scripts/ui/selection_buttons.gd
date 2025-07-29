@@ -18,7 +18,7 @@ func _ready() -> void:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Hotbar != null:
-			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			#update(JSON.parse_string(BackendClient.playerdata.Hotbar))
 			pass
 			
 	for slot in buttons:
@@ -84,10 +84,10 @@ func _press_key(i: int) -> void:
 			Globals.can_build = false
 			Globals.custom_block = buttons[current_key].Item_resource.unique_name
 			#Globals.add_item_to_hand.emit(buttons[current_key].Item_resource)
-		elif buttons[current_key].Item_resource is ItemWeapon:
-			Globals.can_build = false
-			Globals.add_item_to_hand.emit(buttons[current_key].Item_resource,buttons[current_key].Item_resource.weapon_model)
-			Globals.custom_block = buttons[current_key].Item_resource.unique_name
+		#elif buttons[current_key].Item_resource is ItemWeapon:
+			#Globals.can_build = false
+			#Globals.add_item_to_hand.emit(buttons[current_key].Item_resource,buttons[current_key].Item_resource.weapon_model)
+			#Globals.custom_block = buttons[current_key].Item_resource.unique_name
 		elif buttons[current_key].Item_resource is ItemFood: 
 			Globals.can_build = false
 			selected_item = buttons[current_key].Item_resource
