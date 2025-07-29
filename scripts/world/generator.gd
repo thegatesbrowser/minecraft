@@ -127,7 +127,7 @@ func _init():
 func _get_used_channels_mask() -> int:
 	return 1 << _CHANNEL
 
-var biome:Biome
+var biome:Biome = preload("res://resources/biomes/forest.tres")
 
 func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 			
@@ -156,10 +156,11 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 	
 	
 				
-	temp = temp_data(origin_in_voxels.x,origin_in_voxels.z)
-	temp = round(temp)
-	await select_biome(temp)
+	
 	#print(biome.biome_name)
+	
+	
+	
 	
 	if origin_in_voxels.y > _heightmap_max_y:
 		buffer.fill(AIR, _CHANNEL)
@@ -179,11 +180,18 @@ func _generate_block(buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int):
 		
 		var gx : int
 		var gz := origin_in_voxels.z
-
+		
+		temp = temp_data(origin_in_voxels.x,origin_in_voxels.z)
+		temp = round(temp)
+		await select_biome(temp)
+				
 		for z in block_size:
 			gx = origin_in_voxels.x
-
+			
 			for x in block_size:
+				
+			
+	
 				var height := _get_height_at(gx, gz)
 				
 				
@@ -409,7 +417,7 @@ func get_biome(temp:float) -> Biome:
 	for _biome in biomes:
 		if temp >= _biome.min_temp and temp <= _biome.max_temp:
 			return_biome = _biome
-			return_biome.create_voxels_ids()
+			#return_biome.create_voxels_ids()
 	
 	return return_biome
 	

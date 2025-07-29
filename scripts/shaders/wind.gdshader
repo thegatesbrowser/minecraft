@@ -1,6 +1,7 @@
 shader_type spatial;
 render_mode cull_disabled;
 
+uniform bool trans = true;
 uniform sampler2D grass_texture : filter_nearest, source_color;
 uniform float distance_fade_min : hint_range(0.0, 4096.0, 0.01);
 uniform float distance_fade_max : hint_range(0.0, 4096.0, 0.01);
@@ -14,8 +15,10 @@ void vertex(){
 void fragment(){
 	SPECULAR = 0.0;
 	ALBEDO = texture(grass_texture, UV).rgb;
-	ALPHA  = texture(grass_texture, UV).a;
-	ALPHA_SCISSOR_THRESHOLD = .9;
+	 if (trans) {
+        // Do something if true
+		ALPHA  = texture(grass_texture, UV).a;
+		ALPHA_SCISSOR_THRESHOLD = .9; }
 //
 	//// Distance Fade: Pixel Dither
 	  //float fade_distance = length(VERTEX);

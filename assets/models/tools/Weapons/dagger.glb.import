@@ -3,12 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://p05vhxwc33yv"
-valid=false
+uid="uid://uqykg8imxdu5"
+path="res://.godot/imported/dagger.glb-52a92c7f97ca86bd29d78cf39ea22d6e.scn"
 
 [deps]
 
-source_file="res://assets/models/tools/shovel_stone.gltf"
+source_file="res://assets/models/tools/Weapons/dagger.glb"
+dest_files=["res://.godot/imported/dagger.glb-52a92c7f97ca86bd29d78cf39ea22d6e.scn"]
 
 [params]
 

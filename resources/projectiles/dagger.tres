@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Projectile" load_steps=3 format=3 uid="uid://hns36dm0dpw3"]
+
+[ext_resource type="PackedScene" uid="uid://nc805cx4udrf" path="res://assets/models/tools/Weapons/thrown_dagger.tscn" id="1_58clc"]
+[ext_resource type="Script" path="res://scripts/items/weapons/projectile_resource.gd" id="1_vk4fh"]
+
+[resource]
+script = ExtResource("1_vk4fh")
+speed = 0.2
+model = ExtResource("1_58clc")
+damage = 2

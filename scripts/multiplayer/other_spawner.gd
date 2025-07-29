@@ -4,9 +4,15 @@ signal spawned_object(id:int, object)
 
 
 func _ready() -> void:
+	set_multiplayer_authority(1)
 	spawn_function = custom_spawn
 	despawned.emit()
 	Globals.add_object.connect(spawn_object)
+	spawned_object.emit()
+	
+	
+func print_spawned_object(id:int,object):
+	print("spawned ",id,object)
 
 
 func spawn_object(data := []) -> void:
@@ -39,10 +45,15 @@ func custom_spawn(data: Array) -> Node:
 		object.position = spawn_position
 	
 	if item_path != null:
-		if amount != null:
+		if "Item" in object:
 			object.Item = load(item_path)
-			object.amount = amount
+		elif "resource" in object:
+			object.resource = load(item_path)
+		print(load(item_path))
 			
+	if amount != null:
+		object.amount = amount
+		
 	object.set_multiplayer_authority(id,true)
 	
 	spawned_object.emit(id, object)

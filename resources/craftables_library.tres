@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CraftableLibrary" load_steps=22 format=3 uid="uid://bfr8tc7ljf5l2"]
+[gd_resource type="Resource" script_class="CraftableLibrary" load_steps=23 format=3 uid="uid://bfr8tc7ljf5l2"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_bg3qg"]
 [ext_resource type="Resource" uid="uid://dermpqlxy23ti" path="res://resources/items/craftables/wood_2.tres" id="2_tspjb"]
@@ -21,7 +21,8 @@
 [ext_resource type="Resource" uid="uid://cm3ggrje5swt3" path="res://resources/items/craftables/iron_leg.tres" id="18_771tx"]
 [ext_resource type="Resource" uid="uid://ck7wy7ive5y3m" path="res://resources/items/craftables/oak_planks.tres" id="18_y7f6b"]
 [ext_resource type="Resource" uid="uid://b4g78ll6bonjn" path="res://resources/items/craftables/portal.tres" id="19_4qc7d"]
+[ext_resource type="Resource" uid="uid://beev60uxfmwdr" path="res://resources/items/craftables/dagger.tres" id="21_ufg0f"]
 
 [resource]
 script = ExtResource("16_cxr8e")
-craftable_array = Array[ExtResource("1_bg3qg")]([ExtResource("2_tspjb"), ExtResource("18_y7f6b"), ExtResource("6_w55lx"), ExtResource("4_4f3rf"), ExtResource("5_44dxb"), ExtResource("7_suevq"), ExtResource("8_kwy50"), ExtResource("8_nulcj"), ExtResource("9_0dxvs"), ExtResource("10_bnnyb"), ExtResource("12_yda56"), ExtResource("11_70hn4"), ExtResource("12_etmbp"), ExtResource("13_r8vrx"), ExtResource("14_7l1fi"), ExtResource("16_cehkx"), ExtResource("17_02fb7"), ExtResource("18_771tx"), ExtResource("19_4qc7d")])
+craftable_array = Array[ExtResource("1_bg3qg")]([ExtResource("2_tspjb"), ExtResource("18_y7f6b"), ExtResource("6_w55lx"), ExtResource("4_4f3rf"), ExtResource("5_44dxb"), ExtResource("7_suevq"), ExtResource("8_kwy50"), ExtResource("8_nulcj"), ExtResource("9_0dxvs"), ExtResource("10_bnnyb"), ExtResource("12_yda56"), ExtResource("11_70hn4"), ExtResource("12_etmbp"), ExtResource("13_r8vrx"), ExtResource("14_7l1fi"), ExtResource("16_cehkx"), ExtResource("17_02fb7"), ExtResource("18_771tx"), ExtResource("19_4qc7d"), ExtResource("21_ufg0f")])
