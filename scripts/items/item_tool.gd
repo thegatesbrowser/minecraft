@@ -12,7 +12,8 @@ class_name ItemTool
 
 @export_group("uses")
 @export var projectable : bool = false
-@export var projectile_item : Projectile
+@export var projectile_item : ItemBase
+@export var projectile_resource : Projectile
 @export var amount_needed:int = 0
 @export var throws_self:bool = false
 

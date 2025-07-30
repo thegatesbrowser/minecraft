@@ -46,6 +46,8 @@ func _ready() -> void:
 	
 func _process(_delta: float) -> void:
 	
+	slots = items_collection.get_children()
+	
 	check_slots()
 	check_if_full()
 					
@@ -89,12 +91,12 @@ func spawn_item(item_resource:ItemBase, amount:int = 1,health:int = 0) -> void:
 
 func sort() -> void:
 	items.clear()
-	slots.clear()
+	#slots.clear()
 	for i in items_collection.get_children():
 		if i.Item_resource != null:
 			if items.has(i.Item_resource.unique_name) == false:
 				items.append(i.Item_resource.unique_name)
-				slots.append(i)
+				#slots.append(i)
 				
 	for slot in items_collection.get_children():
 		var find_item
@@ -182,6 +184,7 @@ func check_slots():
 		if i.Item_resource != null:
 			for amount in i.amount:
 				inventory.append(i.Item_resource.unique_name)
+			
 
 
 #func open(server_details:= {}):

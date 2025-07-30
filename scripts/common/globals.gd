@@ -225,3 +225,20 @@ func add_meta_data(pos:Vector3,data):
 @rpc("any_peer")
 func live_ui(pos,data,id):
 	Globals.sync_change_open.emit(pos,data,id)
+
+func find_item(item:ItemBase) -> Slot:
+	var return_ = null
+	
+	var inventory = get_tree().get_first_node_in_group("Main Inventory")
+	var hot_bar = get_tree().get_first_node_in_group("Hotbar")
+	
+	for slot in inventory.slots:
+		if slot.Item_resource == item:
+			return_ = slot
+			break
+	if return_ == null:
+		for slot in hot_bar.buttons:
+			if slot.Item_resource == item:
+				return_ = slot
+				break
+	return return_
