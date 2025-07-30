@@ -16,7 +16,6 @@ transparency = 2
 alpha_scissor_threshold = 0.05
 alpha_antialiasing_mode = 0
 cull_mode = 2
-albedo_color = Color(1, 1, 1, 1)
 albedo_texture = ExtResource("2_tib0x")
 metallic_specular = 0.0
 texture_filter = 2
@@ -75,6 +74,21 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_885e0")
 
+[sub_resource type="Animation" id="Animation_3vxfv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.12574, -1.5708, -3.14159)]
+}
+
 [sub_resource type="Animation" id="Animation_cqfpr"]
 resource_name = "new_animation"
 length = 1.8
@@ -92,21 +106,6 @@ tracks/0/keys = {
 "values": [Vector3(1.12574, -3.14159, -3.14159), Vector3(47.1937, -3.14159, -3.14159)]
 }
 
-[sub_resource type="Animation" id="Animation_3vxfv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1.12574, -1.5708, -3.14159)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7x67p"]
 _data = {
 "RESET": SubResource("Animation_3vxfv"),
@@ -114,7 +113,7 @@ _data = {
 }
 
 [node name="Blade2" type="MeshInstance3D"]
-transform = Transform3D(-9.25104e-09, 0.237245, -0.11316, 9.89275e-09, -0.11316, -0.237245, -0.26285, -1.26088e-08, -4.94637e-09, 0, 0, 0)
+transform = Transform3D(1.55297e-06, 0.237245, -0.113159, -2.86879e-07, -0.113159, -0.237245, -0.26285, 1.5252e-06, -4.09636e-07, 0, 0, 0)
 mesh = SubResource("ArrayMesh_0eukp")
 skeleton = NodePath("")
 

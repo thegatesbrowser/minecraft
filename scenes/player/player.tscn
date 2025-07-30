@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=66 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -17,7 +17,6 @@
 [ext_resource type="AudioStream" uid="uid://brsc44tm3my31" path="res://assets/sounds/other/Eat1.ogg" id="13_y6cgu"]
 [ext_resource type="Texture2D" uid="uid://ftfi0mih6i5" path="res://assets/models/runestone player_right leg 1 Base Color.png" id="14_3wkw4"]
 [ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="14_322f3"]
-[ext_resource type="PackedScene" uid="uid://82s1wrisejgt" path="res://assets/models/tools/Weapons/dagger.tscn" id="14_haqbj"]
 [ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="15_qijyr"]
 [ext_resource type="AudioStream" uid="uid://d2u44d524q4pt" path="res://assets/sounds/block/hurt.mp3" id="19_mt6y7"]
 [ext_resource type="Shader" path="res://scripts/shaders/Vignette .gdshader" id="22_nolos"]
@@ -1068,8 +1067,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.475605, -0.61644)
 
 [node name="Hand" type="Node3D" parent="RotationRoot/Head/Camera3D"]
 transform = Transform3D(3.08654e-06, 1.89145e-06, -1, 0.522502, -0.852638, 0, -0.852638, -0.522502, -3.61999e-06, 0.333, -0.536575, -0.225)
-
-[node name="MeshInstance3D" parent="RotationRoot/Head/Camera3D/Hand" instance=ExtResource("14_haqbj")]
 
 [node name="HandAni" type="AnimationPlayer" parent="RotationRoot/Head"]
 root_node = NodePath("../Camera3D")

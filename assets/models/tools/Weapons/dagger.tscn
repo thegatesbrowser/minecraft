@@ -18,7 +18,6 @@ alpha_scissor_threshold = 0.05
 alpha_antialiasing_mode = 0
 cull_mode = 2
 specular_mode = 2
-albedo_color = Color(1, 1, 1, 1)
 albedo_texture = ExtResource("2_ne81q")
 metallic_specular = 0.0
 texture_filter = 2

@@ -621,8 +621,15 @@ func mine_and_place(delta:float):
 				if hotbar_item.throws_self:
 					var current_slot = hotbar.get_current() as Slot
 					current_slot.amount -= 1
-					spawn_throwable.rpc_id(1,[your_id,camera_transform,"res://scenes/items/weapons/projectile.tscn",hotbar_item.projectile_item.get_path()])
-					
+					spawn_throwable.rpc_id(1,[your_id,camera_transform,"res://scenes/items/weapons/projectile.tscn",hotbar_item.projectile_resource.get_path()])
+				else:
+					var find_item = hotbar_item.projectile_item
+					var item_slot = Globals.find_item(find_item)
+					if item_slot != null:
+						if item_slot.amount - hotbar_item.amount_needed:
+							if item_slot.amount >= 0:
+								item_slot.amount -= hotbar_item.amount_needed
+								spawn_throwable.rpc_id(1,[your_id,camera_transform,"res://scenes/items/weapons/projectile.tscn",hotbar_item.projectile_resource.get_path()])
 					
 func swimming_movement(delta:float) -> void:
 

@@ -547,7 +547,7 @@ texture_under = SubResource("GradientTexture2D_5s26x")
 texture_progress = SubResource("GradientTexture2D_nnvyx")
 metadata/_edit_use_anchors_ = true
 
-[node name="Hotbar" parent="Player UI" groups=["Hotbar"] instance=ExtResource("12_qvgc7")]
+[node name="Hotbar" parent="Player UI" instance=ExtResource("12_qvgc7")]
 process_mode = 3
 layout_mode = 1
 
