@@ -51,7 +51,7 @@ func _process(delta: float) -> void:
 		last_hit = _terrian_tool.raycast(origin, forward, 1 ,2)
 		
 		if last_hit != null:
-			
+			sfx.rpc("water",last_hit.position)
 			player.swimming = true
 			_environment.environment.fog_enabled = true
 			

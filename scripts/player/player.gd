@@ -8,7 +8,7 @@ var speed_mode = false
 var start_position:Vector3
 var spawn_position: Vector3
 var your_id
-var _agrid: VoxelAStarGrid3D = null
+var protection:int
 
 @export var defualt_hand_model:PackedScene
 
@@ -23,6 +23,10 @@ var _agrid: VoxelAStarGrid3D = null
 @export var CROUCH_SPEED = 3.0
 
 @export var can_autojump: bool = true
+
+var set_fall_height:bool = false
+var start_fall_height:float 
+var end_fall_height:float
 
 var fall_time:float = 0.0
 
@@ -94,7 +98,7 @@ var is_flying: bool
 @export var _direction: Vector3 = Vector3.ZERO
 
 @export_group("STATS")
-@export var fall_hurt_height:float = 2.0
+@export var fall_hurt_height:float = 4.0
 @export var base_hunger: float = 5.0
 var hunger: float = 0
 @export var hunger_update_time := 10.0
@@ -110,16 +114,9 @@ var health
 var spawn_point_set := {}
 
 func _ready() -> void:
-	_agrid = VoxelAStarGrid3D.new()
-	# set _terrain that is the main VoxelTerrain
-	
-
-	# little aabb box of 20 by 10 by 20
-	
 	
 	backendclient = get_tree().get_first_node_in_group("BackendClient")
 	Globals.hunger_points_gained.connect(hunger_points_gained)
-	Globals.max_health = max_health
 	Globals.paused = true
 	spawn_position = start_position
 	
@@ -152,6 +149,8 @@ func _ready() -> void:
 	Globals.add_item_to_hand.connect(add_item_to_hand)
 	Globals.remove_item_in_hand.connect(remove_item_in_hand)
 	camera.current = true
+	
+	var player_save_timer = get_tree().create_timer(10).timeout.connect(save_data)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -184,6 +183,7 @@ func _process(_delta: float) -> void:
 			#Globals.paused = false
 			global_position = floor_ray.get_collision_point() + Vector3(0,1,0)
 			start_position = floor_ray.get_collision_point() + Vector3(0,1,0)
+			spawn_position = start_position
 			found_ground = true
 			Globals.paused = false
 		
@@ -192,9 +192,7 @@ func _process(_delta: float) -> void:
 		
 	hunger_update(_delta)
 		
-	Globals.player_health = health
-
-
+	#Globals.player_health = health
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
@@ -203,23 +201,26 @@ func _physics_process(delta: float) -> void:
 		var inventory = get_tree().get_first_node_in_group("Main Inventory")
 		your_id = get_multiplayer_authority()
 	
-	if swimming:
-		fall_timer.stop()
-		fall_time = 0.0
 		
 	if !is_flying and found_ground and !swimming:
 		# Add the gravity.
 		if not is_on_floor():
-			if fall_timer.is_stopped():
-				fall_timer.start()
+			
+			if !set_fall_height:
+				start_fall_height = global_position.y
+				set_fall_height = true
+				
 			velocity.y -= gravity * delta
 		else:
 			# Fall Damage
-			if fall_time >= fall_hurt_height:
-				var damage = fall_time * 2
-				hit(damage)
-			fall_timer.stop()
-			fall_time = 0.0
+			
+			end_fall_height = global_position.y
+			set_fall_height = false
+			
+			if !swimming:
+				if start_fall_height - end_fall_height >= fall_hurt_height:
+					var damage = start_fall_height - end_fall_height
+					hit(damage)
 			
 	if !Globals.paused:
 		mine_and_place(delta)
@@ -386,11 +387,11 @@ func remove_item_in_hand() -> void:
 @rpc("any_peer","call_local")
 func hit(damage: int = 1) -> void:
 	
-	if damage - Globals.protection < 0:
+	if damage - protection < 0:
 		damage = 0
 	
 	
-	health -= damage
+	health -= (damage - protection)
 	
 	hit_sfx.play()
 	camera_shake._shake()
@@ -461,16 +462,6 @@ func hunger_points_gained(amount: int) -> void:
 		hunger += amount
 	else:
 		hunger = base_hunger
-
-
-func _on_fall_time_timeout() -> void:
-	if Globals.paused or swimming: return
-	fall_time += 1
-
-
-func _on_update_timeout() -> void:
-	if not Connection.is_server():
-		save_data()
 
 func normal_movement(delta:float):
 	# Handle Sprint.
@@ -557,7 +548,7 @@ func flying_movement(delta:float):
 	
 func mine_and_place(delta:float):
 	var hotbar = get_node("/root/Main").find_child("Hotbar") as HotBar
-	var hotbar_item:ItemBase = hotbar.get_current().Item_resource
+	var hotbar_item:ItemBase = hotbar.get_current().item
 
 	if Input.is_action_pressed("Mine"):
 		if hand_ani.current_animation != "attack":
@@ -587,7 +578,7 @@ func mine_and_place(delta:float):
 						Globals.open_inventory.emit(coll.spawn_pos)
 		
 	if Input.is_action_just_pressed("Mine"):
-		#print(hotbar.get_current().Item_resource)
+		#print(hotbar.get_current().item)
 		
 		if ray.is_colliding():
 			var coll = ray.get_collider()

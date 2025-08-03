@@ -6,9 +6,7 @@ class_name Inventory_Holder
 
 func _ready() -> void:
 	Globals.sync_change_open.connect(ui_change)
-	#Globals.open_inventory.connect(open_inventory)
-	pass
-	pass
+	Globals.open_inventory.connect(open_inventory)
 
 func ui_change(pos,data,id):
 	print("id ",id, "your ",multiplayer.get_unique_id())
@@ -18,7 +16,7 @@ func ui_change(pos,data,id):
 		if "id" in i:
 			if i.id == pos:
 				i.open_with_meta(JSON.parse_string(data))
-				
+	show()
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Inventory"):
@@ -40,7 +38,6 @@ func _physics_process(delta: float) -> void:
 			Globals.paused = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-#
 func open_inventory(id:Vector3) -> void:
 	#Globals.save_player_ui.emit()
 	#for i in h_box_container.get_children():

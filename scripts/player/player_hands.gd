@@ -12,9 +12,11 @@ var terrian:VoxelTerrain
 var voxel_tool:VoxelTool
 var eat_timer: Timer
 var timer: Timer
+var slot_manager:SlotManager
 @export var camera: Camera3D
 
 func _ready():
+	slot_manager = get_node("/root/Main").find_child("SlotManager")
 	Globals.drop_item.connect(drop)
 	items_library.init_items()
 	terrain_interaction.enable()
@@ -44,8 +46,8 @@ func _process(_delta: float) -> void:
 				
 		if Input.is_action_pressed("Build"):
 			if eat_timer.is_stopped():
-				if Globals.selected_slot != null:
-					var item =  Globals.selected_slot.Item_resource
+				if slot_manager.selected_slot != null:
+					var item =  slot_manager.selected_slot.item
 					if item is ItemFood:
 						
 						eat_timer.wait_time = item.eat_time
@@ -87,9 +89,9 @@ func _process(_delta: float) -> void:
 				
 				var item = items_library.get_item(type) as ItemBlock
 				
-				if Globals.selected_slot != null:
-					if Globals.selected_slot.Item_resource is ItemTool:
-						var holding_item = Globals.selected_slot.Item_resource as ItemTool
+				if slot_manager.selected_slot != null:
+					if slot_manager.selected_slot.item is ItemTool:
+						var holding_item = slot_manager.selected_slot.item as ItemTool
 						if holding_item.suitable_objects.has(item):
 							timer.wait_time = item.break_time - holding_item.breaking_efficiency
 						else:
@@ -203,15 +205,14 @@ func receive_meta(meta_data, type:int, position:Vector3):
 		#var meta = voxel_tool.get_voxel_metadata(terrain_interaction.last_hit.position)
 		print("open ",position)
 		var ui = load(item.utility.ui_scene_path).instantiate()
+		var inventory = get_node("/root/Main").find_child("Inventory")
+		
 		ui.id = position
-		var holder = get_node("/root/Main").find_child("Inventory")
+		var holder = get_node("/root/Main").find_child("Inventory Holder")
 		holder.add_child(ui)
-		var ui_holder = get_node("/root/Main").find_child("Inventory holder")
 		
 		if meta_data != null:
 			ui.open_with_meta(JSON.parse_string(meta_data))
-		#else:
-			#ui.open()
 			
-		ui_holder.open_inventory(position)
+		inventory.open_inventory(position)
 	

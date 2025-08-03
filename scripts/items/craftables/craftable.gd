@@ -1,6 +1,5 @@
 extends Resource
 class_name Craftable
-# RESOURCES GRASS, DIRT, STONE, GLASS, LOG1, WOOD1, LOG2, WOOD2, LEAF1, LEAF2
 
 @export var Name:String
 @export var texture:Texture

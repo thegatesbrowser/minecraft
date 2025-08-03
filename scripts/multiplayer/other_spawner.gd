@@ -45,8 +45,8 @@ func custom_spawn(data: Array) -> Node:
 		object.position = spawn_position
 	
 	if item_path != null:
-		if "Item" in object:
-			object.Item = load(item_path)
+		if "item" in object:
+			object.item = load(item_path)
 		elif "resource" in object:
 			object.resource = load(item_path)
 		print(load(item_path))

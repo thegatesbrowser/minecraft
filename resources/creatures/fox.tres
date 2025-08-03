@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Creature" load_steps=15 format=3 uid="uid://dwphi1dev865q"]
+[gd_resource type="Resource" script_class="Creature" load_steps=14 format=3 uid="uid://dwphi1dev865q"]
 
 [ext_resource type="PackedScene" uid="uid://lapvsp2lnu5y" path="res://scenes/creatures/fox.tscn" id="1_ebhm5"]
 [ext_resource type="AudioStream" uid="uid://b2kddj78qu34s" path="res://assets/sounds/other/Fox_death1.ogg" id="2_pi4oh"]
@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://dbr3jim8fdk0q" path="res://assets/sounds/other/Fox_death2.ogg" id="3_j5gx8"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="3_ldbmh"]
 [ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="6_h4vq4"]
-[ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="6_m8rcb"]
 [ext_resource type="AudioStream" uid="uid://bvw3dv5xk1sm2" path="res://assets/sounds/other/Fox_hurt2.ogg" id="7_v6jf2"]
 [ext_resource type="AudioStream" uid="uid://dxd8kf1git7iw" path="res://assets/sounds/other/Fox_hurt3.ogg" id="8_u06be"]
 [ext_resource type="AudioStream" uid="uid://bj3cpbjncj2hs" path="res://assets/sounds/other/Fox_hurt4.ogg" id="9_1nupn"]
@@ -45,8 +44,5 @@ hurt_sound = SubResource("AudioStreamRandomizer_wx3dg")
 death_sound = SubResource("AudioStreamRandomizer_1uf8p")
 flyies = false
 flying_height = 10.0
-tamable = true
-excepted_items = Array[ExtResource("2_sffgm")]([ExtResource("6_m8rcb")])
-amount = 1
 creature_name = "Fox"
 drop_items = Array[ExtResource("2_sffgm")]([ExtResource("3_g1f5t")])

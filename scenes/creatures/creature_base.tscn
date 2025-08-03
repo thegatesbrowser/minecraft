@@ -43,10 +43,9 @@ streams_count = 2
 stream_0/stream = ExtResource("3_yg616")
 stream_1/stream = ExtResource("4_4tu1u")
 
-[node name="AI Base" type="CharacterBody3D" node_paths=PackedStringArray("walk_timer", "_synchronizer") groups=["NPCS"]]
+[node name="AI Base" type="CharacterBody3D" node_paths=PackedStringArray("_synchronizer") groups=["NPCS"]]
 script = ExtResource("1_yo80c")
 creature_resource = ExtResource("2_qtj8b")
-walk_timer = NodePath("Move")
 _synchronizer = NodePath("MultiplayerSynchronizer")
 
 [node name="RotationRoot" type="Node3D" parent="."]

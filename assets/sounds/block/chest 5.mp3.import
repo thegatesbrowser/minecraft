@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://btx2b1x0qm4eo"
+path="res://.godot/imported/chest 5.mp3-e65834f9c9d64252a76dab1c7f1e8c32.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/block/chest 5.mp3"
+dest_files=["res://.godot/imported/chest 5.mp3-e65834f9c9d64252a76dab1c7f1e8c32.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

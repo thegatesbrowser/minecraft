@@ -22,12 +22,12 @@ func _ready() -> void:
 	#select_item.rpc(1)
 	
 func new_offer(index:int,item_path:String,amount:int,parent:String,health:float,rot:int):
-	if sell_slot.Item_resource == null: return
-	if buy_slot.Item_resource == null: return
+	if sell_slot.item == null: return
+	if buy_slot.item == null: return
 	
-	var offer = sell_slot.Item_resource.value * sell_slot.amount
+	var offer = sell_slot.item.value * sell_slot.amount
 	offer_cost.text = str("$",offer)
-	var buy = buy_slot.Item_resource.value * buy_slot.amount
+	var buy = buy_slot.item.value * buy_slot.amount
 	
 	if offer >= buy:
 		can_buy = true
@@ -43,7 +43,7 @@ func Buy(index:int,item_path:String,amount:int,parent:String,health:float,rot:in
 		offer_cost.text = str("$",0)
 		buy_cost.text = str("$",0)
 		
-		sell_slot.Item_resource = null
+		sell_slot.item = null
 		sell_slot.amount = 1
 		sell_slot.update_slot()
 		bought = true
@@ -55,10 +55,10 @@ func open(server_details:= {}):
 		update_client.rpc(server_details)
 	else:
 		var buy_item = items_lib.items_array.pick_random()
-		buy_slot.Item_resource = buy_item
+		buy_slot.item = buy_item
 		buy_slot.amount = randi_range(1,buy_item.max_stack)
 		buy_slot.update_slot()
-		var value = buy_slot.Item_resource.value * buy_slot.amount
+		var value = buy_slot.item.value * buy_slot.amount
 		buy_cost.text = str("$",value)
 		Globals.sync_ui_change.emit(buy_slot.get_index(),buy_item.get_path(),buy_slot.amount,buy_slot.get_parent().name,buy_slot.health,buy_slot.rot)
 	
@@ -70,9 +70,9 @@ func update_client(info):
 		var slot = find_child(info[i].parent).get_child(i.to_int())
 		
 		if info[i].item_path != "":
-			slot.Item_resource = load(info[i].item_path)
+			slot.item = load(info[i].item_path)
 		else:
-			slot.Item_resource = null
+			slot.item = null
 			
 		slot.health = info[i].health
 		slot.amount = info[i].amount
@@ -80,11 +80,11 @@ func update_client(info):
 		slot.update_slot()
 		
 		if info[i].parent == "Buy":
-			if buy_slot.Item_resource != null:
-				var value = buy_slot.Item_resource.value * buy_slot.amount
+			if buy_slot.item != null:
+				var value = buy_slot.item.value * buy_slot.amount
 				buy_cost.text = str("$",value)
 				
 		elif info[i].parent == "Sell":
-			if sell_slot.Item_resource != null:
-				var value = sell_slot.Item_resource.value * sell_slot.amount
+			if sell_slot.item != null:
+				var value = sell_slot.item.value * sell_slot.amount
 				offer_cost.text = str("$",value)

@@ -9,7 +9,7 @@ signal item_changed(index:int,item_path:String,amount:int,parent:String,health:f
 @export var type: String = "inventory"
 @export var amount: int = 1
 
-@export var Item_resource: ItemBase
+@export var item: ItemBase
 @export var background_texture:Texture
 
 @export var rot_label:Label 
@@ -29,19 +29,19 @@ var focused:bool = false
 
 func _process(_delta: float) -> void:
 	
-	if Item_resource != null:
+	if item != null:
 		health_label.text = str(health)
 		health_bar.value = health
 		
-		if Item_resource is ItemFood:
-			if Item_resource.rot_step_textures.size() >= rot:
-				if Item_resource.rot_step_textures.size() != 0:
-					image.texture = Item_resource.rot_step_textures[rot]
+		if item is ItemFood:
+			if item.rot_step_textures.size() >= rot:
+				if item.rot_step_textures.size() != 0:
+					image.texture = item.rot_step_textures[rot]
 			else:
-				Item_resource = null
+				item = null
 				update_slot()
 		else:
-			image.texture = Item_resource.texture
+			image.texture = item.texture
 			
 	else:
 		image.texture = null
@@ -60,7 +60,7 @@ func _process(_delta: float) -> void:
 	# destorys the item is the amount is 0 (mainly for the furnace)
 	if amount <= 0:
 		amount = 1
-		Item_resource = null
+		item = null
 		image.texture = null
 		amount_label.hide()
 		
@@ -68,47 +68,45 @@ func _ready() -> void:
 	background_texturerect.texture = background_texture
 	index = get_index()
 	
-	if Item_resource != null:
-		image.texture = Item_resource.texture
+	if item != null:
+		image.texture = item.texture
 		
-	if Item_resource is ItemFood:
-		start_rot(Item_resource.time_rot_step)
+	if item is ItemFood:
+		start_rot(item.time_rot_step)
 	update_slot()
 
 
 func _on_pressed() -> void:
+	var slot_manager = get_node("/root/Main").find_child("SlotManager")
+	
 	if !locked:
 		if Globals.paused:
 			if type == "hotbar":
-				if Item_resource != null:
+				if item != null:
 					Globals.hotbar_slot_clicked.emit(self)
 					
 			
-			if Item_resource != null:
-				Globals.slot_clicked(self)
+			if item != null:
+				slot_manager.slot_clicked(self)
 			else:
-				if Globals.last_clicked_slot != null:
-					Globals.slot_clicked(self)
+				if slot_manager.last_clicked_slot != null:
+					slot_manager.slot_clicked(self)
 
 
 func update_slot() -> void:
 	amount_label.text = str(amount)
-	if Item_resource != null:
+	if item != null:
 		
 		if amount >= 2:
 			amount_label.show()
 
-		if Item_resource is ItemFood:
-			max_rot = Item_resource.max_rot_steps
+		if item is ItemFood:
+			max_rot = item.max_rot_steps
 			rot_label.text = str(rot)
-			#rot_label.show()
-		else:
-			#rot_label.hide()
-			pass
+
+		item_changed.emit(index,item.get_path(),amount,get_parent().name,health,rot)
 		
-		item_changed.emit(index,Item_resource.get_path(),amount,get_parent().name,health,rot)
-		
-		if not Item_resource is ItemTool:
+		if not item is ItemTool:
 			health_bar.hide()
 		else:
 			health_bar.show()
@@ -122,15 +120,11 @@ func update_slot() -> void:
 		rot_label.hide()
 		amount_label.hide()
 		
-	#if !Connection.is_server():
-		#if
-		#Globals.save.emit()
-		pass
 
 func used() -> void:
-	health -= Item_resource.degrade_rate
+	health -= item.degrade_rate
 	if health <= 0:
-		Item_resource = null
+		item = null
 	update_slot()
 	
 var _time
@@ -149,5 +143,5 @@ func rot_update() -> void:
 	
 	rot += 1
 	if rot >= max_rot:
-		Item_resource = null
+		item = null
 	update_slot()
