@@ -78,7 +78,7 @@ signal start_hand_ani(ani_name)
 signal stop_hand_ani()
 
 # Backend
-var username:String
+var client_id:String
 signal save
 signal save_slot(index: int, item_path: String, amount: int,parent: String,health: int)
 signal send_to_server(data:Dictionary)

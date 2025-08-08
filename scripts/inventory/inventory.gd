@@ -22,10 +22,10 @@ var inventory = []
 
 
 func _ready() -> void:
-	print("INV")
+	print("INVENTORY")
 	#var data = save()
 	#Globals.add_meta_data.rpc(id,data)
-		
+	
 	if is_in_group("Main Inventory"):
 		Console.add_command("item", self, '_on_add_random_item_pressed')\
 		.set_description("spawns random item).")\
@@ -50,7 +50,7 @@ func _process(_delta: float) -> void:
 	
 	check_slots()
 	check_if_full()
-					
+	
 	if Input.is_action_just_pressed("Build"):
 		## split
 		if Globals.last_clicked_slot != null:

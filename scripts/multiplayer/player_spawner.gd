@@ -89,8 +89,10 @@ func create_viewer(id: int, player: Player) -> void:
 
 func on_spawned(node: Node) -> void:
 	player_spawned.emit(node.get_multiplayer_authority(), node)
-	
-	var player = players[multiplayer.get_unique_id()].player
+	# Only set up commands for the local player's instance
+	if node.get_multiplayer_authority() != multiplayer.get_unique_id():
+		return
+	var player := node as Player
 	
 	Console.add_command("respawn", player, 'death')\
 		.set_description("makes the player position the spawn position).")\
