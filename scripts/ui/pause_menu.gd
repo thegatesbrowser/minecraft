@@ -1,7 +1,7 @@
 extends Control
 
 @export var settings:Control
-@export var menu_scene: PackedScene = preload("res://scenes/menu.tscn")
+@export var menu_scene: PackedScene = preload("res://scenes/loading page.tscn")
 
 var played_ani: bool
 
