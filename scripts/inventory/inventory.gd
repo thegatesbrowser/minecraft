@@ -22,10 +22,10 @@ var inventory = []
 
 
 func _ready() -> void:
-	print("INV")
+	print("INVENTORY")
 	#var data = save()
 	#Globals.add_meta_data.rpc(id,data)
-		
+	
 	if is_in_group("Main Inventory"):
 		Console.add_command("item", self, '_on_add_random_item_pressed')\
 		.set_description("spawns random item).")\
@@ -35,6 +35,7 @@ func _ready() -> void:
 		if !BackendClient.playerdata.is_empty():
 			if BackendClient.playerdata.Inventory != null:
 				update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
+		
 				#pass
 	for i in items_collection.get_children():
 		i.item_changed.connect(change)
@@ -45,12 +46,11 @@ func _ready() -> void:
 	
 	
 func _process(_delta: float) -> void:
-	
 	slots = items_collection.get_children()
 	
 	check_slots()
 	check_if_full()
-					
+	
 	if Input.is_action_just_pressed("Build"):
 		## split
 		if Globals.last_clicked_slot != null:
@@ -249,6 +249,7 @@ func add_meta_data(data):
 	print(" change",TerrainHelper.get_terrain_tool().get_voxel_tool().get_voxel_metadata(id))
 
 func update_client(info):
+	print("update inventory ",info)
 	for i in info:
 		
 		var slot = find_child(info[i].parent).get_child(i.to_int())

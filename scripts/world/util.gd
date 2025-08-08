@@ -13,10 +13,8 @@ enum Message{
 	checkIn,
 	serverLobbyInfo,
 	removeLobby,
-	createUser,
-	loginUser ,
+	identify,
 	playerinfo,
-	failedToLogin,
 	update,
 	slot_update
 }
