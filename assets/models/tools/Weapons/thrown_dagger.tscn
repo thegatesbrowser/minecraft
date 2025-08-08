@@ -113,7 +113,7 @@ _data = {
 }
 
 [node name="Blade2" type="MeshInstance3D"]
-transform = Transform3D(1.55297e-06, 0.237245, -0.113159, -2.86879e-07, -0.113159, -0.237245, -0.26285, 1.5252e-06, -4.09636e-07, 0, 0, 0)
+transform = Transform3D(1.55297e-06, 0.237245, -0.113159, -2.86879e-07, -0.113159, -0.237245, -0.26285, 1.5252e-06, -4.09635e-07, 0, 0, 0)
 mesh = SubResource("ArrayMesh_0eukp")
 skeleton = NodePath("")
 

@@ -22,7 +22,7 @@ func _ready() -> void:
 		start_scene(multiplayer_scene)
 		return
 	
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(3).timeout
 	start_scene(multiplayer_scene)
 
 

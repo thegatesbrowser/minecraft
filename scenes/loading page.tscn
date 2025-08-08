@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=4 uid="uid://cvh8mc8ybmio1"]
 
-[ext_resource type="Script" path="res://scripts/ui/menu.gd" id="1_v1vki"]
-[ext_resource type="PackedScene" uid="uid://de27e3hbp0hph" path="res://scenes/multiplayer.tscn" id="2_koh5b"]
-[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="4_1o25k"]
-[ext_resource type="AudioStream" uid="uid://8srankxfcp10" path="res://assets/sounds/music/Untitled song (3).mp3" id="8_3bbue"]
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_6ja64"]
+[ext_resource type="Script" path="res://scripts/ui/loading page.gd" id="2_ijexi"]
+[ext_resource type="PackedScene" uid="uid://de27e3hbp0hph" path="res://scenes/multiplayer.tscn" id="3_cfeif"]
+[ext_resource type="AudioStream" uid="uid://8srankxfcp10" path="res://assets/sounds/music/Untitled song (3).mp3" id="4_23x62"]
 
 [sub_resource type="Animation" id="4"]
 length = 0.001
@@ -92,9 +92,9 @@ loop = true
 shuffle = true
 stream_count = 2
 stream_0 = SubResource("AudioStreamMP3_8ix0o")
-stream_1 = ExtResource("8_3bbue")
+stream_1 = ExtResource("4_23x62")
 
-[node name="Menu" type="Control" node_paths=PackedStringArray("multiplayer_btn", "splash", "animation_player")]
+[node name="Loading Page" type="Control" node_paths=PackedStringArray("multiplayer_btn", "splash", "animation_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -103,10 +103,10 @@ offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_1o25k")
-script = ExtResource("1_v1vki")
+theme = ExtResource("1_6ja64")
+script = ExtResource("2_ijexi")
 multiplayer_btn = NodePath("CenterContainer2/VBoxContainer/Multiplayer")
-multiplayer_scene = ExtResource("2_koh5b")
+multiplayer_scene = ExtResource("3_cfeif")
 splash_sayings = PackedStringArray("Punching trees since... always!", "Loading... or just daydreaming?", "TheGates: Where worlds collide!", "Crafting chaos, one block at a time.", "Breaking blocks, opening doors.", "Did you bring enough torches?", "TheGates: Infinite portals, infinite fun!", "Dig down. Regret later.", "Opening doors... to blocky madness!")
 splash = NodePath("CenterContainer/Label/Splash")
 animation_player = NodePath("AnimationPlayer")
@@ -150,7 +150,7 @@ grow_horizontal = 2
 
 [node name="Label" type="Label" parent="CenterContainer"]
 layout_mode = 2
-theme = ExtResource("4_1o25k")
+theme = ExtResource("1_6ja64")
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.32549)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 20
@@ -169,7 +169,7 @@ offset_right = 1047.05
 offset_bottom = 255.0
 rotation = -0.350811
 pivot_offset = Vector2(300, 20)
-theme = ExtResource("4_1o25k")
+theme = ExtResource("1_6ja64")
 theme_override_colors/font_color = Color(1, 0, 0.0166664, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
@@ -198,13 +198,13 @@ theme_override_constants/separation = 25
 [node name="Singleplayer" type="Button" parent="CenterContainer2/VBoxContainer"]
 visible = false
 layout_mode = 2
-theme = ExtResource("4_1o25k")
+theme = ExtResource("1_6ja64")
 theme_override_font_sizes/font_size = 64
 text = "Singleplayer"
 
 [node name="Multiplayer" type="Button" parent="CenterContainer2/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("4_1o25k")
+theme = ExtResource("1_6ja64")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.286275)
 theme_override_font_sizes/font_size = 46
