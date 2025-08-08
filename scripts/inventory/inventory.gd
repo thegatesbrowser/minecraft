@@ -43,6 +43,18 @@ func _process(_delta: float) -> void:
 	check_slots()
 	check_if_full()
 	
+	if Input.is_action_just_pressed("Build"):
+		## split
+		if Globals.last_clicked_slot != null:
+			if is_even(Globals.last_clicked_slot.amount):
+				if Globals.last_clicked_slot.amount >= 2:
+					var amount = Globals.last_clicked_slot.amount / 2
+					Globals.last_clicked_slot.amount = Globals.last_clicked_slot.amount / 2
+					spawn_item(Globals.last_clicked_slot.Item_resource,amount)
+					Globals.last_clicked_slot.update_slot()
+					Globals.last_clicked_slot = null
+					
+	
 			
 func is_even(x: int) -> bool:
 	return x % 2 == 0
