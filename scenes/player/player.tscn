@@ -992,6 +992,7 @@ transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, -0.005, 0.02, -0.005
 
 [node name="Edge" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -999,6 +1000,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge2" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1006,6 +1008,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge3" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, 0.5, 0)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1013,6 +1016,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge4" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, -0.5, 0)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1020,6 +1024,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge5" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1027,6 +1032,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge6" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1034,6 +1040,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge7" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, 0.5, 0)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1041,6 +1048,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge8" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, -0.5, 0)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1048,6 +1056,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge9" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, 0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1055,6 +1064,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge10" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1062,6 +1072,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge11" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, -0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1069,6 +1080,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge12" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, -0.5)
+visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")

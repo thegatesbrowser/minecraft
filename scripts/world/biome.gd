@@ -21,8 +21,8 @@ const voxel_library = preload("res://resources/voxel_block_library.tres")
 
 @export var blocks: Dictionary = {
 	"surface_block": "grass",
-	"stone_layer_block":  "stone",
-	"dirt_layer_block": "dirt",
+	"rock_block":  "stone",
+	"dirt_block": "dirt",
 }
 
 #func create_voxels_ids():

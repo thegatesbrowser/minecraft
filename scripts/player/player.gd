@@ -219,7 +219,7 @@ func _physics_process(delta: float) -> void:
 			
 			if !swimming:
 				if start_fall_height - end_fall_height >= fall_hurt_height:
-					var damage = start_fall_height - end_fall_height
+					var damage = start_fall_height - end_fall_height * .1
 					hit(damage)
 			
 	if !Globals.paused:
