@@ -115,7 +115,7 @@ func _ready() -> void:
 	
 
 	# little aabb box of 20 by 10 by 20
-	print("PLAYER READY")
+	
 	
 	backendclient = get_tree().get_first_node_in_group("BackendClient")
 	Globals.hunger_points_gained.connect(hunger_points_gained)
@@ -168,8 +168,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	var t = skeleton_3d.get_bone_pose(head)
 	t = t.rotated(Vector3(0.0, 1.0, 0.0),bone_rot)
 	skeleton_3d.set_bone_pose(head,t)
-
-
+	
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
@@ -258,13 +257,13 @@ func set_sync_properties() -> void:
 
 func save_data():
 	#Position
-	Globals.send_to_server.emit({"client_id": Globals.client_id,"change_name": "Position_x", "change": position.x})
-	Globals.send_to_server.emit({"client_id": Globals.client_id,"change_name": "Position_y", "change": position.y})
-	Globals.send_to_server.emit({"client_id": Globals.client_id,"change_name": "Position_z", "change": position.z})
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "Position_x", "change": position.x})
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "Position_y", "change": position.y})
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "Position_z", "change": position.z})
 	
 	#Stats
-	Globals.send_to_server.emit({"client_id": Globals.client_id,"change_name": "health", "change": health})
-	Globals.send_to_server.emit({"client_id": Globals.client_id,"change_name": "hunger", "change": hunger})
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "health", "change": health})
+	Globals.send_to_server.emit({"name": Globals.username,"change_name": "hunger", "change": hunger})
 	
 func on_synchronized() -> void:
 	velocity = _velocity

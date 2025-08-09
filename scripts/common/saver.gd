@@ -15,29 +15,25 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	Terrain = get_tree().get_first_node_in_group("VoxelTerrain")
-
-
+	
+	
 func _on_peer_connected(_peer_id: int) -> void:
 	if multiplayer.get_peers().size() == 1:
 		load_creatures()
-
-
+	
 func _on_peer_disconnected(_peer_id: int) -> void:
 	if multiplayer.get_peers().size() == 0:
 		print("All peers disconnected, saving")
 		save()
-
-
+		
 func exit_tree() -> void:
 	print("Closing game, saving modified blocks")
 	save()
-
 
 func save() -> void:
 	if multiplayer.is_server():
 		save_creatures()
 	Terrain.save_modified_blocks()
-
 
 func save_player_ui() -> void:
 	for ui in get_tree().get_nodes_in_group("PlayersUI"):
@@ -45,7 +41,7 @@ func save_player_ui() -> void:
 			var ui_data = ui.call("save")
 			var data = JSON.stringify(ui_data)
 			var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-			Globals.send_to_server.emit({"client_id" : BackendClient.client_id , "change_name" : ui.name,"change" : data})
+			Globals.send_to_server.emit({"name" : BackendClient.username , "change_name" : ui.name,"change" : data})
 			#await get_tree().create_timer(2.0).timeout
 			#for i in ui_data:
 				#var item = ui_data[i].item_path
@@ -54,9 +50,10 @@ func save_player_ui() -> void:
 
 func save_slot(index: int, item_path: String, amount: int,parent: String,health: int, rot:int) -> void:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	Globals.send_slot_data.emit({"index":index,"item_path":item_path,"amount":amount,"parent":parent,"health":health,"rot":rot,"client_id":BackendClient.client_id})
-
-
+	Globals.send_slot_data.emit({"index":index,"item_path":item_path,"amount":amount,"parent":parent,"health":health,"rot":rot,"username":BackendClient.username})
+					
+					
+					
 func save_item(item:ItemBase, _buffer=[], size:Vector2 = Vector2.ZERO) -> void:
 	var data := {}
 	var item_data = inst_to_dict(item)
@@ -81,7 +78,7 @@ func save_item(item:ItemBase, _buffer=[], size:Vector2 = Vector2.ZERO) -> void:
 	var save_data = JSON.stringify(data)
 	
 	## Save This Data
-	Globals.send_data.emit({"client_id" : BackendClient.client_id , "change_name" : "item_data","change" : save_data})
+	Globals.send_data.emit({"name" : BackendClient.username , "change_name" : "item_data","change" : save_data})
 	#var new_image = Image.new()
 	#new_image.load_png_from_buffer(buffer)
 	#

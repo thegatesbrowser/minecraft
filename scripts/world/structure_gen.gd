@@ -10,8 +10,7 @@ var channel := VoxelBuffer.CHANNEL_TYPE
 
 func _init() -> void:
 	Item_LIB.init_items()
-
-
+	
 func generate() -> Array[Structure]:
 	var voxels: Dictionary = {}
 	var spawn_chance:float

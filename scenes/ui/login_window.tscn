@@ -1,0 +1,125 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2707t8cxxdvp"]
+
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_exyan"]
+[ext_resource type="Script" path="res://scripts/ui/login_window.gd" id="1_onibv"]
+[ext_resource type="PackedScene" uid="uid://xlramxseaccj" path="res://scenes/ui/create_user.tscn" id="2_s3cbq"]
+[ext_resource type="AudioStream" uid="uid://d4mieippat2vk" path="res://assets/sounds/block/item_frame_add_item4.ogg" id="4_o8p0u"]
+
+[node name="Login_Window" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_exyan")
+script = ExtResource("1_onibv")
+Create_User_Window = ExtResource("2_s3cbq")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 600
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 600
+theme_override_constants/margin_bottom = 225
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="error" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="Create User" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "CREATE NEW USER"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "USERNAME"
+
+[node name="Username" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "PASSWORD"
+
+[node name="Password" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+secret = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+visible = false
+layout_mode = 2
+text = "CANCEL"
+
+[node name="Login" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "LOGIN"
+
+[node name="UI" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_o8p0u")
+volume_db = -19.9378
+pitch_scale = 3.0
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_exyan")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.32549)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 105
+theme_override_font_sizes/font_size = 176
+text = "World Hoppers"
+
+[node name="Splash" type="Label" parent="CenterContainer/Label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.475
+anchor_right = 0.475
+offset_left = 466.05
+offset_top = 192.0
+offset_right = 1066.05
+offset_bottom = 255.0
+rotation = -0.350811
+pivot_offset = Vector2(300, 20)
+theme = ExtResource("1_exyan")
+theme_override_colors/font_color = Color(1, 0, 0.0166664, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 36
+text = "THE GATES"
+horizontal_alignment = 1
+
+[connection signal="button_down" from="MarginContainer/VBoxContainer/Create User" to="." method="_on_create_user_button_down"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/Username" to="." method="sfx"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/Password" to="." method="sfx"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer3/Cancel" to="." method="_on_cancel_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer3/Login" to="." method="_on_login_button_down"]

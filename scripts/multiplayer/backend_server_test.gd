@@ -20,7 +20,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(delta):
 	peer.poll()
 	if peer.get_available_packet_count() > 0:
 		var packet = peer.get_packet()
@@ -32,7 +32,11 @@ func _process(_delta):
 			if data.message ==  Util.Message.lobby:
 				JoinLobby(data)
 			
-			# legacy test server code left unused; login/createUser removed
+			if data.message == Util.Message.loginUser:
+				login(data)
+				
+			if data.message == Util.Message.createUser:
+				createUser(data)
 				
 			if data.message ==  Util.Message.offer || data.message ==  Util.Message.answer || data.message ==  Util.Message.candidate:
 				print("source id is " + str(data.orgPeer))
@@ -41,7 +45,7 @@ func _process(_delta):
 			if data.message ==  Util.Message.removeLobby:
 				if lobbies.has(data.lobbyID):
 					lobbies.erase(data.lobbyID)
-
+	pass
 
 func peer_connected(id):
 	print("Peer Connected: " + str(id))
@@ -50,19 +54,20 @@ func peer_connected(id):
 		"message" :  Util.Message.id
 	}
 	peer.get_peer(id).put_packet(JSON.stringify(users[id]).to_utf8_buffer())
-
-
+	pass
+	
 func peer_disconnected(id):
 	users.erase(id)
+	pass
 
 
 func JoinLobby(user):
-	var _result = ""
+	var result = ""
 	if user.lobbyValue == "":
 		user.lobbyValue = generateRandomString()
 		lobbies[user.lobbyValue] = Lobby.new(user.id)
 		print(user.lobbyValue)
-	var _player = lobbies[user.lobbyValue].AddPlayer(user.id, user.client_id)
+	var player = lobbies[user.lobbyValue].AddPlayer(user.id, user.name)
 	
 	for p in lobbies[user.lobbyValue].Players:
 		
@@ -88,24 +93,22 @@ func JoinLobby(user):
 		
 		
 	
-	var _data = {
+	var data = {
 		"message" :  Util.Message.userConnected,
 		"id" : user.id,
 		"host" : lobbies[user.lobbyValue].HostID,
 		"player" : lobbies[user.lobbyValue].Players[user.id],
 		"lobbyValue" : user.lobbyValue
 	}
-    
-	sendToPlayer(user.id, _data)
-
-
+	
+	sendToPlayer(user.id, data)
+	
 func update(data):
-	dao.change_data(data.data.client_id, data.data.change_name, data.data.change)
-
+	dao.change_data(data.data.name, data.data.change_name, data.data.change)
 func get_player_data(data):
-	var userData = dao.GetUserFromDB(data.data.client_id)
+	var userData = dao.GetUserFromDB(data.data.username)
 	var returnData = {
-		"client_id" : userData.client_id,
+		"username" : userData.name,
 		"id" : userData.id,
 		"message" : Util.Message.playerinfo,
 		"health" : userData.health,
@@ -117,7 +120,34 @@ func get_player_data(data):
 	}
 	peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
 
-## removed login/createUser from test server
+func createUser(data):
+	var salt = cryptoUtil.GenerateSalt()
+	var hashedPassword = cryptoUtil.HashPassword(data.data.password, salt)
+	dao.InsertUserData(data.data.username, hashedPassword, salt)
+	login(data)
+	
+func login(data):
+	var userData = dao.GetUserFromDB(data.data.username)
+	if(userData.hashedPassword == cryptoUtil.HashPassword(data.data.password, userData.salt)):
+		var returnData = {
+			"username" : userData.name,
+			"id" : userData.id,
+			"message" : Util.Message.playerinfo,
+			"health" : userData.health,
+			"Position_x": userData.Position_x,
+			"Position_y": userData.Position_y,
+			"Position_z": userData.Position_z,
+			"Inventory": userData.Inventory,
+			"Hotbar": userData.Hotbar,
+			 ## add stuff like player pos etc
+		}
+		peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
+	else:
+		var returnData ={
+			"message" : Util.Message.failedToLogin,
+			"text" : "Failed to login invalid username or password"
+		}
+		peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
 func sendToPlayer(userId, data):
 	peer.get_peer(userId).put_packet(JSON.stringify(data).to_utf8_buffer())
 	

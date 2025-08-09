@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=101 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" path="res://scripts/other/time.gd" id="4_dglu2"]
 [ext_resource type="VoxelGeneratorScript" uid="uid://c3hi068pr8l37" path="res://resources/generator.tres" id="4_eo0cp"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
-[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_r8tt2"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
 [ext_resource type="Script" path="res://scripts/world/water.gd" id="10_riapq"]
@@ -302,7 +301,6 @@ shadow_blur = 0.6
 script = ExtResource("4_dglu2")
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
-stream = ExtResource("5_r8tt2")
 generator = ExtResource("4_eo0cp")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 gi_mode = 1

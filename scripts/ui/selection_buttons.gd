@@ -11,7 +11,6 @@ var buttons
 var keys
 
 func _ready() -> void:
-	print("HOTBAR READY")
 	Globals.spawn_item_hotbar.connect(spawn_item_hotbar)
 	Globals.remove_item_from_hotbar.connect(remove)
 	buttons = slots.get_children()

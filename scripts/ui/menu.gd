@@ -11,19 +11,21 @@ const SPLASH_ANIMATION_NAME = "Splash"
 @export var splash: Label
 @export var animation_player: AnimationPlayer
 
-
 func _enter_tree() -> void:
 	var backend = backend_scene.instantiate()
 	get_tree().root.call_deferred("add_child",backend)
-
-
+	pass
+	
 func _ready() -> void:
+	
 	if Connection.is_server():
 		start_scene(multiplayer_scene)
 		return
 	
-	await get_tree().create_timer(0.1).timeout
-	start_scene(multiplayer_scene)
+	#single_player_btn.pressed.connect(func(): start_scene(singleplayer_scene))
+	multiplayer_btn.pressed.connect(func(): start_scene(multiplayer_scene))
+	
+	setup_splash_screen()
 
 
 func setup_splash_screen() -> void:
