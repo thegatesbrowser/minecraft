@@ -719,7 +719,7 @@ skeleton_3d = NodePath("RotationRoot/runestone player/Player/Skeleton3D")
 fall_hurt_height = 3.0
 hunger_update_time = 15.0
 hunger_step = 0.05
-max_health = 20
+max_health = 50
 
 [node name="RotationRoot" type="Node3D" parent="."]
 

@@ -149,8 +149,12 @@ func _ready() -> void:
 	Globals.remove_item_in_hand.connect(remove_item_in_hand)
 	camera.current = true
 	
-	var player_save_timer = get_tree().create_timer(10).timeout.connect(save_data)
-
+	#var player_save_timer = get_tree().create_timer(1).timeout.connect(save_data)
+	var player_save_timer = Timer.new()
+	player_save_timer.wait_time = 1
+	add_child(player_save_timer)
+	player_save_timer.start()
+	player_save_timer.timeout.connect(save_data)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
@@ -215,13 +219,16 @@ func _physics_process(delta: float) -> void:
 			# Fall Damage
 			
 			end_fall_height = global_position.y
-			set_fall_height = false
 			
+			
+
 			if !swimming:
-				if start_fall_height - end_fall_height >= fall_hurt_height:
-					var damage = start_fall_height - end_fall_height * .1
+				if start_fall_height - end_fall_height >= fall_hurt_height and set_fall_height:
+					var damage = start_fall_height - end_fall_height
 					hit(damage)
-			
+
+			set_fall_height = false
+
 	if !Globals.paused:
 		mine_and_place(delta)
 	if !is_flying and !Globals.paused and !swimming:
@@ -403,7 +410,6 @@ func hit(damage: int = 1) -> void:
 		tween.tween_property(mat,"shader_parameter/inner_radius",.2,.4)
 		tween.tween_property(mat,"shader_parameter/inner_radius", 1,1)
 		
-	print("hit")
 
 func hunger_update(_delta: float) -> void:
 	if _move_direction:

@@ -28,7 +28,7 @@ TerrainHelper="*res://scripts/common/terrain_helper.gd"
 _CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
 SettingsManager="*res://scripts/common/SettingsManager.gd"
 BackendServer="*res://scripts/multiplayer/backend_server.gd"
-ItemManager="*res://scripts/ui/item_manager.gd"
+Backend="*res://scenes/backend.tscn"
 
 [debug]
 

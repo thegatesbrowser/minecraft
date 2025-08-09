@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("3_ayu3j")
-Name = "fire"
+Name = "cooker"
 texture = ExtResource("4_tbcow")
 output_item = ExtResource("2_1sann")
 output_amount = 1

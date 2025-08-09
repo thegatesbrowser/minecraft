@@ -1,9 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnqhxtkp8jhnd"]
+[gd_scene load_steps=8 format=3 uid="uid://dnqhxtkp8jhnd"]
 
+[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="1_hxces"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/ui/slot.tscn" id="2_3e275"]
 [ext_resource type="Script" path="res://scripts/ui/furnace_ui.gd" id="2_nr2i6"]
 [ext_resource type="Texture2D" uid="uid://db5770yd2432b" path="res://assets/textures/items/beef_raw.png" id="3_4aw2q"]
 [ext_resource type="Texture2D" uid="uid://em5kbswgwfi8" path="res://assets/textures/items/charcoal.png" id="4_8cy1a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8qqvd"]
+bg_color = Color(0.151276, 0.151276, 0.151276, 1)
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k31lx"]
+bg_color = Color(0.151276, 0.151276, 0.151276, 1)
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
 
 [node name="furnace_ui" type="PanelContainer" node_paths=PackedStringArray("cooking_slot", "fuel_slot", "output_container", "input_container")]
 anchors_preset = 8
@@ -11,17 +22,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -106.0
-offset_right = 176.0
-offset_bottom = 107.0
+offset_left = -188.0
+offset_top = -115.0
+offset_right = 190.0
+offset_bottom = 117.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_hxces")
 script = ExtResource("2_nr2i6")
-cooking_slot = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot")
-fuel_slot = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input/Slot2")
-output_container = NodePath("MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer")
-input_container = NodePath("MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input")
+cooking_slot = NodePath("MarginContainer/HBoxContainer/Inputs/MarginContainer/VBoxContainer2/HBoxContainer/input/Slot")
+fuel_slot = NodePath("MarginContainer/HBoxContainer/Inputs/MarginContainer/VBoxContainer2/HBoxContainer/input/Slot2")
+output_container = NodePath("MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer")
+input_container = NodePath("MarginContainer/HBoxContainer/Inputs/MarginContainer/VBoxContainer2/HBoxContainer/input")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -35,41 +47,57 @@ layout_mode = 2
 
 [node name="Inputs" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8qqvd")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Inputs"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Inputs"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Inputs/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="title" type="Label" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2"]
+[node name="title" type="Label" parent="MarginContainer/HBoxContainer/Inputs/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "inputs"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Inputs/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 alignment = 1
 
-[node name="input" type="GridContainer" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer"]
+[node name="input" type="GridContainer" parent="MarginContainer/HBoxContainer/Inputs/MarginContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 
-[node name="Slot" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input" instance=ExtResource("2_3e275")]
+[node name="Slot" parent="MarginContainer/HBoxContainer/Inputs/MarginContainer/VBoxContainer2/HBoxContainer/input" instance=ExtResource("2_3e275")]
 layout_mode = 2
 background_texture = ExtResource("3_4aw2q")
 
-[node name="Slot2" parent="MarginContainer/HBoxContainer/Inputs/VBoxContainer2/HBoxContainer/input" instance=ExtResource("2_3e275")]
+[node name="Slot2" parent="MarginContainer/HBoxContainer/Inputs/MarginContainer/VBoxContainer2/HBoxContainer/input" instance=ExtResource("2_3e275")]
 layout_mode = 2
 background_texture = ExtResource("4_8cy1a")
 
 [node name="output" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k31lx")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/output"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/output"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/output/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="title" type="Label" parent="MarginContainer/HBoxContainer/output/VBoxContainer"]
+[node name="title" type="Label" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "outputs
@@ -77,36 +105,36 @@ text = "outputs
 horizontal_alignment = 1
 uppercase = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/output/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 columns = 3
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer"]
 visible = false
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer"]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Slot" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot5" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot5" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot6" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot6" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot2" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot2" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot3" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot3" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2
 
-[node name="Slot4" parent="MarginContainer/HBoxContainer/output/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
+[node name="Slot4" parent="MarginContainer/HBoxContainer/output/MarginContainer/VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("2_3e275")]
 layout_mode = 2

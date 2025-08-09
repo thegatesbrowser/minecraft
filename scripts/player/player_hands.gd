@@ -216,3 +216,19 @@ func receive_meta(meta_data, type:int, position:Vector3):
 			
 		inventory.open_inventory(position)
 	
+	if item_name == "cooker":
+		print("cooker")
+
+		print("open ",position)
+		
+		var ui = load(item.utility.ui_scene_path).instantiate()
+		var inventory = get_node("/root/Main").find_child("Inventory")
+		
+		ui.id = position
+		var holder = get_node("/root/Main").find_child("Inventory Holder")
+		holder.add_child(ui)
+		
+		if meta_data != null:
+			ui.open_with_meta(JSON.parse_string(meta_data))
+			
+		inventory.open_inventory(position)

@@ -1,36 +1,39 @@
 extends ScrollContainer
 class_name Inventory
 
+# External references
 @export var sync:bool = true ## FALSE for the player main inventory
-
-@export var items_collection: GridContainer
-
+@export var slot_container: GridContainer
 @export var id: Vector3
 @export var items_library: ItemsLibrary
 
-var server_info: Dictionary
+
 
 #var times:int = 0
 var items = []
-var slots = []
+var slots = [] ## List of slots in the inventory
 var full:bool = false
-var inventory = []
+var inventory = [] ## List of ItemBase unique names in the inventory
 
+# Server/client info
+var server_info: Dictionary
 
 func _ready() -> void:
+	slots = slot_container.get_children()
+
+	for slot in slots:
+		slot.item_changed.connect(change)
+
 	if is_in_group("Main Inventory"):
 		Console.add_command("item", self, '_on_add_random_item_pressed')\
 		.set_description("spawns random item).")\
 		.register()
 		
-		var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-		if !BackendClient.playerdata.is_empty():
-			if BackendClient.playerdata.Inventory != null:
-				update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
-		
-				#pass
-	for i in items_collection.get_children():
-		i.item_changed.connect(change)
+		var backend_client = get_tree().get_first_node_in_group("BackendClient")
+		if backend_client and backend_client.playerdata:
+			var inventory_data = JSON.parse_string(backend_client.playerdata.Inventory)
+			if inventory_data:
+				update_client(inventory_data)
 		
 	Globals.spawn_item_inventory.connect(spawn_item)
 	Globals.remove_item.connect(remove_item)
@@ -38,59 +41,45 @@ func _ready() -> void:
 	
 	
 func _process(_delta: float) -> void:
-	slots = items_collection.get_children()
 	
 	check_slots()
 	check_if_full()
-	
-	if Input.is_action_just_pressed("Build"):
-		## split
-		if Globals.last_clicked_slot != null:
-			if is_even(Globals.last_clicked_slot.amount):
-				if Globals.last_clicked_slot.amount >= 2:
-					var amount = Globals.last_clicked_slot.amount / 2
-					Globals.last_clicked_slot.amount = Globals.last_clicked_slot.amount / 2
-					spawn_item(Globals.last_clicked_slot.Item_resource,amount)
-					Globals.last_clicked_slot.update_slot()
-					Globals.last_clicked_slot = null
-					
-	
-			
+								
 func is_even(x: int) -> bool:
 	return x % 2 == 0
 
-
 func spawn_item(item:ItemBase, amount:int = 1,health:int = 0) -> void:
-	if !visible: return
-	if !full:
-		for i in items_collection.get_children():
-			if i.item == null:
-				i.item = item
-				i.amount = amount
-				
-				if item is ItemFood:
-					i.start_rot(item.time_rot_step)
-				
-				if health != 0:
-					i.health = health
-				#print(item)
-				i.update_slot()
-				for num in amount:
-					inventory.append(item.unique_name)
-				check_if_full()
-				sort()
-				break
+	if full:
+		return
+	for slot in slots:
+		if slot.item == null:
+			slot.item = item
+			slot.amount = amount
+			
+			if item is ItemFood:
+				slot.start_rot(item.time_rot_step)
+			
+			if health != 0:
+				slot.health = health
+
+			
+			for num in amount:
+				inventory.append(item.unique_name)
+
+			slot.update_slot()
+			check_if_full()
+			sort()
+			break
 
 func sort() -> void:
 	items.clear()
-	#slots.clear()
-	for i in items_collection.get_children():
+	for i in slots:
 		if i.item != null:
 			if items.has(i.item.unique_name) == false:
 				items.append(i.item.unique_name)
 				#slots.append(i)
 				
-	for slot in items_collection.get_children():
+	for slot in slot_container.get_children():
 		var find_item
 		if slot.item != null:
 			if slot.amount < slot.item.max_stack:
@@ -112,20 +101,12 @@ func sort() -> void:
 func _on_sort_pressed() -> void:
 	sort()
 
-
-func _on_add_random_item_pressed() -> void:
-	#var item = items_library.items_array.pick_random()
-	spawn_item(load("res://resources/items/portal.tres"))
-
-
-func check_amount_of_item(item:StringName) -> int:
+func check_amount_of_item(unique_name:StringName) -> int:
 	var amount = 0
-	for i in inventory:
-		#print(i)
-		if i == item:
+	for name in inventory:
+		if name == unique_name:
 			amount += 1
-		elif item in i:
-			#print("yes ",item, " in ", i)
+		elif unique_name in name: ## if asking for a part of the name like "wood" and the item is "oak_wood"
 			amount += 1
 	return amount
 
@@ -134,7 +115,7 @@ func remove_item(unique_name:StringName,amount:int) -> void:
 	if id != Vector3.ZERO: return ## id mean its not the players inventory
 	
 	for i in amount:
-		for slot in items_collection.get_children():
+		for slot in slots:
 			if slot.item != null:
 				if slot.item.unique_name == unique_name:
 					if slot.amount == 1:
@@ -159,51 +140,29 @@ func remove_item(unique_name:StringName,amount:int) -> void:
 
 
 func check_if_full() -> void:
-	var free_space:int = 0
-	for i in items_collection.get_children():
-		if i.item == null:
-			free_space += 1
-	if free_space == 0:
-		full = true
-	else:
-		full = false
+	var free_space:bool = false
 
+	for slot in slots:
+		if slot.item == null:
+			free_space = true
+			break
+			
+	full = free_space
 
 func check_slots():
 	inventory.clear()
 	
-	for i in items_collection.get_children():
-		if i.item != null:
-			for amount in i.amount:
-				inventory.append(i.item.unique_name)
+	for slot in slots:
+		if slot.item != null:
+			for amount in slot.amount:
+				inventory.append(slot.item.unique_name)
 			
-
-
-#func open(server_details:= {}):
-	#pass
-	##print("details ",server_details)
-	##show()
-	##if sync:
-		##for i in items_collection.get_children():
-			##i.item = null
-			##i.update_slot()
-		##if !server_details.is_empty():
-			##update_client.rpc(server_details)
-
 
 func change(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	if sync:
-		pass
 		var _save = save()
 		var data = JSON.stringify(_save)
-		#var terrian = get_tree().get_first_node_in_group("VoxelTerrain") as VoxelTerrain
-		#terrian.get_voxel_tool().set_voxel_metadata(id,data)
-		#Globals.live_ui(id,data,multiplayer.get_unique_id())
 		Globals.sync_add_metadata.emit(id,data)
-		
-		#update.rpc(id,data)
-		#Globals.add_meta_data.rpc()
-		#Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
 	else:
 		var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 		if BackendClient.playerdata.Inventory == null:
@@ -257,13 +216,13 @@ func update_client(info):
 		slot.update_slot()
 	pass
 
-func pack_items(items:Array[String]):
-	for item in items:
-		var Inventory_ = owner as Inventory
-		Inventory_.spawn_item(load(item))
+#func pack_items(items:Array[String]):
+	#for item in items:
+		#var Inventory_ = owner as Inventory
+		#Inventory_.spawn_item(load(item))
 
 func drop_all():
-	for slot in items_collection.get_children():
+	for slot in slot_container.get_children():
 		var item = slot.item as ItemBase
 		if item != null:
 			Globals.drop_item.emit(multiplayer.get_unique_id(),item,slot.amount)
@@ -275,21 +234,21 @@ func _on_drop_all_pressed() -> void:
 
 func save() -> Dictionary:
 	var save_data:Dictionary = {}
-	for i in items_collection.get_children():
-		if i.item != null:
-			save_data[str(i.get_index())] = {
-				"item_path":i.item.get_path(),
-				"amount":i.amount,
-				"parent":i.get_parent().name,
-				"health":i.health,
-				"rot":i.rot,
+	for slot in slots:
+		if slot.item != null:
+			save_data[str(slot.get_index())] = {
+				"item_path" : slot.item.get_path(),
+				"amount" : slot.amount,
+				"parent" : slot.get_parent().name,
+				"health" : slot.health,
+				"rot" : slot.rot,
 				}
 		else:
-			save_data[str(i.get_index())] = {
-				"item_path":"",
-				"amount":i.amount,
-				"parent":i.get_parent().name,
-				"health":i.health,
-				"rot":i.rot,
+			save_data[str(slot.get_index())] = {
+				"item_path" : "",
+				"amount" : slot.amount,
+				"parent" : slot.get_parent().name,
+				"health" : slot.health,
+				"rot" : slot.rot,
 				}
 	return save_data

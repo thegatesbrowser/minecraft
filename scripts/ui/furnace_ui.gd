@@ -23,13 +23,15 @@ var last_cooking_amount: int
 func _ready() -> void:
 	for output in output_container.get_children():
 		if output is Slot:
+			slots.append(output)	
 			output.item_changed.connect(change)
 			
 	for input in input_container.get_children():
 		if input is Slot:
+			slots.append(input)
 			input.item_changed.connect(change)
 
-
+	
 func _process(_delta: float) -> void:
 	var forge_item: ItemBase = cooking_slot.item
 	if forge_item != null:
@@ -89,12 +91,30 @@ func open(server_details: Dictionary = {}) -> void:
 			#print(server_details)
 			update_client.rpc(server_details)
 
+func open_with_meta(data):
+	show()
+	for i in data:
+		
+		var slot = find_child(data[i].parent).get_child(i.to_int())
+		
+		if data[i].item_path != "":
+			slot.item = load(data[i].item_path)
+		else:
+			slot.item = null
+			
+		slot.health = data[i].health
+		slot.amount = data[i].amount
+		slot.rot = data[i].rot
+		slot.update_slot()
+
 
 func change(index: int, item_path: String, amount: int, parent:String,health:float,rot:int) -> void:
 	if sync:
-		#print(index,"item ", item_path, parent)
 		Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
-
+		
+		var _save = save()
+		var data = JSON.stringify(_save)
+		Globals.sync_add_metadata.emit(id,data)
 
 @rpc("any_peer","call_local")
 func update_client(info) -> void:
@@ -111,3 +131,26 @@ func update_client(info) -> void:
 				slot.amount = info[i].amount
 				slot.rot =  info[i].rot
 				slot.update_slot()
+
+
+
+func save() -> Dictionary:
+	var save_data:Dictionary = {}
+	for slot in slots:
+		if slot.item != null:
+			save_data[str(slot.get_index())] = {
+				"item_path" : slot.item.get_path(),
+				"amount" : slot.amount,
+				"parent" : slot.get_parent().name,
+				"health" : slot.health,
+				"rot" : slot.rot,
+				}
+		else:
+			save_data[str(slot.get_index())] = {
+				"item_path" : "",
+				"amount" : slot.amount,
+				"parent" : slot.get_parent().name,
+				"health" : slot.health,
+				"rot" : slot.rot,
+				}
+	return save_data

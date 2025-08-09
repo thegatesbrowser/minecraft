@@ -2,32 +2,36 @@ extends ScrollContainer
 class_name HotBar
 
 @export var eat_sfx: AudioStreamPlayer
-@export var slots: HBoxContainer
+@onready var slot_container: HBoxContainer = $"MarginContainer/VBoxContainer/Slots"
 
 var selected_item: ItemBase 
 
 var current_key = 1
-var buttons
+var slots: Array = [] ## slot_container 
 var keys
 var slot_manager:SlotManager
 
 func _ready() -> void:
 	slot_manager = get_node("/root/Main").find_child("SlotManager")
+
 	Globals.spawn_item_hotbar.connect(spawn_item_hotbar)
 	Globals.remove_item_from_hotbar.connect(remove)
 	
-	buttons = slots.get_children()
+	slots = slot_container.get_children()
 	
+	for slot in slots:
+		# connect signals to save hotbar data
+		slot.item_changed.connect(slot_updated)
+
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Hotbar != null:
-			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			#update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			# update the hotbar with the saved data
 			pass
 			
-	for slot in buttons:
-		slot.item_changed.connect(slot_updated)
+	
 			
-
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_released("Scroll_Up"):
 		current_key -= 1
@@ -42,64 +46,64 @@ func _input(_event: InputEvent) -> void:
 		if Input.is_action_just_pressed("0"):
 			current_key = 9
 	
-
-	
 	current_key %= 10
 	_unpress_all()
-	buttons[current_key].focused = true
+	slots[current_key].focused = true
 	_press_key(current_key)
 
 
 func _unpress_all() -> void:
-	for i in slots.get_children():
+	for i in slot_container.get_children():
 		i.button_pressed = false
 		i.focused = false
 
 
 func get_current() -> Slot:
-	return buttons[current_key]
+	return slots[current_key]
 
 
 func _press_key(i: int) -> void:
 	selected_item = null
-	buttons[i].button_pressed = true
+	slots[i].button_pressed = true
 	Globals.remove_item_in_hand.emit()
-	slot_manager.selected_slot = buttons[current_key]
+	slot_manager.selected_slot = slots[current_key]
 	
-	if buttons[current_key].item != null:
-		selected_item = buttons[current_key].item
+	if slots[current_key].item != null:
+		selected_item = slots[current_key].item
 	
 		## add holdable if has one
 		
-		## general holdables
-		if buttons[current_key].item.holdable_mesh != null:
-				Globals.add_item_to_hand.emit(buttons[current_key].item,null)
+		## General holdables
+		if slots[current_key].item.holdable_mesh != null:
+				Globals.add_item_to_hand.emit(slots[current_key].item,null)
 				
-		if buttons[current_key].item is ItemBlock:
-			Globals.current_block = buttons[current_key].item.unique_name
+		## Placeable items
+		if slots[current_key].item is ItemBlock:
+			Globals.current_block = slots[current_key].item.unique_name
 			Globals.can_build = true 
 			Globals.custom_block = &""
-		#elif buttons[current_key].item is ItemPlant:
-			#Globals.current_block = buttons[current_key].item.unique_name
+
+		#elif slots[current_key].item is ItemPlant:
+			#Globals.current_block = slots[current_key].item.unique_name
 			#Globals.can_build = true 
 			#Globals.custom_block = &""
-		elif buttons[current_key].item is ItemTool:
+
+		## Tool items
+		elif slots[current_key].item is ItemTool:
 			Globals.can_build = false
-			Globals.custom_block = buttons[current_key].item.unique_name
-			#Globals.add_item_to_hand.emit(buttons[current_key].item)
-		#elif buttons[current_key].item is ItemWeapon:
-			#Globals.can_build = false
-			#Globals.add_item_to_hand.emit(buttons[current_key].item,buttons[current_key].item.weapon_model)
-			#Globals.custom_block = buttons[current_key].item.unique_name
-		elif buttons[current_key].item is ItemFood: 
+			Globals.custom_block = slots[current_key].item.unique_name
+
+		## Foot items
+		elif slots[current_key].item is ItemFood: 
 			Globals.can_build = false
-			selected_item = buttons[current_key].item
+			selected_item = slots[current_key].item
 			var holdable_array = selected_item.rot_step_holdable_models as Array
 			if not holdable_array.is_empty():
-				var holdable = holdable_array[buttons[current_key].rot]
+				var holdable = holdable_array[slots[current_key].rot]
 				Globals.add_item_to_hand.emit(null,holdable)
 		else:
-			Globals.custom_block = buttons[current_key].item.unique_name
+			## Others ?
+			Globals.custom_block = slots[current_key].item.unique_name
 			Globals.can_build = true 
 			
 	else:
@@ -115,8 +119,9 @@ func remove(unique_name: String = "", amount: int = 1) -> void:
 		if slot.amount <= 0:
 			slot.item = null
 		slot.update_slot()
+
 	else:
-		for slot in buttons:
+		for slot in slots:
 			if slot.item != null:
 				if slot.item.unique_name == unique_name:
 					slot.amount -= amount
@@ -126,35 +131,33 @@ func remove(unique_name: String = "", amount: int = 1) -> void:
 
 
 func drop_all() -> void:
-	for slot in slots.get_children():
+	for slot in slots:
 		var item = slot.item as ItemBase
 		if item != null:
 			Globals.drop_item.emit(item,slot.amount)
-					
 			remove(item.unique_name,slot.amount)
 
 func _on_dropall_pressed() -> void:
 	drop_all()
 
-
 func save() -> Dictionary:
 	var save_data:Dictionary = {}
-	for i in slots.get_children():
-		if i.item != null:
-			save_data[str(i.get_index())] = {
-				"item_path":i.item.get_path(),
-				"amount":i.amount,
-				"parent":i.get_parent().name,
-				"health":i.health,
-				"rot":i.rot,
+	for slot in slots:
+		if slot.item != null:
+			save_data[str(slot.get_index())] = {
+				"item_path" : slot.item.get_path(),
+				"amount" : slot.amount,
+				"parent" : slot.get_parent().name,
+				"health" : slot.health,
+				"rot" : slot.rot,
 				}
 		else:
-			save_data[str(i.get_index())] = {
-				"item_path":"",
-				"amount":i.amount,
-				"parent":i.get_parent().name,
-				"health":i.health,
-				"rot":i.rot,
+			save_data[str(slot.get_index())] = {
+				"item_path" : "",
+				"amount" : slot.amount,
+				"parent" : slot.get_parent().name,
+				"health" : slot.health,
+				"rot" : slot.rot,
 				}
 	return save_data
 
@@ -176,8 +179,7 @@ func update(info) -> void:
 		
 	Globals.hotbar_full = hotbar_full()
 		
-		
-
+# Signal to update the slot when item changes
 func slot_updated(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
@@ -188,7 +190,7 @@ func slot_updated(index: int, item_path: String, amount: int,parent:String,healt
 	
 
 func spawn_item_hotbar(item:ItemBase) -> void:
-	for slot in slots.get_children():
+	for slot in slots:
 		if slot.item == null:
 			slot.item = item
 			slot.update_slot()
@@ -202,7 +204,7 @@ func spawn_item_hotbar(item:ItemBase) -> void:
 				
 func hotbar_full() -> bool:
 	var full:bool = true
-	for slot in slots.get_children():
+	for slot in slots:
 		if slot.item == null:
 			full = false
 			#return true

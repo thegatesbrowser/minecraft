@@ -74,10 +74,11 @@ func _init() -> void:
 	temp_curve.bake()
 	curve.bake()
 	
-var _cave:float
+#var _cave:float
 	
 func _generate_block(out_buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: int) -> void:
 	var temp:float
+	var _cave:bool
 	var block_size := int(out_buffer.get_size().x)
 	#var chunk_pos = Vector3(origin_in_voxels.x,origin_in_voxels.y,origin_in_voxels.z)
 	var chunk_pos := Vector3(
@@ -117,6 +118,9 @@ func _generate_block(out_buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: i
 				# important thing is that we do not set voxels using the real coordinate; the chunk we are generating ONLY cares about coordinates relative to itself, e.g. 0-16, so we use the normal y here
 					
 					if real_coordinate_y == real_height:
+						
+						#voxel_tool.paste(Vector3(x,y,z),test_structure.voxels,_channel)
+						
 						if rng.randf() < 0.001:
 							var creature = current_biome.possible_creatures.pick_random().get_path()
 							out_buffer.set_voxel(voxels.get_model_index_default("creature_spawner"),x,y,z,_channel)
@@ -132,8 +136,11 @@ func _generate_block(out_buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: i
 							
 							out_buffer.set_voxel(foliage, x, y, z, _channel)
 							
-					#voxel_tool.paste(Vector3(x,y,z),test_structure.voxels,_channel)
-					#voxel_tool.paste_masked(Vector3(x,y,z),test_structure.voxels,_channel,_channel,voxels.get_model_index_default("cave_air"))
+
+							
+					#
+					
+						#else: 
 						
 						
 					if real_coordinate_y == real_height - 1:
@@ -148,11 +155,12 @@ func _generate_block(out_buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: i
 							var ore = possible_ore[rng.randi_range(0,ore_size)]
 							if rng.randf() < ore.spawn_chance:
 								out_buffer.set_voxel(voxels.get_model_index_default(ore.unique_name),x,y,z,_channel)
-					var cave = cave(real_coordinate_x,real_coordinate_z,real_coordinate_y)
-					if cave > 0:
-						#caves.append(Vector3(real_coordinate_x,real_coordinate_y,real_coordinate_z))
-						out_buffer.set_voxel(voxels.get_model_index_default("air"), x, y, z,_channel )# x, y, and z are all between 0-15
-				#			
+					#var cave = cave(real_coordinate_y ,real_coordinate_y,real_coordinate_y)
+				#
+					#if cave:
+						##print(Vector3(x,y,z))
+						##caves.append(Vector3(real_coordinate_x,real_coordinate_y,real_coordinate_z))
+						#out_buffer.set_voxel(voxels.get_model_index_default("air"), x, y, z,_channel )# x, y, and z are all between 0-15
 				else:
 					out_buffer.set_voxel(voxels.get_model_index_default("air"),x,y,z,_channel)
 			
@@ -169,36 +177,10 @@ func _generate_block(out_buffer: VoxelBuffer, origin_in_voxels: Vector3i, lod: i
 							#out_buffer.set_voxel(voxels.get_model_index_default("water_top"),x,block_size - 1,z)
 				
 	
-	if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
-		#if rng.randf() < biome.tree_chance:
-		var voxel_tool := out_buffer.get_voxel_tool()
-		var structure_instances := []
-		_get_tree_instances_in_chunk(chunk_pos, origin_in_voxels, block_size, structure_instances)
-
-		# Relative to current block
-		var block_aabb := AABB(Vector3(), out_buffer.get_size() + Vector3i(1, 1, 1))
-
-		for dir in _moore_dirs:
-			var ncpos : Vector3 = (chunk_pos + dir).round()
-			_get_tree_instances_in_chunk(ncpos, origin_in_voxels, block_size, structure_instances)
-		
-		
-		for structure_instance in structure_instances:
-			var pos : Vector3 = structure_instance[0]
-			var structure : Structure = structure_instance[1]
-			var lower_corner_pos := pos - structure.offset
-			var aabb := AABB(lower_corner_pos, structure.voxels.get_size() + Vector3i(1, 1, 1))
-
-			
-			if aabb.intersects(block_aabb):
-				#print(structure.voxels)
-				#print("tree")
-				
-				voxel_tool.paste_masked(lower_corner_pos, 
-					structure.voxels,VoxelBuffer.CHANNEL_TYPE,
-					# Masking
-					VoxelBuffer.CHANNEL_TYPE, voxels.get_model_index_default("air"))
-						##print("tree ",lower_corner_pos)
+				#if origin_in_voxels.y <= _trees_max_y and origin_in_voxels.y + block_size >= _trees_min_y:
+					#if rng.randf() < biome.tree_chance:
+					
+								##print("tree ",lower_corner_pos)
 		#
 	#if origin_in_voxels.y <= max_heightmap and origin_in_voxels.y + block_size >= min_heightmap:
 		#var voxel_tool := out_buffer.get_voxel_tool()
@@ -233,9 +215,13 @@ func _get_height_at(x: int, z: int) -> int:
 	var t = 0.5 + 0.5 * noise.get_noise_2d(x, z)
 	return int(curve.sample_baked(t))
 
-func cave(x:int,z:int,y:int) -> float:
+func cave(x:int,z:int,y:int) -> bool:
 	var t = cavenoise.get_noise_3d(x, y, z)
-	return t
+	if t > 0:
+		return true
+		caves.append(Vector3(x,y,z))
+	else:
+		return false
 
 func temp(x:int,z:int) -> int:
 	var t = 0.5 + 0.5 * temp_noise.get_noise_2d(x, z)
@@ -254,31 +240,27 @@ func select_biome(temp:int):
 					current_biome = biome
 	lock.unlock()
 	
-func _get_tree_instances_in_chunk(
-	cpos: Vector3, offset: Vector3, chunk_size: int, tree_instances: Array):
-		
-	var rng := RandomNumberGenerator.new()
-	rng.seed = _get_chunk_seed_2d(cpos)
-	
-	for i in 4:
-		var pos := Vector3(rng.randi() % chunk_size, 0, rng.randi() % chunk_size)
-		pos += cpos * chunk_size
-		pos.y = _get_height_at(pos.x, pos.z)
-		
-		
-		if pos.y > 0:
-			#if allows_trees(pos):
-			pos -= offset
-			
-			var cave_ = cave(pos.x,pos.z,pos.y - 1)
-			print("cave ",cave_)
-			if cave_ <= 0:
-				
-				
-				var si := rng.randi() % len(_tree_structures)
-				var structure : Structure = _tree_structures[si]
-				tree_instances.append([pos.round(), structure])
-					
+#func _get_tree_instances_in_chunk(
+	#cpos: Vector3, offset: Vector3, chunk_size: int, tree_instances: Array):
+		#
+	#var rng := RandomNumberGenerator.new()
+	#rng.seed = _get_chunk_seed_2d(cpos)
+	#
+	#for i in 4:
+		#var pos := Vector3(rng.randi() % chunk_size, 0, rng.randi() % chunk_size)
+		#pos += cpos * chunk_size
+		#pos.y = _get_height_at(pos.x, pos.z)
+		#
+		#
+		#if pos.y > 0:
+			##if allows_trees(pos):
+			#pos -= offset
+			#
+			#
+			#var si := rng.randi() % len(_tree_structures)
+			#var structure : Structure = _tree_structures[si]
+			#tree_instances.append([pos.round(), structure])
+					#
 static func _get_chunk_seed_2d(cpos: Vector3) -> int:
 	return int(cpos.x) ^ (31 * int(cpos.z))
 
