@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/ui/slot.tscn" id="3_v400e"]
 [ext_resource type="Resource" uid="uid://bh4f3xyyxfdql" path="res://resources/items_library.tres" id="4_2bd2u"]
 
-[node name="Inventory" type="ScrollContainer" node_paths=PackedStringArray("items_collection", "inventroy_name")]
+[node name="Inventory" type="ScrollContainer" node_paths=PackedStringArray("items_collection")]
 process_mode = 3
 custom_minimum_size = Vector2(540, 321)
 anchors_preset = 8
@@ -23,10 +23,7 @@ mouse_filter = 2
 theme = ExtResource("1_e6rhx")
 horizontal_scroll_mode = 0
 script = ExtResource("1_vh6pj")
-slot_s = ExtResource("3_v400e")
 items_collection = NodePath("PanelContainer/MarginContainer/VBoxContainer/Items")
-amount_of_slots = 40
-inventroy_name = NodePath("PanelContainer/MarginContainer/VBoxContainer/InventroyName")
 items_library = ExtResource("4_2bd2u")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

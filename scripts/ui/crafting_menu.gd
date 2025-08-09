@@ -14,8 +14,8 @@ func _ready() -> void:
 	output_slot.item_changed.connect(crafted)
 	
 func check(index:int,item_path:String,amount:int,parent:String,health:float,rot:int):
-	var item1 = input_1.Item_resource
-	var item2 = input_2.Item_resource
+	var item1 = input_1.item
+	var item2 = input_2.item
 
 
 	if item1 != null and item2 == null:
@@ -56,10 +56,10 @@ func check(index:int,item_path:String,amount:int,parent:String,health:float,rot:
 						print("CRAFT",craftable.Name)
 					
 func craft(craftable:Craftable):
-	output_slot.Item_resource = craftable.output_item
+	output_slot.item = craftable.output_item
 
 func crafted(index:int,item_path:String,amount:int,parent:String,health:float,rot:int):
-	input_1.Item_resource = null
-	input_2.Item_resource = null
+	input_1.item = null
+	input_2.item = null
 	input_1.update_slot()
 	input_2.update_slot()

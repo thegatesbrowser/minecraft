@@ -1,11 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://clt86wlubencc"]
+[gd_scene load_steps=7 format=3 uid="uid://clt86wlubencc"]
 
 [ext_resource type="Script" path="res://scripts/items/dropped_item.gd" id="1_jdsxj"]
+[ext_resource type="Texture2D" uid="uid://b2q0kdc7iqkvx" path="res://assets/textures.png" id="2_v23qs"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fq45t"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nykrj"]
+atlas = ExtResource("2_v23qs")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3oc0a"]
+albedo_texture = SubResource("AtlasTexture_nykrj")
+albedo_texture_force_srgb = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_824ji"]
-material = SubResource("StandardMaterial3D_fq45t")
+material = SubResource("StandardMaterial3D_3oc0a")
 size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ejm1y"]
@@ -18,6 +25,7 @@ script = ExtResource("1_jdsxj")
 
 [node name="block mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_824ji")
+surface_material_override/0 = SubResource("StandardMaterial3D_3oc0a")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ejm1y")

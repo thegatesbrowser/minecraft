@@ -1,0 +1,34 @@
+[gd_resource type="VoxelGeneratorScript" load_steps=12 format=3 uid="uid://d0je706aoxpxp"]
+
+[ext_resource type="Script" path="res://scripts/world/biome.gd" id="1_gq5mr"]
+[ext_resource type="Script" path="res://scripts/world/gen.gd" id="1_h4jkd"]
+[ext_resource type="Resource" uid="uid://dq8ewo1p7ux38" path="res://resources/biomes/forest.tres" id="2_r6jkp"]
+[ext_resource type="Curve" uid="uid://cvrt8qtqhadv1" path="res://resources/heightmap_curve.tres" id="3_8081o"]
+[ext_resource type="FastNoiseLite" uid="uid://8dlrjkx8v1k5" path="res://resources/forest.tres" id="4_d38ch"]
+[ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="5_6y5rw"]
+[ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="6_aq8su"]
+[ext_resource type="Resource" uid="uid://bgq1uw8gii0xc" path="res://resources/creatures/Sparrow.tres" id="7_ef751"]
+[ext_resource type="Resource" uid="uid://c0itwwmcp2khv" path="res://resources/creatures/trader.tres" id="8_43v8f"]
+[ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/glowtail.tres" id="9_ks57c"]
+
+[sub_resource type="Resource" id="Resource_v62ta"]
+script = ExtResource("1_gq5mr")
+min_temp = 11.0
+max_temp = 30.0
+biome_name = "desert"
+possible_creatures = Array[ExtResource("5_6y5rw")]([ExtResource("6_aq8su"), ExtResource("7_ef751"), ExtResource("7_ef751"), ExtResource("8_43v8f"), ExtResource("6_aq8su"), ExtResource("9_ks57c")])
+plants = [&"reeds"]
+trees = true
+tree_chance = 1.0
+plant_chance = 0.5
+heightmap = ExtResource("3_8081o")
+noise = ExtResource("4_d38ch")
+blocks = {
+"dirt_block": "sand",
+"rock_block": "stone",
+"surface_block": "sand"
+}
+
+[resource]
+script = ExtResource("1_h4jkd")
+biomes = Array[ExtResource("1_gq5mr")]([ExtResource("2_r6jkp"), SubResource("Resource_v62ta")])

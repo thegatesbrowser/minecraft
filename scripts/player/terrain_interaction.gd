@@ -51,8 +51,11 @@ var _dirs: Array[Vector3] = [
 	Vector3(1, -1, 1)
 ]
 
+var slot_manager:SlotManager
 
 func _ready() -> void:
+	slot_manager = get_node("/root/Main").find_child("SlotManager")
+	
 	plants = [voxel_blocky_type_library.get_model_index_default("tall_grass"),voxel_blocky_type_library.get_model_index_default("fern"),voxel_blocky_type_library.get_model_index_default("flower"),voxel_blocky_type_library.get_model_index_default("reeds")]
 
 	if is_multiplayer_authority() or Connection.is_server():
@@ -204,7 +207,7 @@ func _break_block_server(position: Vector3) -> void:
 		
 		if item.utility != null:
 			if item.utility.has_ui:
-				Globals.remove_ui.emit(position)
+				voxel_tool.set_voxel_metadata(position,null)
 				
 			elif item.utility.portal:
 				Globals.remove_portal_data.emit(position)
@@ -242,50 +245,23 @@ func _on_Area_body_exited(_body: Node3D) -> void:
 
 @rpc("any_peer","call_remote")
 func send_item(type: StringName) -> void:
+	var slot_manager = get_node("/root/Main").find_child("SlotManager")
 	## if the player is holding a tool it will be damaged
-	if Globals.selected_slot != null:
-		if Globals.selected_slot.Item_resource != null:
-			if Globals.selected_slot.Item_resource is ItemTool:
-				Globals.selected_slot.used()
+	if slot_manager.selected_slot != null:
+		if slot_manager.selected_slot.item != null:
+			if slot_manager.selected_slot.item is ItemTool:
+				slot_manager.selected_slot.used()
 						
 	## gives the broken item to the player
 	var item = item_library.get_item(type)
 	#Globals.spawn_item_inventory.emit(item)
-	Globals.add_item_to_hotbar_or_inventory(item)
+	slot_manager.add_item_to_hotbar_or_inventory(item)
 
 
 @rpc("any_peer","call_local")
 func open_portal_ui(id: Vector3) -> void:
 	Globals.open_portal_url.emit(id)
 	pass
-
-
-@rpc("any_peer","reliable")
-func ping_server() -> void:
-	ping_client.rpc_id(multiplayer.get_remote_sender_id(),true)
-
-
-@rpc("any_peer","reliable")
-func ping_client(getting: bool = false) -> void:
-	if multiplayer.is_server(): return
-	if getting:
-		var time: float = Time.get_unix_time_from_system() - last_ping_time
-		ping_label.text = str("Ping ", roundf(time))
-		print(multiplayer.get_unique_id(), " time ", roundf(time))
-
-	else:
-		ping_server.rpc_id(1)
-		
-	last_ping_time = Time.get_unix_time_from_system()
-
-
-func tick() -> void:
-	if ping_label.visible:
-		ping_client()
-
-
-func _on_block_broken(type: StringName) -> void:
-	pass # Replace with function body.
 
 @rpc("any_peer","call_local")
 func remove_spawn_point(pos: Vector3) -> void:

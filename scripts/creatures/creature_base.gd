@@ -43,10 +43,6 @@ var walk_time := 10.0
 
 @export var StateManager:Node
 var health
-var tame_step:int = 0
-var tame_progress:float = 100.0 ## percent
-var animal_owner:Player
-var animal_ownerid:int
 
 var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
@@ -165,7 +161,6 @@ func try_despawn() -> void:
 
 
 func hit(damage:int = 1):
-	#print("hit")
 	hurt_sfx.play()
 	health -= damage
 	if health <= 0:
@@ -175,11 +170,6 @@ func hit(damage:int = 1):
 			var drop_item = creature_resource.drop_items.pick_random()
 			Globals.spawn_item_inventory.emit(drop_item)
 		queue_free()
-
-#@rpc("authority","call_local")
-#func killed():
-	#queue_free()
-
 
 func _on_attack_range_body_entered(body: Node3D) -> void:
 	if creature_resource.attacks:
@@ -230,32 +220,6 @@ func interpolate_client(delta: float) -> void:
 	velocity.y -= gravity * delta
 	move_and_slide()
 
-
-
-
-@rpc("any_peer","call_local")
-func tame(owner_id:int):
-	var players = get_tree().get_nodes_in_group("Player")
-	for i in players:
-		if owner_id == i.name.to_int():
-			#StateManager._on_child_transition(self,"Follow")
-			animal_owner = i
-			animal_ownerid = owner_id
-			#print(animal_owner)
-			#_on_move_timeout()
-	
-func give(item:ItemBase,id):
-	feed_sfx.play()
-	if creature_resource.excepted_items.has(item):
-		var max_steps = creature_resource.amount
-		tame_step += 1
-		tame_progress = (tame_step / max_steps) * 100
-		
-	if tame_progress >= 100:
-		if animal_owner == null:
-			tame.rpc_id(1,id)
-			
-	
 func show_debug():
 	$target.visible = !$target.visible
 

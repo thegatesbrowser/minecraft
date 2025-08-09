@@ -79,15 +79,6 @@ func save_item(item:ItemBase, _buffer=[], size:Vector2 = Vector2.ZERO) -> void:
 	
 	## Save This Data
 	Globals.send_data.emit({"name" : BackendClient.username , "change_name" : "item_data","change" : save_data})
-	#var new_image = Image.new()
-	#new_image.load_png_from_buffer(buffer)
-	#
-	#new_image.save_png("res://buffer.png")
-	
-
-	#Saver.save_item(item,buffer,image.get_size())
-	
-	#ItemManager.create_item.rpc_id(1,item_data,buffer,size)
 
 
 func save_creatures() -> void:

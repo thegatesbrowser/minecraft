@@ -7,15 +7,14 @@
 [ext_resource type="Resource" uid="uid://dwphi1dev865q" path="res://resources/creatures/fox.tres" id="2_td8v1"]
 [ext_resource type="Resource" uid="uid://bgq1uw8gii0xc" path="res://resources/creatures/Sparrow.tres" id="3_w0f62"]
 [ext_resource type="Resource" uid="uid://c0itwwmcp2khv" path="res://resources/creatures/trader.tres" id="4_4uu1s"]
-[ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/Glowtail.tres" id="5_kslnp"]
+[ext_resource type="Resource" uid="uid://cylxg4ja44lhh" path="res://resources/creatures/glowtail.tres" id="5_kslnp"]
 
 [resource]
 script = ExtResource("1_7jarf")
-min_temp = 0
+min_temp = 0.0
 max_temp = 10.0
 biome_name = "forest"
 possible_creatures = Array[ExtResource("1_xn2j4")]([ExtResource("2_td8v1"), ExtResource("3_w0f62"), ExtResource("3_w0f62"), ExtResource("4_4uu1s"), ExtResource("2_td8v1"), ExtResource("5_kslnp")])
-creature_spawn_chance = 0.1
 plants = [&"tall_grass"]
 trees = true
 tree_chance = 1.0
@@ -23,7 +22,7 @@ plant_chance = 0.5
 heightmap = ExtResource("1_vcudw")
 noise = ExtResource("2_adedl")
 blocks = {
-"dirt_layer_block": "dirt",
-"stone_layer_block": "stone",
+"dirt_block": "dirt",
+"rock_block": "stone",
 "surface_block": "grass"
 }

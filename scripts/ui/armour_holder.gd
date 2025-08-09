@@ -16,8 +16,8 @@ func _on_helment_item_changed(index: int, item_path: String, amount: int, parent
 func check_all():
 	equiped.clear()
 	for i in slot_holder.get_children():
-		if i.Item_resource != null:
-			equiped.append(i.Item_resource)
+		if i.item != null:
+			equiped.append(i.item)
 	caculate_protection()
 		
 func caculate_protection():
@@ -25,4 +25,7 @@ func caculate_protection():
 	for i in equiped:
 		protect += i.protect_amount
 		
-	Globals.protection = protect
+	var players = get_tree().get_first_node_in_group("PlayerContainer")
+	for player in players.get_children(): 
+		if player.get_multiplayer_authority() == multiplayer.get_unique_id():
+			player.protection = protect

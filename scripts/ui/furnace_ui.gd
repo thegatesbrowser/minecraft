@@ -31,7 +31,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	var forge_item: ItemBase = cooking_slot.Item_resource
+	var forge_item: ItemBase = cooking_slot.item
 	if forge_item != null:
 		if forge_item.forgable:
 			#print(forge_item.unique_name)
@@ -58,19 +58,19 @@ func _process(_delta: float) -> void:
 func cook(Item: ItemBase) -> void:
 	for i in output_container.get_children():
 		if i is Slot:
-			if i.Item_resource == null:
-				i.Item_resource = Item.output_item
+			if i.item == null:
+				i.item = Item.output_item
 				i.update_slot()
 				break
-			elif i.Item_resource == Item.output_item:
+			elif i.item == Item.output_item:
 				i.amount += 1
 				i.update_slot()
 				break
 
 
 func _fuel() -> void:
-	if fuel_slot.Item_resource != null:
-		if fuel_types.has(fuel_slot.Item_resource.unique_name):
+	if fuel_slot.item != null:
+		if fuel_types.has(fuel_slot.item.unique_name):
 			fueled = true
 			fuel_slot.amount -= 1
 			last_cooking_amount = cooking_slot.amount
@@ -106,7 +106,7 @@ func update_client(info) -> void:
 			var slot = parent.get_child(i.to_int())
 			
 			if slot != null:
-				slot.Item_resource = load(info[i].item_path)
+				slot.item = load(info[i].item_path)
 				slot.health = info[i].health
 				slot.amount = info[i].amount
 				slot.rot =  info[i].rot

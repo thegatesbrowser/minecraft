@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnn281w2sleq"]
+[gd_scene load_steps=3 format=3 uid="uid://dnn281w2sleq"]
 
 [ext_resource type="PackedScene" uid="uid://dnqhxtkp8jhnd" path="res://scenes/ui/furnace_ui.tscn" id="1_6nc8g"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="2_dhf2j"]
-[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="3_r85ut"]
-[ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="4_jju1w"]
 
 [node name="test ui" type="Control"]
 layout_mode = 3
@@ -26,10 +24,8 @@ sync = false
 
 [node name="Slot" parent="Inventory/PanelContainer/MarginContainer/VBoxContainer/Items" index="0"]
 amount = 16
-Item_resource = ExtResource("3_r85ut")
 
 [node name="Slot2" parent="Inventory/PanelContainer/MarginContainer/VBoxContainer/Items" index="1"]
 amount = 21
-Item_resource = ExtResource("4_jju1w")
 
 [editable path="Inventory"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://de27e3hbp0hph"]
+[gd_scene load_steps=77 format=3 uid="uid://de27e3hbp0hph"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -35,7 +35,13 @@
 [ext_resource type="AudioStream" uid="uid://ctt7t044miel2" path="res://assets/sounds/block/azalea_leaves_break6.ogg" id="19_4xy3u"]
 [ext_resource type="AudioStream" uid="uid://bpxj0rjcov7aj" path="res://assets/sounds/block/wood break.mp3" id="20_hq426"]
 [ext_resource type="AudioStream" uid="uid://drnoamqy8nnuo" path="res://assets/sounds/block/azalea_leaves_break7.ogg" id="20_keaee"]
+[ext_resource type="AudioStream" uid="uid://cch5k6cgj7gho" path="res://assets/sounds/block/log 1.mp3" id="21_6ophe"]
 [ext_resource type="AudioStream" uid="uid://8cg57dcdfxcl" path="res://assets/sounds/block/Sand Break.mp3" id="21_lraem"]
+[ext_resource type="AudioStream" uid="uid://bemkbp5uo6lth" path="res://assets/sounds/block/log 2.mp3" id="22_wg0rg"]
+[ext_resource type="AudioStream" uid="uid://d2lp05mnpj8s2" path="res://assets/sounds/block/log 3.mp3" id="23_5r5sb"]
+[ext_resource type="AudioStream" uid="uid://cbnrhqvwib116" path="res://assets/sounds/block/log 4.mp3" id="24_hpxhg"]
+[ext_resource type="AudioStream" uid="uid://cxwmqe0gyn2or" path="res://assets/sounds/block/log 6.mp3" id="25_8wggn"]
+[ext_resource type="AudioStream" uid="uid://winjkqayvpbo" path="res://assets/sounds/block/log 7.mp3" id="26_qwltm"]
 [ext_resource type="AudioStream" uid="uid://bu0qysk0wk2h5" path="res://assets/sounds/block/item_frame_add_item1.ogg" id="29_gmxig"]
 [ext_resource type="AudioStream" uid="uid://dkmhotcmyyo1" path="res://assets/sounds/block/item_frame_add_item2.ogg" id="30_1ny5t"]
 [ext_resource type="AudioStream" uid="uid://cftecgxiqhol6" path="res://assets/sounds/block/item_frame_add_item3.ogg" id="31_ot16s"]
@@ -44,11 +50,12 @@
 [ext_resource type="Script" path="res://scripts/common/saver.gd" id="34_s4tlk"]
 [ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="35_06sqe"]
 [ext_resource type="PackedScene" uid="uid://8oym32y4vfye" path="res://scenes/ui/portal_url.tscn" id="35_fu1ca"]
-[ext_resource type="Script" path="res://scripts/ui/ui_handler.gd" id="37_0ju56"]
+[ext_resource type="Script" path="res://scripts/ui/slot_manager.gd" id="37_0ju56"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
 [ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="41_0dc52"]
 [ext_resource type="Script" path="res://scripts/world/random_ticker.gd" id="44_caq2v"]
+[ext_resource type="AudioStream" uid="uid://bppwbkwodacxc" path="res://assets/sounds/269010__lwdickens__water-splash-3.wav" id="44_khtt3"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jg8kd"]
 random_pitch = 2.0
@@ -127,8 +134,13 @@ stream_0/stream = ExtResource("20_hq426")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_popfw"]
 random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("20_hq426")
+streams_count = 6
+stream_0/stream = ExtResource("21_6ophe")
+stream_1/stream = ExtResource("22_wg0rg")
+stream_2/stream = ExtResource("23_5r5sb")
+stream_3/stream = ExtResource("24_hpxhg")
+stream_4/stream = ExtResource("25_8wggn")
+stream_5/stream = ExtResource("26_qwltm")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_efjkb"]
 streams_count = 1
@@ -171,6 +183,12 @@ stream_0/stream = ExtResource("15_pu3bv")
 stream_1/stream = ExtResource("16_sdbfq")
 stream_2/stream = ExtResource("17_cgiyb")
 stream_3/stream = ExtResource("18_a8qjd")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mj8om"]
+random_pitch = 2.06
+random_volume_offset_db = 3.1
+streams_count = 1
+stream_0/stream = ExtResource("44_khtt3")
 
 [node name="Main" type="Node" groups=["PlayersUI"]]
 
@@ -263,12 +281,11 @@ panning_strength = 3.0
 [node name="log_oak" type="AudioStreamPlayer3D" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_popfw")
 volume_db = -21.5247
-pitch_scale = 0.45
 max_distance = 52.51
 panning_strength = 3.0
 
 [node name="log_birch" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_efjkb")
+stream = SubResource("AudioStreamRandomizer_popfw")
 volume_db = -21.5247
 pitch_scale = 0.45
 max_distance = 52.51
@@ -344,6 +361,11 @@ volume_db = -35.9358
 pitch_scale = 2.68
 panning_strength = 0.0
 
+[node name="water_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = SubResource("AudioStreamRandomizer_mj8om")
+max_distance = 52.0
+panning_strength = 10.25
+
 [node name="PortalManager" type="Node" parent="." node_paths=PackedStringArray("UI")]
 script = ExtResource("34_oj152")
 UI = NodePath("portal_url")
@@ -362,7 +384,7 @@ encrypt = true
 wait_time = 0.1
 autostart = true
 
-[node name="UI_Handler" type="Node" parent="."]
+[node name="SlotManager" type="Node" parent="."]
 script = ExtResource("37_0ju56")
 
 [node name="RandomTick" type="Node" parent="."]
