@@ -126,6 +126,7 @@ func identify_or_create(data):
 	# Return player info for this id (create empty defaults on first time)
 	var userData = dao.GetUserFromDB(client_id)
 	var returnData = {
+		"client_id" : userData.client_id,
 		"id" : userData.id,
 		"message" : Util.Message.playerinfo,
 		"health" : userData.health,
@@ -135,8 +136,7 @@ func identify_or_create(data):
 		"Position_z": userData.Position_z,
 		"Inventory": userData.Inventory,
 		"Hotbar": userData.Hotbar,
-		"item_data": userData.item_data,
-		"client_id" : userData.client_id,
+		"item_data": userData.item_data
 	}
 	peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
 
@@ -144,6 +144,7 @@ func identify_or_create(data):
 func get_player_data(data):
 	var userData = dao.GetUserFromDB(data.data.client_id)
 	var returnData = {
+		"client_id" : userData.client_id,
 		"id" : userData.id,
 		"message" : Util.Message.playerinfo,
 		"health" : userData.health,
@@ -153,8 +154,7 @@ func get_player_data(data):
 		"Position_z": userData.Position_z,
 		"Inventory": userData.Inventory,
 		"Hotbar": userData.Hotbar,
-		"item_data": userData.item_data ,
-		"client_id" : userData.client_id,
+		"item_data": userData.item_data 
 		## add stuff like player pos etc
 	}
 	peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())

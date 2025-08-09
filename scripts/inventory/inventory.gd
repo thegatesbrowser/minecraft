@@ -35,7 +35,6 @@ func _ready() -> void:
 		if !BackendClient.playerdata.is_empty():
 			if BackendClient.playerdata.Inventory != null:
 				update_client(JSON.parse_string(BackendClient.playerdata.Inventory))
-		
 				#pass
 	for i in items_collection.get_children():
 		i.item_changed.connect(change)
@@ -46,6 +45,7 @@ func _ready() -> void:
 	
 	
 func _process(_delta: float) -> void:
+	
 	slots = items_collection.get_children()
 	
 	check_slots()
@@ -249,7 +249,6 @@ func add_meta_data(data):
 	print(" change",TerrainHelper.get_terrain_tool().get_voxel_tool().get_voxel_metadata(id))
 
 func update_client(info):
-	print("update inventory ",info)
 	for i in info:
 		
 		var slot = find_child(info[i].parent).get_child(i.to_int())

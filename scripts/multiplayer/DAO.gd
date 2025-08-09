@@ -13,6 +13,7 @@ func _init():
 		
 		table = {
 			"id" : {"data_type": "int", "primary_key" : true, "not_null" : true, "auto_increment"  : true},
+			"client_id": {"data_type" : "text"},
 			"salt" :{"data_type" : "int", "not_null" : true},
 			"health":{"data_type" : "int"},
 			"hunger":{"data_type" : "float"},
@@ -21,8 +22,7 @@ func _init():
 			"Position_z":{"data_type": "float"},
 			"Inventory":{"data_type": "String"},
 			"Hotbar":{"data_type": "String"},
-			"item_data": {"data_type": "String"},
-			"client_id": {"data_type" : "String"},
+			"item_data": {"data_type": "String"}
 		}
 		
 		db.create_table("players", table)
@@ -50,6 +50,7 @@ func GetUserFromDB(client_id):
 		return{
 			"id" : i["id"],
 			"salt" : i["salt"],
+			"client_id" : client_id,
 			"health":  i["health"],
 			"hunger": i["hunger"],
 			"Position_x": i["Position_x"],
@@ -57,8 +58,7 @@ func GetUserFromDB(client_id):
 			"Position_z": i["Position_z"],
 			"Inventory": i["Inventory"],
 			"Hotbar": i["Hotbar"],
-			"item_data": i["item_data"],
-			"client_id" : client_id,
+			"item_data": i["item_data"]
 		}
 
 func HasUserId(client_id:String) -> bool:
