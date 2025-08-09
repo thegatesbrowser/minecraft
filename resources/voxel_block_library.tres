@@ -1,7 +1,7 @@
 [gd_resource type="VoxelBlockyTypeLibrary" load_steps=105 format=4 uid="uid://csna43pkcr65d"]
 
-[ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/terrain.material" id="1_v2tgt"]
-[ext_resource type="Texture2D" uid="uid://b2q0kdc7iqkvx" path="res://assets/textures.png" id="3_1m38q"]
+[ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/materials/terrain.material" id="1_8hqtx"]
+[ext_resource type="Texture2D" uid="uid://b2q0kdc7iqkvx" path="res://assets/textures/textures.png" id="3_isu6s"]
 [ext_resource type="Texture2D" uid="uid://djxr6uhl80usp" path="res://assets/textures/blocks/tallgrass.png" id="4_q5um5"]
 [ext_resource type="ArrayMesh" uid="uid://bj6dxjaih1d51" path="res://assets/models/grass.obj" id="4_vwypi"]
 [ext_resource type="Texture2D" uid="uid://cjnpnhygkgq2m" path="res://assets/models/bed_Image_0.png" id="6_c8n1j"]
@@ -36,7 +36,7 @@ culls_neighbors = false
 lod_skirts_enabled = false
 collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 1, 1, 1)])
 collision_mask = 5
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_kgnva"]
 unique_name = &"dirt"
@@ -53,7 +53,7 @@ tile_front = Vector2i(1, 0)
 random_tickable = true
 collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 1, 1, 1)])
 collision_mask = 5
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_4ubr4"]
 unique_name = &"grass"
@@ -68,7 +68,7 @@ tile_bottom = Vector2i(3, 0)
 tile_top = Vector2i(3, 0)
 tile_back = Vector2i(3, 0)
 tile_front = Vector2i(3, 0)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_k4bih"]
 unique_name = &"stone"
@@ -83,7 +83,7 @@ tile_bottom = Vector2i(5, 0)
 tile_top = Vector2i(5, 0)
 tile_back = Vector2i(4, 0)
 tile_front = Vector2i(4, 0)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_yomcl"]
 unique_name = &"log_oak"
@@ -98,7 +98,7 @@ tile_bottom = Vector2i(5, 1)
 tile_top = Vector2i(5, 1)
 tile_back = Vector2i(4, 1)
 tile_front = Vector2i(4, 1)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_7argj"]
 unique_name = &"log_birch"
@@ -113,7 +113,7 @@ tile_bottom = Vector2i(7, 0)
 tile_top = Vector2i(7, 0)
 tile_back = Vector2i(7, 0)
 tile_front = Vector2i(7, 0)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_fu35l"]
 unique_name = &"wood_oak"
@@ -128,7 +128,7 @@ tile_bottom = Vector2i(7, 1)
 tile_top = Vector2i(7, 1)
 tile_back = Vector2i(7, 1)
 tile_front = Vector2i(7, 1)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_bbxuy"]
 unique_name = &"wood_birch"
@@ -141,7 +141,7 @@ shader = ExtResource("7_ssghj")
 shader_parameter/trans = true
 shader_parameter/distance_fade_min = 60.0
 shader_parameter/distance_fade_max = 50.0
-shader_parameter/grass_texture = ExtResource("3_1m38q")
+shader_parameter/grass_texture = ExtResource("3_isu6s")
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_j6y2v"]
 atlas_size_in_tiles = Vector2i(12, 4)
@@ -166,7 +166,7 @@ shader = ExtResource("7_ssghj")
 shader_parameter/trans = true
 shader_parameter/distance_fade_min = 60.0
 shader_parameter/distance_fade_max = 50.0
-shader_parameter/grass_texture = ExtResource("3_1m38q")
+shader_parameter/grass_texture = ExtResource("3_isu6s")
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_il7i2"]
 atlas_size_in_tiles = Vector2i(12, 4)
@@ -193,7 +193,7 @@ tile_bottom = Vector2i(2, 3)
 tile_top = Vector2i(2, 3)
 tile_back = Vector2i(2, 3)
 tile_front = Vector2i(2, 3)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_i06l5"]
 unique_name = &"sand"
@@ -226,11 +226,11 @@ transparency = 2
 alpha_scissor_threshold = 0.909
 alpha_antialiasing_mode = 0
 cull_mode = 2
-albedo_texture = ExtResource("3_1m38q")
+albedo_texture = ExtResource("3_isu6s")
 metallic_specular = 0.2
 emission_enabled = true
 emission_energy_multiplier = 3.0
-emission_texture = ExtResource("3_1m38q")
+emission_texture = ExtResource("3_isu6s")
 texture_filter = 0
 distance_fade_max_distance = 0.0
 
@@ -257,7 +257,7 @@ tile_bottom = Vector2i(10, 0)
 tile_top = Vector2i(10, 0)
 tile_back = Vector2i(10, 0)
 tile_front = Vector2i(10, 0)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_t5wsu"]
 unique_name = &"iron"
@@ -272,7 +272,7 @@ tile_bottom = Vector2i(10, 1)
 tile_top = Vector2i(10, 1)
 tile_back = Vector2i(10, 1)
 tile_front = Vector2i(10, 1)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_5xsqa"]
 unique_name = &"diamond"
@@ -333,10 +333,10 @@ collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 1, 1,
 collision_enabled_0 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_8i1qp"]
-unique_name = &"fire_pit"
+unique_name = &"cooker"
 base_model = SubResource("VoxelBlockyModelMesh_dclci")
 attributes = Array[VoxelBlockyAttribute]([SubResource("VoxelBlockyAttributeDirection_oxmji")])
-resource_name = "fire_pit"
+resource_name = "cooker"
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_xh23b"]
 atlas_size_in_tiles = Vector2i(12, 4)
@@ -346,7 +346,7 @@ tile_bottom = Vector2i(2, 2)
 tile_top = Vector2i(2, 2)
 tile_back = Vector2i(2, 2)
 tile_front = Vector2i(2, 2)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_4tqua"]
 unique_name = &"lava"
@@ -363,7 +363,7 @@ tile_bottom = Vector2i(8, 0)
 tile_top = Vector2i(8, 0)
 tile_back = Vector2i(9, 1)
 tile_front = Vector2i(8, 1)
-material_override_0 = ExtResource("1_v2tgt")
+material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_l4xyh"]
 unique_name = &"chest"
@@ -656,4 +656,4 @@ resource_name = "cave_air"
 
 [resource]
 types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_06gsb"), SubResource("VoxelBlockyType_o5re0"), SubResource("VoxelBlockyType_xg2os"), SubResource("VoxelBlockyType_ywefl"), SubResource("VoxelBlockyType_3d0ox")])
-_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]", "wheat", "wheat_seed", "sandstone", "cave_air")
+_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]", "wheat", "wheat_seed", "sandstone", "cave_air", "cooker[direction=0]", "cooker[direction=1]", "cooker[direction=2]", "cooker[direction=3]", "cooker[direction=4]", "cooker[direction=5]")

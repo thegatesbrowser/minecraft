@@ -1,10 +1,11 @@
 extends Control
 class_name Inventory_Holder
 
-@export var h_box_container: HBoxContainer
-
+@onready var container: HBoxContainer = $"Panel/MarginContainer/VBoxContainer/Inventory Holder"
 
 func _ready() -> void:
+
+
 	Globals.sync_change_open.connect(ui_change)
 	Globals.open_inventory.connect(open_inventory)
 
@@ -12,21 +13,21 @@ func ui_change(pos,data,id):
 	print("id ",id, "your ",multiplayer.get_unique_id())
 	if multiplayer.get_unique_id() == id: return
 	
-	for i in h_box_container.get_children():
-		if "id" in i:
-			if i.id == pos:
-				i.open_with_meta(JSON.parse_string(data))
+	for child in container.get_children():
+		if "id" in child:
+			if child.id == pos:
+				child.open_with_meta(JSON.parse_string(data))
 	show()
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Inventory"):
 		visible = !visible
 		
-		for i in h_box_container.get_children():
-			if "sync" in i:
-				if i.sync:
+		for child in container.get_children():
+			if "sync" in child:
+				if child.sync:
 					if !visible:
-						i.queue_free()
+						child.queue_free()
 		
 		if visible:
 			#Globals.save_player_ui.emit()

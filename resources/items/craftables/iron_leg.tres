@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://btpo7f8axkpl" path="res://assets/textures/blocks/iron.png" id="1_rgawj"]
 [ext_resource type="Resource" uid="uid://bp80kikc6g2n4" path="res://resources/items/iron_leggings.tres" id="2_vawyi"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_roinm"]
-[ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/iron_armour.png" id="4_pv6up"]
+[ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/textures/iron_armour.png" id="4_pv6up"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xuv7t"]
 atlas = ExtResource("4_pv6up")

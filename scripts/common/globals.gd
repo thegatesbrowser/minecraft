@@ -60,6 +60,8 @@ signal craftable_unhovered
 
 signal drop_item(item)
 
+var hotbar_full:bool 
+
 signal start_hand_ani(ani_name)
 signal stop_hand_ani()
 

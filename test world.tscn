@@ -1,8 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://cg2nx287bqtet"]
+[gd_scene load_steps=7 format=3 uid="uid://cg2nx287bqtet"]
 
-[ext_resource type="Script" path="res://node_3d.gd" id="1_06pbr"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="2_8hsn3"]
-[ext_resource type="VoxelGeneratorScript" uid="uid://c7u312p7bey4c" path="res://new_voxel_generator_script.tres" id="2_367wr"]
 [ext_resource type="Script" path="res://addons/freecam_3D/freecam.gd" id="4_gui2d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w51ub"]
@@ -22,7 +20,6 @@ glow_enabled = true
 library = ExtResource("2_8hsn3")
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_06pbr")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ovhmx")
@@ -40,7 +37,6 @@ max_view_distance = 40
 block_enter_notification_enabled = true
 area_edit_notification_enabled = true
 use_gpu_generation = true
-generator = ExtResource("2_367wr")
 mesher = SubResource("VoxelMesherBlocky_4ilwg")
 
 [node name="Freecam3D" type="Camera3D" parent="."]
