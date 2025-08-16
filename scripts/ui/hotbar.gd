@@ -26,7 +26,7 @@ func _ready() -> void:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Hotbar != null:
-			#update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
 			# update the hotbar with the saved data
 			pass
 			
@@ -69,7 +69,7 @@ func _press_key(i: int) -> void:
 	slot_manager.selected_slot = slots[current_key]
 	
 	if slots[current_key].item != null:
-		selected_item = slots[current_key].item
+		selected_item = slots[current_key].item.duplicate()
 	
 		## add holdable if has one
 		
@@ -113,6 +113,7 @@ func _press_key(i: int) -> void:
 
 
 func remove(unique_name: String = "", amount: int = 1) -> void:
+	#print("remove from hotbar ",unique_name,amount)
 	if unique_name == "":
 		var slot: Slot = get_current()
 		slot.amount -= amount
@@ -162,7 +163,7 @@ func save() -> Dictionary:
 	return save_data
 
 func update(info) -> void:
-	print("update hotbar ",info)
+	#print("update hotbar ",info)
 	for i in info:
 		
 		var slot = find_child(info[i].parent).get_child(i.to_int())
@@ -181,6 +182,7 @@ func update(info) -> void:
 		
 # Signal to update the slot when item changes
 func slot_updated(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
+	#print("hotbar slot updated ",index,item_path,amount,parent,health,rot)
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	if !BackendClient.playerdata.is_empty():
 		if BackendClient.playerdata.Inventory == null:
@@ -190,6 +192,7 @@ func slot_updated(index: int, item_path: String, amount: int,parent:String,healt
 	
 
 func spawn_item_hotbar(item:ItemBase) -> void:
+	#print("spawn item hotbar ",item.unique_name)
 	for slot in slots:
 		if slot.item == null:
 			slot.item = item

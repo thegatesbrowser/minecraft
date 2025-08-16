@@ -29,6 +29,7 @@ _CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
 SettingsManager="*res://scripts/common/SettingsManager.gd"
 BackendServer="*res://scripts/multiplayer/backend_server.gd"
 Backend="*res://scenes/backend.tscn"
+Nav="*res://scripts/common/nav.gd"
 
 [debug]
 
@@ -252,7 +253,7 @@ Inventory={
 }
 Drop={
 "deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":3,"canceled":false,"pressed":false,"double_click":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":61,"physical_keycode":0,"key_label":0,"unicode":61,"location":0,"echo":false,"script":null)
 ]
 }
 chat={

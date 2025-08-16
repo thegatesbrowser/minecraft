@@ -1,6 +1,5 @@
 [gd_resource type="VoxelStreamSQLite" format=3 uid="uid://btm3gtoqnt4nf"]
 
 [resource]
-database_path = "world_save.sqlite3"
+database_path = "save.sqlite3"
 preferred_coordinate_format = 0
-save_generator_output = true

@@ -1,14 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cog3w5pk86koo"]
+[gd_scene load_steps=7 format=3 uid="uid://cog3w5pk86koo"]
 
 [ext_resource type="Script" path="res://scripts/ui/hotbar.gd" id="1_5wsty"]
 [ext_resource type="PackedScene" uid="uid://dp3vw6ecck05s" path="res://scenes/ui/slot.tscn" id="2_oguge"]
-[ext_resource type="Resource" uid="uid://b1r2gkiv3wqnm" path="res://resources/items/fire pit.tres" id="3_5y3ce"]
 [ext_resource type="AudioStream" uid="uid://brsc44tm3my31" path="res://assets/sounds/other/Eat1.ogg" id="3_y8fcp"]
-[ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="4_eao24"]
 [ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="4_naokw"]
-[ext_resource type="Resource" uid="uid://c2tw0hhp6mydb" path="res://resources/items/wood_birch.tres" id="5_205xi"]
 [ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="5_p26lf"]
-[ext_resource type="Resource" uid="uid://lxq2aq82pa5e" path="res://resources/items/chest.tres" id="6_nfrmw"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a1iif"]
 streams_count = 3
@@ -50,19 +46,14 @@ alignment = 1
 [node name="Slot" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_oguge")]
 layout_mode = 2
 type = "hotbar"
-item = ExtResource("3_5y3ce")
 
 [node name="Slot2" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_oguge")]
 layout_mode = 2
 type = "hotbar"
-amount = 10
-item = ExtResource("4_eao24")
 
 [node name="Slot3" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_oguge")]
 layout_mode = 2
 type = "hotbar"
-amount = 10
-item = ExtResource("5_205xi")
 
 [node name="Slot4" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_oguge")]
 layout_mode = 2
@@ -71,8 +62,6 @@ type = "hotbar"
 [node name="Slot5" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_oguge")]
 layout_mode = 2
 type = "hotbar"
-amount = 4
-item = ExtResource("6_nfrmw")
 
 [node name="Slot6" parent="MarginContainer/VBoxContainer/Slots" instance=ExtResource("2_oguge")]
 layout_mode = 2

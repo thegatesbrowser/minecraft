@@ -31,9 +31,11 @@ func _ready() -> void:
 		
 		var backend_client = get_tree().get_first_node_in_group("BackendClient")
 		if backend_client and backend_client.playerdata:
-			var inventory_data = JSON.parse_string(backend_client.playerdata.Inventory)
-			if inventory_data:
-				update_client(inventory_data)
+			if backend_client.playerdata.Inventory:
+				# If the player has an inventory, load it
+				var data = JSON.parse_string(backend_client.playerdata.Inventory)
+				if data:
+					update_client(data)
 		
 	Globals.spawn_item_inventory.connect(spawn_item)
 	Globals.remove_item.connect(remove_item)
@@ -71,7 +73,9 @@ func spawn_item(item:ItemBase, amount:int = 1,health:int = 0) -> void:
 			sort()
 			break
 
+
 func sort() -> void:
+	#print("sorting inventory")
 	items.clear()
 	for i in slots:
 		if i.item != null:
@@ -113,7 +117,7 @@ func check_amount_of_item(unique_name:StringName) -> int:
 
 func remove_item(unique_name:StringName,amount:int) -> void:
 	if id != Vector3.ZERO: return ## id mean its not the players inventory
-	
+	#print("remove from inventory ",unique_name,amount)
 	for i in amount:
 		for slot in slots:
 			if slot.item != null:
@@ -140,14 +144,14 @@ func remove_item(unique_name:StringName,amount:int) -> void:
 
 
 func check_if_full() -> void:
-	var free_space:bool = false
+	var full:bool = false
 
 	for slot in slots:
 		if slot.item == null:
-			free_space = true
+			full = false
 			break
 			
-	full = free_space
+	full = full
 
 func check_slots():
 	inventory.clear()
@@ -173,6 +177,9 @@ func change(index: int, item_path: String, amount: int,parent:String,health:floa
 func open_with_meta(data):
 	show()
 	#print("new details ",data)
+	if not data:
+		return
+
 	for i in data:
 		
 		var slot = find_child(data[i].parent).get_child(i.to_int())
@@ -200,7 +207,7 @@ func add_meta_data(data):
 	#print(" change",TerrainHelper.get_terrain_tool().get_voxel_tool().get_voxel_metadata(id))
 
 func update_client(info):
-	print("update inventory ",info)
+	#("update inventory ",info)
 	for i in info:
 		
 		var slot = find_child(info[i].parent).get_child(i.to_int())

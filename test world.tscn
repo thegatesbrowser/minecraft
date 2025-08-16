@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cg2nx287bqtet"]
+[gd_scene load_steps=8 format=3 uid="uid://cg2nx287bqtet"]
 
+[ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/new_voxel_generator_multipass_cb.tres" id="1_k03nw"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="2_8hsn3"]
 [ext_resource type="Script" path="res://addons/freecam_3D/freecam.gd" id="4_gui2d"]
 
@@ -33,14 +34,14 @@ offset_right = 165.0
 offset_bottom = 116.0
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="."]
-max_view_distance = 40
-block_enter_notification_enabled = true
-area_edit_notification_enabled = true
+max_view_distance = 20
 use_gpu_generation = true
+generator = ExtResource("1_k03nw")
 mesher = SubResource("VoxelMesherBlocky_4ilwg")
 
 [node name="Freecam3D" type="Camera3D" parent="."]
 script = ExtResource("4_gui2d")
 
 [node name="VoxelViewer" type="VoxelViewer" parent="Freecam3D"]
-view_distance = 40
+view_distance = 20
+requires_collisions = false

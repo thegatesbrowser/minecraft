@@ -142,6 +142,20 @@ func _makes_grass_die(raw_type: int) -> bool:
 func _random_tick_callback(pos: Vector3i, value: int) -> void:
 	#print(value)
 	var type = VoxelLibraryResource.get_type_name_and_attributes_from_model_index(value)[0]
+
+
+	if value == VoxelLibraryResource.get_model_index_default("spawner"):
+		#print("creature")
+		return
+		if rng.randf() < 0.8:
+			var creature = _voxel_tool.get_voxel_metadata(pos)
+			
+			print("creature? ", _voxel_tool.get_voxel_metadata(pos))
+			if creature == null:
+				return
+			Globals.spawn_creature.emit(pos + Vector3i(0,1,0),creature)
+			_voxel_tool.do_point(pos)
+
 	if ItemLib.types.has(type) == false: return
 	var item = ItemLib.get_item(type)
 	
@@ -201,16 +215,7 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 		if found_burnable == false:
 			_voxel_tool.set_voxel(pos, VoxelLibraryResource.get_model_index_default("air"))
 	
-	if value == VoxelLibraryResource.get_model_index_default("creature_spawner"):
-		#print("creature")
-		if rng.randf() < 0.8:
-			var creature = _voxel_tool.get_voxel_metadata(pos)
-			
-			#print("creature? ", _voxel_tool.get_voxel_metadata(pos))
-			if creature == null:
-				return
-			Globals.spawn_creature.emit(pos + Vector3i(0,1,0),creature)
-			_voxel_tool.do_point(pos)
+	
 	#print(value)
 	if item is ItemPlant:
 		var above := pos + Vector3i(0, 1, 0)

@@ -21,6 +21,7 @@ func spawn_creature(pos: Vector3, creature:Creature) -> void:
 	#print(creature, pos)
 	if not multiplayer.is_server(): return
 	
+
 	var spawn_position = pos
 	# print("creature spawn pos ", spawn_position)
 	spawn([1, spawn_position,creature.get_path()])

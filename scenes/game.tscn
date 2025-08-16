@@ -1,12 +1,14 @@
-[gd_scene load_steps=101 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=103 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="3_y2n02"]
-[ext_resource type="VoxelGeneratorScript" uid="uid://d0je706aoxpxp" path="res://resources/gen_resource.tres" id="5_b6abl"]
+[ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/new_voxel_generator_multipass_cb.tres" id="4_88uyt"]
+[ext_resource type="Script" path="res://scripts/other/sun_rotation.gd" id="4_rdt6h"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
+[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_nl2pn"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
 [ext_resource type="Script" path="res://scripts/world/water.gd" id="10_riapq"]
@@ -66,10 +68,10 @@
 [ext_resource type="Script" path="res://scripts/ui/crafting_menu.gd" id="55_ri7k6"]
 [ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
-[ext_resource type="PackedScene" uid="uid://dnqhxtkp8jhnd" path="res://scenes/ui/furnace_ui.tscn" id="58_nx7rt"]
 [ext_resource type="Script" path="res://scripts/ui/gameplay_settings.gd" id="66_h5gdj"]
 [ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="69_713dd"]
 [ext_resource type="AudioStream" uid="uid://sx4737eqqk7h" path="res://assets/sounds/ambient/Soulsand_valley_wind3.ogg" id="70_eg5sl"]
+[ext_resource type="Script" path="res://scenes/ui/account_settings.gd" id="70_umxlk"]
 
 [sub_resource type="Gradient" id="Gradient_3lj46"]
 
@@ -282,23 +284,29 @@ creature_s = ExtResource("2_pgqmj")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["Enviroment"]]
 environment = SubResource("Environment_ca72k")
 
-[node name="rotation" type="Node3D" parent="WorldEnvironment"]
+[node name="sun_rotation" type="Node3D" parent="WorldEnvironment" node_paths=PackedStringArray("day", "night", "world_environment")]
 transform = Transform3D(0.563682, 0.603759, 0.563682, -0.426922, 0.797167, -0.426922, -0.707107, 0, 0.707107, 0, 0, 0)
+script = ExtResource("4_rdt6h")
+day = NodePath("day")
+night = NodePath("night")
+world_environment = NodePath("..")
+speed = 0.0001
 
-[node name="night" type="DirectionalLight3D" parent="WorldEnvironment/rotation"]
+[node name="night" type="DirectionalLight3D" parent="WorldEnvironment/sun_rotation"]
 light_energy = 0.0
 light_volumetric_fog_energy = 0.192
 shadow_enabled = true
 shadow_bias = 0.0
 shadow_blur = 0.5
 
-[node name="day" type="DirectionalLight3D" parent="WorldEnvironment/rotation"]
+[node name="day" type="DirectionalLight3D" parent="WorldEnvironment/sun_rotation"]
 visible = false
 shadow_enabled = true
 shadow_blur = 0.6
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
-generator = ExtResource("5_b6abl")
+stream = ExtResource("5_nl2pn")
+generator = ExtResource("4_88uyt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 gi_mode = 1
 
@@ -465,9 +473,6 @@ theme_override_styles/separator = SubResource("StyleBoxLine_ku4ms")
 layout_mode = 2
 sync = false
 items_library = SubResource("Resource_c0ten")
-
-[node name="furnace_ui" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder" instance=ExtResource("58_nx7rt")]
-layout_mode = 2
 
 [node name="Crafting Menu" type="PanelContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input_1", "input_2", "output_slot")]
 visible = false
@@ -669,9 +674,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_v2bsq")
-current_tab = 0
+current_tab = 3
 
 [node name="InputSettings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_q5s33")
 script = ExtResource("18_1gacs")
@@ -784,6 +790,31 @@ layout_mode = 2
 button_pressed = true
 text = "Varying FOV"
 
+[node name="Account Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
+layout_mode = 2
+script = ExtResource("70_umxlk")
+metadata/_tab_index = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Account Settings"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Account Settings/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="DeleteSave" type="Button" parent="Player UI/Pause Menu/Settings/Account Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = " Delete Save "
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="Player UI/Pause Menu/Settings/Account Settings"]
+initial_position = 1
+ok_button_text = "Yes"
+
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_helment_item_changed"]
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot2" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_chest_item_changed"]
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot3" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_pants_item_changed"]
@@ -798,3 +829,6 @@ text = "Varying FOV"
 [connection signal="text_submitted" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/view_range" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_view_range_text_submitted"]
 [connection signal="toggled" from="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/Headbob" to="Player UI/Pause Menu/Settings/Gameplay Settings" method="_on_headbob_toggled"]
 [connection signal="toggled" from="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/varing fov" to="Player UI/Pause Menu/Settings/Gameplay Settings" method="_on_varing_fov_toggled"]
+[connection signal="pressed" from="Player UI/Pause Menu/Settings/Account Settings/MarginContainer/VBoxContainer/DeleteSave" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_delete_save_pressed"]
+[connection signal="canceled" from="Player UI/Pause Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_confirmation_dialog_canceled"]
+[connection signal="confirmed" from="Player UI/Pause Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_confirmation_dialog_confirmed"]

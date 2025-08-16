@@ -1,9 +1,9 @@
 extends CharacterBody3D
-class_name CreatureBase
+#class_name CreatureBase
 
 var look_at_target:Vector3
 var spawn_pos:Vector3
-var pathfinding:VoxelAStarGrid3D = VoxelAStarGrid3D.new()
+var pathfinding:AStar3D
 
 @export var creature_resource: Creature
 
@@ -65,8 +65,9 @@ var is_despawning: bool = false
 
 func _ready() -> void:
 	if Connection.is_server():
-		terrain = TerrainHelper.get_terrain_tool()
-		pathfinding.set_terrain(terrain)
+		#terrain = TerrainHelper.get_terrain_tool()
+		#pathfinding.set_terrain(terrain)
+		pass
 	else:
 		#_synchronizer.delta_synchronized.connect(on_synchronized)
 		#_synchronizer.synchronized.connect(on_synchronized)

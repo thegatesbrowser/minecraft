@@ -3,7 +3,7 @@ const Item_LIB = preload("res://resources/items_library.tres")
 const VoxelLibrary = preload("res://resources/voxel_block_library.tres")
 const Structure = preload("./structure.gd")
 
-var files:Array[String] = ["res://1.save","res://2.save","res://3.save"]
+var files:Array[String] = ["res://1.save","res://3.save"]
 var possible_worlds:Array[String]
 
 var channel := VoxelBuffer.CHANNEL_TYPE
