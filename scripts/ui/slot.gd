@@ -27,8 +27,7 @@ var played_ani:bool = false
 var focused:bool = false
 
 
-func _process(_delta: float) -> void:
-	
+func _process(_delta: float) -> void: 
 	if item != null:
 		health_label.text = str(health)
 		health_bar.value = health
@@ -77,6 +76,7 @@ func _ready() -> void:
 
 
 func _on_pressed() -> void:
+	#print("pressed slot ",index)
 	var slot_manager = get_node("/root/Main").find_child("SlotManager")
 	
 	if !locked:
@@ -97,12 +97,16 @@ func update_slot() -> void:
 	amount_label.text = str(amount)
 	if item != null:
 		
+		image.texture = item.texture
+
 		if amount >= 2:
 			amount_label.show()
 
 		if item is ItemFood:
 			max_rot = item.max_rot_steps
 			rot_label.text = str(rot)
+		else:
+			stop_rot()
 
 		item_changed.emit(index,item.get_path(),amount,get_parent().name,health,rot)
 		
@@ -112,6 +116,7 @@ func update_slot() -> void:
 			health_bar.show()
 
 	else:
+		#print("item is null")
 		amount = 1
 		image.texture = null
 		item_changed.emit(index,"",amount,get_parent().name,health,rot)
@@ -122,6 +127,7 @@ func update_slot() -> void:
 		
 
 func used() -> void:
+	#print("used slot ",index)
 	health -= item.degrade_rate
 	if health <= 0:
 		item = null
@@ -129,15 +135,23 @@ func used() -> void:
 	
 var _time
 var timer:Timer
+
 func start_rot(time:float) -> void:
 	var rot_timer = Timer.new()
 	rot_timer.wait_time = time
+	rot_timer.name = "rot_timer"
 	add_child(rot_timer)
 	rot_timer.start()
 	rot_timer.timeout.connect(rot_update)
 	timer = rot_timer
 	_time = time
 	
+func stop_rot() -> void:
+	var rot_timer = find_child("rot_timer")
+	if rot_timer != null:
+		#print("stopping rot timer")
+		rot_timer.stop()
+		rot = 0
 	
 func rot_update() -> void:
 	

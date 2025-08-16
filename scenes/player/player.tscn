@@ -702,8 +702,6 @@ shader_parameter/vignette_color = Color(1, 0, 0, 1)
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hit_shader", "rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "floor_ray", "skeleton_3d") groups=["Player"]]
 script = ExtResource("1")
 defualt_hand_model = ExtResource("2_w6sp7")
-SPRINT_SPEED = 7.0
-CROUCH_SPEED = 1.0
 hit_shader = NodePath("hit shader")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/runestone player/AnimationPlayer")

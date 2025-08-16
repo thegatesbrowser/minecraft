@@ -117,6 +117,9 @@ func on_spawned(node: Node) -> void:
 		.set_description("Enables the player to go speedy).")\
 		.register()
 	
+	Console.add_command("spawn_creature", player, '_spawn_creature')\
+		.set_description("test command to spawn a creature at player pos")\
+		.register()
 	#print(node.get_multiplayer_authority())
 
 func on_despawned(node: Node) -> void:

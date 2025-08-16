@@ -561,14 +561,6 @@ unique_name = &"reeds"
 base_model = SubResource("VoxelBlockyModelMesh_xmpic")
 resource_name = "reeds"
 
-[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_ydxtk"]
-random_tickable = true
-
-[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_06gsb"]
-unique_name = &"creature_spawner"
-base_model = SubResource("VoxelBlockyModelEmpty_ydxtk")
-resource_name = "creature_spawner"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_234e5"]
 render_priority = 0
 shader = ExtResource("7_ssghj")
@@ -654,6 +646,14 @@ unique_name = &"cave_air"
 base_model = SubResource("VoxelBlockyModelEmpty_b28sd")
 resource_name = "cave_air"
 
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_nsyqt"]
+random_tickable = true
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_5w55q"]
+unique_name = &"spawner"
+base_model = SubResource("VoxelBlockyModelCube_nsyqt")
+resource_name = "spawner"
+
 [resource]
-types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_06gsb"), SubResource("VoxelBlockyType_o5re0"), SubResource("VoxelBlockyType_xg2os"), SubResource("VoxelBlockyType_ywefl"), SubResource("VoxelBlockyType_3d0ox")])
-_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]", "wheat", "wheat_seed", "sandstone", "cave_air", "cooker[direction=0]", "cooker[direction=1]", "cooker[direction=2]", "cooker[direction=3]", "cooker[direction=4]", "cooker[direction=5]")
+types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_o5re0"), SubResource("VoxelBlockyType_xg2os"), SubResource("VoxelBlockyType_ywefl"), SubResource("VoxelBlockyType_3d0ox"), SubResource("VoxelBlockyType_5w55q")])
+_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]", "wheat", "wheat_seed", "sandstone", "cave_air", "cooker[direction=0]", "cooker[direction=1]", "cooker[direction=2]", "cooker[direction=3]", "cooker[direction=4]", "cooker[direction=5]", "spawner")

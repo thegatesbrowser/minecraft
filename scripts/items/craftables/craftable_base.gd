@@ -25,6 +25,7 @@ func craft() -> void:
 		
 		if steps == 0:
 			if inventory.full == false:
+
 				GlobalAnimation._tween(self,"bounce",.3)
 				#print("crafted")
 				var soundmanager = get_node("/root/Main").find_child("SoundManager")

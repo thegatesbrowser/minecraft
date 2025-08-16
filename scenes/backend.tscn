@@ -2,14 +2,12 @@
 
 [ext_resource type="Script" path="res://scripts/multiplayer/backend_client.gd" id="1_vp6qf"]
 
-[node name="Backend" type="Node"]
-
-[node name="BackendClient" type="Node" parent="." node_paths=PackedStringArray("debug_ui", "PlayerInfo") groups=["BackendClient"]]
+[node name="BackendClient" type="Node" node_paths=PackedStringArray("debug_ui", "PlayerInfo") groups=["BackendClient"]]
 script = ExtResource("1_vp6qf")
 debug_ui = NodePath("Debug")
 PlayerInfo = NodePath("Debug/Debug/Player Info")
 
-[node name="Debug" type="Control" parent="BackendClient"]
+[node name="Debug" type="Control" parent="."]
 visible = false
 top_level = true
 layout_mode = 3
@@ -17,7 +15,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Debug" type="Panel" parent="BackendClient/Debug"]
+[node name="Debug" type="Panel" parent="Debug"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -27,7 +25,7 @@ offset_right = 424.0
 offset_bottom = 1040.0
 grow_vertical = 0
 
-[node name="Player Info" type="RichTextLabel" parent="BackendClient/Debug/Debug"]
+[node name="Player Info" type="RichTextLabel" parent="Debug/Debug"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,7 +33,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button2" type="Button" parent="BackendClient/Debug"]
+[node name="Button2" type="Button" parent="Debug"]
 visible = false
 layout_mode = 0
 offset_top = 48.0
@@ -43,7 +41,7 @@ offset_right = 92.0
 offset_bottom = 79.0
 text = "start client"
 
-[node name="Button" type="Button" parent="BackendClient/Debug"]
+[node name="Button" type="Button" parent="Debug"]
 visible = false
 layout_mode = 0
 offset_right = 98.0

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://c1tenirmy1xiy"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://c1tenirmy1xiy"]
 
 [ext_resource type="FontFile" uid="uid://bcyn2himieq3h" path="res://assets/menu/mc_menu.ttf" id="1_grn67"]
 
@@ -53,6 +53,9 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdsj5"]
+bg_color = Color(0.0253638, 0.0253638, 0.0253638, 1)
+
 [sub_resource type="StyleBoxFlat" id="5"]
 bg_color = Color(0.6, 0.6, 0.6, 0.278431)
 
@@ -77,6 +80,7 @@ HSeparator/constants/separation = 16
 HSeparator/styles/separator = SubResource("6")
 Panel/styles/panel = SubResource("StyleBoxFlat_8wr3k")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_ug056")
+PopupPanel/styles/panel = SubResource("StyleBoxFlat_jdsj5")
 VScrollBar/styles/grabber = SubResource("5")
 VScrollBar/styles/grabber_highlight = SubResource("5")
 VScrollBar/styles/grabber_pressed = SubResource("5")

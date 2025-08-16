@@ -10,6 +10,8 @@ func _process(delta: float) -> void:
 		_drop_last_clicked_item()
 
 func _drop_last_clicked_item() -> void:
+	#print("dropping last clicked item")
+
 	var item := last_clicked_slot.item as ItemBase
 	if item:
 		Globals.drop_item.emit(multiplayer.get_unique_id(), item)
@@ -20,6 +22,9 @@ func _drop_last_clicked_item() -> void:
 		last_clicked_slot = null
 
 func slot_clicked(slot:Slot):
+	if not Globals.paused:
+		return
+
 	_play_ui_sound()
 			
 	if last_clicked_slot == null:

@@ -16,11 +16,11 @@ var protection:int
 @export_range(0.1, 1.1, 0.1) var max_flying_margin = 0.2
 @export_range(-1.1, -0.1, 0.1) var min_flying_margin = -0.2
 
-@export var SWIMMING_SPEED = 4.0
-@export var WALK_SPEED = 5.0
-@export var SPRINT_SPEED = 8.0
-@export var JUMP_VELOCITY = 7.0
-@export var CROUCH_SPEED = 3.0
+var SWIMMING_SPEED = 4.0
+var WALK_SPEED = 5.0
+var SPRINT_SPEED = 8.0
+var JUMP_VELOCITY = 7.0
+var CROUCH_SPEED = 3.0
 
 @export var can_autojump: bool = true
 
@@ -206,6 +206,8 @@ func _physics_process(delta: float) -> void:
 		your_id = get_multiplayer_authority()
 	
 		
+
+
 	if !is_flying and found_ground and !swimming:
 		# Add the gravity.
 		if not is_on_floor():
@@ -687,3 +689,18 @@ func _speed_mode():
 @rpc("any_peer","call_local")
 func spawn_throwable(data):
 	Globals.add_object.emit(data)
+
+func _spawn_creature():
+	#if not multiplayer.is_server(): return
+	
+	var creature_resource = load("res://resources/creatures/glowtail.tres") as Creature
+	if creature_resource == null:
+		print("Creature resource not found")
+		return
+	
+	spawn_creature.rpc_id(1,global_position + Vector3(0,3,2),creature_resource.get_path())
+
+@rpc("any_peer")
+func spawn_creature(pos,creature):
+	print("creature")
+	Globals.spawn_creature.emit(pos,load(creature))
