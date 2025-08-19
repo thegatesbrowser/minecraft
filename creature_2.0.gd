@@ -77,7 +77,7 @@ func on_walk_timeout():
 
 func create_points_around(radius: int):
 	var voxel_tool:VoxelToolTerrain = TerrainHelper.get_terrain_tool().get_voxel_tool()
-	var area:AABB = AABB(floor(global_position),Vector3(30,30,30))
+	var area:AABB = AABB(global_position,Vector3(30,30,30))
 	voxel_tool.for_each_voxel_metadata_in_area(area,voxel)
 	#print("Copy created: ", copy.get_size())
 	created_nav = true
@@ -93,7 +93,6 @@ func voxel(voxel_position: Vector3i, voxel_metadata: Variant):
 		if voxel_metadata == "walkable":
 			if Nav.has_point(Vector3(voxel_position.x,voxel_position.y,voxel_position.z)) == false:
 				Nav.create_point(voxel_position.x,voxel_position.y,voxel_position.z)
- 			
 		#if voxel_metadata == "walkable":
 			#
 

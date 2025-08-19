@@ -5,7 +5,50 @@ const CustomStructureGen = preload("res://scripts/world/structure_gen.gd")
 const TreeGenerator = preload("res://scripts/world/tree_generator.gd")
 const voxels:VoxelBlockyTypeLibrary = preload("res://resources/voxel_block_library.tres")
 const curve:Curve = preload("res://resources/heightmap_curve.tres")
-const cavenoise:FastNoiseLite = preload("res://resources/cave_noise.tres")
+const temp_curve:Curve = preload("res://resources/HeatCurve.tres")
+
+
+var iron := preload("res://resources/items/iron_block.tres")
+var diamond := preload("res://resources/items/diamond_block.tres")
+var possible_ore = [iron,diamond]
+
+const cavenoise:FastNoiseLite = preload("res://resources/noises/cave_noise.tres")
+const river_noise:FastNoiseLite = preload("res://resources/noises/river noise.tres")
+const hill_noise:FastNoiseLite = preload("res://resources/noises/hills noise.tres")
+
+
+var last_biome:String = ""
+
+const biomes : Dictionary = {
+	"forest": {
+		"heat_range": [0,1,2,3,4,5,6,7,8,9,10],
+		"trees": ["oak", "birch"],
+		"first_layer": "grass",
+		"second_layer": "dirt",
+		"third_layer": "stone",
+		"plants": ["tall_grass","tall_flower"],
+		"noise": preload("res://resources/forest.tres"),
+		"biome_curve": preload("res://resources/heightmap_curve forest.tres")
+	},
+	"desert": {
+		"heat_range": [11,12,13,14,15,16,17,18,19,20],
+		"trees": ["cactus"],
+		"first_layer": "sand",
+		"second_layer": "sand",
+		"third_layer": "stone",
+		"plants": ["reeds"],
+		"noise": preload("res://resources/desert.tres"),
+		"biome_curve": preload("res://resources/heightmap_curve desert.tres")
+	},
+	"snowy": {
+		"heat_range":[-1,-2],
+		"trees": ["pine"],
+		"first_layer": "grass",
+		"second_layer": "dirt",
+		"third_layer": "stone",
+	}
+}
+
 
 const CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
@@ -13,6 +56,8 @@ var trunk_len_min := 6
 var trunk_len_max := 15
 
 var heightmap_noise: FastNoiseLite = FastNoiseLite.new()
+var temperature_noise: FastNoiseLite = FastNoiseLite.new()
+var moisture_noise: FastNoiseLite = FastNoiseLite.new()
 
 var max_heightmap:int = (curve.max_value)
 var min_heightmap:int = (curve.min_value)
@@ -64,6 +109,17 @@ func _init() -> void:
 	heightmap_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	heightmap_noise.frequency = 0.01
 
+	temperature_noise.noise_type = FastNoiseLite.TYPE_PERLIN
+	temperature_noise.frequency = 0.01
+	temperature_noise.seed = 123453
+
+	moisture_noise.noise_type = FastNoiseLite.TYPE_PERLIN
+	moisture_noise.frequency = 0.01
+	moisture_noise.seed = 12345
+
+	
+
+	temp_curve.bake()
 	curve.bake()
 
 func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
@@ -86,27 +142,53 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 			for x in range(min_pos.x, max_pos.x):
 				for y in range(min_pos.y, max_pos.y):
 					
+					
+					var temp:int = get_temp(x, z)
+					var biome_name 
+
+					if last_biome == "":
+						biome_name = get_biome(temp)
+					else:
+						if temp in biomes[last_biome].heat_range:
+							biome_name = last_biome
+						else:
+							biome_name = get_biome(temp)
+							last_biome = biome_name
+
 					var real_height = _get_height_at(x,z)
+					
 
 					if y <= real_height:
+
 						if y == real_height:
 							
 							voxel_tool.set_voxel_metadata(Vector3i(x, y, z),"walkable")
+							
 							if rng.randf() <= 0.8:
 								#voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
 								#voxel_tool.set_voxel_metadata(Vector3i(x, y, z), load("res://resources/creatures/fox.tres"))
 								pass
-							if rng.randf() <= 0.8:
-								voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("tall_grass"))
+							if rng.randf() <= 0.5:
+								if voxel_tool.get_voxel(Vector3i(x, y - 1, z)) != voxels.get_model_index_default("air"):
+									#voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default(plant))
+								
+									var plant = biomes[biome_name].plants.pick_random()
+									voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default(plant))
 
+					
 						if y == real_height - 1:
-							voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("grass"))
+							voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default(biomes[biome_name].first_layer))
 							
 							
 						if y == real_height - 2:
-							voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("dirt"))
+							voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default(biomes[biome_name].second_layer))
 						if y < real_height - 2:
-							voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("stone"))
+							voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default(biomes[biome_name].third_layer))
+							var ore_size = possible_ore.size() - 1
+				
+							var ore = possible_ore[rng.randi_range(0,ore_size)]
+							if rng.randf() < ore.spawn_chance:
+								voxel_tool.set_voxel(Vector3i(x, y, z),voxels.get_model_index_default(ore.unique_name))
 
 						var cave = cave(x,y,z)
 						
@@ -128,8 +210,27 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 					
 								 
 func _get_height_at(x: int, z: int) -> int:
-	var t = 0.5 + 0.5 * heightmap_noise.get_noise_2d(x, z)
-	return int(curve.sample_baked(t))
+	var river_noise_value =  0.5 + 0.5 * river_noise.get_noise_2d(x, z)
+	var hill_noise_value =  0.5 + 0.5 * hill_noise.get_noise_2d(x, z)
+	var base_noise_value =  0.5 + 0.5 * heightmap_noise.get_noise_2d(x, z) * 100
+
+	if hill_noise_value > 0.5:
+		hill_noise_value = hill_noise_value * 100
+	else:
+		hill_noise_value = 0.0
+
+	if river_noise_value > 0.9:
+		river_noise_value = river_noise_value * -50
+	else:
+		river_noise_value = 0.0
+
+	
+	
+
+
+	var height = (river_noise_value + hill_noise_value + base_noise_value) / 3.0
+
+	return int(height)
 
 func cave(x:int,y:int,z:int) -> bool:
 	var t = cavenoise.get_noise_3d(x, y, z)
@@ -160,9 +261,11 @@ func try_plant_tree(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNumberGe
 	while tree_pos.y >= min_pos.y:
 		var v := voxel_tool.get_voxel(tree_pos)
 		# Note, we could also find tree blocks that were placed earlier!
+
 		if v == voxels.get_model_index_default("grass") or v == voxels.get_model_index_default("tall_grass"):
 			found_ground = true
 			break
+
 		tree_pos.y -= 1
 	
 	if not found_ground:
@@ -190,7 +293,7 @@ func try_place_structure(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNum
 	while tree_pos.y >= min_pos.y:
 		var v := voxel_tool.get_voxel(tree_pos)
 		# Note, we could also find tree blocks that were placed earlier!
-		if v == voxels.get_model_index_default("grass"):
+		if v == voxels.get_model_index_default("grass") or v == voxels.get_model_index_default("tall_grass") or v == voxels.get_model_index_default("sand"):
 			found_ground = true
 			break
 		tree_pos.y -= 1
@@ -200,7 +303,22 @@ func try_place_structure(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNum
 		return
 	var structure:Structure = _custom_structures.pick_random()
 
-
+	
 	if rng.randf() > structure.spawn_chance: return
 
 	voxel_tool.paste_masked(tree_pos - type_convert(structure.offset,10), structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,VoxelBuffer.CHANNEL_TYPE,voxels.get_model_index_default("air"))
+
+	
+	
+
+func get_biome(temp: int) -> String:
+	for biome_name in biomes:
+		var biome = biomes[biome_name]
+		if temp in biome.heat_range:
+			return biome_name
+
+	return "forest"  # Default biome if none match
+
+func get_temp(x: int, z: int) -> int:
+	var temperature =  0.5 + 0.5 * temperature_noise.get_noise_2d(x, z)
+	return int(temp_curve.sample_baked(temperature))

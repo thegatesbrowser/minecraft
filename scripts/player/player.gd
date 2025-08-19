@@ -7,7 +7,6 @@ signal health_updated(health)
 var speed_mode = false
 var start_position:Vector3
 var spawn_position: Vector3
-var your_id
 var protection:int
 
 @export var defualt_hand_model:PackedScene
@@ -77,7 +76,6 @@ var position_before_sync: Vector3 = Vector3.ZERO
 var last_sync_time_ms: int = 0
 var is_flying: bool
 
-
 @export var camera_transform:Transform3D
 
 @onready var drop_node: Node3D = $RotationRoot/Head/Camera3D/Drop_node
@@ -108,22 +106,28 @@ var hunger: float = 0
 @export var max_health: int = 3
 var health
 
-@onready var minecraft_player: Node3D = $"RotationRoot/runestone player" # TP
+@onready var minecraft_player: Node3D = $"RotationRoot/Model" # TP
 #@onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp # FP
 
 var spawn_point_set := {}
 
 func _ready() -> void:
-	backendclient = get_tree().get_first_node_in_group("BackendClient")
+	Globals.add_item_to_hand.connect(add_item_to_hand)
+	Globals.remove_item_in_hand.connect(remove_item_in_hand)
 	Globals.hunger_points_gained.connect(hunger_points_gained)
-	Globals.paused = true
+	Globals.fnished_loading.connect(free_player)
 	spawn_position = start_position
+	
+	Globals.paused = true
+	
+	backendclient = get_tree().get_first_node_in_group("BackendClient")
 	
 	if !backendclient.playerdata.is_empty():
 		if backendclient.playerdata.hunger == null:
 			hunger = base_hunger
 		else:
 			hunger = backendclient.playerdata.hunger
+
 		if backendclient.playerdata.hunger == null:
 			health = max_health
 		else:
@@ -135,26 +139,28 @@ func _ready() -> void:
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
-		hand.hide()
-		minecraft_player.show()
-		return
-	else:
-		hand.show()
-		minecraft_player.hide()
-	
+		
+	_update_tp_fp_visibility()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # TODO: Move to mouse mode
 	
-	Globals.add_item_to_hand.connect(add_item_to_hand)
-	Globals.remove_item_in_hand.connect(remove_item_in_hand)
+	
 	camera.current = true
 	
-	#var player_save_timer = get_tree().create_timer(1).timeout.connect(save_data)
 	var player_save_timer = Timer.new()
 	player_save_timer.wait_time = 1
 	add_child(player_save_timer)
 	player_save_timer.start()
 	player_save_timer.timeout.connect(save_data)
+
+func _update_tp_fp_visibility() -> void:
+	if is_multiplayer_authority():
+		hand.show()
+		minecraft_player.hide()
+	else:
+		hand.hide()
+		minecraft_player.show()
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
@@ -176,39 +182,17 @@ func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
 	camera_transform = camera.global_transform
-	
-	if found_ground == false:
-		var ClientServer = get_tree().get_first_node_in_group("BackendClient")
-		if ClientServer.playerdata.is_empty() == false:
-			if ClientServer.playerdata.Position_x != null:
-				global_position = Vector3(ClientServer.playerdata.Position_x,ClientServer.playerdata.Position_y,ClientServer.playerdata.Position_z) + Vector3(0,1,0)
-		pass
-		if floor_ray.is_colliding():
-			#Globals.paused = false
-			global_position = floor_ray.get_collision_point() + Vector3(0,1,0)
-			start_position = floor_ray.get_collision_point() + Vector3(0,1,0)
-			spawn_position = start_position
-			found_ground = true
-			Globals.paused = false
 		
 	pos_label.text = str("pos   ", global_position)
 	camera.far = Globals.view_range
 		
 	hunger_update(_delta)
-		
-	#Globals.player_health = health
+
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
-		
-	if your_id != get_multiplayer_authority():
-		var inventory = get_tree().get_first_node_in_group("Main Inventory")
-		your_id = get_multiplayer_authority()
-	
-		
 
-
-	if !is_flying and found_ground and !swimming:
+	if !is_flying and !swimming and found_ground:
 		# Add the gravity.
 		if not is_on_floor():
 			
@@ -216,14 +200,14 @@ func _physics_process(delta: float) -> void:
 				start_fall_height = global_position.y
 				set_fall_height = true
 				
+			# Gravity
 			velocity.y -= gravity * delta
 		else:
+
 			# Fall Damage
 			
 			end_fall_height = global_position.y
 			
-			
-
 			if !swimming:
 				if start_fall_height - end_fall_height >= fall_hurt_height and set_fall_height:
 					var damage = start_fall_height - end_fall_height
@@ -240,7 +224,7 @@ func _physics_process(delta: float) -> void:
 	if !is_flying and !Globals.paused and swimming:
 		swimming_movement(delta)
 		
-	if Globals.paused and found_ground:
+	if Globals.paused:
 		velocity.x = lerp(velocity.x,0.0,.1)
 		velocity.z = lerp(velocity.x,0.0,.1)
 	
@@ -356,37 +340,14 @@ func _exit_tree():
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
 
-func add_item_to_hand(item: ItemBase, scene:PackedScene) -> void:
-	#var hand_empty:bool = true
-	#
-	#if hand.get_child_count() != 0:
-		#hand_empty = false
+func add_item_to_hand(scene:PackedScene) -> void:
 		
-	for i in hand.get_children():
-		i.queue_free()
+	remove_item_in_hand()
 			
-	if item != null:
-		
-			
-		if item is ItemTool:
-			var tool = item.holdable_mesh.instantiate()
-			hand.add_child(tool)
-			#if hand_ani:
-				#hand_ani.play("pick up")
-		else:
-			var mesh_instance = MeshInstance3D.new()
-			mesh_instance.mesh = item.holdable_mesh
-			hand.add_child(mesh_instance)
-			#if hand_ani:
-				#hand_ani.play("pick up")
-	else:
-		var holdable_mesh = scene.instantiate()
-		hand.add_child(holdable_mesh) 
-		#if hand_ani:
-			#hand_ani.play("pick up")
+	var holdable_mesh = scene.instantiate()
+	hand.add_child(holdable_mesh) 
 
 func remove_item_in_hand() -> void:
-		
 	for i in hand.get_children():
 		i.queue_free()
 	
@@ -396,6 +357,7 @@ func remove_item_in_hand() -> void:
 @rpc("any_peer","call_local")
 func hit(damage: int = 1) -> void:
 	
+	#cant get damage that is neg
 	if damage - protection < 0:
 		damage = 0
 	
@@ -404,8 +366,11 @@ func hit(damage: int = 1) -> void:
 	
 	hit_sfx.play()
 	camera_shake._shake()
+
 	if health <= 0:
 		death()
+
+	# hit special effects
 	if damage != 0:
 		var mat = hit_shader.get_material() as ShaderMaterial
 		var tween = create_tween()
@@ -446,11 +411,11 @@ func death() -> void:
 	#terrain_interation.place_block(&"gravestone")
 	health = max_health
 	hunger = base_hunger
-	print("death")
 	respawn.rpc(spawn_position)
 	camera_shake._shake()
 	drop_items()
 	global_position = spawn_position
+	print("death")
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -620,7 +585,7 @@ func mine_and_place(delta:float):
 				if hotbar_item.throws_self:
 					var current_slot = hotbar.get_current() as Slot
 					current_slot.amount -= 1
-					spawn_throwable.rpc_id(1,[your_id,camera_transform,"res://scenes/items/weapons/projectile.tscn",hotbar_item.projectile_resource.get_path()])
+					spawn_throwable.rpc_id(1,[get_multiplayer_authority(),camera_transform,"res://scenes/items/weapons/projectile.tscn",hotbar_item.projectile_resource.get_path()])
 				else:
 					var find_item = hotbar_item.projectile_item
 					var item_slot = Globals.find_item(find_item)
@@ -628,7 +593,7 @@ func mine_and_place(delta:float):
 						if item_slot.amount - hotbar_item.amount_needed:
 							if item_slot.amount >= 0:
 								item_slot.amount -= hotbar_item.amount_needed
-								spawn_throwable.rpc_id(1,[your_id,camera_transform,"res://scenes/items/weapons/projectile.tscn",hotbar_item.projectile_resource.get_path()])
+								spawn_throwable.rpc_id(1,[get_multiplayer_authority(),camera_transform,"res://scenes/items/weapons/projectile.tscn",hotbar_item.projectile_resource.get_path()])
 					
 func swimming_movement(delta:float) -> void:
 
@@ -704,3 +669,7 @@ func _spawn_creature():
 func spawn_creature(pos,creature):
 	print("creature")
 	Globals.spawn_creature.emit(pos,load(creature))
+
+# after loading lets the player move
+func free_player():
+	found_ground = true

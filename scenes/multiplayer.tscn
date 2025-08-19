@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://de27e3hbp0hph"]
+[gd_scene load_steps=76 format=3 uid="uid://de27e3hbp0hph"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -53,7 +53,6 @@
 [ext_resource type="Script" path="res://scripts/ui/slot_manager.gd" id="37_0ju56"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
 [ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
-[ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="41_0dc52"]
 [ext_resource type="Script" path="res://scripts/world/random_ticker.gd" id="44_caq2v"]
 [ext_resource type="AudioStream" uid="uid://bppwbkwodacxc" path="res://assets/sounds/269010__lwdickens__water-splash-3.wav" id="44_khtt3"]
 
@@ -390,14 +389,13 @@ script = ExtResource("37_0ju56")
 [node name="RandomTick" type="Node" parent="."]
 script = ExtResource("44_caq2v")
 
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater", "loading") groups=["PlayerSpawner"]]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("stats_ui_updater") groups=["PlayerSpawner"]]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
 script = ExtResource("6_l50oc")
 view_distance = 100
 player_scene = ExtResource("7_n7355")
 stats_ui_updater = NodePath("../Game/Player UI/stats_ui_update")
-loading = NodePath("../loading")
 
 [node name="CreatureSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/creatures/creature_base.tscn")
@@ -416,48 +414,5 @@ script = ExtResource("37_5iseo")
 [node name="Game" parent="." instance=ExtResource("8_62j4i")]
 
 [node name="Objects" type="Node3D" parent="."]
-
-[node name="loading" type="CanvasLayer" parent="."]
-
-[node name="loading" type="Control" parent="loading"]
-z_index = 25
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("41_0dc52")
-
-[node name="ColorRect" type="ColorRect" parent="loading/loading"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="loading" type="Label" parent="loading/loading"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -82.0
-offset_top = -14.0
-offset_right = 82.0
-offset_bottom = 14.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 61
-text = "loading the world"
-uppercase = true
-
-[node name="TextureRect" type="TextureRect" parent="loading/loading"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="timeout" from="Saver/Update" to="Saver" method="_on_update_timeout"]

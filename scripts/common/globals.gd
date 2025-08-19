@@ -14,13 +14,17 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 # Configurable setting based checked user's hardware.
 @export var chunk_loading_threads := 7
 
-@export var paused := false
+@export var paused := true
+
 
 var current_block:StringName ## unique_name
 var custom_block:StringName ## unique_name
 var can_build:bool = false
 var view_range:int = 128
 
+
+# world gen
+signal fnished_loading # let the player move ground has been made
 
 signal spawn_creature(pos,creature)
 signal hunger_points_gained(amount)
