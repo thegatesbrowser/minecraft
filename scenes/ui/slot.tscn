@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dp3vw6ecck05s"]
+[gd_scene load_steps=9 format=3 uid="uid://dp3vw6ecck05s"]
 
 [ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_kl6vd"]
 [ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="2_gx7ws"]
@@ -11,28 +11,8 @@ shader_parameter/clr = Color(0.435192, 0.435192, 0.435192, 1)
 shader_parameter/type = 2
 shader_parameter/thickness = 1.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xyujq"]
-bg_color = Color(0, 0, 0, 0.529412)
-corner_radius_top_left = 325
-corner_radius_top_right = 325
-corner_radius_bottom_right = 325
-corner_radius_bottom_left = 325
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqeng"]
-bg_color = Color(0, 1, 0.0333333, 1)
-corner_radius_top_left = 325
-corner_radius_top_right = 325
-corner_radius_bottom_right = 325
-corner_radius_bottom_left = 325
-anti_aliasing = false
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]
 bg_color = Color(0, 0, 0, 0.572549)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
 border_color = Color(0, 0, 0, 0.8)
 corner_radius_top_left = 25
 corner_radius_top_right = 25
@@ -40,20 +20,36 @@ corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5lic"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+border_blend = true
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+corner_detail = 20
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bokx8"]
 bg_color = Color(1, 1, 1, 0)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
+corner_detail = 20
+expand_margin_left = 2.0
+expand_margin_right = 2.0
 anti_aliasing = false
 
-[node name="Slot" type="TextureButton" node_paths=PackedStringArray("pressed_panel", "rot_label")]
+[node name="Slot" type="TextureButton" node_paths=PackedStringArray("pressed_panel")]
 custom_minimum_size = Vector2(80, 80)
 offset_right = 80.0
 offset_bottom = 80.0
@@ -61,7 +57,6 @@ pivot_offset = Vector2(40, 40)
 stretch_mode = 4
 script = ExtResource("1_kl6vd")
 pressed_panel = NodePath("pressed")
-rot_label = NodePath("rot")
 
 [node name="CenterContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -88,16 +83,6 @@ texture = ExtResource("3_vn32h")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="health" type="ProgressBar" parent="CenterContainer"]
-custom_minimum_size = Vector2(1.45519e-11, 2)
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_styles/background = SubResource("StyleBoxFlat_xyujq")
-theme_override_styles/fill = SubResource("StyleBoxFlat_jqeng")
-max_value = 5.0
-value = 0.77
-show_percentage = false
-
 [node name="PanelContainer" type="PanelContainer" parent="."]
 show_behind_parent = true
 layout_mode = 1
@@ -109,6 +94,33 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ecmii")
 
+[node name="Health" type="Panel" parent="."]
+modulate = Color(0.0333333, 1, 0, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e5lic")
+
+[node name="pressed" type="Panel" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -1.0
+offset_right = -1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bokx8")
+
 [node name="amount" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 3
@@ -116,10 +128,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -43.0
-offset_top = -37.0
-offset_right = -7.0
-offset_bottom = 1.0
+offset_left = -44.0
+offset_top = -33.0
+offset_right = -8.0
+offset_bottom = 2.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("4_2r2mj")
@@ -129,48 +141,5 @@ theme_override_constants/shadow_outline_size = 10
 theme_override_font_sizes/font_size = 20
 text = "64"
 horizontal_alignment = 2
-
-[node name="health" type="Label" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -21.0
-offset_bottom = 79.0
-grow_horizontal = 0
-theme = ExtResource("4_2r2mj")
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-text = "1"
-horizontal_alignment = 1
-
-[node name="rot" type="Label" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -21.0
-offset_bottom = 79.0
-grow_horizontal = 0
-theme = ExtResource("4_2r2mj")
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 15
-text = "0"
-horizontal_alignment = 1
-
-[node name="pressed" type="Panel" parent="."]
-show_behind_parent = true
-z_index = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bokx8")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

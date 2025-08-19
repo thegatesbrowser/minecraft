@@ -75,7 +75,7 @@ func _press_key(i: int) -> void:
 		
 		## General holdables
 		if slots[current_key].item.holdable_mesh != null:
-				Globals.add_item_to_hand.emit(slots[current_key].item,null)
+				Globals.add_item_to_hand.emit(slots[current_key].item.holdable_mesh)
 				
 		## Placeable items
 		if slots[current_key].item is ItemBlock:
@@ -83,24 +83,19 @@ func _press_key(i: int) -> void:
 			Globals.can_build = true 
 			Globals.custom_block = &""
 
-		#elif slots[current_key].item is ItemPlant:
-			#Globals.current_block = slots[current_key].item.unique_name
-			#Globals.can_build = true 
-			#Globals.custom_block = &""
-
 		## Tool items
 		elif slots[current_key].item is ItemTool:
 			Globals.can_build = false
 			Globals.custom_block = slots[current_key].item.unique_name
 
-		## Foot items
+		## Food items
 		elif slots[current_key].item is ItemFood: 
 			Globals.can_build = false
 			selected_item = slots[current_key].item
 			var holdable_array = selected_item.rot_step_holdable_models as Array
 			if not holdable_array.is_empty():
 				var holdable = holdable_array[slots[current_key].rot]
-				Globals.add_item_to_hand.emit(null,holdable)
+				Globals.add_item_to_hand.emit(holdable)
 		else:
 			## Others ?
 			Globals.custom_block = slots[current_key].item.unique_name

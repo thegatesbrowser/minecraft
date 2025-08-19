@@ -40,9 +40,11 @@ func create_point(x: int, y: int, z: int):
 	var point_id = pathfinding.get_available_point_id()
 
 	pathfinding.add_point(point_id, Vector3(x, y, z))
-	create_visual_debug(Vector3(x, y, z), Color.RED)  # Create a visual debug sphere at the point position
+	create_visual_debug(Vector3(x, y, z))  # Create a visual debug sphere at the point position
 	#connect_points(point_id - 1,point_id)  # Connect to the previous point for a simple path
    
+
+
 	print("Point created at: ", Vector3(x, y, z))
 	print("Total points: ", pathfinding.get_point_count())
 
@@ -101,17 +103,12 @@ func get_nav_path(start: Vector3, end: Vector3) -> PackedVector3Array:
 	return PackedVector3Array()
 
 
-func create_visual_debug(pos:Vector3, color: Color):
+func create_visual_debug(pos:Vector3):
 	var sphere := SphereMesh.new()
 	sphere.radius = 0.1
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	sphere.material_override = material
 	
 	var instance := MeshInstance3D.new()
 	instance.mesh = sphere
 	instance.transform.origin = pos
 	
-	add_child(instance)
-	
-	return instance
+	get_tree().root.add_child(instance)

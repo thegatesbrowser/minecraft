@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=67 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -407,6 +407,8 @@ _data = {
 "waling": SubResource("Animation_r1lhi")
 }
 
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_wbd57"]
+
 [sub_resource type="Animation" id="Animation_4e7vc"]
 length = 0.001
 tracks/0/type = "value"
@@ -642,12 +644,12 @@ shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pct4i"]
-emission_shape_offset = Vector3(0.5, 1, 0.5)
 emission_shape = 3
-emission_box_extents = Vector3(0.3, 0.3, 0.3)
+emission_box_extents = Vector3(0.6, 1.45519e-11, 0.6)
 velocity_pivot = Vector3(1.45519e-11, 1.45519e-11, 1.45519e-11)
-direction = Vector3(1.45519e-11, 2, 1.45519e-11)
-initial_velocity_max = 3.0
+direction = Vector3(1.45519e-11, 1, 1.45519e-11)
+spread = 7.0
+initial_velocity_max = 5.0
 scale_min = 0.0
 hue_variation_min = -1.0
 hue_variation_max = 1.0
@@ -704,7 +706,7 @@ script = ExtResource("1")
 defualt_hand_model = ExtResource("2_w6sp7")
 hit_shader = NodePath("hit shader")
 rotation_root = NodePath("RotationRoot")
-ANI = NodePath("RotationRoot/runestone player/AnimationPlayer")
+ANI = NodePath("RotationRoot/Model/AnimationPlayer")
 hit_sfx = NodePath("hit")
 pos_label = NodePath("Pos")
 ping_label = NodePath("Ping")
@@ -713,7 +715,7 @@ hand_ani = NodePath("RotationRoot/Head/HandAni")
 terrain_interation = NodePath("Hands/TerrainInteraction")
 camera_shake = NodePath("RotationRoot/Head/CameraShake3DNode")
 floor_ray = NodePath("floor")
-skeleton_3d = NodePath("RotationRoot/runestone player/Player/Skeleton3D")
+skeleton_3d = NodePath("RotationRoot/Model/Player/Skeleton3D")
 fall_hurt_height = 3.0
 hunger_update_time = 15.0
 hunger_step = 0.05
@@ -721,12 +723,12 @@ max_health = 50
 
 [node name="RotationRoot" type="Node3D" parent="."]
 
-[node name="runestone player" type="Node3D" parent="RotationRoot"]
+[node name="Model" type="Node3D" parent="RotationRoot"]
 
-[node name="Player" type="Node3D" parent="RotationRoot/runestone player"]
+[node name="Player" type="Node3D" parent="RotationRoot/Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.711247, 0)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="RotationRoot/runestone player/Player"]
+[node name="Skeleton3D" type="Skeleton3D" parent="RotationRoot/Model/Player"]
 bones/0/name = "back"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 1.14868e-07, 0, -1.14868e-07, 1, 0, 0, 0)
@@ -840,57 +842,57 @@ bones/15/position = Vector3(0, 0, 0)
 bones/15/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 bones/15/scale = Vector3(1, 1, 1)
 
-[node name="Head" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="Head" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_14bnm")
 skin = SubResource("Skin_kjrme")
 
-[node name="left arm 1" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="left arm 1" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_wpyk8")
 skin = SubResource("Skin_kjrme")
 
-[node name="left arm 2" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="left arm 2" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_qsdr2")
 skin = SubResource("Skin_kjrme")
 
-[node name="left leg 1" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="left leg 1" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_ouks7")
 skin = SubResource("Skin_kjrme")
 
-[node name="left leg 2" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="left leg 2" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_yfkkj")
 skin = SubResource("Skin_kjrme")
 
-[node name="right arm 1" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="right arm 1" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_wlk0m")
 skin = SubResource("Skin_kjrme")
 
-[node name="right arm 2" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="right arm 2" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_rqevp")
 skin = SubResource("Skin_kjrme")
 
-[node name="right leg 1" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="right leg 1" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_o6tu4")
 skin = SubResource("Skin_kjrme")
 
-[node name="right leg 2" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="right leg 2" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("ArrayMesh_2hfa6")
 skin = SubResource("Skin_kjrme")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RotationRoot/runestone player/Player/Skeleton3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RotationRoot/Model/Player/Skeleton3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.299107, 0)
 material_override = SubResource("StandardMaterial3D_lyiwi")
 mesh = SubResource("BoxMesh_505ks")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="RotationRoot/runestone player"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RotationRoot/Model"]
 libraries = {
 "": SubResource("AnimationLibrary_asj5l")
 }
@@ -903,9 +905,7 @@ skeleton = NodePath("../..")
 [node name="Camera3D" type="Camera3D" parent="RotationRoot/Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 cull_mask = 1048543
-fov = 90.0
-near = 0.001
-far = 800.0
+attributes = SubResource("CameraAttributesPhysical_wbd57")
 
 [node name="RayCast3D" type="RayCast3D" parent="RotationRoot/Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.37544)
@@ -955,7 +955,7 @@ shape = SubResource("10")
 
 [node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "hand_ani", "camera")]
 script = ExtResource("4_064gd")
-break_part = NodePath("TerrainInteraction/Breakparticle")
+break_part = NodePath("TerrainInteraction/BlockOutline/Breakparticle")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
 floor_ray = NodePath("../floor")
@@ -986,11 +986,10 @@ shape = SubResource("6")
 shape = SubResource("7")
 
 [node name="Visible_Block" type="Node3D" parent="Hands/TerrainInteraction/BlockOutline"]
-transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, -0.005, 0.02, -0.005)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005, 0.02, -0.005)
 
 [node name="Edge" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -998,7 +997,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge2" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1006,7 +1004,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge3" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, 0.5, 0)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1014,7 +1011,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge4" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, -0.5, 0)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1022,7 +1018,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge5" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1030,7 +1025,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge6" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1038,7 +1032,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge7" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, 0.5, 0)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1046,7 +1039,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge8" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, -0.5, 0)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1054,7 +1046,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge9" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, 0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1062,7 +1053,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge10" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1070,7 +1060,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge11" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, -0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
@@ -1078,18 +1067,15 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
 [node name="Edge12" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/Visible_Block"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, -0.5)
-visible = false
 cast_shadow = 0
 mesh = SubResource("8")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
-[node name="Breakparticle" type="GPUParticles3D" parent="Hands/TerrainInteraction"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.67777, 0.524349, -1.0743)
-visible = false
+[node name="Breakparticle" type="GPUParticles3D" parent="Hands/TerrainInteraction/BlockOutline"]
 cast_shadow = 0
 emitting = false
-amount = 40
+amount = 10
 lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_pct4i")
 draw_pass_1 = SubResource("BoxMesh_5jdb0")

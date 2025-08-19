@@ -107,7 +107,7 @@ func _init() -> void:
 func _ready():
 	if not Connection.is_server(): return
 		
-	plant_voxels = [VoxelLibraryResource.get_model_index_default("tall_grass"),VoxelLibraryResource.get_model_index_default("flower"),VoxelLibraryResource.get_model_index_default("fern")]
+	plant_voxels = [VoxelLibraryResource.get_model_index_default("tall_grass"),VoxelLibraryResource.get_model_index_default("flower"),VoxelLibraryResource.get_model_index_default("tall_flower")]
 	_terrain = get_tree().get_first_node_in_group("VoxelTerrain")
 	_voxel_tool = _terrain.get_voxel_tool()
 	_players_container = get_tree().get_first_node_in_group("PlayerContainer")

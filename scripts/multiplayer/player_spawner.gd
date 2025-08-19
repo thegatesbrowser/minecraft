@@ -7,7 +7,6 @@ signal player_despawned(id: int)
 @export var view_distance: int = 128
 @export var player_scene: PackedScene
 @export var stats_ui_updater: Control
-@export var loading:CanvasLayer
 
 @onready var spawn_points: SpawnPoints = $"../Game/SpawnPoints"
 
@@ -25,13 +24,11 @@ func _ready() -> void:
 
 
 func create_player(id: int) -> void:
-	if not multiplayer.is_server(): return
-	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	
 	var spawn_position:Vector3
-	spawn_position = spawn_points.get_spawn_position()
-		
-			
+
+	if not multiplayer.is_server(): return
+	
+	spawn_position = get_spawn_position()
 	spawn([id, spawn_position])
 
 	Debug.log_msg("Player %d spawned at %.v" % [id, spawn_position])
@@ -60,7 +57,6 @@ func custom_spawn(data: Array) -> Node:
 		"player": player
 	}
 	
-	loading.hide()
 	player_spawned.emit(id, player)
 	stats_ui_updater.your_player = player
 	return player
@@ -85,6 +81,8 @@ func create_viewer(id: int, player: Player) -> void:
 		viewer.view_distance = view_distance + 16
 		
 		player.add_child(viewer)
+
+		
 
 
 func on_spawned(node: Node) -> void:
@@ -120,7 +118,19 @@ func on_spawned(node: Node) -> void:
 	Console.add_command("spawn_creature", player, '_spawn_creature')\
 		.set_description("test command to spawn a creature at player pos")\
 		.register()
+
+
 	#print(node.get_multiplayer_authority())
 
 func on_despawned(node: Node) -> void:
 	player_despawned.emit(node.get_multiplayer_authority())
+
+func get_spawn_position() -> Vector3:
+	var client = get_tree().get_first_node_in_group("BackendClient")
+	if not client.playerdata.is_empty():
+		if client.playerdata.Position_x:
+			return Vector3(client.playerdata.Position_x,client.playerdata.Position_y,client.playerdata.Position_z) + Vector3(0,1,0)
+	
+	var spawn_position = spawn_points.get_spawn_position()
+	return spawn_position
+	#		

@@ -12,4 +12,7 @@ func init_items():
 		types.append(item.unique_name)
 
 func get_item(unique_name: StringName) -> ItemBase:
+	if not items.has(unique_name):
+		push_error("Item with unique name '%s' does not exist in the library." % unique_name)
+		return null
 	return items[unique_name]

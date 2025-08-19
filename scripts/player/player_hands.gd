@@ -34,6 +34,7 @@ func _ready():
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
 	if Globals.paused: return
+
 	if Input.is_action_just_pressed("Build"):
 		if terrain_interaction.can_place():
 			if Globals.can_build:
@@ -137,6 +138,9 @@ func is_interactable() -> bool:
 	
 	var item = items_library.get_item(type)
 	
+	if item == null:
+		return false
+		
 	if item.utility != null:
 		return true
 	else:
@@ -151,23 +155,24 @@ func interaction() -> void:
 	if type == "air": return
 	
 	var item = items_library.get_item(type)
-	
-	if item.utility != null:
-		if item.utility.has_ui:
-			get_voxel_meta.rpc_id(1,terrain_interaction.last_hit.position)
+
+	if item != null:
+		if item.utility != null:
+			if item.utility.has_ui:
+				get_voxel_meta.rpc_id(1,terrain_interaction.last_hit.position)
+				
+				
+				#var meta_data = terrain_interaction.get_voxel_meta(terrain_interaction.last_hit.position)
+				#terrain_interaction.get_voxel_meta(terrain_interaction.last_hit.position)
+				#Globals.open_inventory.emit(terrain_interaction.last_hit.position)
+				
+			if item.utility.spawn_point:
+				get_parent().spawn_position = terrain_interaction.last_hit.position + Vector3i(0,1,0)
+				print_debug("spawn point set ",get_parent().spawn_position)
 			
-			
-			#var meta_data = terrain_interaction.get_voxel_meta(terrain_interaction.last_hit.position)
-			#terrain_interaction.get_voxel_meta(terrain_interaction.last_hit.position)
-			#Globals.open_inventory.emit(terrain_interaction.last_hit.position)
-			
-		if item.utility.spawn_point:
-			get_parent().spawn_position = terrain_interaction.last_hit.position + Vector3i(0,1,0)
-			print_debug("spawn point set ",get_parent().spawn_position)
-		
-		if item.utility.portal:
-			terrain_interaction.rpc_id(1,"get_voxel_meta",terrain_interaction.last_hit.position)
-			#
+			if item.utility.portal:
+				terrain_interaction.rpc_id(1,"get_voxel_meta",terrain_interaction.last_hit.position)
+				#
 
 func drop(owner_id: int ,item: ItemBase ,amount := 1) -> void:
 	print("drop")

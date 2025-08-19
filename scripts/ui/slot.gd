@@ -12,41 +12,19 @@ signal item_changed(index:int,item_path:String,amount:int,parent:String,health:f
 @export var item: ItemBase
 @export var background_texture:Texture
 
-@export var rot_label:Label 
 @onready var background_texturerect: TextureRect = $"CenterContainer/background texture"
 @onready var image: TextureRect = $CenterContainer/Image
 @onready var amount_label: Label = $amount
-@onready var health_label: Label = $health
-@onready var health_bar: ProgressBar = $CenterContainer/health
+@onready var health_panel:Panel = $Health
 
 var max_rot:int = 0
 var rot:int = 0
 var index:int
-var health:float
+var health:float = 10001
 var played_ani:bool = false
 var focused:bool = false
 
-
 func _process(_delta: float) -> void: 
-	if item != null:
-		health_label.text = str(health)
-		health_bar.value = health
-		
-		if item is ItemFood:
-			if item.rot_step_textures.size() >= rot:
-				if item.rot_step_textures.size() != 0:
-					image.texture = item.rot_step_textures[rot]
-			else:
-				item = null
-				update_slot()
-		else:
-			image.texture = item.texture
-			
-	else:
-		image.texture = null
-		
-	amount_label.text = str(amount)
-	
 	if focused:
 		if !played_ani:
 			GlobalAnimation._tween(self,"bounce",.3)
@@ -55,13 +33,7 @@ func _process(_delta: float) -> void:
 	else:
 		played_ani = false
 		pressed_panel.hide()
-	
-	# destorys the item is the amount is 0 (mainly for the furnace)
-	if amount <= 0:
-		amount = 1
-		item = null
-		image.texture = null
-		amount_label.hide()
+
 		
 func _ready() -> void:
 	background_texturerect.texture = background_texture
@@ -72,6 +44,7 @@ func _ready() -> void:
 		
 	if item is ItemFood:
 		start_rot(item.time_rot_step)
+
 	update_slot()
 
 
@@ -95,34 +68,51 @@ func _on_pressed() -> void:
 
 func update_slot() -> void:
 	amount_label.text = str(amount)
+
+	## destory item if amount is 0
+	if amount <= 0:
+		amount = 1
+		item = null
+		image.texture = null
+		amount_label.hide()
+
 	if item != null:
 		
 		image.texture = item.texture
 
 		if amount >= 2:
 			amount_label.show()
+		else:
+			amount_label.hide()
 
 		if item is ItemFood:
 			max_rot = item.max_rot_steps
-			rot_label.text = str(rot)
+			if item.rot_step_textures.size() >= rot:
+				if item.rot_step_textures.size() != 0:
+					image.texture = item.rot_step_textures[rot]
+			else:
+				item = null
+				update_slot()
+
 		else:
 			stop_rot()
 
-		item_changed.emit(index,item.get_path(),amount,get_parent().name,health,rot)
-		
 		if not item is ItemTool:
-			health_bar.hide()
+			health_panel.hide()
 		else:
-			health_bar.show()
+			health_panel.show()
+			update_health()
+
+		item_changed.emit(index,item.get_path(),amount,get_parent().name,health,rot)
+
 
 	else:
 		#print("item is null")
 		amount = 1
 		image.texture = null
-		item_changed.emit(index,"",amount,get_parent().name,health,rot)
 		health = 0
-		health_bar.hide()
-		rot_label.hide()
+		item_changed.emit(index,"",amount,get_parent().name,health,rot)
+		health_panel.hide()
 		amount_label.hide()
 		
 
@@ -159,3 +149,28 @@ func rot_update() -> void:
 	if rot >= max_rot:
 		item = null
 	update_slot()
+
+func update_health():
+	var heath_range = range(0,item.max_health + 1)
+			
+	var half_health = heath_range.size() / 2
+
+	var red_health = half_health - half_health / 2
+
+	var green_health = half_health + half_health / 2
+
+	var health_pos = heath_range.find(roundi(health))
+
+	if health_pos in range(red_health,half_health + 1):
+		if health_panel.modulate == Color.GREEN:
+			var tween = create_tween()
+			tween.tween_property(health_panel,"modulate",Color.YELLOW,.2)
+
+	if health_pos >= green_health:
+		
+		health_panel.modulate = Color.GREEN
+
+	if health_pos <= red_health:
+		if health_panel.modulate == Color.YELLOW:
+			var tween = create_tween()
+			tween.tween_property(health_panel,"modulate",Color.RED,.2)
