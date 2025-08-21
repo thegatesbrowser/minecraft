@@ -11,7 +11,8 @@ func _process(delta: float) -> void:
 
 func _drop_last_clicked_item() -> void:
 	#print("dropping last clicked item")
-
+	if not last_clicked_slot: return
+	
 	var item := last_clicked_slot.item as ItemBase
 	if item:
 		Globals.drop_item.emit(multiplayer.get_unique_id(), item)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://de27e3hbp0hph"]
+[gd_scene load_steps=77 format=3 uid="uid://de27e3hbp0hph"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
@@ -55,6 +55,7 @@
 [ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
 [ext_resource type="Script" path="res://scripts/world/random_ticker.gd" id="44_caq2v"]
 [ext_resource type="AudioStream" uid="uid://bppwbkwodacxc" path="res://assets/sounds/269010__lwdickens__water-splash-3.wav" id="44_khtt3"]
+[ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="49_v742o"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jg8kd"]
 random_pitch = 2.0
@@ -378,6 +379,7 @@ script = ExtResource("38_ig7nw")
 [node name="Saver" type="Node" parent="."]
 script = ExtResource("34_s4tlk")
 encrypt = true
+Voxels = ExtResource("49_v742o")
 
 [node name="Update" type="Timer" parent="Saver"]
 wait_time = 0.1

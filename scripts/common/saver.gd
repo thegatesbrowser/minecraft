@@ -4,9 +4,11 @@ var Terrain:VoxelTerrain
 
 var passcode = "dqaduqiqbnmn1863841hjb"
 
+
 @export var encrypt:bool = false
 @export var Creature_save_path:String = "res://CreatureSave.save"
 @export var ItemManager:Node
+@export var Voxels:VoxelBlockyTypeLibrary 
 
 func _ready() -> void:
 	Globals.save.connect(save_player_ui)
@@ -15,6 +17,9 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	Terrain = get_tree().get_first_node_in_group("VoxelTerrain")
+	#var data = Voxels.serialize_id_map_to_string_array()
+	#var file = FileAccess.open("res://voxels.txt",FileAccess.WRITE)
+	#file.store_line(JSON.stringify(data))
 
 
 func _on_peer_connected(_peer_id: int) -> void:
@@ -36,7 +41,7 @@ func exit_tree() -> void:
 func save() -> void:
 	if multiplayer.is_server():
 		save_creatures()
-	Terrain.save_modified_blocks()
+		Terrain.save_modified_blocks()
 
 
 func save_player_ui() -> void:
