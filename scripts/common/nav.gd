@@ -112,3 +112,4 @@ func create_visual_debug(pos:Vector3):
 	instance.transform.origin = pos
 	
 	get_tree().root.add_child(instance)
+	instance.material_override = load("res://assets/materials/debug.tres")

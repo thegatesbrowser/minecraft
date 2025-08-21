@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=108 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -130,13 +130,10 @@ sky_material = SubResource("ShaderMaterial_oomw1")
 [sub_resource type="Environment" id="Environment_nrp0b"]
 background_mode = 2
 sky = SubResource("Sky_m4him")
-ambient_light_sky_contribution = 0.68
-reflected_light_source = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.485703, 0.485704, 0.485703, 1)
 ssr_fade_in = 0.15529
 ssao_enabled = true
-ssao_radius = 1.94
-ssao_intensity = 3.03
-ssao_sharpness = 0.0
 ssil_intensity = 2.68
 sdfgi_use_occlusion = true
 glow_enabled = true
@@ -146,17 +143,13 @@ fog_mode = 1
 fog_density = 1.0
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0265
-volumetric_fog_albedo = Color(0.4134, 0.78, 0.66391, 1)
+volumetric_fog_albedo = Color(0.6014, 0.920853, 0.97, 1)
 volumetric_fog_detail_spread = 0.5
 volumetric_fog_ambient_inject = 1.08
 volumetric_fog_sky_affect = 0.629
 adjustment_enabled = true
 adjustment_contrast = 1.14
 adjustment_saturation = 1.14
-
-[sub_resource type="VoxelStreamSQLite" id="VoxelStreamSQLite_ysay6"]
-database_path = "save.sqlite3"
-preferred_coordinate_format = 0
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
@@ -324,7 +317,8 @@ transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107
 shadow_enabled = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
-stream = SubResource("VoxelStreamSQLite_ysay6")
+mesh_block_size = 32
+use_gpu_generation = true
 generator = ExtResource("4_88uyt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 

@@ -139,19 +139,21 @@ func _ready() -> void:
 	if not is_multiplayer_authority():
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
+	else:
+		camera.current = true
 		
 	_update_tp_fp_visibility()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # TODO: Move to mouse mode
 	
 	
-	camera.current = true
 	
-	var player_save_timer = Timer.new()
-	player_save_timer.wait_time = 1
-	add_child(player_save_timer)
-	player_save_timer.start()
-	player_save_timer.timeout.connect(save_data)
+	
+	#var player_save_timer = Timer.new()
+	#player_save_timer.wait_time = 1
+	#add_child(player_save_timer)
+	#player_save_timer.start()
+	#player_save_timer.timeout.connect(save_data)
 
 func _update_tp_fp_visibility() -> void:
 	if is_multiplayer_authority():
