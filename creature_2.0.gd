@@ -32,69 +32,43 @@ func _ready() -> void:
 
 
 	var body = creature_resource.body_scene.instantiate()
-	rotation_root.add_child(body)
+	add_child(body)
 
-	for i in body.get_children(true):
-		if i is MeshInstance3D:
-			meshs.append(i)
+	#for i in body.get_children(true):
+		#if i is MeshInstance3D:
+			#meshs.append(i)
 
 
-	collision_shape_3d.shape = creature_resource.coll_shape
-	attack_coll.shape = creature_resource.coll_shape
-	attack_coll.scale = Vector3(1.1,1.1,1.1)
+	#collision_shape_3d.shape = creature_resource.coll_shape
+	#attack_coll.shape = creature_resource.coll_shape
+	#attack_coll.scale = Vector3(1.1,1.1,1.1)
 
 #ani = body.find_child("AnimationPlayer")
-	mesh = body.find_child(creature_resource.mesh_name)
+	#mesh = body.find_child(creature_resource.mesh_name)
 #ani.speed_scale = creature_resource.speed / 2
 
-	collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
-	attack_coll.position.y =  mesh.get_aabb().size.y / 2
+	#collision_shape_3d.position.y =  mesh.get_aabb().size.y / 2
+	#attack_coll.position.y =  mesh.get_aabb().size.y / 2
 
-	if creature_resource.utility != null:
-		if creature_resource.utility.has_ui:
-			Globals.new_ui.emit(spawn_pos,creature_resource.utility.ui_scene_path)
-
-	var walk_timer = Timer.new()
-	walk_timer.name = "walk_timer"
-	walk_timer.wait_time = 0.5
-	walk_timer.one_shot = false
-	walk_timer.autostart = true
-	add_child(walk_timer)
-	walk_timer.timeout.connect(on_walk_timeout)
+	#if creature_resource.utility != null:
+	#if creature_resource.utility.has_ui:
+		#	Globals.new_ui.emit(spawn_pos,creature_resource.utility.ui_scene_path)
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	else:
-		if created_nav == false:
-			create_points_around(20)
-			
-	move_and_slide()
-func on_walk_timeout():
-	var target_world_space = get_random_pos_in_sphere(20) + global_position
-	#var path = Nav.get_nav_path(global_position, target_world_space)
-	#print("Path found: ", path)
+		if jump.is_colliding():
+			print("jump")
+			velocity.y += 2
 
-func create_points_around(radius: int):
-	var voxel_tool:VoxelToolTerrain = TerrainHelper.get_terrain_tool().get_voxel_tool()
-	var area:AABB = AABB(global_position,Vector3(30,30,30))
-	voxel_tool.for_each_voxel_metadata_in_area(area,voxel)
-	#print("Copy created: ", copy.get_size())
-	created_nav = true
-	await get_tree().create_timer(1.0).timeout
-	Nav.connect_all_points()
-	var target_world_space = get_random_pos_in_sphere(6) + global_position
-	var path = Nav.get_nav_path(global_position, target_world_space)
-	print("path ",path)
+	find_player()
+
+	rotation_root.rotation.y = lerp(rotation_root.rotation.y,guide.rotation.y, delta * 2.0)
+
 	
-func voxel(voxel_position: Vector3i, voxel_metadata: Variant):
-	print("voxel")
-	if voxel_metadata is String:
-		if voxel_metadata == "walkable":
-			if Nav.has_point(Vector3(voxel_position.x,voxel_position.y,voxel_position.z)) == false:
-				Nav.create_point(voxel_position.x,voxel_position.y,voxel_position.z)
-		#if voxel_metadata == "walkable":
-			#
+
+	move_and_slide()
 
 func get_random_pos_in_sphere(radius : float) -> Vector3:
 	var x1= randi_range(-1,1)
@@ -113,3 +87,25 @@ func get_random_pos_in_sphere(radius : float) -> Vector3:
 	random_pos_on_unit_sphere.z *= randi_range(-radius, radius)
 
 	return random_pos_on_unit_sphere
+
+func find_player():
+	var pos = global_position
+	var player = get_tree().get_first_node_in_group("Player").global_position
+	
+	var path = Nav.find_path(pos,player)
+
+	print("path ",path)
+
+	for i in path:
+		if path.size() >= 2:
+			var point = path[1] + Vector3(0.5,0,0.5)
+
+			var direction = global_position.direction_to(point)
+
+			velocity = direction * creature_resource.speed
+
+			guide.look_at(point)
+
+			print("move to",point, "from ", pos)
+			
+	

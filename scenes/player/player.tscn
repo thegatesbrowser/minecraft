@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=68 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="14_322f3"]
 [ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="15_qijyr"]
 [ext_resource type="AudioStream" uid="uid://d2u44d524q4pt" path="res://assets/sounds/block/hurt.mp3" id="19_mt6y7"]
+[ext_resource type="Script" path="res://scenes/player/nav_viewer.gd" id="21_0lsw4"]
 [ext_resource type="Shader" path="res://scripts/shaders/Vignette .gdshader" id="22_nolos"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lyiwi"]
@@ -1148,6 +1149,11 @@ target_position = Vector3(1.45519e-11, -1, 1.45519e-11)
 collision_mask = 2
 hit_from_inside = true
 debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="NavViewer" type="Node3D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("21_0lsw4")
+player = NodePath("..")
+update_time = 2.0
 
 [connection signal="block_broken" from="Hands/TerrainInteraction" to="Hands/TerrainInteraction" method="_on_block_broken"]
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_entered"]
