@@ -173,12 +173,12 @@ resource_name = "leaf_birch"
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_61l6h"]
 atlas_size_in_tiles = Vector2i(12, 4)
-tile_left = Vector2i(2, 3)
-tile_right = Vector2i(2, 3)
-tile_bottom = Vector2i(2, 3)
-tile_top = Vector2i(2, 3)
-tile_back = Vector2i(2, 3)
-tile_front = Vector2i(2, 3)
+tile_left = Vector2i(0, 1)
+tile_right = Vector2i(0, 1)
+tile_bottom = Vector2i(0, 1)
+tile_top = Vector2i(0, 1)
+tile_back = Vector2i(0, 1)
+tile_front = Vector2i(0, 1)
 material_override_0 = ExtResource("1_8hqtx")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_i06l5"]
