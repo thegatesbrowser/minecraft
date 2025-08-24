@@ -71,6 +71,7 @@ CreatureContainer=""
 saveE="save event group"
 Enviroment=""
 "Water Updater"="updates the water"
+NavViewer=""
 
 [input]
 

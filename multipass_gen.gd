@@ -125,14 +125,11 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 
 						if y == real_height:
 							
-							#voxel_tool.set_voxel_metadata(Vector3i(x, y, z),"walkable")
-							
 							if rng.randf() <= 0.8:
 								#voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
 								#voxel_tool.set_voxel_metadata(Vector3i(x, y, z), load("res://resources/creatures/fox.tres"))
 								pass
 							if rng.randf() <= 0.5:
-									#voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default(plant))
 								
 								var plant = biomes[biome_name].plants.pick_random()
 								voxel_tool.set_voxel(Vector3i(x, y, z), plant)
@@ -161,12 +158,11 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 	
 
 	elif pass_index == 1:
+		#try_place_structure(voxel_tool, rng)
+		#var tree_count := 7
 		pass
-
-		var tree_count := 7
-		
-		for tree_index in tree_count:
-			try_plant_tree(voxel_tool, rng)
+		#for tree_index in tree_count:
+			#try_plant_tree(voxel_tool, rng)
 			
 
 	elif pass_index == 2:
@@ -238,12 +234,13 @@ func try_plant_tree(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNumberGe
 	
 	var paste_buffer := VoxelBuffer.new()
 	var biome_name = get_biome(get_temp(tree_pos.x,tree_pos.z))
-
+	print("biome ", biomes[biome_name])
 	if biomes[biome_name].trees.is_empty(): return # returns if no trees in that biome
 
 	var tree = biomes[biome_name].trees.pick_random()
 
 	var file = FileAccess.open(tree,FileAccess.READ)
+	print("file ",file)
 	var size := file.get_32()
 	var data := file.get_buffer(size)
 	VoxelBlockSerializer.deserialize_from_byte_array(data, paste_buffer, true)
