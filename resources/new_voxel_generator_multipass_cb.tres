@@ -4,7 +4,6 @@
 
 [resource]
 column_height_blocks = 10
-pass_count = 3
+pass_count = 2
 pass_1_extent = 1
-pass_2_extent = 1
 script = ExtResource("1_tux7n")

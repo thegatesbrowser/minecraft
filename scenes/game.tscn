@@ -317,6 +317,7 @@ transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107
 shadow_enabled = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
+max_view_distance = 60
 mesh_block_size = 32
 use_gpu_generation = true
 generator = ExtResource("4_88uyt")

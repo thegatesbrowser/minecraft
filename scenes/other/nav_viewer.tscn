@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq2adlui7agaw"]
+
+[ext_resource type="Script" path="res://scenes/player/nav_viewer.gd" id="1_qwoxb"]
+
+[node name="NavViewer" type="Node3D" groups=["NavViewer"]]
+script = ExtResource("1_qwoxb")
