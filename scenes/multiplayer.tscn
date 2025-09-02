@@ -376,9 +376,10 @@ visible = false
 [node name="UISyncer" type="Node" parent="." groups=["UISyncer"]]
 script = ExtResource("38_ig7nw")
 
-[node name="Saver" type="Node" parent="."]
+[node name="Saver" type="Node" parent="." node_paths=PackedStringArray("UI_syncer")]
 script = ExtResource("34_s4tlk")
 encrypt = true
+UI_syncer = NodePath("../UISyncer")
 Voxels = ExtResource("49_v742o")
 
 [node name="Update" type="Timer" parent="Saver"]
@@ -395,7 +396,7 @@ script = ExtResource("44_caq2v")
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
 script = ExtResource("6_l50oc")
-view_distance = 60
+view_distance = 100
 player_scene = ExtResource("7_n7355")
 stats_ui_updater = NodePath("../Game/Player UI/stats_ui_update")
 

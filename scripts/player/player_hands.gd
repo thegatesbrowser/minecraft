@@ -78,10 +78,6 @@ func _process(_delta: float) -> void:
 				
 	if Input.is_action_pressed("Mine"):
 		
-		if !get_parent().crouching:
-			#interaction() ## checks for interactions
-			if is_interactable(): return
-		
 		var last_mine_pos:Vector3i
 		if timer.is_stopped():
 			if terrain_interaction.can_break():
@@ -122,8 +118,6 @@ func _process(_delta: float) -> void:
 						terrain_interaction.break_block()
 						last_mine_pos = Vector3i.ZERO
 						
-		
-		
 	else:
 		break_part.emitting = false
 		timer.stop()
@@ -159,12 +153,7 @@ func interaction() -> void:
 	if item != null:
 		if item.utility != null:
 			if item.utility.has_ui:
-				get_voxel_meta.rpc_id(1,terrain_interaction.last_hit.position)
-				
-				
-				#var meta_data = terrain_interaction.get_voxel_meta(terrain_interaction.last_hit.position)
-				#terrain_interaction.get_voxel_meta(terrain_interaction.last_hit.position)
-				#Globals.open_inventory.emit(terrain_interaction.last_hit.position)
+				terrain_interaction.rpc_id(1,"get_voxel_meta",terrain_interaction.last_hit.position)
 				
 			if item.utility.spawn_point:
 				get_parent().spawn_position = terrain_interaction.last_hit.position + Vector3i(0,1,0)
@@ -190,13 +179,6 @@ func sync_drop(item_path: String, pos: Vector3 ,amount := 1) -> void:
 	Globals.add_object.emit([1,pos,"res://scenes/items/dropped_item.tscn",item_path,amount])
 
 @rpc("any_peer","call_local")
-func get_voxel_meta(position:Vector3):
-	var meta = voxel_tool.get_voxel_metadata(position)
-	var type = voxel_tool.get_voxel(position)
-	receive_meta.rpc_id(multiplayer.get_remote_sender_id(),meta,type,position)
-	#receive_meta(meta,type,position)
-
-@rpc("any_peer","call_local")
 func receive_meta(meta_data, type:int, position:Vector3):
 	var item_name = voxel_library.get_type_name_and_attributes_from_model_index(type)[0]
 	var item = items_library.get_item(item_name)
@@ -207,33 +189,15 @@ func receive_meta(meta_data, type:int, position:Vector3):
 		
 	if item_name == "chest":
 		print("chest")
-		#var meta = voxel_tool.get_voxel_metadata(terrain_interaction.last_hit.position)
+
 		print("open ",position)
-		var ui = load(item.utility.ui_scene_path).instantiate()
-		var inventory = get_node("/root/Main").find_child("Inventory")
-		
-		ui.id = position
-		var holder = get_node("/root/Main").find_child("Inventory Holder")
-		holder.add_child(ui)
-		
-		if meta_data != null:
-			ui.open_with_meta(JSON.parse_string(meta_data))
-			
-		inventory.open_inventory(position)
+		Globals.open_ui.emit(item.utility.ui_scene_path,position, meta_data)
 	
 	if item_name == "cooker":
 		print("cooker")
 
 		print("open ",position)
+		Globals.open_ui.emit(item.utility.ui_scene_path,position,meta_data)
 		
-		var ui = load(item.utility.ui_scene_path).instantiate()
-		var inventory = get_node("/root/Main").find_child("Inventory")
-		
-		ui.id = position
-		var holder = get_node("/root/Main").find_child("Inventory Holder")
-		holder.add_child(ui)
-		
-		if meta_data != null:
-			ui.open_with_meta(JSON.parse_string(meta_data))
-			
-		inventory.open_inventory(position)
+	if item_name == "blueprint_station":
+		Globals.open_ui.emit(item.utility.ui_scene_path,position,null)

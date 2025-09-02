@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=106 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -6,15 +6,14 @@
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="3_y2n02"]
 [ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/new_voxel_generator_multipass_cb.tres" id="4_88uyt"]
+[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="4_ywb7s"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
 [ext_resource type="Script" path="res://scripts/world/water.gd" id="10_riapq"]
 [ext_resource type="PackedScene" uid="uid://b4ef0j31tttko" path="res://scenes/items/craftables/craftable_info.tscn" id="11_cdfh2"]
-[ext_resource type="PackedScene" uid="uid://dwwv5ywawdbba" path="res://scenes/ui/crafting_ui.tscn" id="12_151fq"]
 [ext_resource type="PackedScene" uid="uid://cog3w5pk86koo" path="res://scenes/ui/hotbar.tscn" id="12_qvgc7"]
 [ext_resource type="Script" path="res://scenes/gen loading.gd" id="13_78wo2"]
-[ext_resource type="Resource" uid="uid://bfr8tc7ljf5l2" path="res://resources/craftables_library.tres" id="13_p6nu7"]
 [ext_resource type="Script" path="res://scripts/ui/armour_holder.gd" id="13_wsp3s"]
 [ext_resource type="AudioStream" uid="uid://8srankxfcp10" path="res://assets/sounds/music/Untitled song (3).mp3" id="14_88wwe"]
 [ext_resource type="Script" path="res://scripts/ui/stats_ui_update.gd" id="14_ho63k"]
@@ -65,9 +64,10 @@
 [ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="52_wm2ll"]
 [ext_resource type="Resource" uid="uid://dsltjvratfyrg" path="res://resources/items/iron_chestplate.tres" id="53_asrdx"]
 [ext_resource type="Resource" uid="uid://l4nd5is685cm" path="res://resources/items/pants.tres" id="54_57bq4"]
-[ext_resource type="Script" path="res://scripts/ui/crafting_menu.gd" id="55_ri7k6"]
 [ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
+[ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="61_mnu3p"]
+[ext_resource type="Resource" uid="uid://cxgyc78ob8tvg" path="res://resources/items/craftables/blueprint_station.tres" id="62_jlllp"]
 [ext_resource type="Script" path="res://scripts/ui/gameplay_settings.gd" id="66_h5gdj"]
 [ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="69_713dd"]
 [ext_resource type="AudioStream" uid="uid://sx4737eqqk7h" path="res://assets/sounds/ambient/Soulsand_valley_wind3.ogg" id="70_eg5sl"]
@@ -210,10 +210,6 @@ bg_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
 atlas = ExtResource("17_lk0tq")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_ku4ms"]
-color = Color(0, 0, 0, 0)
-vertical = true
-
 [sub_resource type="Resource" id="Resource_iwo8c"]
 script = ExtResource("26_6dvgg")
 break_time = 10.0
@@ -261,9 +257,6 @@ value = 10
 [sub_resource type="Resource" id="Resource_c0ten"]
 script = ExtResource("56_rtthk")
 items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), SubResource("Resource_iwo8c"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), SubResource("Resource_32ko8"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_xhoya"]
-color = Color(0, 0, 0, 0)
 
 [sub_resource type="Gradient" id="Gradient_88jip"]
 colors = PackedColorArray(0, 0, 0, 0.607843, 0, 0, 0, 0.176471)
@@ -317,9 +310,9 @@ transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107
 shadow_enabled = true
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
-max_view_distance = 60
 mesh_block_size = 32
 use_gpu_generation = true
+stream = ExtResource("4_ywb7s")
 generator = ExtResource("4_88uyt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 
@@ -523,10 +516,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -332.5
-offset_top = -207.5
-offset_right = 332.5
-offset_bottom = 207.5
+offset_left = -282.5
+offset_top = -170.5
+offset_right = 282.5
+offset_bottom = 170.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -535,16 +528,29 @@ layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Inventory/Panel/MarginContainer"]
 layout_mode = 2
+alignment = 1
+
+[node name="Blueprint Info" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("inventory") instance=ExtResource("11_cdfh2")]
+visible = false
+layout_mode = 2
+inventory = NodePath("../Inventory Holder/Inventory")
 
 [node name="Inventory Holder" type="HBoxContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 25
 alignment = 1
 
+[node name="Blueprint" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder" node_paths=PackedStringArray("inventory") instance=ExtResource("61_mnu3p")]
+layout_mode = 2
+inventory = NodePath("../Inventory")
+blueprint = ExtResource("62_jlllp")
+
 [node name="Armour" type="PanelContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder" node_paths=PackedStringArray("slot_holder")]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nskl3")
 script = ExtResource("13_wsp3s")
@@ -552,10 +558,10 @@ slot_holder = NodePath("MarginContainer/VBoxContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour"]
 layout_mode = 2
-theme_override_constants/margin_top = 64
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer"]
 layout_mode = 2
+alignment = 2
 
 [node name="Slot" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer" instance=ExtResource("14_ihskq")]
 layout_mode = 2
@@ -572,70 +578,10 @@ layout_mode = 2
 type = "pants"
 background_texture = SubResource("AtlasTexture_fhmo7")
 
-[node name="VSeparator" type="VSeparator" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder"]
-layout_mode = 2
-theme_override_constants/separation = 20
-theme_override_styles/separator = SubResource("StyleBoxLine_ku4ms")
-
 [node name="Inventory" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder" groups=["Main Inventory", "PlayersUI"] instance=ExtResource("10_hxw3b")]
 layout_mode = 2
 sync = false
 items_library = SubResource("Resource_c0ten")
-
-[node name="Crafting Menu" type="PanelContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("input_1", "input_2", "output_slot")]
-visible = false
-layout_mode = 2
-script = ExtResource("55_ri7k6")
-craftables = ExtResource("13_p6nu7")
-input_1 = NodePath("MarginContainer/HBoxContainer/Slot")
-input_2 = NodePath("MarginContainer/HBoxContainer/Slot2")
-output_slot = NodePath("MarginContainer/HBoxContainer/Slot3")
-
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Crafting Menu"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Slot" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
-layout_mode = 2
-
-[node name="Slot2" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
-layout_mode = 2
-
-[node name="VSeparator" type="VSeparator" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 40
-theme_override_styles/separator = SubResource("StyleBoxLine_xhoya")
-
-[node name="Label" type="Label" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "="
-
-[node name="VSeparator2" type="VSeparator" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 40
-theme_override_styles/separator = SubResource("StyleBoxLine_xhoya")
-
-[node name="Slot3" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Crafting Menu/MarginContainer/HBoxContainer" instance=ExtResource("14_ihskq")]
-layout_mode = 2
-
-[node name="Crafting" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("send_to_inventory") instance=ExtResource("12_151fq")]
-layout_mode = 2
-theme = ExtResource("3_v2bsq")
-send_to_inventory = NodePath("../Inventory Holder/Inventory")
-crafting_library = ExtResource("13_p6nu7")
-
-[node name="Craftable Info" parent="Player UI/Inventory" instance=ExtResource("11_cdfh2")]
-visible = false
-layout_mode = 0
-offset_bottom = 47.0
-mouse_filter = 2
 
 [node name="stats_ui_update" type="Control" parent="Player UI"]
 layout_mode = 1
@@ -890,12 +836,10 @@ layout_mode = 2
 
 [node name="Headbob" type="CheckButton" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
-button_pressed = true
 text = "Headbob"
 
 [node name="varing fov" type="CheckButton" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
-button_pressed = true
 text = "Varying FOV"
 
 [node name="Account Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]

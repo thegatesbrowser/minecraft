@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CraftableLibrary" load_steps=17 format=3 uid="uid://dgswqwr4e80oy"]
 
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_dyrdd"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="1_dyrdd"]
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable_library.gd" id="2_ftexq"]
 [ext_resource type="Resource" uid="uid://ddnn87htgsb3u" path="res://resources/items/craftables/axe_wood.tres" id="3_nw8am"]
 [ext_resource type="Resource" uid="uid://b44xmwqmnnj8j" path="res://resources/items/craftables/chest.tres" id="4_5j57i"]

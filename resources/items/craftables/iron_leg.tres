@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://cm3ggrje5swt3"]
+[gd_resource type="Resource" script_class="Blueprint" load_steps=6 format=3 uid="uid://cm3ggrje5swt3"]
 
 [ext_resource type="Texture2D" uid="uid://btpo7f8axkpl" path="res://assets/textures/blocks/iron.png" id="1_rgawj"]
 [ext_resource type="Resource" uid="uid://bp80kikc6g2n4" path="res://resources/items/iron_leggings.tres" id="2_vawyi"]
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_roinm"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="3_roinm"]
 [ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/textures/iron_armour.png" id="4_pv6up"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xuv7t"]
@@ -12,8 +12,6 @@ region = Rect2(32, 1.45519e-11, 16, 16)
 [resource]
 script = ExtResource("3_roinm")
 Name = "iron leggings"
-texture = SubResource("AtlasTexture_xuv7t")
-output_item = ExtResource("2_vawyi")
 output_amount = 1
 items_needed = {
 1: {
@@ -22,3 +20,12 @@ items_needed = {
 "texture": ExtResource("1_rgawj")
 }
 }
+unique_name = &""
+texture = SubResource("AtlasTexture_xuv7t")
+max_stack = 64
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+output_item = ExtResource("2_vawyi")
+value = 10

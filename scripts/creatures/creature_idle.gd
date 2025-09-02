@@ -11,7 +11,7 @@ func randomize_wander():
 	target = get_random_pos_in_sphere(move_distance) + creature.global_position
 	wander_time = randf_range(1,4)
 
-func Enter():
+func Enter(data:Dictionary):
 	randomize_wander()
 	
 func Update(delta:float):
@@ -24,26 +24,47 @@ func Physics_Update(delta:float):
 	if creature:
 		var new_velocity: Vector3
 		var current_pos = creature.global_position
-		var new_velocity_x = (target.x - current_pos.x)
-		var new_velocity_z = (target.z - current_pos.z)
-		new_velocity = Vector3(new_velocity_x,0,new_velocity_z).normalized() * creature.creature_resource.speed
-		
-		creature.look_at_target = Vector3(target.x,current_pos.y + 0.01,target.z)
-		creature.velocity = creature.velocity.move_toward(new_velocity, .25)
 		
 		var player = get_closest_player()
 		
 		if creature.creature_resource.attacks:
 			
+			var path = Nav.find_path(current_pos,target)
+			
+			if path:
+
+				for i in path:
+					if path.size() >= 2:
+						creature.stopped = false
+
+						var point = path[1] + Vector3(0.5,0,0.5)
+
+						var direction = creature.global_position.direction_to(point)
+
+						creature.velocity.x = direction.x * creature.creature_resource.speed
+						creature.velocity.z = direction.z * creature.creature_resource.speed
+
+						creature.guide.global_position = point
+
+						#print("move to",point, "from ", pos)
+					else:
+						#print("cant move too close")
+						creature.stopped = true
+						creature.velocity.x = 0
+						creature.velocity.z = 0 
+			else:
+				creature.velocity.x = 0
+				creature.velocity.z = 0 
+			
 			if player:
 				#print("distance ",current_pos.distance_to(player.global_position))
 				if current_pos.distance_to(player.global_position) <= 10:
-					Transitioned.emit(self,"Attack")
+					Transitioned.emit(self,"Chase",{})
 		else:
 			if player:
 				#print("distance ",current_pos.distance_to(player.global_position))
 				if current_pos.distance_to(player.global_position) <= 10:
-					Transitioned.emit(self,"runaway")
+					Transitioned.emit(self,"runaway",{})
 
 func get_random_pos_in_sphere(radius : float) -> Vector3:
 	var x1= randi_range(-1,1)

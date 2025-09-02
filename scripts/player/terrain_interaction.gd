@@ -152,18 +152,12 @@ func break_block() -> void:
 @rpc("reliable", "authority")
 func _place_block_server(type: StringName, position: Vector3, player_pos: Vector3 = Vector3.ZERO) -> void:
 	var item = item_library.get_item(type)
-	
-	#if item is ItemPlant:
-		#voxel_tool.set_voxel_metadata(position,{"time_left":item.time_to_grow,"type",type})
-	#print("player pos ", player_pos)
-	if item.utility != null:
-		if item.utility.has_ui:
-			Globals.new_ui.emit(position,item.utility.ui_scene_path)
-			
-		elif item.utility.portal:
-			Globals.create_portal.emit(position)
-			open_portal_ui.rpc_id(multiplayer.get_remote_sender_id(),position)
-			
+	if item:
+		if item.utility:
+			if item.utility.portal:
+				Globals.create_portal.emit(position)
+				open_portal_ui.rpc_id(multiplayer.get_remote_sender_id(),position)
+				
 	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	
@@ -180,7 +174,7 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 func get_voxel_meta(position:Vector3):
 	var meta = voxel_tool.get_voxel_metadata(position)
 	print("meta ", meta)
-	get_parent().rpc_id(multiplayer.get_remote_sender_id(),"receive_meta",meta,voxel_tool.get_voxel(position))
+	get_parent().rpc_id(multiplayer.get_remote_sender_id(),"receive_meta",meta,voxel_tool.get_voxel(position),position)
 	
 
 @rpc("reliable", "authority")

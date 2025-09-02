@@ -1,6 +1,6 @@
 extends Node
 
-var headbob:bool = true
+var headbob:bool = false
 var varing_fov:bool = true
 
 signal updated

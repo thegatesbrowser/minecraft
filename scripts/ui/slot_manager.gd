@@ -27,7 +27,12 @@ func slot_clicked(slot:Slot):
 		return
 
 	_play_ui_sound()
-			
+	
+	if slot.item is Blueprint:
+		Globals.blueprint_hovered.emit(slot.item,slot)
+	else:
+		Globals.blueprint_unhovered.emit()
+
 	if last_clicked_slot == null:
 		last_clicked_slot = slot
 		last_clicked_slot.focused = true

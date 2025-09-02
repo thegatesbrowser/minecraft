@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dxd8kf1git7iw" path="res://assets/sounds/other/Fox_hurt3.ogg" id="8_u06be"]
 [ext_resource type="AudioStream" uid="uid://bj3cpbjncj2hs" path="res://assets/sounds/other/Fox_hurt4.ogg" id="9_1nupn"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_e0a6d"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_683en"]
 size = Vector3(0.285156, 0.395752, 0.614319)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1uf8p"]
@@ -33,16 +33,17 @@ stream_3/stream = ExtResource("9_1nupn")
 [resource]
 script = ExtResource("3_ldbmh")
 body_scene = ExtResource("1_ebhm5")
-max_health = 6
-attacks = true
-run_away_after_attack = false
 damage = 1
-speed = 6.5
-coll_shape = SubResource("BoxShape3D_e0a6d")
+speed = 4.0
+max_health = 5
 mesh_name = "Object_7"
+drop_items = Array[ExtResource("2_sffgm")]([ExtResource("3_g1f5t")])
 hurt_sound = SubResource("AudioStreamRandomizer_wx3dg")
 death_sound = SubResource("AudioStreamRandomizer_1uf8p")
 flyies = false
 flying_height = 10.0
-creature_name = "Fox"
-drop_items = Array[ExtResource("2_sffgm")]([ExtResource("3_g1f5t")])
+attacks = true
+walk_ani_name = "walk"
+idle_ani_name = "idle"
+collision_shape = SubResource("BoxShape3D_683en")
+collision_offset = Vector3(0, 0.194716, 0)

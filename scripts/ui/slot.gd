@@ -40,6 +40,7 @@ func _ready() -> void:
 	index = get_index()
 	
 	if item != null:
+		background_texturerect.texture = item.background_texture
 		image.texture = item.texture
 		
 	if item is ItemFood:
@@ -68,6 +69,7 @@ func _on_pressed() -> void:
 
 func update_slot() -> void:
 	amount_label.text = str(amount)
+	
 
 	## destory item if amount is 0
 	if amount <= 0:
@@ -77,7 +79,7 @@ func update_slot() -> void:
 		amount_label.hide()
 
 	if item != null:
-		
+		background_texturerect.texture = item.background_texture
 		image.texture = item.texture
 
 		if amount >= 2:
@@ -97,11 +99,18 @@ func update_slot() -> void:
 		else:
 			stop_rot()
 
+		if item is Blueprint:
+			$Background_Image.show()
+		else:
+			$Background_Image.hide()
+			
 		if not item is ItemTool:
 			health_panel.hide()
 		else:
 			health_panel.show()
 			update_health()
+
+
 
 		item_changed.emit(index,item.get_path(),amount,get_parent().name,health,rot)
 
@@ -114,6 +123,7 @@ func update_slot() -> void:
 		item_changed.emit(index,"",amount,get_parent().name,health,rot)
 		health_panel.hide()
 		amount_label.hide()
+		$Background_Image.hide()
 		
 
 func used() -> void:
@@ -174,3 +184,5 @@ func update_health():
 		if health_panel.modulate == Color.YELLOW:
 			var tween = create_tween()
 			tween.tween_property(health_panel,"modulate",Color.RED,.2)
+
+	

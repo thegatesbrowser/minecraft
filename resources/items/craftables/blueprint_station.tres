@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Blueprint" load_steps=5 format=3 uid="uid://cxgyc78ob8tvg"]
+
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="1_63jsf"]
+[ext_resource type="Resource" uid="uid://dn2s8tsdl4rca" path="res://resources/items/blueprint_station.tres" id="1_jw4f3"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7m55q"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c3ywf"]
+
+[resource]
+script = ExtResource("1_63jsf")
+Name = "Blueprint Station"
+output_amount = 1
+items_needed = {
+1: {
+"amount": 4,
+"name": "log",
+"texture": SubResource("PlaceholderTexture2D_7m55q")
+}
+}
+unique_name = &""
+texture = SubResource("PlaceholderTexture2D_c3ywf")
+max_stack = 64
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+output_item = ExtResource("1_jw4f3")
+value = 10

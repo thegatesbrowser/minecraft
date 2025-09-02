@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://dpkc8k2a64whr"]
+[gd_resource type="Resource" script_class="Blueprint" load_steps=6 format=3 uid="uid://dpkc8k2a64whr"]
 
 [ext_resource type="Texture2D" uid="uid://btpo7f8axkpl" path="res://assets/textures/blocks/iron.png" id="1_k6pyq"]
 [ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="2_0stt5"]
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_iicld"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="3_iicld"]
 [ext_resource type="Texture2D" uid="uid://ckfau82vb7p2t" path="res://assets/textures/iron_armour.png" id="4_ti7rf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8cbe1"]
@@ -12,8 +12,6 @@ region = Rect2(0, 0, 16, 16)
 [resource]
 script = ExtResource("3_iicld")
 Name = "iron helment"
-texture = SubResource("AtlasTexture_8cbe1")
-output_item = ExtResource("2_0stt5")
 output_amount = 1
 items_needed = {
 1: {
@@ -22,3 +20,12 @@ items_needed = {
 "texture": ExtResource("1_k6pyq")
 }
 }
+unique_name = &""
+texture = SubResource("AtlasTexture_8cbe1")
+max_stack = 64
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+output_item = ExtResource("2_0stt5")
+value = 10

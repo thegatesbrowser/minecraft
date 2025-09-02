@@ -8,6 +8,7 @@ extends PanelContainer
 var server_info: Dictionary
 var server_info_output: Dictionary
 
+@export var metadata:bool = true
 @export var sync:bool = true
 
 @export var output_container: GridContainer 
@@ -110,11 +111,12 @@ func open_with_meta(data):
 
 func change(index: int, item_path: String, amount: int, parent:String,health:float,rot:int) -> void:
 	if sync:
-		Globals.sync_ui_change.emit(index,item_path,amount,parent,health,rot)
-		
 		var _save = save()
-		var data = JSON.stringify(_save)
-		Globals.sync_add_metadata.emit(id,data)
+		if metadata:
+			var data = JSON.stringify(_save)
+			Globals.sync_add_metadata.emit(id,data)
+		else:
+			Globals.update_registered_ui.emit(id,_save)
 
 @rpc("any_peer","call_local")
 func update_client(info) -> void:

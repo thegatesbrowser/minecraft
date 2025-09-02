@@ -3,6 +3,7 @@ class_name ItemBase
 
 @export var unique_name: StringName
 @export var texture: Texture2D
+@export var background_texture: Texture2D
 @export_range(1, 65535) var max_stack: int = 64
 
 @export var holdable_mesh:PackedScene

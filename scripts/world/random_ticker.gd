@@ -145,9 +145,9 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 
 
 	if value == VoxelLibraryResource.get_model_index_default("spawner"):
-		#print("creature")
-		return
-		if rng.randf() < 0.8:
+		print("creature")
+	
+		if rng.randf() < 0.2:
 			var creature = _voxel_tool.get_voxel_metadata(pos)
 			
 			print("creature? ", _voxel_tool.get_voxel_metadata(pos))

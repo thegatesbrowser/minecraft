@@ -4,10 +4,9 @@ class_name Inventory
 # External references
 @export var sync:bool = true ## FALSE for the player main inventory
 @export var slot_container: GridContainer
+@export var metadata:bool = true
 @export var id: Vector3
 @export var items_library: ItemsLibrary
-
-
 
 #var times:int = 0
 var items = []
@@ -15,8 +14,6 @@ var slots = [] ## List of slots in the inventory
 var full:bool = false
 var inventory = [] ## List of ItemBase unique names in the inventory
 
-# Server/client info
-var server_info: Dictionary
 
 func _ready() -> void:
 	slots = slot_container.get_children()
@@ -166,7 +163,10 @@ func change(index: int, item_path: String, amount: int,parent:String,health:floa
 	if sync:
 		var _save = save()
 		var data = JSON.stringify(_save)
-		Globals.sync_add_metadata.emit(id,data)
+		if metadata:
+			Globals.sync_add_metadata.emit(id,data)
+		else:
+			Globals.update_registered_ui.emit(id,_save)
 	else:
 		var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 		if BackendClient.playerdata.Inventory == null:
@@ -194,10 +194,7 @@ func open_with_meta(data):
 		slot.rot = data[i].rot
 		slot.update_slot()
 			
-			
-@rpc("any_peer")
-func update(pos,data):
-	Globals.sync_change_open.emit(pos,data)
+
 	
 @rpc("any_peer","call_local")
 func add_meta_data(data):
@@ -206,21 +203,23 @@ func add_meta_data(data):
 	TerrainHelper.get_terrain_tool().get_voxel_tool().set_voxel_metadata(id,data)
 	#print(" change",TerrainHelper.get_terrain_tool().get_voxel_tool().get_voxel_metadata(id))
 
-func update_client(info):
-	#("update inventory ",info)
-	for i in info:
+func update_client(data):
+	if data == null: return
+
+	for i in data:
 		
-		var slot = find_child(info[i].parent).get_child(i.to_int())
+		var slot = find_child(data[i].parent).get_child(i.to_int())
 		
-		if info[i].item_path != "":
-			slot.item = load(info[i].item_path)
+		if data[i].item_path != "":
+			slot.item = load(data[i].item_path)
 		else:
 			slot.item = null
 			
-		slot.health = info[i].health
-		slot.amount = info[i].amount
-		slot.rot = info[i].rot
+		slot.health = data[i].health
+		slot.amount = data[i].amount
+		slot.rot = data[i].rot
 		slot.update_slot()
+
 	pass
 
 #func pack_items(items:Array[String]):

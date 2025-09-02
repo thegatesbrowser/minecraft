@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=4 format=3 uid="uid://kltgxe62khhc"]
 
 [ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="1_yfbef"]
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="3_35rm7"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="3_35rm7"]
 [ext_resource type="Texture2D" uid="uid://cs0w8nddhqtjw" path="res://assets/textures/items/bow.tres" id="4_m28aa"]
 
 [resource]

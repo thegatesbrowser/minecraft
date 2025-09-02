@@ -1,15 +1,34 @@
-[gd_scene load_steps=9 format=3 uid="uid://dp3vw6ecck05s"]
+[gd_scene load_steps=11 format=3 uid="uid://dp3vw6ecck05s"]
 
 [ext_resource type="Script" path="res://scripts/ui/slot.gd" id="1_kl6vd"]
 [ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="2_gx7ws"]
-[ext_resource type="Texture2D" uid="uid://bsycnwg5wwakp" path="res://assets/textures/items/wood_sword.png" id="3_vn32h"]
+[ext_resource type="Texture2D" uid="uid://dudcasy8dleom" path="res://assets/textures/items/stone_sword.png" id="3_fcira"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="4_2r2mj"]
+[ext_resource type="Texture2D" uid="uid://bn5we2hlukmst" path="res://construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="5_qvmxl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ekc5y"]
 shader = ExtResource("2_gx7ws")
-shader_parameter/clr = Color(0.435192, 0.435192, 0.435192, 1)
-shader_parameter/type = 2
 shader_parameter/thickness = 1.0
+shader_parameter/ring_count = 16
+shader_parameter/ring_offset = null
+shader_parameter/outline_color = null
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = false
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mipvp"]
+shader = ExtResource("2_gx7ws")
+shader_parameter/thickness = 19.827
+shader_parameter/ring_count = 128
+shader_parameter/ring_offset = 1.0
+shader_parameter/outline_color = Color(0, 0, 0, 0.321569)
+shader_parameter/border_clipping_fix = false
+shader_parameter/aspect_ratio = 2.79
+shader_parameter/square_border = false
+shader_parameter/offset = Vector2(-50, -50)
+shader_parameter/max_or_add = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecmii"]
 bg_color = Color(0, 0, 0, 0.572549)
@@ -72,16 +91,28 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 12
 
 [node name="background texture" type="TextureRect" parent="CenterContainer"]
-modulate = Color(0, 0, 0, 0.0117647)
 material = SubResource("ShaderMaterial_ekc5y")
 layout_mode = 2
+expand_mode = 1
 
 [node name="Image" type="TextureRect" parent="CenterContainer"]
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("3_vn32h")
+texture = ExtResource("3_fcira")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Background_Image" type="TextureRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_mipvp")
+custom_minimum_size = Vector2(10, 10)
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 28.0
+offset_bottom = 28.0
+pivot_offset = Vector2(30, 30)
+texture = ExtResource("5_qvmxl")
+expand_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 show_behind_parent = true
@@ -142,4 +173,5 @@ theme_override_font_sizes/font_size = 20
 text = "64"
 horizontal_alignment = 2
 
+[connection signal="button_up" from="." to="." method="_on_button_up"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -908,7 +908,7 @@ cull_mask = 1048543
 attributes = SubResource("CameraAttributesPhysical_wbd57")
 
 [node name="RayCast3D" type="RayCast3D" parent="RotationRoot/Head/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.37544)
+transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.0823141)
 target_position = Vector3(1.45519e-11, -5, 1.45519e-11)
 collision_mask = 3
 debug_shape_custom_color = Color(0.988235, 0, 0, 0.0823529)

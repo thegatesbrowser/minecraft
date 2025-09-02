@@ -7,14 +7,7 @@ enum Level { DEBUG = 0, INFO = 1, WARNING = 2, ERROR = 3, CRITICAL = 4 }
 @export var single_threaded_render := false
 @export var capture_mouse_on_start := true
 
-# Chunk Generation Settings.
-@export var chunk_size := Vector3(16, 256, 16)
-@export var max_stale_chunks := 2000
-
-# Configurable setting based checked user's hardware.
-@export var chunk_loading_threads := 7
-
-@export var paused := true
+@export var paused := false
 
 
 var current_block:StringName ## unique_name
@@ -26,7 +19,7 @@ var view_range:int = 128
 # world gen
 signal fnished_loading # let the player move ground has been made
 
-signal spawn_creature(pos,creature)
+signal spawn_creature(pos:Vector3,creature,spawn_pos:Vector3)
 signal hunger_points_gained(amount)
 signal add_object(data:Array)
 signal removed_spawnpoint(id:Vector3)
@@ -39,18 +32,16 @@ signal add_portal_url(id:Vector3,url:String)
 signal remove_portal_data(id:Vector3)
 
 # ui
-signal new_ui(position:Vector3,instance_path:String)
-signal sync_ui_change(index: int, item_path: String, amount: int,parent: String,health: int, rot:int)
-#signal remove_ui(position:Vector3)
+signal register_ui(id:Vector3,ui_scene_path:String)
+signal open_ui(ui_scene:String, id:Vector3, containments )
+signal open_registered_ui(id:Vector3)
+signal update_registered_ui(id:Vector3, containments:Dictionary)
 
 signal sync_add_metadata(pos,metadata)
-signal sync_change_open(position,data,id)
 
-
-signal open_inventory(id)
 signal remove_item_from_hotbar
 
-signal spawn_item_inventory(item)
+signal spawn_item_inventory(item,amount,health)
 signal spawn_item_hotbar(item)
 
 signal check_amount_of_item(item)
@@ -59,10 +50,11 @@ signal hotbar_slot_clicked(slot)
 signal add_item_to_hand(item,scene:PackedScene)
 signal remove_item_in_hand
 
-signal craftable_hovered(craftable,node)
-signal craftable_unhovered
+signal blueprint_hovered(bluepring_resource:Blueprint,slot:Slot)
+signal blueprint_unhovered
 
 signal drop_item(item)
+signal closed_inventory
 
 var hotbar_full:bool 
 
@@ -81,24 +73,21 @@ func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
 	
 
-@rpc("any_peer","call_local")
-func add_meta_data(pos:Vector3,data):
-	TerrainHelper.get_terrain_tool().get_voxel_tool().set_voxel_metadata(pos,data)
-	print("added meta at ",pos, " with ",data)
-
-func find_item(item:ItemBase) -> Slot:
+func find_item(item:ItemBase,inventory:bool = true,hotbar:bool = true) -> Slot:
 	var return_ = null
 	
-	var inventory = get_tree().get_first_node_in_group("Main Inventory")
+	var _inventory = get_tree().get_first_node_in_group("Main Inventory")
 	var hot_bar = get_tree().get_first_node_in_group("Hotbar")
 	
-	for slot in inventory.slots:
-		if slot.item == item:
-			return_ = slot
-			break
-	if return_ == null:
-		for slot in hot_bar.buttons:
+	if inventory:
+		for slot in _inventory.slots:
 			if slot.item == item:
 				return_ = slot
 				break
+	if hotbar:
+		if return_ == null:
+			for slot in hot_bar.buttons:
+				if slot.item == item:
+					return_ = slot
+					break
 	return return_

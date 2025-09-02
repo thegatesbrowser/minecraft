@@ -82,15 +82,15 @@ func _press_key(i: int) -> void:
 			Globals.current_block = slots[current_key].item.unique_name
 			Globals.can_build = true 
 			Globals.custom_block = &""
+		else:
+			Globals.can_build = false
 
 		## Tool items
-		elif slots[current_key].item is ItemTool:
-			Globals.can_build = false
+		if slots[current_key].item is ItemTool:
 			Globals.custom_block = slots[current_key].item.unique_name
 
 		## Food items
 		elif slots[current_key].item is ItemFood: 
-			Globals.can_build = false
 			selected_item = slots[current_key].item
 			var holdable_array = selected_item.rot_step_holdable_models as Array
 			if not holdable_array.is_empty():
@@ -98,8 +98,9 @@ func _press_key(i: int) -> void:
 				Globals.add_item_to_hand.emit(holdable)
 		else:
 			## Others ?
-			Globals.custom_block = slots[current_key].item.unique_name
-			Globals.can_build = true 
+			#Globals.custom_block = slots[current_key].item.unique_name
+			#Globals.can_build = true 
+			pass
 			
 	else:
 		Globals.can_build = false

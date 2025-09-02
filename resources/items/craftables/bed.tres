@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://bhvdh5jd8e1jh"]
 
 [ext_resource type="Texture2D" uid="uid://h8nndohifc41" path="res://assets/textures/items/Oak Log.png" id="1_fnp6w"]
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_tke2w"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="1_tke2w"]
 [ext_resource type="Texture2D" uid="uid://bs3c50kbfm68w" path="res://assets/textures/items/Leaf.png" id="2_33ko0"]
 [ext_resource type="Resource" uid="uid://2cgpe8xf3dkh" path="res://resources/items/bed.tres" id="3_affro"]
 [ext_resource type="Texture2D" uid="uid://d100dr2itcy2u" path="res://assets/textures/items/bed.png" id="5_y1ifp"]

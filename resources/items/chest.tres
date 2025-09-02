@@ -10,6 +10,7 @@ has_ui = true
 ui_scene_path = "res://scenes/ui/inventory.tscn"
 spawn_point = false
 portal = false
+needs_metadata = true
 
 [resource]
 script = ExtResource("1_25f0t")

@@ -1,6 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3jgvc45n8k2i"]
+[gd_scene load_steps=7 format=3 uid="uid://b3jgvc45n8k2i"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable_base.gd" id="1_eofgj"]
+[ext_resource type="Texture2D" uid="uid://bn5we2hlukmst" path="res://construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="2_i2s1n"]
+[ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="3_5twbg"]
+[ext_resource type="Texture2D" uid="uid://dudcasy8dleom" path="res://assets/textures/items/stone_sword.png" id="3_awsau"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2lyla"]
+shader = ExtResource("3_5twbg")
+shader_parameter/thickness = 19.827
+shader_parameter/ring_count = 128
+shader_parameter/ring_offset = 1.0
+shader_parameter/outline_color = Color(0, 0, 0, 0.321569)
+shader_parameter/border_clipping_fix = false
+shader_parameter/aspect_ratio = 2.79
+shader_parameter/square_border = false
+shader_parameter/offset = Vector2(-50, -50)
+shader_parameter/max_or_add = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rnsct"]
 bg_color = Color(0, 0, 0, 0.572549)
@@ -14,8 +29,8 @@ shadow_size = 2
 shadow_offset = Vector2(3, 3)
 anti_aliasing = false
 
-[node name="Craftable" type="TextureButton"]
-custom_minimum_size = Vector2(90, 90)
+[node name="Blueprint" type="TextureButton"]
+custom_minimum_size = Vector2(80, 80)
 offset_right = 40.0
 offset_bottom = 40.0
 stretch_mode = 5
@@ -29,13 +44,27 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 12
 
 [node name="Image" type="TextureRect" parent="CenterContainer"]
 layout_mode = 2
+texture = ExtResource("3_awsau")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Background_Image" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_2lyla")
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 26.0
+offset_bottom = 24.0
+pivot_offset = Vector2(30, 30)
+texture = ExtResource("2_i2s1n")
 expand_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -49,6 +78,4 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rnsct")
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="." to="." method="craft"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

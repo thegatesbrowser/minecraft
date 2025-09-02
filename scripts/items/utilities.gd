@@ -5,3 +5,4 @@ class_name Utilities
 @export var ui_scene_path: String
 @export var spawn_point: bool
 @export var portal: bool
+@export var needs_metadata:bool = false

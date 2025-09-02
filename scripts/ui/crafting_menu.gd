@@ -55,7 +55,7 @@ func check(index:int,item_path:String,amount:int,parent:String,health:float,rot:
 						craft(craftable)
 						print("CRAFT",craftable.Name)
 					
-func craft(craftable:Craftable):
+func craft(craftable:Blueprint):
 	output_slot.item = craftable.output_item
 
 func crafted(index:int,item_path:String,amount:int,parent:String,health:float,rot:int):

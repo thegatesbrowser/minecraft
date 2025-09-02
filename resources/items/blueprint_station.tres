@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=5 format=3 uid="uid://dn2s8tsdl4rca"]
+
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_b1c5b"]
+[ext_resource type="Script" path="res://scripts/items/utilities.gd" id="2_8pium"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bs4qo"]
+
+[sub_resource type="Resource" id="Resource_et5lg"]
+script = ExtResource("2_8pium")
+has_ui = true
+ui_scene_path = "res://scenes/ui/blueprint_station.tscn"
+spawn_point = false
+portal = false
+needs_metadata = false
+
+[resource]
+script = ExtResource("1_b1c5b")
+break_time = 0.4
+spawn_chance = 0.1
+spawn_size = 1
+spawn_height = 0.0
+unique_name = &"blueprint_station"
+texture = SubResource("PlaceholderTexture2D_bs4qo")
+max_stack = 64
+utility = SubResource("Resource_et5lg")
+rotatable = false
+drop_items = Array[StringName]([&"bluepring_station"])
+forgable = false
+forge_time = 2.0
+value = 10
