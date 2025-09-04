@@ -5,6 +5,8 @@ var users = {}
 var lobbies = {}
 var dao 
 var Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+var allowed_servers:Array = []
+var portal_url:Array[String] = ["test_world"]
 @export var hostPort = 8819
 
 var cryptoUtil = UserCrypto.new()
@@ -34,6 +36,11 @@ func _process(_delta):
 			var data = JSON.parse_string(dataString)
 			##print(data)
 			
+			
+			
+			if data.message == Util.Message.portal:
+				check_portal(data)
+			
 			if data.message == Util.Message.slot_update:
 				update_slot(data)
 			
@@ -46,6 +53,7 @@ func _process(_delta):
 			if data.message == Util.Message.identify:
 				identify_or_create(data)
 				
+				
 			if data.message ==  Util.Message.offer || data.message == Util.Message.answer || data.message ==  Util.Message.candidate:
 				print("source id is " + str(data.orgPeer))
 				sendToPlayer(data.peer, data)
@@ -57,6 +65,7 @@ func peer_connected(id):
 		"id" : id,
 		"message" :  Util.Message.id
 	}
+	print("users ",users)
 	peer.get_peer(id).put_packet(JSON.stringify(users[id]).to_utf8_buffer())
 
 
@@ -140,7 +149,6 @@ func identify_or_create(data):
 	}
 	peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
 
-
 func get_player_data(data):
 	var userData = dao.GetUserFromDB(data.data.client_id)
 	var returnData = {
@@ -158,7 +166,6 @@ func get_player_data(data):
 		## add stuff like player pos etc
 	}
 	peer.get_peer(data.peer).put_packet(JSON.stringify(returnData).to_utf8_buffer())
-
 
 func sendToPlayer(userId, data):
 	peer.get_peer(userId).put_packet(JSON.stringify(data).to_utf8_buffer())
@@ -187,3 +194,12 @@ func _on_button_2_button_down():
 		"data" : "test"
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+
+func check_portal(data:Dictionary):
+	var vx = data.data.x
+	var vy = data.data.y
+	var vz = data.data.z
+	
+	var send_data:Dictionary = {"message" :  Util.Message.portal,"x":vx,"y":vy,"z":vz,"url":portal_url.pick_random()}
+	sendToPlayer(data.peer,send_data)
+	

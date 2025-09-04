@@ -27,7 +27,6 @@ GlobalAnimation="*res://scripts/common/animation.gd"
 TerrainHelper="*res://scripts/common/terrain_helper.gd"
 _CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
 SettingsManager="*res://scripts/common/SettingsManager.gd"
-BackendServer="*res://scripts/multiplayer/backend_server.gd"
 Backend="*res://scenes/backend.tscn"
 Nav="*res://scripts/common/nav.gd"
 
@@ -72,6 +71,9 @@ saveE="save event group"
 Enviroment=""
 "Water Updater"="updates the water"
 NavViewer=""
+Blueprints=""
+LightContainer="hold block lights"
+SoundContainer=""
 
 [input]
 

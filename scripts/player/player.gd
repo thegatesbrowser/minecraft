@@ -118,8 +118,6 @@ func _ready() -> void:
 	Globals.fnished_loading.connect(free_player)
 	spawn_position = start_position
 	
-	Globals.paused = true
-	
 	backendclient = get_tree().get_first_node_in_group("BackendClient")
 	
 	if !backendclient.playerdata.is_empty():
@@ -194,6 +192,18 @@ func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected:
 		interpolate_client(delta); return
 
+	# Head bob
+	if SettingsManager.headbob:
+		t_bob += delta * velocity.length() * float(is_on_floor())
+		camera.transform.origin = _headbob(t_bob)
+	
+	# FOV
+	if SettingsManager.varing_fov:
+		var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
+		var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
+		camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
+		
+		
 	if !is_flying and !swimming and found_ground:
 		# Add the gravity.
 		if not is_on_floor():
@@ -229,17 +239,6 @@ func _physics_process(delta: float) -> void:
 	if Globals.paused:
 		velocity.x = lerp(velocity.x,0.0,.1)
 		velocity.z = lerp(velocity.x,0.0,.1)
-	
-	# Head bob
-	if SettingsManager.headbob:
-		t_bob += delta * velocity.length() * float(is_on_floor())
-		camera.transform.origin = _headbob(t_bob)
-	
-	# FOV
-	if SettingsManager.varing_fov:
-		var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
-		var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
-		camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
 		
 	move_and_slide()
 	set_sync_properties()
@@ -541,16 +540,12 @@ func mine_and_place(delta:float):
 			var coll = ray.get_collider()
 			
 			if coll is CreatureBase:
-				if coll.creature_resource.tamable:
-					if hotbar_item != null:
-						coll.give(hotbar_item,name.to_int())
-						Globals.remove_item_from_hotbar.emit()
 						
-				elif coll.creature_resource.utility != null:
+				if coll.creature_resource.utility != null:
 					var util = coll.creature_resource.utility as Utilities
 					if util.has_ui:
 						print(coll.spawn_pos)
-						Globals.open_inventory.emit(coll.spawn_pos)
+						Globals.open_registered_ui.emit(coll.spawn_pos)
 		
 	if Input.is_action_just_pressed("Mine"):
 		#print(hotbar.get_current().item)
@@ -566,20 +561,20 @@ func mine_and_place(delta:float):
 			if coll is CreatureBase:
 				if hotbar_item != null:
 					if "damage" in hotbar_item:
-						coll.hit(hotbar_item.damage)
+						coll.hit.rpc_id(1, global_position,hotbar_item.damage)
 					else:
-						coll.hit()
+						coll.hit.rpc_id(1, global_position)
 				else:
-					coll.hit()
+					coll.hit.rpc_id(1, global_position)
 					
 			if coll is Player:
 				if hotbar_item != null:
 					if "damage" in hotbar_item:
-						coll.hit.rpc_id(coll.get_multiplayer_authority(),hotbar_item.damage)
+						coll.hit.rpc_id( coll.get_multiplayer_authority(),hotbar_item.damage)
 					else:
-						coll.hit.rpc_id(coll.get_multiplayer_authority())
+						coll.hit.rpc_id( coll.get_multiplayer_authority())
 				else:
-					coll.hit.rpc_id(coll.get_multiplayer_authority())
+					coll.hit.rpc_id( coll.get_multiplayer_authority())
 	
 	if Input.is_action_just_released("Mine"):
 		if hotbar_item is ItemTool:
@@ -660,7 +655,7 @@ func spawn_throwable(data):
 func _spawn_creature():
 	#if not multiplayer.is_server(): return
 	
-	var creature_resource = load("res://resources/creatures/glowtail.tres") as Creature
+	var creature_resource = load("res://resources/creatures/fox.tres") as Creature
 	if creature_resource == null:
 		print("Creature resource not found")
 		return

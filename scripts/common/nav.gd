@@ -50,8 +50,6 @@ func _ready() -> void:
 	add_child(update_nav_timer)
 	update_nav_timer.timeout.connect(update_navs)
 
-
-
 func create_point(pos):
 	#print("multiplayer id ",multiplayer.get_unique_id())
 	
@@ -127,14 +125,14 @@ func find_path(from:Vector3,to:Vector3):
 
 	var path = astar.get_point_path(start_id,end_id,true)
 
-	if debug:
-		debug_path.rpc(path)
+	debug_path.rpc(path)
 	
 	return path
 
 @rpc("any_peer")
 func debug_path(path:PackedVector3Array):
 	if multiplayer.is_server(): return # client debug
+	if not debug: return
 
 	for point in points:
 		if path.has(point):
@@ -152,9 +150,13 @@ func update_navs():
 	clear_points()
 
 	for nav_viewer in nav_viewers:
-		var surroundings = nav_viewer.grab_surrounds()
-		for pos in surroundings:
-			create_point(pos)
+		if nav_viewer != null:
+			var surroundings = nav_viewer.grab_surrounds()
+			for pos in surroundings:
+				create_point(pos)
+		else:
+			if nav_viewers.has(nav_viewer):
+				nav_viewers.erase(nav_viewer)
 
 	connect_points()
 

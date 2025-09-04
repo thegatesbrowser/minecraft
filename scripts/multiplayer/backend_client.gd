@@ -2,8 +2,10 @@ extends Node
 
 @export var debug_ui:Control
 @export var PlayerInfo:RichTextLabel
-#@export var address:String = "ws://127.0.0.1:8819"
-@export var address:String = "ws://188.245.188.59:8819"
+
+var exported_address = "ws://188.245.188.59:8819" 
+var address:String
+
 signal playerdata_updated
 
 var peer = WebSocketMultiplayerPeer.new()
@@ -21,18 +23,24 @@ var playerdata:Dictionary = {}
 
 
 func _ready():
+	if OS.is_debug_build():
+		address = "ws://127.0.0.1:8819"
+	else:
+		address = exported_address
+	
 	Console.add_command("saveD", self, 'saveD')\
 		.set_description("shows the saved player data from the backend).")\
 		.register()
 	#Globals.send_data.connect(update)
+	Globals.ask_for_portal.connect(ask_for_portal_url)
 	Globals.send_slot_data.connect(update_slot)
 	Globals.send_to_server.connect(_update)
-	multiplayer.connected_to_server.connect(RTCServerConnected)
-	multiplayer.peer_connected.connect(RTCPeerConnected)
-	multiplayer.peer_disconnected.connect(RTCPeerDisconnected)
 	
 	if Connection.is_server() == false:
 		connectToServer("")
+	else:
+		connectToServer("")
+		pass
 
 
 func ask_for_player_data(cid):
@@ -48,17 +56,33 @@ func ask_for_player_data(cid):
 
 
 func identify():
-	var cid := get_saved_client_id()
-	var data := {"client_id": cid}
-	var message := {
-		"peer" : id,
-		"orgPeer" : self.id,
-		"message" : Util.Message.identify,
-		"data": data,
-		"Lobby": lobbyValue
-	}
-	print("sent identify message", message)
-	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	var cid:String
+	print("server? ",Connection.is_server() )
+	if Connection.is_server():
+		cid = "server"
+		var data := {"client_id": cid}
+		var message := {
+			"peer" : id,
+			"orgPeer" : self.id,
+			"message" : Util.Message.identify,
+			"data": data,
+			"Lobby": lobbyValue
+		}
+		print("sent identify message", message)
+		peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	else:
+		cid = get_saved_client_id()
+			
+		var data := {"client_id": cid}
+		var message := {
+			"peer" : id,
+			"orgPeer" : self.id,
+			"message" : Util.Message.identify,
+			"data": data,
+			"Lobby": lobbyValue
+		}
+		print("sent identify message", message)
+		peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 
 
 func RTCServerConnected():
@@ -70,12 +94,7 @@ func RTCPeerConnected(peer_id):
 func RTCPeerDisconnected(peer_id):
 	print("backend peer disconnected " + str(peer_id))
 
-
-
 func _process(_delta):
-	if Input.is_action_just_pressed("0"):
-		ask_for_player_data(client_id)
-	
 	peer.poll()
 	if peer.get_available_packet_count() > 0:
 		var packet = peer.get_packet()
@@ -87,25 +106,16 @@ func _process(_delta):
 			
 			if data.message == Util.Message.id:
 				id = data.id
-				connected(id)
 				identify()
 			
+			if data.message == Util.Message.identify:
+				identify()
 			#if data.message == Util.Message.userConnected:
 				##GameManager.Players[data.id] = data.player
 				#createPeer(data.id)
-			
-			if data.message == Util.Message.candidate:
-				if rtcPeer.has_peer(data.orgPeer):
-					print("Got Candididate: " + str(data.orgPeer) + " my id is " + str(id))
-					rtcPeer.get_peer(data.orgPeer).connection.add_ice_candidate(data.mid, data.index, data.sdp)
-			
-			if data.message == Util.Message.offer:
-				if rtcPeer.has_peer(data.orgPeer):
-					rtcPeer.get_peer(data.orgPeer).connection.set_remote_description("offer", data.data)
-			
-			if data.message == Util.Message.answer:
-				if rtcPeer.has_peer(data.orgPeer):
-					rtcPeer.get_peer(data.orgPeer).connection.set_remote_description("answer", data.data)
+			if data.message == Util.Message.portal:
+				print(data)
+				set_portal_url.rpc(data.x,data.y,data.z)
 			
 			if data.message == Util.Message.playerinfo:
 				playerdata = data
@@ -143,88 +153,15 @@ func _update(data:Dictionary):
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 	
-
-func connected(peer_id):
-	rtcPeer.create_mesh(peer_id)
-	multiplayer.multiplayer_peer = rtcPeer
-
-
-#web rtc connection
-func createPeer(peer_id):
-	if peer_id != self.id:
-		var wrtc_peer : WebRTCPeerConnection = WebRTCPeerConnection.new()
-		wrtc_peer.initialize({
-			"iceServers" : [{ "urls": ["stun:stun.l.google.com:19302"] }]
-		})
-		print("binding id " + str(peer_id) + "my id is " + str(self.id))
-		
-		wrtc_peer.session_description_created.connect(self.offerCreated.bind(peer_id))
-		wrtc_peer.ice_candidate_created.connect(self.iceCandidateCreated.bind(peer_id))
-		rtcPeer.add_peer(wrtc_peer, peer_id)
-		
-		if !hostId == self.id:
-			wrtc_peer.create_offer()
-
-
-func offerCreated(type, data, peer_id):
-	if !rtcPeer.has_peer(id):
-		return
-		
-	rtcPeer.get_peer(peer_id).connection.set_local_description(type, data)
-	
-	if type == "offer":
-		sendOffer(peer_id, data)
-	else:
-		sendAnswer(peer_id, data)
-
-
-func sendOffer(peer_id, data):
-	var message = {
-		"peer" : peer_id,
-		"orgPeer" : self.id,
-		"message" :  Util.Message.offer,
-		"data": data,
-		"Lobby": lobbyValue
-	}
-	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-
-
-func sendAnswer(peer_id, data):
-	var message = {
-		"peer" : peer_id,
-		"orgPeer" : self.id,
-		"message" : Util.Message.answer,
-		"data": data,
-		"Lobby": lobbyValue
-	}
-	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-
-
-func iceCandidateCreated(midName, indexName, sdpName, peer_id):
-	var message = {
-		"peer" : peer_id,
-		"orgPeer" : self.id,
-		"message" :  Util.Message.candidate,
-		"mid": midName,
-		"index": indexName,
-		"sdp": sdpName,
-		"Lobby": lobbyValue
-	}
-	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-
-
 func connectToServer(_ip):
 	peer.create_client(address)
 	print("started client trying to connect or ", address)
 
-
 func _on_start_client_button_down():
 	connectToServer("")
 
-
 func saveD():
 	debug_ui.visible = !debug_ui.visible
-
 
 func get_saved_client_id() -> String:
 	if FileAccess.file_exists(CLIENT_ID_PATH):
@@ -234,8 +171,26 @@ func get_saved_client_id() -> String:
 		return s
 	return ""
 
-
 func save_client_id(cid: String) -> void:
+	if Connection.is_server(): return
 	var f := FileAccess.open(CLIENT_ID_PATH, FileAccess.WRITE)
 	f.store_string(cid)
 	f.close()
+
+func ask_for_portal_url(voxel_x,voxel_y,voxel_z):
+	var message = {
+		"peer" : id,
+		"orgPeer" : self.id,
+		"message" : Util.Message.portal,
+		"data": {"x":voxel_x,"y":voxel_y,"z":voxel_z},
+		"Lobby": lobbyValue
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	print("sent portal url request")
+
+@rpc("any_peer",'call_local')
+func set_portal_url(x,y,z):
+	var voxel_tool = TerrainHelper.get_terrain_tool().get_voxel_tool()
+	voxel_tool.set_voxel_metadata(Vector3(x,y,z),"test")
+	#voxel_tool.set_voxel(Vector3(x,y,z),11)
+	print("created portal at ",Vector3(x,y,z))

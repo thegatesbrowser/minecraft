@@ -1,35 +1,21 @@
-[gd_scene load_steps=12 format=3 uid="uid://buts6uhmr7s2d"]
+[gd_scene load_steps=16 format=3 uid="uid://buts6uhmr7s2d"]
 
 [ext_resource type="Script" path="res://scripts/creature_2.0.gd" id="1_qm1no"]
 [ext_resource type="AudioStream" uid="uid://dpjq0v4ih2wn6" path="res://assets/sounds/other/Fox_idle1.ogg" id="3_yg616"]
 [ext_resource type="AudioStream" uid="uid://0hib4sdr5vnx" path="res://assets/sounds/other/Fox_idle6.ogg" id="4_4tu1u"]
 [ext_resource type="PackedScene" uid="uid://dq2adlui7agaw" path="res://scenes/other/nav_viewer.tscn" id="5_4wykx"]
 [ext_resource type="Script" path="res://scripts/creatures/random_sound_3d.gd" id="5_ayjnj"]
+[ext_resource type="PackedScene" uid="uid://dteaa4qc2s1sd" path="res://scenes/other/gen_waiter.tscn" id="6_corsq"]
+[ext_resource type="Script" path="res://scripts/creatures/state_manager.gd" id="7_npuiu"]
+[ext_resource type="Script" path="res://scripts/creatures/creature_idle.gd" id="8_kff4x"]
+[ext_resource type="Script" path="res://scripts/creatures/creature_follow.gd" id="9_ovd2j"]
+[ext_resource type="Script" path="res://scripts/creatures/creature_chase.gd" id="10_w64j2"]
+[ext_resource type="Script" path="res://scripts/creatures/creature_attack.gd" id="11_a2w36"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_qepqm"]
-radius = 0.233188
+[sub_resource type="SphereShape3D" id="SphereShape3D_wmg8c"]
+radius = 0.25
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_14nko"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_wyi4v"]
-radius = 0.25
-height = 0.5
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_akaej"]
-transparency = 1
-no_depth_test = true
-shading_mode = 0
-disable_ambient_light = true
-disable_fog = true
-albedo_color = Color(1, 0, 0, 0.222)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oq0u8"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("RotationRoot:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fl4w3"]
 random_pitch = 1.2
@@ -38,41 +24,41 @@ streams_count = 2
 stream_0/stream = ExtResource("3_yg616")
 stream_1/stream = ExtResource("4_4tu1u")
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oq0u8"]
+properties/0/path = NodePath(".:_position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:_velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:_direction")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:_rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
 [node name="AI Base" type="CharacterBody3D" groups=["NPCS"]]
 script = ExtResource("1_qm1no")
 
-[node name="RotationRoot" type="Node3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.253425, 0)
+shape = SubResource("SphereShape3D_wmg8c")
 
-[node name="jump" type="RayCast3D" parent="RotationRoot"]
+[node name="jump" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
 target_position = Vector3(1.45519e-11, 1.45519e-11, -1)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
-[node name="guide" type="Node3D" parent="."]
+[node name="RotationRoot" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.202886, 0.0954758)
-shape = SubResource("SphereShape3D_qepqm")
+[node name="guide" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="attack range" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="attack range"]
 shape = SubResource("BoxShape3D_14nko")
-
-[node name="eyes" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05284, 0)
-target_position = Vector3(0, 0, -3.09)
-debug_shape_custom_color = Color(1, 1, 0, 1)
-
-[node name="target" type="MeshInstance3D" parent="."]
-visible = false
-visibility_range_begin = 60.0
-visibility_range_fade_mode = 1
-mesh = SubResource("SphereMesh_wyi4v")
-surface_material_override/0 = SubResource("StandardMaterial3D_akaej")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_oq0u8")
 
 [node name="Sounds" type="Node3D" parent="."]
 
@@ -100,14 +86,35 @@ autostart = true
 max_distance = 10.0
 panning_strength = 3.0
 
-[node name="Ground" type="RayCast3D" parent="."]
-target_position = Vector3(1.45519e-11, -3000, 1.45519e-11)
-
-[node name="Node" type="Node" parent="."]
-
 [node name="NavViewer" parent="." instance=ExtResource("5_4wykx")]
 x_radius = 6
 z_radius = 6
+
+[node name="Gen Waiter" parent="." instance=ExtResource("6_corsq")]
+check_size = Vector3(2, 2, 2)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_oq0u8")
+
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_npuiu")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
+script = ExtResource("8_kff4x")
+creature = NodePath("../..")
+
+[node name="Follow" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
+script = ExtResource("9_ovd2j")
+creature = NodePath("../..")
+
+[node name="Chase" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
+script = ExtResource("10_w64j2")
+creature = NodePath("../..")
+
+[node name="Attack" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
+script = ExtResource("11_a2w36")
+creature = NodePath("../..")
 
 [connection signal="body_entered" from="attack range" to="." method="_on_attack_range_body_entered"]
 [connection signal="timeout" from="Sounds/idle/Timer" to="Sounds/idle" method="_on_timer_timeout"]

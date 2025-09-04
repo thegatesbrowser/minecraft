@@ -7,25 +7,25 @@ var passcode = "dqaduqiqbnmn1863841hjb"
 
 @export var encrypt:bool = false
 @export var Creature_save_path:String = "res://CreatureSave.save"
-@export var ItemManager:Node
+@export var registered_ui_save_path:String = "res://registered_ui.save"
+@export var UI_syncer:Node
 @export var Voxels:VoxelBlockyTypeLibrary 
 
 func _ready() -> void:
+	save_item(load("res://resources/items/stone.tres"))
+	#Globals.fnished_loading.connect(load_creatures)
 	Globals.save.connect(save_player_ui)
 	Globals.save_slot.connect(save_slot)
 	
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	Terrain = get_tree().get_first_node_in_group("VoxelTerrain")
-	#var data = Voxels.serialize_id_map_to_string_array()
-	#var file = FileAccess.open("res://voxels.txt",FileAccess.WRITE)
-	#file.store_line(JSON.stringify(data))
 
 
 func _on_peer_connected(_peer_id: int) -> void:
 	if multiplayer.get_peers().size() == 1:
-		load_creatures()
-
+		#load_creatures()
+		load_registered_ui()
 
 func _on_peer_disconnected(_peer_id: int) -> void:
 	if multiplayer.get_peers().size() == 0:
@@ -39,8 +39,10 @@ func exit_tree() -> void:
 
 
 func save() -> void:
+	
 	if multiplayer.is_server():
 		save_creatures()
+		save_regisited_ui()
 		Terrain.save_modified_blocks()
 
 
@@ -60,33 +62,6 @@ func save_player_ui() -> void:
 func save_slot(index: int, item_path: String, amount: int,parent: String,health: int, rot:int) -> void:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	Globals.send_slot_data.emit({"index":index,"item_path":item_path,"amount":amount,"parent":parent,"health":health,"rot":rot,"client_id":BackendClient.client_id})
-
-
-func save_item(item:ItemBase, _buffer=[], size:Vector2 = Vector2.ZERO) -> void:
-	var data := {}
-	var item_data = inst_to_dict(item)
-	
-	var image = item.texture.get_image()
-	
-	var buffer = image.save_png_to_buffer()
-	
-	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	if BackendClient.playerdata.item_data != null:
-		data = JSON.parse_string(BackendClient.playerdata.item_data)
-		
-	if data.has(item.unique_name):
-		if BackendClient.playerdata.Inventory.has(item.unique_name) == false and BackendClient.playerdata.Hotbar.has(item.unique_name) == false:
-			data.erase(item.unique_name)
-	else:
-		data[item.unique_name] = {
-			"texture": buffer
-		}
-	
-	
-	var save_data = JSON.stringify(data)
-	
-	## Save This Data
-	Globals.send_data.emit({"client_id" : BackendClient.client_id , "change_name" : "item_data","change" : save_data})
 
 
 func save_creatures() -> void:
@@ -138,9 +113,76 @@ func load_creatures() -> void:
 
 		# Get the data from the JSON object.
 		var node_data = json.data
-	
+
+		var spawn_pos = Vector3(node_data["spawn_pos_x"],node_data["spawn_pos_y"],node_data["spawn_pos_z"])
 		#spawn.rpc()
 		await get_tree().create_timer(.3).timeout
-		Globals.spawn_creature.emit(Vector3(node_data["x"],node_data["y"],node_data["z"]),load(node_data["creature_path"]))
+		Globals.spawn_creature.emit(Vector3(node_data["x"],node_data["y"],node_data["z"]),load(node_data["creature_path"]),spawn_pos)
 		#call_deferred("spawn",)
 		
+func save_regisited_ui():
+	var data = UI_syncer.registered_ui_info
+
+	var save_file = FileAccess.open(registered_ui_save_path, FileAccess.WRITE)
+
+
+	var json_string = JSON.stringify(data)
+
+	# Store the save dictionary as a new line in the save file.
+	save_file.store_line(json_string)
+
+func load_registered_ui():
+	return
+	if not FileAccess.file_exists(registered_ui_save_path):
+		return # Error! We don't have a save to load.
+
+	var save_file = FileAccess.open(registered_ui_save_path, FileAccess.READ)
+
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+
+		var json = JSON.new()
+
+		# Check if there is any error while parsing the JSON string, skip in case of failure.
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+
+		# Get the data from the JSON object.
+		var node_data = json.data
+		print("node_data",node_data)
+		UI_syncer.registered_ui_info = node_data
+
+func save_item(item:ItemBase):
+	var resource_data = inst_to_dict(item) ## all exturnal textures etc will be lost
+	
+	var item_save:Dictionary = {}
+	
+	var variables:Array[String]
+	
+	for variable_name in resource_data:
+		if variable_name is String:
+			if ! variable_name.begins_with("@"):
+				
+				var resource = item.get(variable_name)
+				
+				if resource is Texture2D:
+					var texture:Texture2D = load("res://assets/textures/items/pixil-frame-0 - 2025-04-04T181640.172.png")
+					var image:Image = texture.get_image()
+					var data = image.save_png_to_buffer()
+					var new_img := Image.new()
+					new_img.load_png_from_buffer(data)
+					var new_texture:=ImageTexture.new()
+					new_texture.create_from_image(new_img)
+					ResourceSaver.save(new_img,"res://test.png")
+					print(variable_name, "  ",data)
+				
+				item_save[variable_name] = resource_data[variable_name]
+	
+	
+	
+	print(item_save)
+	
+	var new_item = dict_to_inst(resource_data)
+	ResourceSaver.save(new_item,"res://test.tres")

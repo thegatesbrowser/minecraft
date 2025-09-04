@@ -5,5 +5,3 @@
 [node name="Global" type="Node"]
 script = ExtResource("1")
 print_level = 0
-chunk_size = Vector3(16, 128, 16)
-chunk_loading_threads = 8

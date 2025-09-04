@@ -1,8 +1,10 @@
 extends Node
 class_name Util
 
+
 enum Message{
 	id,
+	serverid,
 	join,
 	userConnected,
 	userDisconnected,
@@ -16,5 +18,6 @@ enum Message{
 	identify,
 	playerinfo,
 	update,
-	slot_update
+	slot_update,
+	portal,
 }

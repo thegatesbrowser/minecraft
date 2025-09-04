@@ -1,7 +1,7 @@
 extends Resource
 class_name CraftableLibrary
 
-@export var craftable_array: Array[Craftable]
+@export var craftable_array: Array[Blueprint]
 
 var craftables: Dictionary = {}
 
@@ -11,5 +11,5 @@ func init_craftable():
 		craftables[craftable.Name] = craftable
 
 
-func get_craftable(unique_name: StringName) -> Craftable:
+func get_craftable(unique_name: StringName) -> Blueprint:
 	return craftables[unique_name]

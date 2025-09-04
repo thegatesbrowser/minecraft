@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cf6c450ctftp2" path="res://assets/textures/items/Oak Plank.png" id="1_5p0io"]
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="2_idmfe"]
 [ext_resource type="Resource" uid="uid://mv1twiklruq5" path="res://resources/items/shovel_wood.tres" id="3_1ehjv"]
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_c1li7"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="4_c1li7"]
 [ext_resource type="Texture2D" uid="uid://3cnaqqywpwv2" path="res://assets/textures/items/wood_shovel.png" id="5_6n0gx"]
 
 [resource]

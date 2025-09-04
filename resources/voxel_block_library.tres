@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=111 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=119 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/materials/terrain.material" id="1_8hqtx"]
 [ext_resource type="Material" uid="uid://6a7s1y7xwrh8" path="res://assets/materials/terrain_material_foliage.material" id="2_tyu8p"]
@@ -11,13 +11,14 @@
 [ext_resource type="Texture2D" uid="uid://d10fsk4wa54su" path="res://assets/textures/blocks/flower_rose.png" id="8_es8ej"]
 [ext_resource type="Texture2D" uid="uid://b7ihfj3ynsmyg" path="res://assets/textures/blocks/fire.png" id="8_lg5pj"]
 [ext_resource type="Texture2D" uid="uid://gamdwyj2ov1x" path="res://assets/textures/blocks/double_plant_fern_top.png" id="9_ixyq0"]
-[ext_resource type="Texture2D" uid="uid://bj0k37nqmn31y" path="res://assets/textures/blocks/lapis_block.png" id="10_yc1ft"]
 [ext_resource type="Material" uid="uid://dhbknp6n7qomp" path="res://assets/materials/fire.tres" id="11_4llsq"]
+[ext_resource type="Shader" path="res://scripts/shaders/portal.gdshader" id="12_rl3je"]
 [ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="12_tb762"]
 [ext_resource type="Texture2D" uid="uid://c4qc2xe8j6hkv" path="res://assets/textures/blocks/reeds.png" id="15_2yhxf"]
 [ext_resource type="Texture2D" uid="uid://c3pdydgbmeasd" path="res://assets/textures/blocks/wheatpng.png" id="15_neqns"]
 [ext_resource type="Texture2D" uid="uid://cp3y4uihouojd" path="res://assets/textures/blocks/wheat_seeds.png" id="16_gn5r2"]
 [ext_resource type="Texture2D" uid="uid://d3tymthu4wkvb" path="res://assets/textures/blocks/flower tall.png" id="18_2bxy0"]
+[ext_resource type="Texture2D" uid="uid://dw1chy4alyqj2" path="res://assets/textures/blocks/test textures.png" id="19_baq5y"]
 
 [sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_54jvr"]
 
@@ -291,8 +292,6 @@ alpha_antialiasing_mode = 0
 cull_mode = 2
 albedo_texture = ExtResource("8_lg5pj")
 emission_enabled = true
-emission = Color(1, 0.235294, 0, 1)
-emission_energy_multiplier = 2.75
 emission_texture = ExtResource("8_lg5pj")
 texture_filter = 0
 
@@ -395,17 +394,18 @@ unique_name = &"fern"
 base_model = SubResource("VoxelBlockyModelMesh_22ywj")
 resource_name = "fern"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ms3ed"]
-albedo_texture = ExtResource("10_yc1ft")
-emission_enabled = true
-emission_energy_multiplier = 6.18
-emission_texture = ExtResource("10_yc1ft")
-uv1_triplanar = true
-uv1_world_triplanar = true
-texture_filter = 0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2m5i5"]
+render_priority = 0
+shader = ExtResource("12_rl3je")
+shader_parameter/color1 = Color(0, 0.9, 1, 1)
+shader_parameter/color2 = Color(0, 1, 1, 1)
+shader_parameter/color3 = Color(0, 0, 0, 1)
+shader_parameter/x_amount = 384.0
+shader_parameter/y_amount = 384.0
+shader_parameter/e_amount = 0.2
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_jvmn8"]
-material_override_0 = SubResource("StandardMaterial3D_ms3ed")
+material_override_0 = SubResource("ShaderMaterial_2m5i5")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_3bomk"]
 unique_name = &"portal"
@@ -631,8 +631,16 @@ unique_name = &"cave_air"
 base_model = SubResource("VoxelBlockyModelEmpty_b28sd")
 resource_name = "cave_air"
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bjsk"]
+transparency = 4
+albedo_color = Color(1, 1, 1, 0.203922)
+
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_nsyqt"]
+culls_neighbors = false
 random_tickable = true
+collision_aabbs = Array[AABB]([])
+material_override_0 = SubResource("StandardMaterial3D_5bjsk")
+collision_enabled_0 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_5w55q"]
 unique_name = &"spawner"
@@ -702,6 +710,45 @@ unique_name = &"cactus"
 base_model = SubResource("VoxelBlockyModelCube_lf26l")
 resource_name = "cactus"
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3qpsq"]
+transparency = 2
+alpha_scissor_threshold = 0.909
+alpha_antialiasing_mode = 0
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.321728, 0.321728, 0.321728, 1)
+albedo_texture = ExtResource("19_baq5y")
+metallic_specular = 0.2
+emission_energy_multiplier = 2.0
+texture_filter = 0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_y4e0k"]
+atlas_size_in_tiles = Vector2i(12, 4)
+tile_left = Vector2i(3, 0)
+tile_right = Vector2i(3, 0)
+tile_bottom = Vector2i(3, 0)
+tile_top = Vector2i(3, 0)
+tile_back = Vector2i(3, 0)
+tile_front = Vector2i(3, 0)
+collision_aabbs = Array[AABB]([])
+material_override_0 = SubResource("StandardMaterial3D_3qpsq")
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_uvhfn"]
+unique_name = &"bedrock"
+base_model = SubResource("VoxelBlockyModelCube_y4e0k")
+resource_name = "bedrock"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pg5pm"]
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_sg625"]
+material_override_0 = SubResource("StandardMaterial3D_pg5pm")
+
+[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_mxeht"]
+unique_name = &"blueprint_station"
+base_model = SubResource("VoxelBlockyModelCube_sg625")
+resource_name = "blueprint_station"
+
 [resource]
-types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_o5re0"), SubResource("VoxelBlockyType_xg2os"), SubResource("VoxelBlockyType_ywefl"), SubResource("VoxelBlockyType_3d0ox"), SubResource("VoxelBlockyType_5w55q"), SubResource("VoxelBlockyType_55pfu"), SubResource("VoxelBlockyType_ygmhy")])
-_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]", "wheat", "wheat_seed", "sandstone", "cave_air", "cooker[direction=0]", "cooker[direction=1]", "cooker[direction=2]", "cooker[direction=3]", "cooker[direction=4]", "cooker[direction=5]", "spawner", "tall_flower", "wood_parm", "leaf_parm")
+types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_o5re0"), SubResource("VoxelBlockyType_xg2os"), SubResource("VoxelBlockyType_ywefl"), SubResource("VoxelBlockyType_3d0ox"), SubResource("VoxelBlockyType_5w55q"), SubResource("VoxelBlockyType_55pfu"), SubResource("VoxelBlockyType_ygmhy"), SubResource("VoxelBlockyType_uvhfn"), SubResource("VoxelBlockyType_mxeht")])
+_id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]", "wheat", "wheat_seed", "sandstone", "cave_air", "cooker[direction=0]", "cooker[direction=1]", "cooker[direction=2]", "cooker[direction=3]", "cooker[direction=4]", "cooker[direction=5]", "spawner", "tall_flower", "wood_parm", "leaf_parm", "bedrock", "blueprint_station")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dteaa4qc2s1sd"]
+
+[ext_resource type="Script" path="res://scripts/other/gen_waiter.gd" id="1_xa28y"]
+
+[node name="Gen Waiter" type="Node3D"]
+script = ExtResource("1_xa28y")

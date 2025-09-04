@@ -27,7 +27,12 @@ func slot_clicked(slot:Slot):
 		return
 
 	_play_ui_sound()
-			
+	
+	if slot.item is Blueprint:
+		Globals.blueprint_hovered.emit(slot.item,slot)
+	else:
+		Globals.blueprint_unhovered.emit()
+
 	if last_clicked_slot == null:
 		last_clicked_slot = slot
 		last_clicked_slot.focused = true
@@ -50,6 +55,9 @@ func add_item_to_hotbar_or_inventory(item:ItemBase):
 func _move_item_to_slot(slot: Slot) -> void:
 	if not _can_equip(slot, last_clicked_slot.item):
 		return
+		
+	if not blueprint_check(last_clicked_slot.item,slot): return
+		
 	slot.item = last_clicked_slot.item
 	slot.health = last_clicked_slot.health
 	slot.amount = last_clicked_slot.amount
@@ -80,6 +88,11 @@ func _swap_items(slot: Slot) -> void:
 		return
 	if not _can_equip(last_clicked_slot, slot.item):
 		return
+		
+	if not blueprint_check(last_clicked_slot.item,slot): return
+	
+	if not blueprint_check(slot.item,last_clicked_slot): return
+	
 	var hold_health = slot.health
 	var hold_amount = slot.amount
 	var hold_rot = slot.rot
@@ -114,3 +127,20 @@ func _can_equip(slot: Slot, item) -> bool:
 func _play_ui_sound() -> void:
 	var soundmanager = get_node("/root/Main").find_child("SoundManager")
 	soundmanager.play_UI_sound()
+
+func blueprint_check(item:ItemBase,slot:Slot) -> bool:
+	if slot.type == "blueprint":
+		if item is Blueprint:
+			return true
+		else:
+			return false
+	else:
+		return true
+
+func blueprint_holder_full():
+	var blueprint_holder = get_tree().get_first_node_in_group("Blueprints")
+	
+	for slot in blueprint_holder.get_children():
+		if slot.item == null: return slot
+		
+	return null

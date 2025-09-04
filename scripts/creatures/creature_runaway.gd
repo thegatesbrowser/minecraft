@@ -4,7 +4,7 @@ class_name CreatureRunaway
 @export var creature : CharacterBody3D
 var player: Player
 
-func Enter():
+func Enter(data:Dictionary):
 	player = get_closest_player()
 	
 func Physics_Update(delta:float):
@@ -24,7 +24,7 @@ func Physics_Update(delta:float):
 		creature.velocity = creature.velocity.move_toward(new_velocity, .25)
 		creature.look_at_target = Vector3(player.global_position.x,current_pos.y + 0.01,player.global_position.z)
 	else:
-		Transitioned.emit(self,"Idle")
+		Transitioned.emit(self,"Idle",{})
 		
 
 

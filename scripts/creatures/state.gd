@@ -2,9 +2,9 @@ extends Node
 
 class_name State
 
-signal Transitioned
+signal Transitioned(state, new_state_name, data)
 
-func Enter():
+func Enter(data:Dictionary):
 	pass
 	
 func Exit():

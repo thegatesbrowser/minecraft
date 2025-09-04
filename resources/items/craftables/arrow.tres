@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=5 format=3 uid="uid://bmkvd4u27kgp1"]
+[gd_resource type="Resource" script_class="Blueprint" load_steps=5 format=3 uid="uid://bmkvd4u27kgp1"]
 
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_iwsia"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="1_iwsia"]
 [ext_resource type="Texture2D" uid="uid://h8nndohifc41" path="res://assets/textures/items/Oak Log.png" id="1_xyhkt"]
 [ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="2_hxsmd"]
 [ext_resource type="Texture2D" uid="uid://qy6bwyrphdnd" path="res://assets/textures/items/arrow.png" id="4_daeo1"]
@@ -8,8 +8,6 @@
 [resource]
 script = ExtResource("1_iwsia")
 Name = "arrow"
-texture = ExtResource("4_daeo1")
-output_item = ExtResource("2_hxsmd")
 output_amount = 1
 items_needed = {
 1: {
@@ -18,3 +16,12 @@ items_needed = {
 "texture": ExtResource("1_xyhkt")
 }
 }
+unique_name = &""
+texture = ExtResource("4_daeo1")
+max_stack = 1
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+output_item = ExtResource("2_hxsmd")
+value = 10

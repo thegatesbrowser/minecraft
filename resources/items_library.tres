@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemsLibrary" load_steps=43 format=3 uid="uid://bh4f3xyyxfdql"]
+[gd_resource type="Resource" script_class="ItemsLibrary" load_steps=44 format=3 uid="uid://bh4f3xyyxfdql"]
 
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="1_n30f3"]
 [ext_resource type="Resource" uid="uid://bgful1da4rkm2" path="res://resources/items/grass.tres" id="1_udeus"]
@@ -41,8 +41,9 @@
 [ext_resource type="Resource" uid="uid://w67gfj5ynnx3" path="res://resources/items/sand.tres" id="40_nnmso"]
 [ext_resource type="Resource" uid="uid://bjxmpky4bm43a" path="res://resources/items/wheat_seed.tres" id="41_mxabo"]
 [ext_resource type="Resource" uid="uid://bdgeb6sqe2tl" path="res://resources/items/wheat.tres" id="42_7oean"]
+[ext_resource type="Resource" uid="uid://dn2s8tsdl4rca" path="res://resources/items/blueprint_station.tres" id="42_qafv7"]
 [ext_resource type="Resource" uid="uid://7mxkqc78efvq" path="res://resources/items/wheat_powder.tres" id="43_yop1k"]
 
 [resource]
 script = ExtResource("1_n30f3")
-items_array = Array[ExtResource("4_bm54l")]([ExtResource("1_udeus"), ExtResource("2_40n5o"), ExtResource("3_5ujum"), ExtResource("5_ry5ga"), ExtResource("6_u3ykv"), ExtResource("7_c3cri"), ExtResource("8_eteuy"), ExtResource("10_rprqd"), ExtResource("11_v0vys"), ExtResource("12_5qwqh"), ExtResource("13_eaw87"), ExtResource("14_4smx3"), ExtResource("15_saklh"), ExtResource("16_wuxvt"), ExtResource("17_yewko"), ExtResource("18_ui7of"), ExtResource("12_5qwqh"), ExtResource("20_rqmp1"), ExtResource("21_y1rwn"), ExtResource("22_kco8g"), ExtResource("23_p6hj2"), ExtResource("24_k8teb"), ExtResource("25_4203e"), ExtResource("26_xcwoa"), ExtResource("27_jk2ju"), ExtResource("28_to4we"), ExtResource("29_mv412"), ExtResource("30_src1s"), ExtResource("31_23i81"), ExtResource("32_r0vl2"), ExtResource("33_lmrg2"), ExtResource("34_iu2j2"), ExtResource("35_oo53n"), ExtResource("36_kersy"), ExtResource("37_fmxgs"), ExtResource("38_x163h"), ExtResource("39_ta271"), ExtResource("40_nnmso"), ExtResource("41_mxabo"), ExtResource("42_7oean"), ExtResource("43_yop1k")])
+items_array = Array[ExtResource("4_bm54l")]([ExtResource("1_udeus"), ExtResource("2_40n5o"), ExtResource("3_5ujum"), ExtResource("5_ry5ga"), ExtResource("6_u3ykv"), ExtResource("7_c3cri"), ExtResource("8_eteuy"), ExtResource("10_rprqd"), ExtResource("11_v0vys"), ExtResource("12_5qwqh"), ExtResource("13_eaw87"), ExtResource("14_4smx3"), ExtResource("15_saklh"), ExtResource("16_wuxvt"), ExtResource("17_yewko"), ExtResource("18_ui7of"), ExtResource("12_5qwqh"), ExtResource("20_rqmp1"), ExtResource("21_y1rwn"), ExtResource("22_kco8g"), ExtResource("23_p6hj2"), ExtResource("24_k8teb"), ExtResource("25_4203e"), ExtResource("26_xcwoa"), ExtResource("27_jk2ju"), ExtResource("28_to4we"), ExtResource("29_mv412"), ExtResource("30_src1s"), ExtResource("31_23i81"), ExtResource("32_r0vl2"), ExtResource("33_lmrg2"), ExtResource("34_iu2j2"), ExtResource("35_oo53n"), ExtResource("36_kersy"), ExtResource("37_fmxgs"), ExtResource("38_x163h"), ExtResource("39_ta271"), ExtResource("40_nnmso"), ExtResource("41_mxabo"), ExtResource("42_7oean"), ExtResource("43_yop1k"), ExtResource("42_qafv7")])

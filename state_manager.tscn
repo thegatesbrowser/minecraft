@@ -3,25 +3,21 @@
 [ext_resource type="Script" path="res://scripts/creatures/state_manager.gd" id="1_t3tgq"]
 [ext_resource type="Script" path="res://scripts/creatures/creature_idle.gd" id="2_56jof"]
 [ext_resource type="Script" path="res://scripts/creatures/creature_follow.gd" id="3_0e36p"]
-[ext_resource type="Script" path="res://scripts/creatures/creature_attack.gd" id="4_ag4gc"]
+[ext_resource type="Script" path="res://scripts/creatures/creature_chase.gd" id="4_ag4gc"]
 [ext_resource type="Script" path="res://scripts/creatures/creature_runaway.gd" id="5_faalw"]
 
 [node name="StateManager" type="Node" node_paths=PackedStringArray("initial_state")]
 script = ExtResource("1_t3tgq")
-initial_state = NodePath("Idle")
+initial_state = NodePath("Follow")
 
-[node name="Idle" type="Node" parent="." node_paths=PackedStringArray("creature")]
+[node name="Idle" type="Node" parent="."]
 script = ExtResource("2_56jof")
-creature = NodePath("")
 
-[node name="Follow" type="Node" parent="." node_paths=PackedStringArray("creature")]
+[node name="Follow" type="Node" parent="."]
 script = ExtResource("3_0e36p")
-creature = NodePath("")
 
-[node name="Attack" type="Node" parent="." node_paths=PackedStringArray("creature")]
+[node name="Attack" type="Node" parent="."]
 script = ExtResource("4_ag4gc")
-creature = NodePath("")
 
-[node name="RunAway" type="Node" parent="." node_paths=PackedStringArray("creature")]
+[node name="RunAway" type="Node" parent="."]
 script = ExtResource("5_faalw")
-creature = NodePath("")

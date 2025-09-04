@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://c3sbkqtek6ll8" path="res://resources/items/ammo.tres" id="1_j7fru"]
 [ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="1_xe53y"]
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_ygcww"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="1_ygcww"]
 [ext_resource type="Texture2D" uid="uid://ea67abfva84w" path="res://assets/textures/items/ammo.png" id="4_pbl4m"]
 
 [resource]

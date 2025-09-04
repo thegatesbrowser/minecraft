@@ -10,6 +10,9 @@ func _ready() -> void:
 		start_scene()
 		return
 
+	else:
+		pass
+		#start_scene()
 	Backend.playerdata_updated.connect(start_scene)
 
 func _process(delta):

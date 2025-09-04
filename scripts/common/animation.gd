@@ -15,3 +15,6 @@ func _tween(subject:Node,tween_name:String,time:float,slide_to_pos:Vector2 = Vec
 		tween.tween_property(subject,"scale",Vector2(0,0),time/2)
 	if tween_name == "slide_out":
 		tween.tween_property(subject,"position",slide_to_pos,time/2)
+		
+	if tween_name == "hurt":
+		tween.tween_property(subject,"mo",slide_to_pos,time/2)

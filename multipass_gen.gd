@@ -10,9 +10,10 @@ const cavenoise:FastNoiseLite = preload("res://resources/noises/cave_noise.tres"
 const river_noise:FastNoiseLite = preload("res://resources/noises/river noise.tres")
 const hill_noise:FastNoiseLite = preload("res://resources/noises/hills noise.tres")
 
-
 var last_biome:String = ""
 
+var _tested:bool = false
+var Bedrock:int = voxels.get_model_index_default("bedrock")
 const AIR: int = 0
 
 var biomes : Dictionary = {
@@ -26,6 +27,9 @@ var biomes : Dictionary = {
 		"noise": preload("res://resources/forest.tres"),
 		"biome_curve": preload("res://resources/heightmap_curve forest.tres"),
 		"trees": ["res://pine_tree 1.txt","res://pine_tree 2.txt","res://pine_tree 3.txt"],
+		"_custom_structures": {"res://chest_island.txt": {"spawn_chance":0.1,}},
+		"creatures": ["res://resources/creatures/fox.tres"],
+		"creature_spawn_chance": 0.006
 	},
 	"desert": {
 		"heat_range": [11,12,13,14,15,16,17,18,19,20],
@@ -37,9 +41,11 @@ var biomes : Dictionary = {
 		"noise": preload("res://resources/desert.tres"),
 		"biome_curve": preload("res://resources/heightmap_curve desert.tres"),
 		"trees": [],
+		"_custom_structures": {"res://chest_island.txt": {"spawn_chance":0.1,}},
+		"creatures": [],
+		"creature_spawn_chance": 0.006
 	},
 }
-
 
 const CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
@@ -52,11 +58,6 @@ var moisture_noise: FastNoiseLite = FastNoiseLite.new()
 
 var max_heightmap:int = (curve.max_value)
 var min_heightmap:int = (curve.min_value)
-
-var _tree_structures := []
-var _custom_structures := []
-var _trees_min_y := 0
-var _trees_max_y := 0
 
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -74,7 +75,7 @@ const _moore_dirs = [
 func _init() -> void:
 	var cus_gen = CustomStructureGen.new()
 
-	_custom_structures = cus_gen.generate()
+	#_custom_structures = cus_gen.generate()
 
 	heightmap_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	heightmap_noise.frequency = 0.01
@@ -82,7 +83,6 @@ func _init() -> void:
 	temperature_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	temperature_noise.frequency = 0.01
 	temperature_noise.seed = 123453
-
 
 	temp_curve.bake()
 	curve.bake()
@@ -124,12 +124,16 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 					if y <= real_height:
 
 						if y == real_height:
-							
-							if rng.randf() <= 0.8:
-								#voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
-								#voxel_tool.set_voxel_metadata(Vector3i(x, y, z), load("res://resources/creatures/fox.tres"))
+							if rng.randf() <= 0.2:
+								#voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("portal"))
 								pass
-							if rng.randf() <= 0.5:
+								
+							elif rng.randf() <= biomes[biome_name].creature_spawn_chance:
+								if biomes[biome_name].creatures.is_empty() == false:
+									voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
+									voxel_tool.set_voxel_metadata(Vector3i(x, y, z), load(biomes[biome_name].creatures.pick_random()))
+								pass
+							elif rng.randf() <= 0.5:
 								
 								var plant = biomes[biome_name].plants.pick_random()
 								voxel_tool.set_voxel(Vector3i(x, y, z), plant)
@@ -149,9 +153,9 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 							if rng.randf() < .001:
 								voxel_tool.set_voxel(Vector3i(x, y, z),ore)
 
-						var cave = cave(x,y,z)
+						var _cave = cave(x,y,z)
 						
-						if cave:
+						if _cave:
 							voxel_tool.set_voxel(Vector3i(x, y, z),AIR)# x, y, and z are all between 0-15
 					else:
 						voxel_tool.set_voxel(Vector3i(x, y, z), AIR)
@@ -159,14 +163,14 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 
 	elif pass_index == 1:
 		#try_place_structure(voxel_tool, rng)
-		#var tree_count := 7
-		pass
-		#for tree_index in tree_count:
-			#try_plant_tree(voxel_tool, rng)
+		var tree_count := 7
+		for tree_index in tree_count:
+			try_plant_tree(voxel_tool, rng)
 			
 
 	elif pass_index == 2:
-		try_place_structure(voxel_tool, rng)
+		for i in 3:
+			try_place_structure(voxel_tool, rng)
 					
 								 
 func _get_height_at(x: int, z: int) -> int:
@@ -234,13 +238,13 @@ func try_plant_tree(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNumberGe
 	
 	var paste_buffer := VoxelBuffer.new()
 	var biome_name = get_biome(get_temp(tree_pos.x,tree_pos.z))
-	print("biome ", biomes[biome_name])
+	#print("biome ", biomes[biome_name])
 	if biomes[biome_name].trees.is_empty(): return # returns if no trees in that biome
 
 	var tree = biomes[biome_name].trees.pick_random()
 
 	var file = FileAccess.open(tree,FileAccess.READ)
-	print("file ",file)
+	#print("file ",file)
 	var size := file.get_32()
 	var data := file.get_buffer(size)
 	VoxelBlockSerializer.deserialize_from_byte_array(data, paste_buffer, true)
@@ -274,17 +278,34 @@ func try_place_structure(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNum
 	if not found_ground:
 		#print("Ground not found")
 		return
-	var structure:Structure = _custom_structures.pick_random()
-
+		
+	var biome_name = get_biome(get_temp(tree_pos.x,tree_pos.z))
 	
-	if rng.randf() > structure.spawn_chance: return
-
-	voxel_tool.paste_masked(tree_pos, structure.voxels, 1 << VoxelBuffer.CHANNEL_TYPE,VoxelBuffer.CHANNEL_TYPE,voxels.get_model_index_default("air"))
-
-
+	var structures:Dictionary = biomes[biome_name]._custom_structures
 	
+	var structure_paths:Array = structures.keys()
+	structure_paths.shuffle()
 	
-
+	var chance = rng.randf()
+	
+	var structure:String = ""
+	
+	for i in structure_paths:
+		if structures[i].spawn_chance > chance:
+			#print( "S chance ",structures[i].spawn_chance, " chance ",chance)
+			structure = i
+			break
+	
+	if structure == "": return ## did not find a structure
+	
+	var paste_buffer := VoxelBuffer.new()
+	paste_buffer.for_each_voxel_metadata(test)
+	var file = FileAccess.open(structure,FileAccess.READ)
+	#print("file ",file)
+	var size := file.get_32()
+	var data := file.get_buffer(size)
+	VoxelBlockSerializer.deserialize_from_byte_array(data, paste_buffer, true)
+	voxel_tool.paste_masked(tree_pos, paste_buffer, 1 << VoxelBuffer.CHANNEL_TYPE,VoxelBuffer.CHANNEL_TYPE,voxels.get_model_index_default("air"))
 func get_biome(temp: int) -> String:
 	for biome_name in biomes:
 		var biome = biomes[biome_name]
@@ -305,3 +326,5 @@ func plant(voxel:int) -> bool:
 
 	return false
 	
+func test():
+	print("meta")

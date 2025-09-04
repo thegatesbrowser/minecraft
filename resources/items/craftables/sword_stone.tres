@@ -1,16 +1,14 @@
-[gd_resource type="Resource" script_class="Craftable" load_steps=6 format=3 uid="uid://bc8la606um3eo"]
+[gd_resource type="Resource" script_class="Blueprint" load_steps=6 format=3 uid="uid://bc8la606um3eo"]
 
 [ext_resource type="Texture2D" uid="uid://b1fb5ogupbs2s" path="res://assets/textures/items/Stone.png" id="1_ablcu"]
 [ext_resource type="Texture2D" uid="uid://bj12475lpqx8q" path="res://assets/textures/items/fishing_rod_cast.png" id="2_kq3rq"]
 [ext_resource type="Resource" uid="uid://2ffbymwl8rid" path="res://resources/items/sword_stone.tres" id="3_sppv4"]
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="4_5rbn2"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="4_5rbn2"]
 [ext_resource type="Texture2D" uid="uid://dudcasy8dleom" path="res://assets/textures/items/stone_sword.png" id="5_iw6jf"]
 
 [resource]
 script = ExtResource("4_5rbn2")
 Name = "Sword Stone"
-texture = ExtResource("5_iw6jf")
-output_item = ExtResource("3_sppv4")
 output_amount = 1
 items_needed = {
 1: {
@@ -24,3 +22,12 @@ items_needed = {
 "texture": ExtResource("2_kq3rq")
 }
 }
+unique_name = &""
+texture = ExtResource("5_iw6jf")
+max_stack = 64
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+output_item = ExtResource("3_sppv4")
+value = 10

@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://bl7sv8pavuke3"]
+
+[ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="1_giwpt"]
+[ext_resource type="Script" path="res://scripts/ui/crafting_station_ui.gd" id="1_lrybb"]
+[ext_resource type="Resource" uid="uid://bfr8tc7ljf5l2" path="res://resources/craftables_library.tres" id="3_dekbb"]
+
+[node name="Blueprint Station" type="PanelContainer"]
+offset_right = 306.0
+offset_bottom = 350.0
+script = ExtResource("1_lrybb")
+craftable_button_scene = ExtResource("1_giwpt")
+crafting_library = ExtResource("3_dekbb")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "BLUEPRINT STATION"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+columns = 3

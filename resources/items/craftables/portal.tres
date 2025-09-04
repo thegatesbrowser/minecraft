@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="1_2j346"]
 [ext_resource type="Texture2D" uid="uid://k45100npl032" path="res://assets/textures/items/diamond.png" id="1_78ais"]
-[ext_resource type="Script" path="res://scripts/items/craftables/craftable.gd" id="1_l4sry"]
+[ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="1_l4sry"]
 [ext_resource type="Texture2D" uid="uid://b0omyudpmrpm4" path="res://assets/textures/items/portal.png" id="4_8ux27"]
 
 [resource]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=70 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -19,6 +19,8 @@
 [ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="14_322f3"]
 [ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="15_qijyr"]
 [ext_resource type="AudioStream" uid="uid://d2u44d524q4pt" path="res://assets/sounds/block/hurt.mp3" id="19_mt6y7"]
+[ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="21_mtu1a"]
+[ext_resource type="Texture2D" uid="uid://bs4sptua4llsr" path="res://drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="21_pwwxa"]
 [ext_resource type="Shader" path="res://scripts/shaders/Vignette .gdshader" id="22_nolos"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lyiwi"]
@@ -701,6 +703,18 @@ shader_parameter/vignette_strength = 1.0
 shader_parameter/dither_strength = 1.45519e-11
 shader_parameter/vignette_color = Color(1, 0, 0, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4dy7q"]
+shader = ExtResource("21_mtu1a")
+shader_parameter/thickness = 1.352
+shader_parameter/ring_count = 128
+shader_parameter/ring_offset = 1.0
+shader_parameter/outline_color = Color(0, 0, 0, 0.203922)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = false
+shader_parameter/offset = Vector2(-5, 1.45519e-11)
+shader_parameter/max_or_add = false
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hit_shader", "rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "floor_ray", "skeleton_3d") groups=["Player"]]
 script = ExtResource("1")
 defualt_hand_model = ExtResource("2_w6sp7")
@@ -908,7 +922,7 @@ cull_mask = 1048543
 attributes = SubResource("CameraAttributesPhysical_wbd57")
 
 [node name="RayCast3D" type="RayCast3D" parent="RotationRoot/Head/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.37544)
+transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -4.47035e-08, 0, 0, -0.0823141)
 target_position = Vector3(1.45519e-11, -5, 1.45519e-11)
 collision_mask = 3
 debug_shape_custom_color = Color(0.988235, 0, 0, 0.0823529)
@@ -953,7 +967,7 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("10")
 
-[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "hand_ani", "camera")]
+[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "hand_ani", "interactable_icon", "camera")]
 script = ExtResource("4_064gd")
 break_part = NodePath("TerrainInteraction/BlockOutline/Breakparticle")
 terrain_interaction = NodePath("TerrainInteraction")
@@ -961,6 +975,7 @@ items_library = ExtResource("5_qnsii")
 floor_ray = NodePath("../floor")
 drop_item_scene = ExtResource("6_6kxdw")
 hand_ani = NodePath("../RotationRoot/Head/HandAni")
+interactable_icon = NodePath("../interactable")
 camera = NodePath("../RotationRoot/Head/Camera3D")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block", "ping_label")]
@@ -1129,6 +1144,23 @@ visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 theme = ExtResource("10_fsqbe")
+
+[node name="interactable" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_4dy7q")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 34.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_pwwxa")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="floor" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.328914, 0)
