@@ -7,6 +7,7 @@ extends Node
 @export var floor_ray:RayCast3D
 @export var drop_item_scene:PackedScene
 @export var hand_ani:AnimationPlayer
+@export var interactable_icon:TextureRect
 
 var terrian:VoxelTerrain
 var voxel_tool:VoxelTool
@@ -34,7 +35,12 @@ func _ready():
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
 	if Globals.paused: return
-
+	
+	if is_interactable():
+		interactable_icon.show()
+	else:
+		interactable_icon.hide()
+	
 	if Input.is_action_just_pressed("Build"):
 		if terrain_interaction.can_place():
 			if Globals.can_build:

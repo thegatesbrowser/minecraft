@@ -10,13 +10,18 @@ has_ui = false
 ui_scene_path = ""
 spawn_point = false
 portal = true
+needs_metadata = false
 
 [resource]
 script = ExtResource("1_a26th")
 break_time = 0.4
-spawn_chance = 0.1
-spawn_size = 1
-spawn_height = 0.0
+light = false
+light_colour = Color(0, 0, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
 unique_name = &"portal"
 texture = ExtResource("2_smnnp")
 max_stack = 64

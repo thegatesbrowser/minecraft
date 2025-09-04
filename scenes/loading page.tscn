@@ -49,7 +49,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_6ja64")
 script = ExtResource("2_ijexi")
-backend_scene = null
 multiplayer_scene = ExtResource("3_cfeif")
 loading_bar = NodePath("ProgressBar")
 

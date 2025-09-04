@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://du4dwna5xwbok"]
+
+[ext_resource type="Script" path="res://scripts/other/block_light.gd" id="1_wghei"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dg5up"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="block_light" type="OmniLight3D"]
+shadow_enabled = true
+omni_shadow_mode = 0
+script = ExtResource("1_wghei")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_dg5up")

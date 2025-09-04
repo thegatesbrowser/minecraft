@@ -106,6 +106,7 @@ stretch_mode = 5
 visible = false
 material = SubResource("ShaderMaterial_mipvp")
 custom_minimum_size = Vector2(10, 10)
+layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 28.0

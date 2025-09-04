@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=104 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -6,7 +6,6 @@
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="3_y2n02"]
 [ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/new_voxel_generator_multipass_cb.tres" id="4_88uyt"]
-[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="4_ywb7s"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
@@ -66,7 +65,6 @@
 [ext_resource type="Resource" uid="uid://l4nd5is685cm" path="res://resources/items/pants.tres" id="54_57bq4"]
 [ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
-[ext_resource type="PackedScene" uid="uid://b3jgvc45n8k2i" path="res://scenes/items/craftables/craftable.tscn" id="61_mnu3p"]
 [ext_resource type="Resource" uid="uid://cxgyc78ob8tvg" path="res://resources/items/craftables/blueprint_station.tres" id="62_jlllp"]
 [ext_resource type="Script" path="res://scripts/ui/gameplay_settings.gd" id="66_h5gdj"]
 [ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="69_713dd"]
@@ -213,9 +211,13 @@ region = Rect2(32, 0, 16, 16)
 [sub_resource type="Resource" id="Resource_iwo8c"]
 script = ExtResource("26_6dvgg")
 break_time = 10.0
-spawn_chance = 0.1
-spawn_size = 1
-spawn_height = 0.0
+light = false
+light_colour = Color(0, 0, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
 unique_name = &"glass"
 max_stack = 64
 rotatable = false
@@ -312,7 +314,6 @@ shadow_enabled = true
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 mesh_block_size = 32
 use_gpu_generation = true
-stream = ExtResource("4_ywb7s")
 generator = ExtResource("4_88uyt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 
@@ -320,6 +321,10 @@ mesher = SubResource("VoxelMesherBlocky_crwyq")
 
 [node name="Water" type="Node" parent="VoxelTerrain" groups=["Water Updater"]]
 script = ExtResource("10_riapq")
+
+[node name="Lights" type="Node3D" parent="VoxelTerrain" groups=["LightContainer"]]
+
+[node name="Sounds" type="Node3D" parent="VoxelTerrain" groups=["SoundContainer"]]
 
 [node name="WORLD SFX" type="Node" parent="."]
 
@@ -464,10 +469,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -7.0
-offset_top = -17.5
-offset_right = 12.0
-offset_bottom = 26.5
+offset_left = 2.0
+offset_top = -17.0
+offset_right = 21.0
+offset_bottom = 27.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.117647)
@@ -544,11 +549,6 @@ layout_mode = 2
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="Blueprint" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder" node_paths=PackedStringArray("inventory") instance=ExtResource("61_mnu3p")]
-layout_mode = 2
-inventory = NodePath("../Inventory")
-blueprint = ExtResource("62_jlllp")
-
 [node name="Armour" type="PanelContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder" node_paths=PackedStringArray("slot_holder")]
 visible = false
 layout_mode = 2
@@ -582,6 +582,85 @@ background_texture = SubResource("AtlasTexture_fhmo7")
 layout_mode = 2
 sync = false
 items_library = SubResource("Resource_c0ten")
+
+[node name="Label" type="Label" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "BLUEPRINTS"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+vertical_scroll_mode = 0
+
+[node name="Blueprints" type="HBoxContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer" groups=["Blueprints"]]
+layout_mode = 2
+alignment = 1
+
+[node name="Slot" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+item = ExtResource("62_jlllp")
+
+[node name="Slot2" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot3" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot4" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot5" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot6" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot7" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot8" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot9" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot10" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot11" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot12" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot13" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot14" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot15" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
+
+[node name="Slot16" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
+layout_mode = 2
+type = "blueprint"
 
 [node name="stats_ui_update" type="Control" parent="Player UI"]
 layout_mode = 1

@@ -12,6 +12,7 @@ var passcode = "dqaduqiqbnmn1863841hjb"
 @export var Voxels:VoxelBlockyTypeLibrary 
 
 func _ready() -> void:
+	save_item(load("res://resources/items/stone.tres"))
 	#Globals.fnished_loading.connect(load_creatures)
 	Globals.save.connect(save_player_ui)
 	Globals.save_slot.connect(save_slot)
@@ -38,6 +39,7 @@ func exit_tree() -> void:
 
 
 func save() -> void:
+	
 	if multiplayer.is_server():
 		save_creatures()
 		save_regisited_ui()
@@ -60,33 +62,6 @@ func save_player_ui() -> void:
 func save_slot(index: int, item_path: String, amount: int,parent: String,health: int, rot:int) -> void:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	Globals.send_slot_data.emit({"index":index,"item_path":item_path,"amount":amount,"parent":parent,"health":health,"rot":rot,"client_id":BackendClient.client_id})
-
-
-func save_item(item:ItemBase, _buffer=[], size:Vector2 = Vector2.ZERO) -> void:
-	var data := {}
-	var item_data = inst_to_dict(item)
-	
-	var image = item.texture.get_image()
-	
-	var buffer = image.save_png_to_buffer()
-	
-	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	if BackendClient.playerdata.item_data != null:
-		data = JSON.parse_string(BackendClient.playerdata.item_data)
-		
-	if data.has(item.unique_name):
-		if BackendClient.playerdata.Inventory.has(item.unique_name) == false and BackendClient.playerdata.Hotbar.has(item.unique_name) == false:
-			data.erase(item.unique_name)
-	else:
-		data[item.unique_name] = {
-			"texture": buffer
-		}
-	
-	
-	var save_data = JSON.stringify(data)
-	
-	## Save This Data
-	Globals.send_data.emit({"client_id" : BackendClient.client_id , "change_name" : "item_data","change" : save_data})
 
 
 func save_creatures() -> void:
@@ -178,3 +153,36 @@ func load_registered_ui():
 		var node_data = json.data
 		print("node_data",node_data)
 		UI_syncer.registered_ui_info = node_data
+
+func save_item(item:ItemBase):
+	var resource_data = inst_to_dict(item) ## all exturnal textures etc will be lost
+	
+	var item_save:Dictionary = {}
+	
+	var variables:Array[String]
+	
+	for variable_name in resource_data:
+		if variable_name is String:
+			if ! variable_name.begins_with("@"):
+				
+				var resource = item.get(variable_name)
+				
+				if resource is Texture2D:
+					var texture:Texture2D = load("res://assets/textures/items/pixil-frame-0 - 2025-04-04T181640.172.png")
+					var image:Image = texture.get_image()
+					var data = image.save_png_to_buffer()
+					var new_img := Image.new()
+					new_img.load_png_from_buffer(data)
+					var new_texture:=ImageTexture.new()
+					new_texture.create_from_image(new_img)
+					ResourceSaver.save(new_img,"res://test.png")
+					print(variable_name, "  ",data)
+				
+				item_save[variable_name] = resource_data[variable_name]
+	
+	
+	
+	print(item_save)
+	
+	var new_item = dict_to_inst(resource_data)
+	ResourceSaver.save(new_item,"res://test.tres")

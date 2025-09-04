@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="1_63jsf"]
 [ext_resource type="Resource" uid="uid://dn2s8tsdl4rca" path="res://resources/items/blueprint_station.tres" id="1_jw4f3"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7m55q"]
+[ext_resource type="Texture2D" uid="uid://h8nndohifc41" path="res://assets/textures/items/Oak Log.png" id="1_xb5od"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c3ywf"]
 
@@ -15,7 +14,7 @@ items_needed = {
 1: {
 "amount": 4,
 "name": "log",
-"texture": SubResource("PlaceholderTexture2D_7m55q")
+"texture": ExtResource("1_xb5od")
 }
 }
 unique_name = &""

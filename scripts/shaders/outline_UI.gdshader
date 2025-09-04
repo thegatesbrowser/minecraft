@@ -46,9 +46,9 @@ void fragment(){
 		}
 	uv += vec2(0.5);
 	vec2 size = vec2(thickness) / vec2(textureSize(TEXTURE, 0));
-	
+
 	vec4 sprite_color = tex(TEXTURE, uv);
-	
+
 	float alpha = sprite_color.a;
 	if (square_border){
 		for(int i=0;i<ring_count;++i){

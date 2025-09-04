@@ -25,6 +25,7 @@ func _process(delta):
 		self_modulate = Color.RED
 
 func hovered(_blueprint: Blueprint, slot:Slot) -> void:
+	print("show")
 	for i in $MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer.get_children():
 		i.queue_free()
 		
@@ -51,7 +52,7 @@ func unhovered() -> void:
 func can_craft() -> bool:
 	if not blueprint: return false
 
-	if Globals.find_item(blueprint,true,false) == null:
+	if Globals.find_item(blueprint,true,false,true) == null:
 		unhovered()
 		return false
 

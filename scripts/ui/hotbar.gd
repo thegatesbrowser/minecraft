@@ -33,6 +33,8 @@ func _ready() -> void:
 	
 			
 func _input(_event: InputEvent) -> void:
+	if Globals.paused: return
+	
 	if Input.is_action_just_released("Scroll_Up"):
 		current_key -= 1
 	

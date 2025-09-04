@@ -12,6 +12,7 @@ const hill_noise:FastNoiseLite = preload("res://resources/noises/hills noise.tre
 
 var last_biome:String = ""
 
+var _tested:bool = false
 var Bedrock:int = voxels.get_model_index_default("bedrock")
 const AIR: int = 0
 
@@ -123,8 +124,11 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 					if y <= real_height:
 
 						if y == real_height:
-							
-							if rng.randf() <= biomes[biome_name].creature_spawn_chance:
+							if rng.randf() <= 0.2:
+								#voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("portal"))
+								pass
+								
+							elif rng.randf() <= biomes[biome_name].creature_spawn_chance:
 								if biomes[biome_name].creatures.is_empty() == false:
 									voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
 									voxel_tool.set_voxel_metadata(Vector3i(x, y, z), load(biomes[biome_name].creatures.pick_random()))
@@ -295,13 +299,13 @@ func try_place_structure(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNum
 	if structure == "": return ## did not find a structure
 	
 	var paste_buffer := VoxelBuffer.new()
+	paste_buffer.for_each_voxel_metadata(test)
 	var file = FileAccess.open(structure,FileAccess.READ)
 	#print("file ",file)
 	var size := file.get_32()
 	var data := file.get_buffer(size)
 	VoxelBlockSerializer.deserialize_from_byte_array(data, paste_buffer, true)
 	voxel_tool.paste_masked(tree_pos, paste_buffer, 1 << VoxelBuffer.CHANNEL_TYPE,VoxelBuffer.CHANNEL_TYPE,voxels.get_model_index_default("air"))
-
 func get_biome(temp: int) -> String:
 	for biome_name in biomes:
 		var biome = biomes[biome_name]
@@ -322,3 +326,5 @@ func plant(voxel:int) -> bool:
 
 	return false
 	
+func test():
+	print("meta")

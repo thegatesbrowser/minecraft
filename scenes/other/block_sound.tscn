@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ga5bwdhua358"]
+
+[ext_resource type="AudioStream" uid="uid://28lrdby7dbey" path="res://assets/sounds/ambient/weather/rain1.ogg" id="1_1rn38"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6lgke"]
+
+[node name="block_sound" type="AudioStreamPlayer3D"]
+stream = ExtResource("1_1rn38")
+autoplay = true
+max_distance = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_6lgke")

@@ -12,6 +12,9 @@ signal block_broken(type: StringName)
 
 const AIR_TYPE = 0
 
+var light_ = preload("res://scenes/other/block_light.tscn")
+var sound_ = preload("res://scenes/other/block_sound.tscn")
+
 var plants: Array[int]
 var terrain: VoxelTerrain
 var voxel_tool: VoxelTool
@@ -161,7 +164,12 @@ func _place_block_server(type: StringName, position: Vector3, player_pos: Vector
 	
 	voxel_tool.channel = VoxelBuffer.CHANNEL_TYPE
 	
-		
+	if item.light:
+		spawn_light.rpc(position,item.light_colour,item.light_energy,item.light_size)
+	
+	if item.has_sound:
+		spawn_sound.rpc(position,item.sound.get_path())
+	
 	if item.rotatable:
 		## make the block rotation towards the player when placed
 		voxel_tool.value = voxel_blocky_type_library.get_model_index_single_attribute(type,get_direction(player_pos,position))
@@ -196,8 +204,19 @@ func _break_block_server(position: Vector3) -> void:
 	if array[0] != "air":
 		var item = item_library.get_item(array[0])
 		
+		# if no other drop items drop itself
+		if item.drop_items.is_empty():
+			send_item.rpc_id(multiplayer.get_remote_sender_id(),array[0])
+			
+		# can drop other items not only it self
 		for drop_item in item.drop_items:
 			send_item.rpc_id(multiplayer.get_remote_sender_id(),drop_item)
+		
+		if item.light:
+			destory_light.rpc(position)
+			
+		if item.has_sound:
+			destory_sound.rpc(position)
 		
 		if item.utility != null:
 			if item.utility.has_ui:
@@ -292,3 +311,38 @@ func get_direction(player_pos:Vector3, place_pos:Vector3):
 	#await growth_timer.timeout
 	#_place_block_server.rpc_id(1,plant.next_plant_stage.unique_name,position)
 	#place_block(plant.next_plant_stage.unique_name)
+
+@rpc("any_peer","call_local")
+func spawn_light(pos: Vector3,color:Color,energy:float, size:float = 5.0) -> void:
+	var light = light_.instantiate()
+	light.position = pos + Vector3(0.5,0.1,0.5)
+	light.color = color
+	light.energy = energy
+	light.size = size
+	var light_container = get_tree().get_first_node_in_group("LightContainer")
+	light_container.add_child(light)
+
+@rpc("any_peer","call_local")
+func destory_light(pos:Vector3):
+	var find_pos = pos - Vector3(0.5,0.1,0.5)
+	var light_container = get_tree().get_first_node_in_group("LightContainer")
+	for light in light_container.get_children():
+		if light.position == find_pos:
+			light.queue_free()
+
+@rpc("any_peer","call_local")
+func destory_sound(pos:Vector3):
+	var find_pos = pos
+	var sound_container = get_tree().get_first_node_in_group("SoundContainer")
+	for sound in sound_container.get_children():
+		if sound.position == find_pos:
+			sound.queue_free()
+
+@rpc("any_peer","call_local")
+func spawn_sound(pos:Vector3, sound:String) -> void:
+	var _sound = sound_.instantiate() as AudioStreamPlayer3D
+	_sound.stream = load(sound)
+	_sound.position = pos 
+	var sound_container = get_tree().get_first_node_in_group("SoundContainer")
+	sound_container.add_child(_sound)
+	

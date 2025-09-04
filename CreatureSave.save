@@ -1,3 +1,4 @@
-{"creature_path":"res://resources/creatures/fox.tres","health":5,"spawn_pos_x":8.63040542602539,"spawn_pos_y":10.0009422302246,"spawn_pos_z":12.5275278091431,"x":-8.00220108032227,"y":7.00410127639771,"z":20.2471408843994}
-{"creature_path":"res://resources/creatures/fox.tres","health":5,"spawn_pos_x":113,"spawn_pos_y":22,"spawn_pos_z":-138,"x":110.395111083984,"y":23.0041027069092,"z":-126.586715698242}
-{"creature_path":"res://resources/creatures/fox.tres","health":5,"spawn_pos_x":230,"spawn_pos_y":-1,"spawn_pos_z":53,"x":230,"y":-1,"z":53}
+{"creature_path":"res://resources/creatures/fox.tres","health":5,"spawn_pos_x":31,"spawn_pos_y":2,"spawn_pos_z":-56,"x":31,"y":2,"z":-56}
+{"creature_path":"res://resources/creatures/fox.tres","health":5,"spawn_pos_x":84,"spawn_pos_y":-1,"spawn_pos_z":-76,"x":84,"y":-1,"z":-76}
+{"creature_path":"res://resources/creatures/fox.tres","health":5,"spawn_pos_x":50,"spawn_pos_y":-1,"spawn_pos_z":-19,"x":50,"y":-1,"z":-19}
+{"creature_path":"res://resources/creatures/fox.tres","health":5,"spawn_pos_x":33,"spawn_pos_y":24,"spawn_pos_z":92,"x":35.5012588500977,"y":24.0041027069092,"z":89.1186447143555}

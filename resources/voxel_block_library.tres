@@ -11,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://d10fsk4wa54su" path="res://assets/textures/blocks/flower_rose.png" id="8_es8ej"]
 [ext_resource type="Texture2D" uid="uid://b7ihfj3ynsmyg" path="res://assets/textures/blocks/fire.png" id="8_lg5pj"]
 [ext_resource type="Texture2D" uid="uid://gamdwyj2ov1x" path="res://assets/textures/blocks/double_plant_fern_top.png" id="9_ixyq0"]
-[ext_resource type="Texture2D" uid="uid://bj0k37nqmn31y" path="res://assets/textures/blocks/lapis_block.png" id="10_yc1ft"]
 [ext_resource type="Material" uid="uid://dhbknp6n7qomp" path="res://assets/materials/fire.tres" id="11_4llsq"]
+[ext_resource type="Shader" path="res://scripts/shaders/portal.gdshader" id="12_rl3je"]
 [ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="12_tb762"]
 [ext_resource type="Texture2D" uid="uid://c4qc2xe8j6hkv" path="res://assets/textures/blocks/reeds.png" id="15_2yhxf"]
 [ext_resource type="Texture2D" uid="uid://c3pdydgbmeasd" path="res://assets/textures/blocks/wheatpng.png" id="15_neqns"]
@@ -292,8 +292,6 @@ alpha_antialiasing_mode = 0
 cull_mode = 2
 albedo_texture = ExtResource("8_lg5pj")
 emission_enabled = true
-emission = Color(1, 0.235294, 0, 1)
-emission_energy_multiplier = 2.75
 emission_texture = ExtResource("8_lg5pj")
 texture_filter = 0
 
@@ -396,17 +394,18 @@ unique_name = &"fern"
 base_model = SubResource("VoxelBlockyModelMesh_22ywj")
 resource_name = "fern"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ms3ed"]
-albedo_texture = ExtResource("10_yc1ft")
-emission_enabled = true
-emission_energy_multiplier = 6.18
-emission_texture = ExtResource("10_yc1ft")
-uv1_triplanar = true
-uv1_world_triplanar = true
-texture_filter = 0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2m5i5"]
+render_priority = 0
+shader = ExtResource("12_rl3je")
+shader_parameter/color1 = Color(0, 0.9, 1, 1)
+shader_parameter/color2 = Color(0, 1, 1, 1)
+shader_parameter/color3 = Color(0, 0, 0, 1)
+shader_parameter/x_amount = 384.0
+shader_parameter/y_amount = 384.0
+shader_parameter/e_amount = 0.2
 
 [sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_jvmn8"]
-material_override_0 = SubResource("StandardMaterial3D_ms3ed")
+material_override_0 = SubResource("ShaderMaterial_2m5i5")
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_3bomk"]
 unique_name = &"portal"

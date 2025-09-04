@@ -10,13 +10,18 @@ has_ui = true
 ui_scene_path = "res://scenes/ui/furnace_ui.tscn"
 spawn_point = false
 portal = false
+needs_metadata = false
 
 [resource]
 script = ExtResource("1_mmwns")
 break_time = 0.4
-spawn_chance = 0.1
-spawn_size = 1
-spawn_height = 0.0
+light = true
+light_colour = Color(1, 0.583333, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
 unique_name = &"cooker"
 texture = ExtResource("2_vwgrf")
 max_stack = 64

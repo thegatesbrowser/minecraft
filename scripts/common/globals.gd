@@ -67,15 +67,16 @@ signal save
 signal save_slot(index: int, item_path: String, amount: int,parent: String,health: int)
 signal send_to_server(data:Dictionary)
 signal send_slot_data(data:Dictionary)
-
+signal ask_for_portal(x,y,z)
 
 func _ready():
 	Print.create_logger(0, print_level, Print.VERBOSE)
 	
 
-func find_item(item:ItemBase,inventory:bool = true,hotbar:bool = true) -> Slot:
+func find_item(item:ItemBase,inventory:bool = true,hotbar:bool = true, blueprints:bool = false) -> Slot:
 	var return_ = null
 	
+	var _blueprints = get_tree().get_first_node_in_group("Blueprints")
 	var _inventory = get_tree().get_first_node_in_group("Main Inventory")
 	var hot_bar = get_tree().get_first_node_in_group("Hotbar")
 	
@@ -84,6 +85,13 @@ func find_item(item:ItemBase,inventory:bool = true,hotbar:bool = true) -> Slot:
 			if slot.item == item:
 				return_ = slot
 				break
+				
+	if blueprints:
+		for slot in _blueprints.get_children():
+			if slot.item == item:
+				return_ = slot
+				break
+				
 	if hotbar:
 		if return_ == null:
 			for slot in hot_bar.buttons:
