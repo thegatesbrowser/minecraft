@@ -21,10 +21,10 @@ const CLIENT_ID_PATH := "user://client_id.txt"
 
 var playerdata:Dictionary = {}
 
-
 func _ready():
 	if OS.is_debug_build():
-		address = "ws://127.0.0.1:8819"
+		address = "ws://188.245.188.59:8819" 
+		#address = "ws://127.0.0.1:8819"
 	else:
 		address = exported_address
 	
@@ -130,7 +130,6 @@ func _process(_delta):
 				client_id = data.client_id
 				Globals.client_id = client_id
 				save_client_id(client_id)
-
 
 func update_slot(slot_data:Dictionary): ##{index: int, item_path: String, amount: int,parent: String,health: int, rot:int, client_id:String}
 	var message = {

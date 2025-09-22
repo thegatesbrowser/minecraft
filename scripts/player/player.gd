@@ -116,6 +116,7 @@ func _ready() -> void:
 	Globals.remove_item_in_hand.connect(remove_item_in_hand)
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.fnished_loading.connect(free_player)
+	
 	spawn_position = start_position
 	
 	backendclient = get_tree().get_first_node_in_group("BackendClient")
@@ -338,6 +339,7 @@ func is_print_logs() -> bool:
 
 
 func _exit_tree():
+	save_data()
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
 

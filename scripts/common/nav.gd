@@ -154,10 +154,6 @@ func update_navs():
 			var surroundings = nav_viewer.grab_surrounds()
 			for pos in surroundings:
 				create_point(pos)
-		else:
-			if nav_viewers.has(nav_viewer):
-				nav_viewers.erase(nav_viewer)
-
 	connect_points()
 
 func allowed_path(path:PackedVector3Array) -> bool:

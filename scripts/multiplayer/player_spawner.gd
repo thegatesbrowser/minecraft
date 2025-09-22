@@ -17,21 +17,15 @@ func _ready() -> void:
 	assert(is_instance_valid(spawn_points), "Fix the path to spawn points")
 	
 	spawn_function = custom_spawn
-	multiplayer.peer_connected.connect(create_player)
+	multiplayer.peer_connected.connect(check_player_data)
 	multiplayer.peer_disconnected.connect(destroy_player)
 	spawned.connect(on_spawned)
 	despawned.connect(on_despawned)
 
 
-func create_player(id: int) -> void:
-	var spawn_position:Vector3
-
-	if not multiplayer.is_server(): return
+func check_player_data(id: int) -> void:
+	get_spawn_position.rpc_id(id)
 	
-	spawn_position = get_spawn_position()
-	spawn([id, spawn_position])
-
-	Debug.log_msg("Player %d spawned at %.v" % [id, spawn_position])
 
 
 func destroy_player(id: int) -> void:
@@ -125,12 +119,25 @@ func on_spawned(node: Node) -> void:
 func on_despawned(node: Node) -> void:
 	player_despawned.emit(node.get_multiplayer_authority())
 
-func get_spawn_position() -> Vector3:
+@rpc("any_peer","call_local","reliable")
+func get_spawn_position() -> void:
+	if multiplayer.is_server(): return
+	
+	var spawn_position:Vector3
+	
+	spawn_position = spawn_points.get_spawn_position()
+	
 	var client = get_tree().get_first_node_in_group("BackendClient")
 	if not client.playerdata.is_empty():
 		if client.playerdata.Position_x:
-			return Vector3(client.playerdata.Position_x,client.playerdata.Position_y,client.playerdata.Position_z) + Vector3(0,1,0)
+			spawn_position = Vector3(client.playerdata.Position_x,client.playerdata.Position_y,client.playerdata.Position_z) + Vector3(0,1,0)
+			
+	spawn_player.rpc_id(1,multiplayer.get_unique_id(),spawn_position)
+		
+@rpc("any_peer","call_local","reliable")
+func spawn_player(id:int,spawn_position:Vector3) -> void:
+	if not multiplayer.is_server(): return
 	
-	var spawn_position = spawn_points.get_spawn_position()
-	return spawn_position
-	#		
+	spawn([id, spawn_position])
+
+	Debug.log_msg("Player %d spawned at %.v" % [id, spawn_position])

@@ -37,9 +37,12 @@ var path:PackedVector3Array
 var ani: AnimationPlayer
 var mesh: MeshInstance3D
 var meshs: Array[MeshInstance3D]
+var despawn_timer := Timer.new()
 
 var health:int
 var stopped:bool = false
+
+var past_points:Array[Vector3]
 
 func _ready() -> void:
 	
@@ -64,7 +67,13 @@ func _ready() -> void:
 	if creature_resource.utility != null:
 		if creature_resource.utility.has_ui:
 			Globals.register_ui.emit(spawn_pos,creature_resource.utility.ui_scene_path)
-
+	
+	#despawn_timer.autostart = true
+	#despawn_timer.wait_time = 5.0
+	#despawn_timer.name == "despawn_timer"
+	#add_child(despawn_timer,true)
+	#despawn_timer.timeout.connect(try_despawn)
+	
 func _process(delta: float) -> void:
 	if ani:
 		if stopped:
@@ -73,6 +82,15 @@ func _process(delta: float) -> void:
 		else:
 			if ani.current_animation != creature_resource.walk_ani_name:
 				ani.play(creature_resource.walk_ani_name)
+				
+	if not multiplayer.is_server(): return
+	
+	var closest_player:Player = get_closest_player()
+	if closest_player:
+		var distance_to_player = global_position.distance_to(closest_player.global_position)
+		
+		if distance_to_player > player_view_distance:
+			try_despawn()
 
 func _physics_process(delta: float) -> void:
 	
@@ -143,43 +161,6 @@ func get_random_pos_in_sphere(radius : float) -> Vector3:
 
 	return random_pos_on_unit_sphere
 
-func Path():
-	var pos = global_position
-	#var player = get_tree().get_first_node_in_group("Player")
-
-	#if not player: return
-
-	var player_pos = null
-
-	var path = Nav.find_path(pos,player_pos)
-
-	#print("path ",path)
-
-	if path:
-
-		for i in path:
-			if path.size() >= 2:
-				stopped = false
-
-				var point = path[1] + Vector3(0.5,0,0.5)
-
-				var direction = global_position.direction_to(point)
-
-				velocity.x = direction.x * creature_resource.speed
-				velocity.z = direction.z * creature_resource.speed
-
-				guide.global_position = point
-
-				#print("move to",point, "from ", pos)
-			else:
-				#print("cant move too close")
-				stopped = true
-				velocity.x = 0
-				velocity.z = 0 
-	else:
-		velocity.x = 0
-		velocity.z = 0 
-
 @rpc("any_peer", "unreliable")
 func hit(hit_from:Vector3,damage:int = 1):
 	
@@ -192,7 +173,6 @@ func hit(hit_from:Vector3,damage:int = 1):
 		hit_sfx.play()
 		knockback(hit_from,3.0)
 		
-
 func knockback(hit_from:Vector3,strength:float):
 	var direction = -global_position.direction_to(hit_from)
 	#print("hit ",direction)
@@ -230,21 +210,10 @@ func on_synchronized() -> void:
 		position = _position
 		rotation_root.rotation = _rotation
 
-func try_despawn(killed:bool = false) -> void:
-	if is_despawning: return
-	
-	var creature_pos = global_position
-	creature_pos.y = 0
-	
-	if killed:
-		var players = get_tree().get_nodes_in_group("Player")
-		for player in players:
-			var player_pos = player.global_position
-			player_pos.y = 0
 
-			if player_pos.distance_to(creature_pos) < player_view_distance:
-				return
-				
+	
+func try_despawn() -> void:
+	if is_despawning: return
 	
 	is_despawning = true
 	await get_tree().create_timer(1.0).timeout
@@ -260,3 +229,18 @@ func drop_items() -> void:
 	for item in creature_resource.drop_items:
 		slot_manager.add_item_to_hotbar_or_inventory(item)
 	dropped_items = true
+
+func get_closest_player():
+	var last_distance: float = 0.0
+	var closest_player: CharacterBody3D
+	
+	for i in get_tree().get_nodes_in_group("Player"):
+		if last_distance == 0.0:
+			last_distance = global_position.distance_to(i.global_position)
+			closest_player = i
+		else:
+			if last_distance > global_position.distance_to(i .global_position):
+				last_distance = global_position.distance_to(i .global_position)
+				closest_player = i
+
+	return closest_player

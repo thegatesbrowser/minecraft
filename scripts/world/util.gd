@@ -20,4 +20,5 @@ enum Message{
 	update,
 	slot_update,
 	portal,
+	player_pos,
 }

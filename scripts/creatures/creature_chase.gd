@@ -4,6 +4,10 @@ class_name CreatureChase
 const ITEM_BLOCK_LIBRARY = preload("res://resources/items_library.tres")
 const VOXEL_BLOCK_LIBRARY = preload("res://resources/voxel_block_library.tres")
 
+var last_pos_check:Vector3
+
+var past_points:Array
+
 @export var creature : CharacterBody3D
 var player: Player
 
@@ -22,25 +26,38 @@ func Physics_Update(delta:float):
 	var path = Nav.find_path(current_pos,player.global_position)
 			
 	if path:
-		for i in path:
-			if path.size() >= 2:
-				creature.stopped = false
+		#for i in path:
+		if path.size() >= 2:
+			creature.stopped = false
+			
+			var point = path[1] + Vector3(0.5,0,0.5)
+			past_points.append(point)
+			
+			print("number ",past_points.count(point))
+			
+			if past_points.count(point) > 50:
+				print("repeat")
+			
+			if get_child_count() != 1:
+				last_pos_check = current_pos
+				get_tree().create_timer(1.0).timeout.connect(check_repeat)
+				
+			
+				
+				
+			var direction = creature.global_position.direction_to(point)
 
-				var point = path[1] + Vector3(0.5,0,0.5)
+			creature.velocity.x = direction.x * creature.creature_resource.speed
+			creature.velocity.z = direction.z * creature.creature_resource.speed
 
-				var direction = creature.global_position.direction_to(point)
+			creature.guide.global_position = point
 
-				creature.velocity.x = direction.x * creature.creature_resource.speed
-				creature.velocity.z = direction.z * creature.creature_resource.speed
-
-				creature.guide.global_position = point
-
-				#print("move to",point, "from ", pos)
-			else:
-				#print("cant move too close")
-				creature.stopped = true
-				creature.velocity.x = 0
-				creature.velocity.z = 0 
+			#print("move to",point, "from ", pos)
+		else:
+			#print("cant move too close")
+			creature.stopped = true
+			creature.velocity.x = 0
+			creature.velocity.z = 0 
 	else:
 		creature.velocity.x = 0
 		creature.velocity.z = 0 
@@ -68,3 +85,9 @@ func get_closest_player():
 				closest_player = i
 
 	return closest_player
+
+func check_repeat():
+	var dis = last_pos_check.distance_to(creature.global_position)
+	print(dis)
+	if dis < 0.4:
+		print("repeat")

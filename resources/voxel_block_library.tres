@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=119 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=118 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/materials/terrain.material" id="1_8hqtx"]
 [ext_resource type="Material" uid="uid://6a7s1y7xwrh8" path="res://assets/materials/terrain_material_foliage.material" id="2_tyu8p"]
@@ -631,20 +631,12 @@ unique_name = &"cave_air"
 base_model = SubResource("VoxelBlockyModelEmpty_b28sd")
 resource_name = "cave_air"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bjsk"]
-transparency = 4
-albedo_color = Color(1, 1, 1, 0.203922)
-
-[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_nsyqt"]
-culls_neighbors = false
+[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_np7f4"]
 random_tickable = true
-collision_aabbs = Array[AABB]([])
-material_override_0 = SubResource("StandardMaterial3D_5bjsk")
-collision_enabled_0 = false
 
 [sub_resource type="VoxelBlockyType" id="VoxelBlockyType_5w55q"]
 unique_name = &"spawner"
-base_model = SubResource("VoxelBlockyModelCube_nsyqt")
+base_model = SubResource("VoxelBlockyModelEmpty_np7f4")
 resource_name = "spawner"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ovc8u"]

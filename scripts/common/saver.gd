@@ -4,10 +4,15 @@ var Terrain:VoxelTerrain
 
 var passcode = "dqaduqiqbnmn1863841hjb"
 
+const sound_block = preload("res://scenes/other/block_sound.tscn")
+const light_block = preload("res://scenes/other/block_light.tscn")
 
 @export var encrypt:bool = false
-@export var Creature_save_path:String = "res://CreatureSave.save"
+@export var creature_save_path:String = "res://CreatureSave.save"
+@export var misc_save_path:String = "res://MISC_SAVE.save"
 @export var registered_ui_save_path:String = "res://registered_ui.save"
+@export var save_light_blocks:String = "res://light_blocks.save"
+@export var save_sound_blocks:String = "res://sound_blocks.save"
 @export var UI_syncer:Node
 @export var Voxels:VoxelBlockyTypeLibrary 
 
@@ -23,6 +28,14 @@ func _ready() -> void:
 
 
 func _on_peer_connected(_peer_id: int) -> void:
+	if multiplayer.is_server():
+		if multiplayer.get_peers().size() == 1:
+				_load_light_blocks(1) ## spawns it on the server
+				_load_sound_blocks(1) ## spawns it on the server
+				_load_misc()
+		_load_light_blocks(_peer_id) ## spawns it on the client
+		_load_sound_blocks(_peer_id) ## spawns it on the client
+		
 	if multiplayer.get_peers().size() == 1:
 		#load_creatures()
 		load_registered_ui()
@@ -41,7 +54,10 @@ func exit_tree() -> void:
 func save() -> void:
 	
 	if multiplayer.is_server():
+		misc_save()
 		save_creatures()
+		_save_light_blocks()
+		_save_sound_blocks()
 		save_regisited_ui()
 		Terrain.save_modified_blocks()
 
@@ -63,14 +79,68 @@ func save_slot(index: int, item_path: String, amount: int,parent: String,health:
 	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
 	Globals.send_slot_data.emit({"index":index,"item_path":item_path,"amount":amount,"parent":parent,"health":health,"rot":rot,"client_id":BackendClient.client_id})
 
+func misc_save():
+	var save_file
+	
+	#if encrypt:
+		#save_file = FileAccess.open_encrypted_with_pass(Creature_save_path, FileAccess.WRITE,passcode)
 
+	save_file = FileAccess.open(misc_save_path, FileAccess.WRITE)
+	
+	var nodes = get_tree().get_nodes_in_group("MISC_SAVE")
+	
+	#print(nodes)
+	for node in nodes:
+		# Check the node has a save function.
+		if !node.has_method("save"):
+			print("persistent node '%s' is missing a save() function, skipped" % node.name)
+
+		# Call the node's save function.
+		var node_data = node.call("save")
+
+		# JSON provides a static method to serialized JSON string.
+		var json_string = JSON.stringify(node_data)
+
+		# Store the save dictionary as a new line in the save file.
+		save_file.store_line(json_string)
+
+func _load_misc():
+	if not FileAccess.file_exists(misc_save_path):
+		return # Error! We don't have a save to load.
+	var save_file
+	
+	#if encrypt:
+		#save_file = FileAccess.open_encrypted_with_pass(Creature_save_path, FileAccess.READ,passcode)
+	#else:
+	save_file = FileAccess.open(misc_save_path, FileAccess.READ)
+		
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+
+		# Creates the helper class to interact with JSON.
+		var json = JSON.new()
+
+		# Check if there is any error while parsing the JSON string, skip in case of failure.
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+
+		# Get the data from the JSON object.
+		var node_data = json.data
+		if "sun_rotation_rad" in node_data:
+			var sun_rot = node_data["sun_rotation_rad"]
+			
+			var time_manager = get_tree().get_first_node_in_group("TimeManager")
+			time_manager.set_sun(sun_rot)
+			
 func save_creatures() -> void:
 	var save_file
 	
 	#if encrypt:
 		#save_file = FileAccess.open_encrypted_with_pass(Creature_save_path, FileAccess.WRITE,passcode)
 
-	save_file = FileAccess.open(Creature_save_path, FileAccess.WRITE)
+	save_file = FileAccess.open(creature_save_path, FileAccess.WRITE)
 	
 	var nodes = get_tree().get_first_node_in_group("CreatureContainer").get_children()
 	
@@ -90,14 +160,14 @@ func save_creatures() -> void:
 		save_file.store_line(json_string)
 
 func load_creatures() -> void:
-	if not FileAccess.file_exists(Creature_save_path):
+	if not FileAccess.file_exists(creature_save_path):
 		return # Error! We don't have a save to load.
 	var save_file
 	
 	#if encrypt:
 		#save_file = FileAccess.open_encrypted_with_pass(Creature_save_path, FileAccess.READ,passcode)
 	#else:
-	save_file = FileAccess.open(Creature_save_path, FileAccess.READ)
+	save_file = FileAccess.open(creature_save_path, FileAccess.READ)
 		
 	while save_file.get_position() < save_file.get_length():
 		var json_string = save_file.get_line()
@@ -186,3 +256,111 @@ func save_item(item:ItemBase):
 	
 	var new_item = dict_to_inst(resource_data)
 	ResourceSaver.save(new_item,"res://test.tres")
+
+func _save_light_blocks():
+	var save_file
+	
+	save_file = FileAccess.open(save_light_blocks, FileAccess.WRITE)
+	
+	for block in get_tree().get_first_node_in_group("LightContainer").get_children():
+		var node_data = {
+			"light_size": block.light_size,
+			"light_color": block.light_color.to_html(true),
+			"light_energy": block.light_energy,
+			"x":block.global_position.x,
+			"y":block.global_position.y,
+			"z":block.global_position.z,
+			
+		}
+		
+		print("light ",node_data)
+		var json_string = JSON.stringify(node_data)
+
+		# Store the save dictionary as a new line in the save file.
+		save_file.store_line(json_string)
+	
+func _save_sound_blocks():
+	var save_file
+	
+	save_file = FileAccess.open(save_sound_blocks, FileAccess.WRITE)
+	
+	for block in get_tree().get_first_node_in_group("SoundContainer").get_children():
+		var node_data
+		
+		node_data = {
+			"stream": block.stream.get_path(),
+			"x":block.global_position.x,
+			"y":block.global_position.y,
+			"z":block.global_position.z,
+		}
+		
+		var json_string = JSON.stringify(node_data)
+
+		# Store the save dictionary as a new line in the save file.
+		save_file.store_line(json_string)
+
+func _load_light_blocks(caller_id:int):
+	if not FileAccess.file_exists(save_light_blocks):
+		return # Error! We don't have a save to load.
+	var save_file
+	
+	save_file = FileAccess.open(save_light_blocks, FileAccess.READ)
+		
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+		
+		var json = JSON.new()
+
+		# Check if there is any error while parsing the JSON string, skip in case of failure.
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+
+		# Get the data from the JSON object.
+		var node_data = json.data
+		
+		var light_pos = Vector3(node_data["x"],node_data["y"],node_data["z"])
+		
+		spawn_light_block.rpc_id(caller_id,node_data["light_size"],node_data["light_energy"],Color.html(node_data["light_color"]),light_pos)
+		
+func _load_sound_blocks(caller_id:int):
+	if not FileAccess.file_exists(save_sound_blocks):
+		return # Error! We don't have a save to load.
+	var save_file
+	
+	save_file = FileAccess.open(save_sound_blocks, FileAccess.READ)
+		
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+		
+		var json = JSON.new()
+
+		# Check if there is any error while parsing the JSON string, skip in case of failure.
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+
+		# Get the data from the JSON object.
+		var node_data = json.data
+		
+		var sound_pos = Vector3(node_data["x"],node_data["y"],node_data["z"])
+		
+		spawn_sound_block.rpc_id(caller_id,node_data["stream"],sound_pos)
+		
+@rpc("any_peer","call_local","reliable")
+func spawn_light_block(light_size:float, light_energy:float, light_color:Color, pos:Vector3):
+	var light = light_block.instantiate()
+	light.light_size = light_size
+	light.light_energy = light_energy
+	light.light_color = light_color
+	light.position = pos
+	get_tree().get_first_node_in_group("LightContainer").add_child(light)
+
+@rpc("any_peer","call_local","reliable")
+func spawn_sound_block(stream_path:String,pos:Vector3):
+	var sound = sound_block.instantiate()
+	sound.stream = load(stream_path)
+	sound.position = pos
+	get_tree().get_first_node_in_group("SoundContainer").add_child(sound)

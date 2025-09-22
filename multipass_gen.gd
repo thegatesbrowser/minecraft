@@ -99,7 +99,7 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 
 	
 
-	rng.seed = _get_chunk_seed_2d(_cpos)
+	rng.seed = _get_chunk_seed_2d(Vector3(0,0,0))
 
 	if pass_index == 0:
 		# Base terrain
@@ -131,11 +131,12 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 							elif rng.randf() <= biomes[biome_name].creature_spawn_chance:
 								if biomes[biome_name].creatures.is_empty() == false:
 									voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
-									voxel_tool.set_voxel_metadata(Vector3i(x, y, z), load(biomes[biome_name].creatures.pick_random()))
+									voxel_tool.set_voxel_metadata(Vector3i(x, y, z), biomes[biome_name].creatures.pick_random())
 								pass
 							elif rng.randf() <= 0.5:
 								
-								var plant = biomes[biome_name].plants.pick_random()
+								var i = rng.randi() % len(biomes[biome_name].plants)
+								var plant = biomes[biome_name].plants[i]
 								voxel_tool.set_voxel(Vector3i(x, y, z), plant)
 
 					
@@ -299,7 +300,6 @@ func try_place_structure(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNum
 	if structure == "": return ## did not find a structure
 	
 	var paste_buffer := VoxelBuffer.new()
-	paste_buffer.for_each_voxel_metadata(test)
 	var file = FileAccess.open(structure,FileAccess.READ)
 	#print("file ",file)
 	var size := file.get_32()
@@ -325,6 +325,3 @@ func plant(voxel:int) -> bool:
 			return true
 
 	return false
-	
-func test():
-	print("meta")

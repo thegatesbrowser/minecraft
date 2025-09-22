@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=107 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -6,6 +6,8 @@
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
 [ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="3_y2n02"]
 [ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/new_voxel_generator_multipass_cb.tres" id="4_88uyt"]
+[ext_resource type="Script" path="res://scripts/other/time.gd" id="4_847i1"]
+[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="4_njnuh"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
@@ -148,6 +150,11 @@ volumetric_fog_sky_affect = 0.629
 adjustment_enabled = true
 adjustment_contrast = 1.14
 adjustment_saturation = 1.14
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_p105y"]
+properties/0/path = NodePath(".:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_crwyq"]
 library = ExtResource("5_td8xe")
@@ -306,14 +313,31 @@ creature_s = ExtResource("2_pgqmj")
 environment = SubResource("Environment_nrp0b")
 
 [node name="sun_rotation" type="Node3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -0.778244, 0.627963, 0, -0.627963, -0.778244, 0, 0, 0)
 
 [node name="day" type="DirectionalLight3D" parent="WorldEnvironment/sun_rotation"]
+light_volumetric_fog_energy = 0.316
 shadow_enabled = true
+directional_shadow_max_distance = 30.0
+
+[node name="night" type="DirectionalLight3D" parent="WorldEnvironment/sun_rotation"]
+light_energy = 0.0
+light_volumetric_fog_energy = 0.316
+shadow_enabled = true
+directional_shadow_max_distance = 30.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="WorldEnvironment/sun_rotation"]
+replication_config = SubResource("SceneReplicationConfig_p105y")
+
+[node name="Time" type="Node" parent="WorldEnvironment" groups=["MISC_SAVE", "TimeManager"]]
+script = ExtResource("4_847i1")
+night_time_end = 180
+update_time = 0.001
 
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 mesh_block_size = 32
 use_gpu_generation = true
+stream = ExtResource("4_njnuh")
 generator = ExtResource("4_88uyt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 
