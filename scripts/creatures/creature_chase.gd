@@ -6,13 +6,24 @@ const VOXEL_BLOCK_LIBRARY = preload("res://resources/voxel_block_library.tres")
 
 var last_pos_check:Vector3
 
-var past_points:Array
+var nav_path:PackedVector3Array
+
+@export var update_time:float
 
 @export var creature : CharacterBody3D
 var player: Player
 
 func Enter(data:Dictionary):
-	pass
+	var update_timer := Timer.new()
+	update_timer.wait_time = update_time
+	update_timer.autostart = true
+	add_child(update_timer)
+	update_timer.timeout.connect(update_nav_path)
+	
+func Exit():
+	var timer = get_child(0)
+	if timer is Timer:
+		timer.queue_free()
 	
 func Physics_Update(delta:float):
 	
@@ -23,28 +34,22 @@ func Physics_Update(delta:float):
 	var distance = creature.global_position.distance_to(player.global_position)
 	##
 	var current_pos = creature.global_position
-	var path = Nav.find_path(current_pos,player.global_position)
+	
 			
-	if path:
-		#for i in path:
-		if path.size() >= 2:
+	if nav_path:
+		if nav_path.size() >= 2:
 			creature.stopped = false
 			
-			var point = path[1] + Vector3(0.5,0,0.5)
-			past_points.append(point)
 			
-			print("number ",past_points.count(point))
+			var point:Vector3 = nav_path[1] + Vector3(0.5,0,0.5)
+			var point_id = nav_path.find(point - Vector3(0.5,0,0.5))
 			
-			if past_points.count(point) > 50:
-				print("repeat")
+			var distance_to_point = current_pos.distance_to(point)
 			
-			if get_child_count() != 1:
-				last_pos_check = current_pos
-				get_tree().create_timer(1.0).timeout.connect(check_repeat)
-				
-			
-				
-				
+			if distance_to_point <= 1:
+				#print("on top of point")
+				nav_path.remove_at(point_id)
+
 			var direction = creature.global_position.direction_to(point)
 
 			creature.velocity.x = direction.x * creature.creature_resource.speed
@@ -63,6 +68,7 @@ func Physics_Update(delta:float):
 		creature.velocity.z = 0 
 #
 	if distance < 1:
+		return
 		await get_tree().create_timer(2.0).timeout
 		Transitioned.emit(self,"Attack",{"player":player})
 	#
@@ -86,8 +92,16 @@ func get_closest_player():
 
 	return closest_player
 
-func check_repeat():
-	var dis = last_pos_check.distance_to(creature.global_position)
-	print(dis)
-	if dis < 0.4:
-		print("repeat")
+func update_nav_path():
+	var player = get_closest_player()
+	var current_pos = creature.global_position
+	
+	var OK = Nav.find_path(current_pos,player.global_position)
+
+	
+	if OK:
+		nav_path = OK
+		
+		for i in nav_path:
+			Nav.create_visual_debug(i,true)
+	

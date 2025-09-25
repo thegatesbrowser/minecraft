@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://beu8kujo2qfke"]
+
+[node name="Target" type="Panel"]
+offset_left = 847.0
+offset_top = 893.0
+offset_right = 867.0
+offset_bottom = 913.0

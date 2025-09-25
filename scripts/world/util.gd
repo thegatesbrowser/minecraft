@@ -21,4 +21,5 @@ enum Message{
 	slot_update,
 	portal,
 	player_pos,
+	delete_user_save,
 }

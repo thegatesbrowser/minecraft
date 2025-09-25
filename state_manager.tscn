@@ -18,6 +18,7 @@ script = ExtResource("3_0e36p")
 
 [node name="Attack" type="Node" parent="."]
 script = ExtResource("4_ag4gc")
+update_time = null
 
 [node name="RunAway" type="Node" parent="."]
 script = ExtResource("5_faalw")

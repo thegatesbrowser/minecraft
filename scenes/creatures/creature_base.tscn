@@ -110,6 +110,7 @@ creature = NodePath("../..")
 
 [node name="Chase" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
 script = ExtResource("10_w64j2")
+update_time = 0.5
 creature = NodePath("../..")
 
 [node name="Attack" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]

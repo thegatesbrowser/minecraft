@@ -144,15 +144,7 @@ func _ready() -> void:
 	_update_tp_fp_visibility()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # TODO: Move to mouse mode
-	
-	
-	
-	
-	#var player_save_timer = Timer.new()
-	#player_save_timer.wait_time = 1
-	#add_child(player_save_timer)
-	#player_save_timer.start()
-	#player_save_timer.timeout.connect(save_data)
+
 
 func _update_tp_fp_visibility() -> void:
 	if is_multiplayer_authority():

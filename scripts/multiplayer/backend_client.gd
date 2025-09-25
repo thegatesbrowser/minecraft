@@ -23,8 +23,8 @@ var playerdata:Dictionary = {}
 
 func _ready():
 	if OS.is_debug_build():
-		address = "ws://188.245.188.59:8819" 
-		#address = "ws://127.0.0.1:8819"
+		#address = "ws://188.245.188.59:8819" 
+		address = "ws://127.0.0.1:8819"
 	else:
 		address = exported_address
 	
@@ -193,3 +193,14 @@ func set_portal_url(x,y,z):
 	voxel_tool.set_voxel_metadata(Vector3(x,y,z),"test")
 	#voxel_tool.set_voxel(Vector3(x,y,z),11)
 	print("created portal at ",Vector3(x,y,z))
+
+func delete_backend_save() -> bool:
+	var message = {
+		"peer" : id,
+		"orgPeer" : self.id,
+		"message" : Util.Message.delete_user_save,
+		"data": {"client_id":client_id},
+		"Lobby": lobbyValue
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	return true

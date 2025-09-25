@@ -71,7 +71,7 @@ func create_point(pos):
 	#print("Point created at: ", Vector3(x, y, z))
 	#print("Total points: ", astar.get_point_count())
 
-func create_visual_debug(pos:Vector3):
+func create_visual_debug(pos:Vector3, path:bool = false):
 	var sphere := BoxMesh.new()
 	
 	var instance := MeshInstance3D.new()
@@ -79,10 +79,15 @@ func create_visual_debug(pos:Vector3):
 	instance.position = pos
 	
 	get_tree().root.add_child(instance)
-	#instance.material_override = load("res://assets/materials/debug.tres")
+	
+	
+		
 	instance.scale = Vector3(0.4,.4,.4)
 
-	points[pos - Vector3(0.5,0,0.5)].mesh = instance
+	if path:
+		instance.material_override = load("res://assets/materials/debug.tres")
+	else:
+		points[pos - Vector3(0.5,0,0.5)].mesh = instance
 
 func clear_points():
 
@@ -138,6 +143,9 @@ func debug_path(path:PackedVector3Array):
 		if path.has(point):
 			if points[point].mesh:
 				points[point].mesh.material_override = load("res://assets/materials/debug.tres")
+			else:
+				pass
+				#print("no mesh")
 		else:
 			if points[point].mesh:
 				points[point].mesh.material_override = null
@@ -154,6 +162,7 @@ func update_navs():
 			var surroundings = nav_viewer.grab_surrounds()
 			for pos in surroundings:
 				create_point(pos)
+				
 	connect_points()
 
 func allowed_path(path:PackedVector3Array) -> bool:

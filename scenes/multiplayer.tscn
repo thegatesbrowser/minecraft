@@ -398,7 +398,7 @@ spawn_path = NodePath("../Players")
 script = ExtResource("6_l50oc")
 view_distance = 100
 player_scene = ExtResource("7_n7355")
-stats_ui_updater = NodePath("../Game/Player UI/stats_ui_update")
+stats_ui_updater = NodePath("../Game/Player UI/ui_interface")
 
 [node name="CreatureSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/creatures/creature_base.tscn")

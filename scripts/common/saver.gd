@@ -17,7 +17,7 @@ const light_block = preload("res://scenes/other/block_light.tscn")
 @export var Voxels:VoxelBlockyTypeLibrary 
 
 func _ready() -> void:
-	save_item(load("res://resources/items/stone.tres"))
+	#save_item(load("res://resources/items/stone.tres"))
 	#Globals.fnished_loading.connect(load_creatures)
 	Globals.save.connect(save_player_ui)
 	Globals.save_slot.connect(save_slot)

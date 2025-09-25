@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_bwre0"]
-[ext_resource type="Texture2D" path="res://assets/textures/items/Stone.png" id="2_7nalx"]
+[ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_8lbx5"]
+[ext_resource type="Texture2D" path="res://assets/textures/items/Stone.png" id="2_5nce1"]
 
 [resource]
-script = ExtResource("1_bwre0")
+script = ExtResource("1_8lbx5")
 break_time = 2.0
 light = false
 light_colour = Color(0, 0, 0, 1)
@@ -14,7 +14,7 @@ has_sound = false
 sound_distance = 10.0
 panning = 1.0
 unique_name = &"stone"
-texture = ExtResource("2_7nalx")
+texture = ExtResource("2_5nce1")
 max_stack = 64
 rotatable = false
 drop_items = Array[StringName]([&"stone"])

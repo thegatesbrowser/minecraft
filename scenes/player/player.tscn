@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=74 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -18,6 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://ftfi0mih6i5" path="res://assets/models/runestone player_right leg 1 Base Color.png" id="14_3wkw4"]
 [ext_resource type="AudioStream" uid="uid://ch58c3xy4npx7" path="res://assets/sounds/other/Eat2.ogg" id="14_322f3"]
 [ext_resource type="AudioStream" uid="uid://cu1qu68816bci" path="res://assets/sounds/other/Eat3.ogg" id="15_qijyr"]
+[ext_resource type="Script" path="res://scripts/other/block_break.gd" id="16_5khb6"]
+[ext_resource type="Texture2D" uid="uid://hwhkmt3r870w" path="res://assets/textures/blocks/break step 1.png" id="17_0hjw6"]
 [ext_resource type="AudioStream" uid="uid://d2u44d524q4pt" path="res://assets/sounds/block/hurt.mp3" id="19_mt6y7"]
 [ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="21_mtu1a"]
 [ext_resource type="Texture2D" uid="uid://bs4sptua4llsr" path="res://drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="21_pwwxa"]
@@ -633,6 +635,21 @@ size = Vector3(0.8, 1.8, 1.5)
 [sub_resource type="BoxShape3D" id="7"]
 size = Vector3(1.5, 1.8, 0.8)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0h68"]
+render_priority = 2
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("17_0hjw6")
+uv1_scale = Vector3(1.0001, 1.0001, 1.0001)
+uv1_offset = Vector3(1.45519e-11, 1.45519e-11, -0.34805)
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+disable_receive_shadows = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_8ityd"]
+size = Vector3(1.0001, 1.0001, 1.0001)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kwqlu"]
 transparency = 1
 albedo_color = Color(0, 0, 0, 0.258824)
@@ -967,7 +984,7 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("10")
 
-[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "hand_ani", "interactable_icon", "camera")]
+[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "hand_ani", "interactable_icon", "break_block", "camera")]
 script = ExtResource("4_064gd")
 break_part = NodePath("TerrainInteraction/BlockOutline/Breakparticle")
 terrain_interaction = NodePath("TerrainInteraction")
@@ -976,6 +993,7 @@ floor_ray = NodePath("../floor")
 drop_item_scene = ExtResource("6_6kxdw")
 hand_ani = NodePath("../RotationRoot/Head/HandAni")
 interactable_icon = NodePath("../interactable")
+break_block = NodePath("TerrainInteraction/BlockOutline/BlockBreak")
 camera = NodePath("../RotationRoot/Head/Camera3D")
 
 [node name="TerrainInteraction" type="Node" parent="Hands" node_paths=PackedStringArray("camera", "block", "ping_label")]
@@ -999,6 +1017,18 @@ shape = SubResource("6")
 
 [node name="CollisionShape2" type="CollisionShape3D" parent="Hands/TerrainInteraction/BlockOutline/Area3D"]
 shape = SubResource("7")
+
+[node name="BlockBreak" type="Node3D" parent="Hands/TerrainInteraction/BlockOutline"]
+visible = false
+script = ExtResource("16_5khb6")
+
+[node name="Block" type="MeshInstance3D" parent="Hands/TerrainInteraction/BlockOutline/BlockBreak"]
+material_override = SubResource("StandardMaterial3D_b0h68")
+mesh = SubResource("BoxMesh_8ityd")
+
+[node name="Half Time" type="Timer" parent="Hands/TerrainInteraction/BlockOutline/BlockBreak"]
+
+[node name="End Time" type="Timer" parent="Hands/TerrainInteraction/BlockOutline/BlockBreak"]
 
 [node name="Visible_Block" type="Node3D" parent="Hands/TerrainInteraction/BlockOutline"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005, 0.02, -0.005)
@@ -1184,3 +1214,5 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 [connection signal="block_broken" from="Hands/TerrainInteraction" to="Hands/TerrainInteraction" method="_on_block_broken"]
 [connection signal="body_entered" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Hands/TerrainInteraction/BlockOutline/Area3D" to="Hands/TerrainInteraction" method="_on_Area_body_exited"]
+[connection signal="timeout" from="Hands/TerrainInteraction/BlockOutline/BlockBreak/Half Time" to="Hands/TerrainInteraction/BlockOutline/BlockBreak" method="_on_half_time_timeout"]
+[connection signal="timeout" from="Hands/TerrainInteraction/BlockOutline/BlockBreak/End Time" to="Hands/TerrainInteraction/BlockOutline/BlockBreak" method="_on_end_time_timeout"]

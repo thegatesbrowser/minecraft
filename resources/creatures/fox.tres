@@ -33,7 +33,7 @@ stream_3/stream = ExtResource("9_1nupn")
 [resource]
 script = ExtResource("3_ldbmh")
 body_scene = ExtResource("1_ebhm5")
-damage = 1
+damage = 0
 speed = 4.0
 max_health = 5
 mesh_name = "Object_7"
