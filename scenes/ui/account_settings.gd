@@ -20,22 +20,22 @@ func _on_delete_save_pressed() -> void:
 func _on_confirmation_dialog_confirmed() -> void:
 	print("Deleting save...")
 	
-	multiplayer.peer_disconnected.emit()
+	#multiplayer.peer_disconnected.emit()
 	await Backend.delete_backend_save()
 	
-	if OS.is_debug_build():
-		get_tree().quit()
-	else:
-		var args := OS.get_cmdline_args()
-		args.append_array(OS.get_cmdline_user_args())
-		print(args)
-		var url := ""
-		for i in range(args.size()):
-			if args[i] == "--url" and i + 1 < args.size():
-				url = args[i + 1]
-				if get_tree().has_method("send_command"):
-					get_tree().send_command("open_gate", [url])
-				break
+	#if OS.is_debug_build():
+	get_tree().quit()
+	#else:
+		#var args := OS.get_cmdline_args()
+		#args.append_array(OS.get_cmdline_user_args())
+		#print(args)
+		#var url := ""
+		#for i in range(args.size()):
+			#if args[i] == "--url" and i + 1 < args.size():
+			#	url = args[i + 1]
+			#	if get_tree().has_method("send_command"):
+				#	get_tree().send_command("open_gate", [url])
+			#	break
 	
 
 func _on_confirmation_dialog_canceled() -> void:
