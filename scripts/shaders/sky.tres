@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=8 format=3 uid="uid://b0peal5e064en"]
 
-[ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="1_qjwve"]
+[ext_resource type="Shader" path="res://scripts/shaders/sky.gdshader" id="1_qjwve"]
 
 [sub_resource type="Gradient" id="Gradient_3lj46"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://buts6uhmr7s2d"]
 
-[ext_resource type="Script" path="res://scripts/creature_2.0.gd" id="1_qm1no"]
+[ext_resource type="Script" path="res://scripts/creatures/creature_base.gd" id="1_qm1no"]
 [ext_resource type="AudioStream" uid="uid://dpjq0v4ih2wn6" path="res://assets/sounds/other/Fox_idle1.ogg" id="3_yg616"]
 [ext_resource type="AudioStream" uid="uid://0hib4sdr5vnx" path="res://assets/sounds/other/Fox_idle6.ogg" id="4_4tu1u"]
 [ext_resource type="PackedScene" uid="uid://dq2adlui7agaw" path="res://scenes/other/nav_viewer.tscn" id="5_4wykx"]
@@ -110,6 +110,7 @@ creature = NodePath("../..")
 
 [node name="Chase" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]
 script = ExtResource("10_w64j2")
+update_time = 0.5
 creature = NodePath("../..")
 
 [node name="Attack" type="Node" parent="StateManager" node_paths=PackedStringArray("creature")]

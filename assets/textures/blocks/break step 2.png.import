@@ -2,26 +2,27 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bs4sptua4llsr"
-path="res://.godot/imported/drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png-215d94739d2a99482ec8f184126dd9c8.ctex"
+uid="uid://cl46uy3qsn2xi"
+path.s3tc="res://.godot/imported/break step 2.png-9fdae7a922982be0af391a134560a5af.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png"
-dest_files=["res://.godot/imported/drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png-215d94739d2a99482ec8f184126dd9c8.ctex"]
+source_file="res://assets/textures/blocks/break step 2.png"
+dest_files=["res://.godot/imported/break step 2.png-9fdae7a922982be0af391a134560a5af.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -31,4 +32,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

@@ -1,6 +1,6 @@
 [gd_resource type="VoxelGeneratorMultipassCB" load_steps=2 format=3 uid="uid://bh1rbxjykhems"]
 
-[ext_resource type="Script" path="res://multipass_gen.gd" id="1_tux7n"]
+[ext_resource type="Script" path="res://scripts/world/multipass_gen.gd" id="1_tux7n"]
 
 [resource]
 column_height_blocks = 10

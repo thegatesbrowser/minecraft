@@ -26,11 +26,10 @@ func _ready() -> void:
 		.set_description("spawns random item).")\
 		.register()
 		
-		var backend_client = get_tree().get_first_node_in_group("BackendClient")
-		if backend_client and backend_client.playerdata:
-			if backend_client.playerdata.Inventory:
+		if Backend.playerdata:
+			if Backend.playerdata.Inventory:
 				# If the player has an inventory, load it
-				var data = JSON.parse_string(backend_client.playerdata.Inventory)
+				var data = JSON.parse_string(Backend.playerdata.Inventory)
 				if data:
 					update_client(data)
 		
@@ -168,8 +167,7 @@ func change(index: int, item_path: String, amount: int,parent:String,health:floa
 		else:
 			Globals.update_registered_ui.emit(id,_save)
 	else:
-		var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-		if BackendClient.playerdata.Inventory == null:
+		if Backend.playerdata.Inventory == null:
 			Globals.save.emit()
 		else:
 			Globals.save_slot.emit(index,item_path,amount,parent,health,rot)

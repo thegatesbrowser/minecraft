@@ -16,7 +16,9 @@ func spawn_creature(pos: Vector3, creature:Creature, spawn_pos = null) -> void:
 	#print(creature, pos)
 	if not multiplayer.is_server(): return
 	
-
+	if get_tree().get_nodes_in_group("NPCS").size() >= 6:
+		return
+		
 	var spawn_position = pos
 	print("creature spawn pos ", spawn_position)
 	spawn([1, spawn_position,creature.get_path(),spawn_pos])
@@ -28,6 +30,9 @@ func destroy_creature(Name: String) -> void:
 
 
 func custom_spawn(data: Array) -> Node:
+	
+
+		
 	var id: int = data[0]
 	var spawn_position: Vector3 = data[1]
 	

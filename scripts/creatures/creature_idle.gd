@@ -5,14 +5,20 @@ var move_distance:float = 10.0
 var target : Vector3
 var wander_time : float
 
+var nav_path:PackedVector3Array
+
 @export var creature: CreatureBase
 
 func randomize_wander():
 	target = get_random_pos_in_sphere(move_distance) + creature.global_position
+	update_nav_path()
 	wander_time = randf_range(1,4)
 
 func Enter(data:Dictionary):
 	randomize_wander()
+	
+func Exit():
+	pass
 	
 func Update(delta:float):
 	if wander_time > 0:
@@ -29,29 +35,34 @@ func Physics_Update(delta:float):
 		
 		if creature.creature_resource.attacks:
 			
-			var path = Nav.find_path(current_pos,target)
-			
-			if path:
+			if nav_path:
+				if nav_path.size() >= 2:
+					creature.stopped = false
+					
+					
+					var point:Vector3 = nav_path[1] + Vector3(0.5,0,0.5)
+					var point_id = nav_path.find(point - Vector3(0.5,0,0.5))
+					
+					var distance_to_point = current_pos.distance_to(point)
+					
+					if distance_to_point <= 1:
+						#print("on top of point")
+						nav_path.remove_at(point_id)
+						
 
-				for i in path:
-					if path.size() >= 2:
-						creature.stopped = false
+					var direction = creature.global_position.direction_to(point)
 
-						var point = path[1] + Vector3(0.5,0,0.5)
+					creature.velocity.x = direction.x * creature.creature_resource.speed
+					creature.velocity.z = direction.z * creature.creature_resource.speed
 
-						var direction = creature.global_position.direction_to(point)
-
-						creature.velocity.x = direction.x * creature.creature_resource.speed
-						creature.velocity.z = direction.z * creature.creature_resource.speed
-
-						creature.guide.global_position = point
+					creature.guide.global_position = point
 
 						#print("move to",point, "from ", pos)
-					else:
-						#print("cant move too close")
-						creature.stopped = true
-						creature.velocity.x = 0
-						creature.velocity.z = 0 
+				else:
+					#print("cant move too close")
+					creature.stopped = true
+					creature.velocity.x = 0
+					creature.velocity.z = 0 
 			else:
 				creature.velocity.x = 0
 				creature.velocity.z = 0 
@@ -99,3 +110,15 @@ func get_closest_player():
 				closest_player = i
 
 	return closest_player
+	
+	
+func update_nav_path():
+	var current_pos = creature.global_position
+	
+	var OK = Nav.find_path(current_pos,target)
+
+	if OK:
+		nav_path = OK
+		
+		for i in nav_path:
+			Nav.create_visual_debug(i,true)

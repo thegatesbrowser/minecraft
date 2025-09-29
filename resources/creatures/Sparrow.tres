@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Creature" load_steps=12 format=3 uid="uid://bgq1uw8gii0xc"]
+[gd_resource type="Resource" script_class="Creature" load_steps=11 format=3 uid="uid://bgq1uw8gii0xc"]
 
-[ext_resource type="PackedScene" uid="uid://pxcswnn73ihf" path="res://scenes/creatures/Sparrow.tscn" id="1_4coyk"]
+[ext_resource type="PackedScene" uid="uid://pxcswnn73ihf" path="res://assets/models/creatures/Sparrow.tscn" id="1_4coyk"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_vipb4"]
 [ext_resource type="AudioStream" uid="uid://bgscst0xbrr5f" path="res://assets/sounds/other/Fox_hurt1.ogg" id="2_mblni"]
 [ext_resource type="Script" path="res://scripts/creatures/creature.gd" id="2_xpub8"]
@@ -8,9 +8,6 @@
 [ext_resource type="AudioStream" uid="uid://dxd8kf1git7iw" path="res://assets/sounds/other/Fox_hurt3.ogg" id="4_xuulr"]
 [ext_resource type="AudioStream" uid="uid://bj3cpbjncj2hs" path="res://assets/sounds/other/Fox_hurt4.ogg" id="5_71sg3"]
 [ext_resource type="Resource" uid="uid://bi2uaabadl7r3" path="res://resources/items/chicken_raw.tres" id="7_gvn4u"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3rn82"]
-size = Vector3(0.287048, 0.486572, 0.418945)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f8dwm"]
 random_pitch = 1.2
@@ -33,16 +30,16 @@ stream_3/stream = ExtResource("5_71sg3")
 [resource]
 script = ExtResource("2_xpub8")
 body_scene = ExtResource("1_4coyk")
-max_health = 1
-attacks = false
-run_away_after_attack = false
 damage = 0
 speed = 5.0
-coll_shape = SubResource("BoxShape3D_3rn82")
+max_health = 1
 mesh_name = "Body"
+drop_items = Array[ExtResource("1_vipb4")]([ExtResource("7_gvn4u")])
 hurt_sound = SubResource("AudioStreamRandomizer_eoa4o")
 death_sound = SubResource("AudioStreamRandomizer_f8dwm")
 flyies = true
 flying_height = 10.0
-creature_name = "Sparrow"
-drop_items = Array[ExtResource("1_vipb4")]([ExtResource("7_gvn4u")])
+attacks = false
+walk_ani_name = ""
+idle_ani_name = ""
+collision_offset = Vector3(0, 0, 0)

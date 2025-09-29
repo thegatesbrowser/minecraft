@@ -59,7 +59,7 @@ var slot_manager:SlotManager
 func _ready() -> void:
 	slot_manager = get_node("/root/Main").find_child("SlotManager")
 	
-	plants = [voxel_blocky_type_library.get_model_index_default("tall_grass"),voxel_blocky_type_library.get_model_index_default("fern"),voxel_blocky_type_library.get_model_index_default("flower"),voxel_blocky_type_library.get_model_index_default("reeds")]
+	plants = [voxel_blocky_type_library.get_model_index_default("tall_grass"),voxel_blocky_type_library.get_model_index_default("fern"),voxel_blocky_type_library.get_model_index_default("flower"),voxel_blocky_type_library.get_model_index_default("reeds"),voxel_blocky_type_library.get_model_index_default("tall_flower"),voxel_blocky_type_library.get_model_index_default("wheat"),voxel_blocky_type_library.get_model_index_default("wheat_seed")]
 
 	if is_multiplayer_authority() or Connection.is_server():
 		terrain = TerrainHelper.get_terrain_tool()
@@ -75,8 +75,6 @@ func _physics_process(_delta: float) -> void:
 	var origin = camera.get_global_transform().origin
 	var forward = -camera.get_global_transform().basis.z.normalized()
 	last_hit = voxel_tool.raycast(origin, forward, distance, 1)
-	#$"../../RotationRoot/Head/Camera3D/RayCast3D".global_position = origin
-	#$"../../RotationRoot/Head/Camera3D/RayCast3D".basis.z = forward
 
 	if last_hit != null:
 		
@@ -315,19 +313,20 @@ func get_direction(player_pos:Vector3, place_pos:Vector3):
 @rpc("any_peer","call_local")
 func spawn_light(pos: Vector3,color:Color,energy:float, size:float = 5.0) -> void:
 	var light = light_.instantiate()
-	light.position = pos + Vector3(0.5,0.1,0.5)
-	light.color = color
-	light.energy = energy
-	light.size = size
+	light.position = pos + Vector3(0.5,0.5,0.5)
+	light.light_color = color
+	light.light_energy = energy
+	light.light_size = size
 	var light_container = get_tree().get_first_node_in_group("LightContainer")
 	light_container.add_child(light)
 
 @rpc("any_peer","call_local")
 func destory_light(pos:Vector3):
-	var find_pos = pos - Vector3(0.5,0.1,0.5)
+	var find_pos = pos + Vector3(0.5,0.5,0.5)
 	var light_container = get_tree().get_first_node_in_group("LightContainer")
 	for light in light_container.get_children():
-		if light.position == find_pos:
+		print("light check for ",find_pos, "light pos ",light.global_position)
+		if light.global_position == find_pos:
 			light.queue_free()
 
 @rpc("any_peer","call_local")

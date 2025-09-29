@@ -53,9 +53,6 @@ var fall_time:float = 0.0
 @export var floor_ray:RayCast3D
 @export var skeleton_3d: Skeleton3D
 
-
-var backendclient
-
 const SENSITIVITY = 0.004
 
 # Bob variables
@@ -116,20 +113,19 @@ func _ready() -> void:
 	Globals.remove_item_in_hand.connect(remove_item_in_hand)
 	Globals.hunger_points_gained.connect(hunger_points_gained)
 	Globals.fnished_loading.connect(free_player)
+	
 	spawn_position = start_position
 	
-	backendclient = get_tree().get_first_node_in_group("BackendClient")
-	
-	if !backendclient.playerdata.is_empty():
-		if backendclient.playerdata.hunger == null:
+	if !Backend.playerdata.is_empty():
+		if Backend.playerdata.hunger == null:
 			hunger = base_hunger
 		else:
-			hunger = backendclient.playerdata.hunger
+			hunger = Backend.playerdata.hunger
 
-		if backendclient.playerdata.hunger == null:
+		if Backend.playerdata.hunger == null:
 			health = max_health
 		else:
-			health = backendclient.playerdata.health
+			health = Backend.playerdata.health
 	else:
 		hunger = base_hunger
 		health = max_health
@@ -143,15 +139,7 @@ func _ready() -> void:
 	_update_tp_fp_visibility()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # TODO: Move to mouse mode
-	
-	
-	
-	
-	#var player_save_timer = Timer.new()
-	#player_save_timer.wait_time = 1
-	#add_child(player_save_timer)
-	#player_save_timer.start()
-	#player_save_timer.timeout.connect(save_data)
+
 
 func _update_tp_fp_visibility() -> void:
 	if is_multiplayer_authority():
@@ -338,6 +326,7 @@ func is_print_logs() -> bool:
 
 
 func _exit_tree():
+	save_data()
 	Console.remove_command("player_flying")
 	Console.remove_command("player_clipping")
 

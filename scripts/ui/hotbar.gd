@@ -23,10 +23,9 @@ func _ready() -> void:
 		# connect signals to save hotbar data
 		slot.item_changed.connect(slot_updated)
 
-	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	if !BackendClient.playerdata.is_empty():
-		if BackendClient.playerdata.Hotbar != null:
-			update(JSON.parse_string(BackendClient.playerdata.Hotbar))
+	if !Backend.playerdata.is_empty():
+		if Backend.playerdata.Hotbar != null:
+			update(JSON.parse_string(Backend.playerdata.Hotbar))
 			# update the hotbar with the saved data
 			pass
 			
@@ -181,9 +180,8 @@ func update(info) -> void:
 # Signal to update the slot when item changes
 func slot_updated(index: int, item_path: String, amount: int,parent:String,health:float,rot:int):
 	#print("hotbar slot updated ",index,item_path,amount,parent,health,rot)
-	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	if !BackendClient.playerdata.is_empty():
-		if BackendClient.playerdata.Inventory == null:
+	if !Backend.playerdata.is_empty():
+		if Backend.playerdata.Inventory == null:
 			Globals.save.emit()
 		else:
 			Globals.save_slot.emit(index,item_path,amount,parent,health,rot)

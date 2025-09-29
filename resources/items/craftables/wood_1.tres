@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Blueprint" load_steps=5 format=3 uid="uid://dh62ut64ibysg"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/blueprint.gd" id="1_2ncyk"]
-[ext_resource type="Texture2D" uid="uid://bn5we2hlukmst" path="res://construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="1_807cg"]
+[ext_resource type="Texture2D" uid="uid://bn5we2hlukmst" path="res://assets/textures/icons/construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="1_807cg"]
 [ext_resource type="Texture2D" uid="uid://h8nndohifc41" path="res://assets/textures/items/Oak Log.png" id="1_ahu68"]
 [ext_resource type="Resource" uid="uid://1826b5fcnlfo" path="res://resources/items/wood_oak.tres" id="1_t8vil"]
 

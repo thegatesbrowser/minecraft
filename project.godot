@@ -67,13 +67,13 @@ SoundManager=""
 Game=""
 NPCS=""
 CreatureContainer=""
-saveE="save event group"
 Enviroment=""
 "Water Updater"="updates the water"
 NavViewer=""
 Blueprints=""
 LightContainer="hold block lights"
 SoundContainer=""
+MISC_SAVE="save event group"
 
 [input]
 
@@ -287,12 +287,9 @@ limits/webrtc/max_channel_in_buffer_kb=200
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile=5
-lights_and_shadows/directional_shadow/16_bits=false
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=1
 textures/decals/filter=0
-environment/volumetric_fog/use_filter=0
 anti_aliasing/quality/msaa_2d=1
-2d/snapping/use_gpu_pixel_snap=true
+lights_and_shadows/positional_shadow/atlas_size=1000
 vram_compression/import_etc=true
 environment/default_environment="res://Assets/default_env.tres"

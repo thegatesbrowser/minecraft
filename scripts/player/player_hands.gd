@@ -1,6 +1,5 @@
 extends Node
 
-@export var break_part:GPUParticles3D
 @export var terrain_interaction:Node
 @export var items_library: ItemsLibrary
 @export var voxel_library = preload("res://resources/voxel_block_library.tres")
@@ -8,6 +7,7 @@ extends Node
 @export var drop_item_scene:PackedScene
 @export var hand_ani:AnimationPlayer
 @export var interactable_icon:TextureRect
+@export var break_block:Node3D
 
 var terrian:VoxelTerrain
 var voxel_tool:VoxelTool
@@ -105,27 +105,26 @@ func _process(_delta: float) -> void:
 					timer.wait_time = item.break_time
 					
 				#print(timer.wait_time )
-							
-				break_part.global_position = terrain_interaction.last_hit.position
-				break_part.emitting = true
-				break_part.show()
-				
+
 				timer.start()
 				if last_mine_pos == Vector3i.ZERO:
 					last_mine_pos = terrain_interaction.last_hit.position
 				elif last_mine_pos != terrain_interaction.last_hit.position:
 					timer.start()
 					
+				break_block.start_break(item.break_time)
+					
 				await timer.timeout
 				
 				if Input.is_action_pressed("Mine"):
 					if terrain_interaction.last_hit != null:
-						break_part.emitting = false
 						terrain_interaction.break_block()
+						break_block.stop()
 						last_mine_pos = Vector3i.ZERO
 						
+						
 	else:
-		break_part.emitting = false
+		break_block.stop()
 		timer.stop()
 
 

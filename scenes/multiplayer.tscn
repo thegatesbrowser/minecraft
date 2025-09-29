@@ -48,7 +48,7 @@
 [ext_resource type="AudioStream" uid="uid://d4mieippat2vk" path="res://assets/sounds/block/item_frame_add_item4.ogg" id="32_ik8i6"]
 [ext_resource type="Script" path="res://scripts/other/portal_manager.gd" id="34_oj152"]
 [ext_resource type="Script" path="res://scripts/common/saver.gd" id="34_s4tlk"]
-[ext_resource type="Script" path="res://scripts/world/creature_spawner.gd" id="35_06sqe"]
+[ext_resource type="Script" path="res://scripts/multiplayer/creature_spawner.gd" id="35_06sqe"]
 [ext_resource type="PackedScene" uid="uid://8oym32y4vfye" path="res://scenes/ui/portal_url.tscn" id="35_fu1ca"]
 [ext_resource type="Script" path="res://scripts/ui/slot_manager.gd" id="37_0ju56"]
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
@@ -398,7 +398,7 @@ spawn_path = NodePath("../Players")
 script = ExtResource("6_l50oc")
 view_distance = 100
 player_scene = ExtResource("7_n7355")
-stats_ui_updater = NodePath("../Game/Player UI/stats_ui_update")
+stats_ui_updater = NodePath("../Game/Player UI/ui_interface")
 
 [node name="CreatureSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/creatures/creature_base.tscn")

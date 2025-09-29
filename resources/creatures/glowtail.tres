@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Creature" load_steps=15 format=3 uid="uid://cylxg4ja44lhh"]
+[gd_resource type="Resource" script_class="Creature" load_steps=14 format=3 uid="uid://cylxg4ja44lhh"]
 
-[ext_resource type="PackedScene" uid="uid://bd6qfhhkcwjft" path="res://test creature.tscn" id="1_m1t2e"]
+[ext_resource type="PackedScene" uid="uid://ghab13gk0ro1" path="res://assets/models/creatures/glowtail.tscn" id="1_qd1kd"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_25jlh"]
 [ext_resource type="AudioStream" uid="uid://b2kddj78qu34s" path="res://assets/sounds/other/Fox_death1.ogg" id="2_yf1rt"]
 [ext_resource type="AudioStream" uid="uid://dbr3jim8fdk0q" path="res://assets/sounds/other/Fox_death2.ogg" id="3_jisxu"]
@@ -11,9 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://bvw3dv5xk1sm2" path="res://assets/sounds/other/Fox_hurt2.ogg" id="6_oyhmh"]
 [ext_resource type="AudioStream" uid="uid://dxd8kf1git7iw" path="res://assets/sounds/other/Fox_hurt3.ogg" id="7_5qakb"]
 [ext_resource type="AudioStream" uid="uid://bj3cpbjncj2hs" path="res://assets/sounds/other/Fox_hurt4.ogg" id="8_xtcw0"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3pi47"]
-size = Vector3(0.285156, 0.395752, 0.785471)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bdycu"]
 streams_count = 2
@@ -31,17 +28,17 @@ stream_3/stream = ExtResource("8_xtcw0")
 
 [resource]
 script = ExtResource("3_ub3wt")
-body_scene = ExtResource("1_m1t2e")
-max_health = 10
-attacks = false
-run_away_after_attack = false
+body_scene = ExtResource("1_qd1kd")
 damage = 0
 speed = 5.0
-coll_shape = SubResource("BoxShape3D_3pi47")
+max_health = 10
 mesh_name = "Cube"
+drop_items = Array[ExtResource("2_25jlh")]([ExtResource("5_7xh10"), ExtResource("6_oudns")])
 hurt_sound = SubResource("AudioStreamRandomizer_q6oy4")
 death_sound = SubResource("AudioStreamRandomizer_bdycu")
 flyies = false
 flying_height = 10.0
-creature_name = "Glowtail"
-drop_items = Array[ExtResource("2_25jlh")]([ExtResource("5_7xh10"), ExtResource("6_oudns")])
+attacks = false
+walk_ani_name = ""
+idle_ani_name = ""
+collision_offset = Vector3(0, 0, 0)

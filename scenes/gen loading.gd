@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 	if client:
 		if !client.playerdata.is_empty():
 			if client.playerdata.Position_x:
-				#location = Vector3(client.playerdata.Position_x,client.playerdata.Position_y,client.playerdata.Position_z)
+				location = Vector3(client.playerdata.Position_x,client.playerdata.Position_y,client.playerdata.Position_z)
 				pass
 				
 	var aabb:AABB = AABB(location,Vector3(40,60,40))

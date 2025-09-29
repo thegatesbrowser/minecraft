@@ -1,7 +1,6 @@
 extends VoxelGeneratorMultipassCB
 
 const Structure = preload("res://scripts/world/structure.gd")
-const CustomStructureGen = preload("res://scripts/world/structure_gen.gd")
 const voxels:VoxelBlockyTypeLibrary = preload("res://resources/voxel_block_library.tres")
 const curve:Curve = preload("res://resources/heightmap_curve.tres")
 const temp_curve:Curve = preload("res://resources/HeatCurve.tres")
@@ -49,8 +48,6 @@ var biomes : Dictionary = {
 
 const CHANNEL = VoxelBuffer.CHANNEL_TYPE
 
-var trunk_len_min := 6
-var trunk_len_max := 15
 
 var heightmap_noise: FastNoiseLite = FastNoiseLite.new()
 var temperature_noise: FastNoiseLite = FastNoiseLite.new()
@@ -73,9 +70,6 @@ const _moore_dirs = [
 ]
 
 func _init() -> void:
-	var cus_gen = CustomStructureGen.new()
-
-	#_custom_structures = cus_gen.generate()
 
 	heightmap_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	heightmap_noise.frequency = 0.01
@@ -97,9 +91,8 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 		min_pos.y >> 4,
 		min_pos.z >> 4)
 
-	
+	rng.seed = hash("Godot")
 
-	rng.seed = _get_chunk_seed_2d(_cpos)
 
 	if pass_index == 0:
 		# Base terrain
@@ -131,12 +124,14 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 							elif rng.randf() <= biomes[biome_name].creature_spawn_chance:
 								if biomes[biome_name].creatures.is_empty() == false:
 									voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
-									voxel_tool.set_voxel_metadata(Vector3i(x, y, z), load(biomes[biome_name].creatures.pick_random()))
+									voxel_tool.set_voxel_metadata(Vector3i(x, y, z), biomes[biome_name].creatures.pick_random())
 								pass
 							elif rng.randf() <= 0.5:
 								
-								var plant = biomes[biome_name].plants.pick_random()
-								voxel_tool.set_voxel(Vector3i(x, y, z), plant)
+								if !cave(x,y+1,z):
+									var i = rng.randi() % len(biomes[biome_name].plants)
+									var plant = biomes[biome_name].plants[i]
+									voxel_tool.set_voxel(Vector3i(x, y, z), plant)
 
 					
 						if y == real_height - 1:
@@ -236,12 +231,14 @@ func try_plant_tree(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNumberGe
 		#print("Ground not found")
 		return
 	
+	if voxel_tool.get_voxel(tree_pos - Vector3i(0,1,0)) == AIR: return
+	
 	var paste_buffer := VoxelBuffer.new()
 	var biome_name = get_biome(get_temp(tree_pos.x,tree_pos.z))
 	#print("biome ", biomes[biome_name])
 	if biomes[biome_name].trees.is_empty(): return # returns if no trees in that biome
 
-	var tree = biomes[biome_name].trees.pick_random()
+	var tree = biomes[biome_name].trees[1]
 
 	var file = FileAccess.open(tree,FileAccess.READ)
 	#print("file ",file)
@@ -299,7 +296,6 @@ func try_place_structure(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNum
 	if structure == "": return ## did not find a structure
 	
 	var paste_buffer := VoxelBuffer.new()
-	paste_buffer.for_each_voxel_metadata(test)
 	var file = FileAccess.open(structure,FileAccess.READ)
 	#print("file ",file)
 	var size := file.get_32()
@@ -325,6 +321,3 @@ func plant(voxel:int) -> bool:
 			return true
 
 	return false
-	
-func test():
-	print("meta")

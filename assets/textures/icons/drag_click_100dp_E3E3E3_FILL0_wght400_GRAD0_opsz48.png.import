@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qda8fe38f6r2"
-path="res://.godot/imported/dialogs_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.svg-f212462be223c7d895dae73fa935eca4.ctex"
+uid="uid://bs4sptua4llsr"
+path="res://.godot/imported/drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png-0072d99b8aa18d5747e7fe1a1ac09481.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dialogs_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.svg"
-dest_files=["res://.godot/imported/dialogs_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.svg-f212462be223c7d895dae73fa935eca4.ctex"]
+source_file="res://assets/textures/icons/drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png"
+dest_files=["res://.godot/imported/drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png-0072d99b8aa18d5747e7fe1a1ac09481.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

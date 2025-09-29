@@ -1,12 +1,12 @@
 [gd_scene load_steps=16 format=3 uid="uid://cg2nx287bqtet"]
 
-[ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/new_voxel_generator_multipass_cb.tres" id="1_k03nw"]
-[ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="2_8hsn3"]
-[ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="4_cjo7v"]
-[ext_resource type="Script" path="res://addons/freecam_3D/freecam.gd" id="4_gui2d"]
+[ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/multipass_gen.tres" id="1_ykh1m"]
+[ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="2_edc4x"]
+[ext_resource type="Script" path="res://addons/freecam_3D/freecam.gd" id="3_7i0kk"]
+[ext_resource type="Shader" path="res://scripts/shaders/sky.gdshader" id="4_h7nv0"]
 
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_4ilwg"]
-library = ExtResource("2_8hsn3")
+library = ExtResource("2_edc4x")
 occlusion_darkness = 1.0
 shadow_occluder_negative_z = true
 shadow_occluder_positive_z = true
@@ -34,7 +34,7 @@ color_ramp = SubResource("Gradient_vdyn7")
 noise = SubResource("FastNoiseLite_5i6mn")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8udel"]
-shader = ExtResource("4_cjo7v")
+shader = ExtResource("4_h7nv0")
 shader_parameter/day_bottom_color = Color(0.78905, 1, 0.996848, 1)
 shader_parameter/day_top_color = Color(0.164706, 0.521569, 1, 1)
 shader_parameter/sunset_bottom_color = Color(0.866667, 0.462745, 0.337255, 1)
@@ -101,13 +101,13 @@ offset_bottom = 116.0
 [node name="VoxelTerrain" type="VoxelTerrain" parent="."]
 max_view_distance = 60
 use_gpu_generation = true
-generator = ExtResource("1_k03nw")
+generator = ExtResource("1_ykh1m")
 mesher = SubResource("VoxelMesherBlocky_4ilwg")
 format = SubResource("VoxelFormat_rhear")
 cast_shadow = 2
 
 [node name="Freecam3D" type="Camera3D" parent="."]
-script = ExtResource("4_gui2d")
+script = ExtResource("3_7i0kk")
 
 [node name="VoxelViewer" type="VoxelViewer" parent="Freecam3D"]
 view_distance = 60
