@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://bbet1xkqsp2wo"]
+[gd_scene load_steps=71 format=4 uid="uid://bbet1xkqsp2wo"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/terrain_interaction.gd" id="2_5q13p"]
@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://hwhkmt3r870w" path="res://assets/textures/blocks/break step 1.png" id="17_0hjw6"]
 [ext_resource type="AudioStream" uid="uid://d2u44d524q4pt" path="res://assets/sounds/block/hurt.mp3" id="19_mt6y7"]
 [ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="21_mtu1a"]
-[ext_resource type="Texture2D" uid="uid://bs4sptua4llsr" path="res://drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="21_pwwxa"]
+[ext_resource type="Texture2D" uid="uid://bs4sptua4llsr" path="res://assets/textures/icons/drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="21_pwwxa"]
 [ext_resource type="Shader" path="res://scripts/shaders/Vignette .gdshader" id="22_nolos"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lyiwi"]
@@ -662,27 +662,6 @@ size = Vector3(0.01, 1, 0.01)
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pct4i"]
-emission_shape = 3
-emission_box_extents = Vector3(0.6, 1.45519e-11, 0.6)
-velocity_pivot = Vector3(1.45519e-11, 1.45519e-11, 1.45519e-11)
-direction = Vector3(1.45519e-11, 1, 1.45519e-11)
-spread = 7.0
-initial_velocity_max = 5.0
-scale_min = 0.0
-hue_variation_min = -1.0
-hue_variation_max = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6f0tj"]
-transparency = 4
-shading_mode = 2
-albedo_color = Color(0.0509804, 0.0509804, 0.0509804, 0.352941)
-metallic_specular = 0.19
-
-[sub_resource type="BoxMesh" id="BoxMesh_5jdb0"]
-material = SubResource("StandardMaterial3D_6f0tj")
-size = Vector3(0.1, 0.1, 0.1)
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2gamh"]
 properties/0/path = NodePath(".:_position")
 properties/0/spawn = true
@@ -984,9 +963,8 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("10")
 
-[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("break_part", "terrain_interaction", "floor_ray", "hand_ani", "interactable_icon", "break_block", "camera")]
+[node name="Hands" type="Node" parent="." node_paths=PackedStringArray("terrain_interaction", "floor_ray", "hand_ani", "interactable_icon", "break_block", "camera")]
 script = ExtResource("4_064gd")
-break_part = NodePath("TerrainInteraction/BlockOutline/Breakparticle")
 terrain_interaction = NodePath("TerrainInteraction")
 items_library = ExtResource("5_qnsii")
 floor_ray = NodePath("../floor")
@@ -1117,14 +1095,6 @@ mesh = SubResource("8")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_vtlvw")
 
-[node name="Breakparticle" type="GPUParticles3D" parent="Hands/TerrainInteraction/BlockOutline"]
-cast_shadow = 0
-emitting = false
-amount = 10
-lifetime = 0.5
-process_material = SubResource("ParticleProcessMaterial_pct4i")
-draw_pass_1 = SubResource("BoxMesh_5jdb0")
-
 [node name="AreaCheck" type="Node" parent="." node_paths=PackedStringArray("player", "floor_ray", "head_ray")]
 script = ExtResource("11_5go8a")
 player = NodePath("..")
@@ -1176,6 +1146,7 @@ offset_bottom = 23.0
 theme = ExtResource("10_fsqbe")
 
 [node name="interactable" type="TextureRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_4dy7q")
 anchors_preset = 8
 anchor_left = 0.5

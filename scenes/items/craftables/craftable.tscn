@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b3jgvc45n8k2i"]
 
 [ext_resource type="Script" path="res://scripts/items/craftables/craftable_base.gd" id="1_eofgj"]
-[ext_resource type="Texture2D" uid="uid://bn5we2hlukmst" path="res://construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="2_i2s1n"]
+[ext_resource type="Texture2D" uid="uid://bn5we2hlukmst" path="res://assets/textures/icons/construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="2_i2s1n"]
 [ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="3_5twbg"]
 [ext_resource type="Texture2D" uid="uid://dudcasy8dleom" path="res://assets/textures/items/stone_sword.png" id="3_awsau"]
 

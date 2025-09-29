@@ -127,10 +127,9 @@ func get_spawn_position() -> void:
 	
 	spawn_position = spawn_points.get_spawn_position()
 	
-	var client = get_tree().get_first_node_in_group("BackendClient")
-	if not client.playerdata.is_empty():
-		if client.playerdata.Position_x:
-			spawn_position = Vector3(client.playerdata.Position_x,client.playerdata.Position_y,client.playerdata.Position_z) + Vector3(0,1,0)
+	if not Backend.playerdata.is_empty():
+		if Backend.playerdata.Position_x:
+			spawn_position = Vector3(Backend.playerdata.Position_x,Backend.playerdata.Position_y,Backend.playerdata.Position_z) + Vector3(0,1,0)
 			
 	spawn_player.rpc_id(1,multiplayer.get_unique_id(),spawn_position)
 		

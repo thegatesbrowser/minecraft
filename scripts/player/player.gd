@@ -53,9 +53,6 @@ var fall_time:float = 0.0
 @export var floor_ray:RayCast3D
 @export var skeleton_3d: Skeleton3D
 
-
-var backendclient
-
 const SENSITIVITY = 0.004
 
 # Bob variables
@@ -119,18 +116,16 @@ func _ready() -> void:
 	
 	spawn_position = start_position
 	
-	backendclient = get_tree().get_first_node_in_group("BackendClient")
-	
-	if !backendclient.playerdata.is_empty():
-		if backendclient.playerdata.hunger == null:
+	if !Backend.playerdata.is_empty():
+		if Backend.playerdata.hunger == null:
 			hunger = base_hunger
 		else:
-			hunger = backendclient.playerdata.hunger
+			hunger = Backend.playerdata.hunger
 
-		if backendclient.playerdata.hunger == null:
+		if Backend.playerdata.hunger == null:
 			health = max_health
 		else:
-			health = backendclient.playerdata.health
+			health = Backend.playerdata.health
 	else:
 		hunger = base_hunger
 		health = max_health

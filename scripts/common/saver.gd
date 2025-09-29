@@ -67,17 +67,10 @@ func save_player_ui() -> void:
 		if ui.has_method("save"):
 			var ui_data = ui.call("save")
 			var data = JSON.stringify(ui_data)
-			var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-			Globals.send_to_server.emit({"client_id" : BackendClient.client_id , "change_name" : ui.name,"change" : data})
-			#await get_tree().create_timer(2.0).timeout
-			#for i in ui_data:
-				#var item = ui_data[i].item_path
-				#if item == "":
-					#continue
+			Globals.send_to_server.emit({"client_id" : Backend.client_id , "change_name" : ui.name,"change" : data})
 
 func save_slot(index: int, item_path: String, amount: int,parent: String,health: int, rot:int) -> void:
-	var BackendClient = get_tree().get_first_node_in_group("BackendClient")
-	Globals.send_slot_data.emit({"index":index,"item_path":item_path,"amount":amount,"parent":parent,"health":health,"rot":rot,"client_id":BackendClient.client_id})
+	Globals.send_slot_data.emit({"index":index,"item_path":item_path,"amount":amount,"parent":parent,"health":health,"rot":rot,"client_id":Backend.client_id})
 
 func misc_save():
 	var save_file

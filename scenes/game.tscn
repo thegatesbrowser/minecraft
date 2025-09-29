@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
-[ext_resource type="Script" path="res://scripts/inventory/inventory_holder.gd" id="3_fe1qo"]
+[ext_resource type="Script" path="res://scripts/ui/inventory_holder.gd" id="3_fe1qo"]
 [ext_resource type="Theme" uid="uid://c1tenirmy1xiy" path="res://assets/menu/main_menu_theme.tres" id="3_v2bsq"]
-[ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="3_y2n02"]
-[ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/new_voxel_generator_multipass_cb.tres" id="4_88uyt"]
+[ext_resource type="Shader" path="res://scripts/shaders/sky.gdshader" id="3_y2n02"]
+[ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/multipass_gen.tres" id="4_88uyt"]
 [ext_resource type="Script" path="res://scripts/other/time.gd" id="4_847i1"]
 [ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="4_njnuh"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
@@ -67,7 +67,7 @@
 [ext_resource type="Resource" uid="uid://l4nd5is685cm" path="res://resources/items/pants.tres" id="54_57bq4"]
 [ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
-[ext_resource type="Resource" uid="uid://cxgyc78ob8tvg" path="res://resources/items/craftables/blueprint_station.tres" id="62_jlllp"]
+[ext_resource type="Script" path="res://scripts/ui/blueprints.gd" id="63_smcjb"]
 [ext_resource type="Script" path="res://scripts/ui/player_direct.gd" id="65_nyrmm"]
 [ext_resource type="Script" path="res://scripts/ui/gameplay_settings.gd" id="66_h5gdj"]
 [ext_resource type="PackedScene" uid="uid://beu8kujo2qfke" path="res://scenes/ui/player_marker.tscn" id="66_uv6sr"]
@@ -528,7 +528,6 @@ E - Inventory
 
 [node name="Inventory" type="Control" parent="Player UI"]
 process_mode = 3
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -541,6 +540,7 @@ mouse_filter = 2
 script = ExtResource("3_fe1qo")
 
 [node name="Panel" type="PanelContainer" parent="Player UI/Inventory"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -619,14 +619,14 @@ size_flags_vertical = 3
 follow_focus = true
 vertical_scroll_mode = 0
 
-[node name="Blueprints" type="HBoxContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer" groups=["Blueprints"]]
+[node name="Blueprints" type="HBoxContainer" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer" groups=["Blueprints", "PlayersUI"]]
 layout_mode = 2
 alignment = 1
+script = ExtResource("63_smcjb")
 
 [node name="Slot" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "blueprint"
-item = ExtResource("62_jlllp")
 
 [node name="Slot2" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
 layout_mode = 2

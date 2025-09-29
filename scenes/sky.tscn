@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://bai247yhexqwe"]
+[gd_scene load_steps=12 format=3 uid="uid://km4h0fw4sdb5"]
 
-[ext_resource type="Shader" path="res://scripts/shaders/sky2.gdshader" id="1_a44fr"]
+[ext_resource type="Shader" path="res://scripts/shaders/sky.gdshader" id="1_8jj4h"]
 [ext_resource type="Script" path="res://scripts/other/time.gd" id="2_1jfua"]
 
 [sub_resource type="Gradient" id="Gradient_3lj46"]
@@ -29,7 +29,7 @@ color_ramp = SubResource("Gradient_u2lpl")
 noise = SubResource("FastNoiseLite_vhfy1")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rtqto"]
-shader = ExtResource("1_a44fr")
+shader = ExtResource("1_8jj4h")
 shader_parameter/day_bottom_color = Color(0.78905, 1, 0.996848, 1)
 shader_parameter/day_top_color = Color(0.164706, 0.521569, 1, 1)
 shader_parameter/sunset_bottom_color = Color(0.866667, 0.462745, 0.337255, 1)

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bn5we2hlukmst"
-path="res://.godot/imported/construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png-0e020876ddad584384b4c549a406b96f.ctex"
+path="res://.godot/imported/construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png-cdebc1370e5a0c3e25bb2d1adf0410c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png"
-dest_files=["res://.godot/imported/construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png-0e020876ddad584384b4c549a406b96f.ctex"]
+source_file="res://assets/textures/icons/construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png"
+dest_files=["res://.godot/imported/construction_1000dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png-cdebc1370e5a0c3e25bb2d1adf0410c7.ctex"]
 
 [params]
 

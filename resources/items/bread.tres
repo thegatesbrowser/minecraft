@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="ItemFood" load_steps=7 format=3 uid="uid://bpfvsqbv3qbye"]
+[gd_resource type="Resource" script_class="ItemFood" load_steps=6 format=3 uid="uid://bpfvsqbv3qbye"]
 
 [ext_resource type="Script" path="res://scripts/items/item_food.gd" id="1_hefeq"]
-[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_sa6l1"]
 
 [sub_resource type="Gradient" id="Gradient_66o26"]
 
@@ -28,7 +27,7 @@ unique_name = &""
 texture = SubResource("NoiseTexture2D_sk1h6")
 max_stack = 64
 rotatable = false
-drop_items = Array[ExtResource("1_sa6l1")]([])
+drop_items = Array[StringName]([])
 forgable = false
 forge_time = 2.0
 value = 10

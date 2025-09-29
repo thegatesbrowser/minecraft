@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Creature" load_steps=14 format=3 uid="uid://dwphi1dev865q"]
 
-[ext_resource type="PackedScene" uid="uid://lapvsp2lnu5y" path="res://scenes/creatures/fox.tscn" id="1_ebhm5"]
+[ext_resource type="PackedScene" uid="uid://lapvsp2lnu5y" path="res://assets/models/creatures/fox.tscn" id="1_ebhm5"]
 [ext_resource type="AudioStream" uid="uid://b2kddj78qu34s" path="res://assets/sounds/other/Fox_death1.ogg" id="2_pi4oh"]
 [ext_resource type="Script" path="res://scripts/items/item_base.gd" id="2_sffgm"]
 [ext_resource type="Resource" uid="uid://c4e134x487d6g" path="res://resources/items/meat.tres" id="3_g1f5t"]

@@ -2,4 +2,4 @@
 
 [resource]
 database_path = "./world_save.sqlite3"
-preferred_coordinate_format = 0
+save_generator_output = true
