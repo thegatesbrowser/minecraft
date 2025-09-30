@@ -138,7 +138,7 @@ func _ready() -> void:
 		
 	_update_tp_fp_visibility()
 	
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # TODO: Move to mouse mode
+	
 
 
 func _update_tp_fp_visibility() -> void:
@@ -153,6 +153,7 @@ func _update_tp_fp_visibility() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
 	if Globals.paused: return
+	if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE: return
 	
 	if event is InputEventMouseMotion:
 		rotation_root.rotate_y(-event.relative.x * SENSITIVITY)
@@ -215,16 +216,16 @@ func _physics_process(delta: float) -> void:
 
 			set_fall_height = false
 
-	if !Globals.paused:
+	if !Globals.paused and Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		mine_and_place(delta)
-	if !is_flying and !Globals.paused and !swimming:
+	if !is_flying and !Globals.paused and !swimming and Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		normal_movement(delta)
-	if is_flying and !Globals.paused and !swimming:
+	if is_flying and !Globals.paused and !swimming and Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		flying_movement(delta)
-	if !is_flying and !Globals.paused and swimming:
+	if !is_flying and !Globals.paused and swimming and Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		swimming_movement(delta)
 		
-	if Globals.paused:
+	if Globals.paused and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 		velocity.x = lerp(velocity.x,0.0,.1)
 		velocity.z = lerp(velocity.x,0.0,.1)
 		
@@ -658,4 +659,5 @@ func spawn_creature(pos,creature):
 
 # after loading lets the player move
 func free_player():
+	MouseMode.set_captured(true)
 	found_ground = true

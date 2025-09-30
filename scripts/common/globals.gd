@@ -19,6 +19,7 @@ var view_range:int = 128
 # world gen
 signal fnished_loading # let the player move ground has been made
 
+signal create_spawner(pos:Vector3i,creature:String)
 signal spawn_creature(pos:Vector3,creature,spawn_pos:Vector3)
 signal hunger_points_gained(amount)
 signal add_object(data:Array)
@@ -99,3 +100,6 @@ func find_item(item:ItemBase,inventory:bool = true,hotbar:bool = true, blueprint
 					return_ = slot
 					break
 	return return_
+
+func _create_spawner(pos:Vector3i,creature:String):
+	create_spawner.emit(pos,creature)

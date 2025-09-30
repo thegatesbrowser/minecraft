@@ -102,6 +102,6 @@ func update_nav_path():
 	if OK:
 		nav_path = OK
 		
-		for i in nav_path:
-			Nav.create_visual_debug(i,true)
+		#for i in nav_path:
+			#Nav.create_visual_debug(i)
 	

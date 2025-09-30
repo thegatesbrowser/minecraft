@@ -30,7 +30,8 @@ func _physics_process(delta: float) -> void:
 			#Globals.save_player_ui.emit()
 			GlobalAnimation._tween(self,"bounce_in",.2)
 			Globals.paused = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			MouseMode.ui_captured(false)
+			#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
 			for i in spawned:
 				var hold_i = i
@@ -40,7 +41,8 @@ func _physics_process(delta: float) -> void:
 			Globals.closed_inventory.emit()
 			GlobalAnimation._tween(self,"bounce_out",.4)
 			Globals.paused = false
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			MouseMode.ui_captured(true)
+			#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func open_inventory(id:Vector3) -> void:
 	#Globals.save_player_ui.emit()
@@ -55,8 +57,10 @@ func open_inventory(id:Vector3) -> void:
 	if visible:
 		GlobalAnimation._tween(self,"bounce_in",.2)
 		Globals.paused = true
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		MouseMode.ui_captured(false)
 	else:
 		Globals.closed_inventory.emit()
 		Globals.paused = false
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		MouseMode.ui_captured(true)
+		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

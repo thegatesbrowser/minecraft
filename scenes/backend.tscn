@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/multiplayer/backend_client.gd" id="1_vp6qf"]
 
-[node name="BackendClient" type="Node" node_paths=PackedStringArray("debug_ui", "PlayerInfo") groups=["BackendClient"]]
+[node name="BackendClient" type="Node" node_paths=PackedStringArray("debug_ui", "PlayerInfo")]
 script = ExtResource("1_vp6qf")
 debug_ui = NodePath("Debug")
 PlayerInfo = NodePath("Debug/Debug/Player Info")

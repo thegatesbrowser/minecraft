@@ -123,8 +123,11 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 								
 							elif rng.randf() <= biomes[biome_name].creature_spawn_chance:
 								if biomes[biome_name].creatures.is_empty() == false:
-									voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
-									voxel_tool.set_voxel_metadata(Vector3i(x, y, z), biomes[biome_name].creatures.pick_random())
+									Globals.call_deferred("_create_spawner",Vector3i(x, y, z) + Vector3i(0,1,0),biomes[biome_name].creatures.pick_random())
+									
+								#	Globals.spawn_creature.emit(Vector3i(x, y, z) + Vector3i(0,1,0),load(biomes[biome_name].creatures.pick_random()))
+									#voxel_tool.set_voxel(Vector3i(x, y, z), voxels.get_model_index_default("spawner"))
+									#voxel_tool.set_voxel_metadata(Vector3i(x, y, z), biomes[biome_name].creatures.pick_random())
 								pass
 							elif rng.randf() <= 0.5:
 								

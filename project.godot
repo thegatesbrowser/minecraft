@@ -29,6 +29,7 @@ _CameraShake3D="*res://addons/CameraShake3D/CameraShake3D/CameraShake3DNode.gd"
 SettingsManager="*res://scripts/common/SettingsManager.gd"
 Backend="*res://scenes/backend.tscn"
 Nav="*res://scripts/common/nav.gd"
+MouseMode="*res://scripts/common/mouse_mode.gd"
 
 [debug]
 
@@ -61,7 +62,6 @@ VoxelTerrain=""
 PlayerSpawner=""
 UISyncer="saves the ui data"
 Hotbar=""
-BackendClient=""
 PlayersUI="saves the players ui"
 SoundManager=""
 Game=""

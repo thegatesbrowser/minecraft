@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=111 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -73,6 +73,7 @@
 [ext_resource type="PackedScene" uid="uid://beu8kujo2qfke" path="res://scenes/ui/player_marker.tscn" id="66_uv6sr"]
 [ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="69_713dd"]
 [ext_resource type="AudioStream" uid="uid://sx4737eqqk7h" path="res://assets/sounds/ambient/Soulsand_valley_wind3.ogg" id="70_eg5sl"]
+[ext_resource type="Shader" path="res://scripts/shaders/Vignette.gdshader" id="70_l6v10"]
 [ext_resource type="Script" path="res://scenes/ui/account_settings.gd" id="70_umxlk"]
 
 [sub_resource type="Gradient" id="Gradient_udu43"]
@@ -300,6 +301,14 @@ width = 832
 height = 10
 fill = 1
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ejk5x"]
+shader = ExtResource("70_l6v10")
+shader_parameter/inner_radius = 0.1
+shader_parameter/outer_radius = 1.0
+shader_parameter/vignette_strength = 1.0
+shader_parameter/dither_strength = 0.03
+shader_parameter/vignette_color = null
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
 thickness = 2
@@ -380,6 +389,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 50, 8)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 50, 8)
 
 [node name="Loading Page" type="Control" parent="." node_paths=PackedStringArray("terrain")]
+visible = false
 z_index = 4
 layout_mode = 3
 anchors_preset = 15
@@ -528,6 +538,7 @@ E - Inventory
 
 [node name="Inventory" type="Control" parent="Player UI"]
 process_mode = 3
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -540,7 +551,6 @@ mouse_filter = 2
 script = ExtResource("3_fe1qo")
 
 [node name="Panel" type="PanelContainer" parent="Player UI/Inventory"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -752,7 +762,7 @@ offset_bottom = 20.0
 process_mode = 3
 layout_mode = 1
 
-[node name="Text Chat" type="PanelContainer" parent="Player UI"]
+[node name="Text_Chat" type="PanelContainer" parent="Player UI"]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -769,27 +779,27 @@ grow_vertical = 0
 theme = ExtResource("3_v2bsq")
 script = ExtResource("27_yvp68")
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Text Chat"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Text_Chat"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Text Chat/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Text_Chat/MarginContainer"]
 layout_mode = 2
 
-[node name="message display" type="TextEdit" parent="Player UI/Text Chat/MarginContainer/VBoxContainer"]
+[node name="message display" type="TextEdit" parent="Player UI/Text_Chat/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(1.45519e-11, 200)
 layout_mode = 2
 editable = false
 
-[node name="message_edit" type="LineEdit" parent="Player UI/Text Chat/MarginContainer/VBoxContainer"]
+[node name="message_edit" type="LineEdit" parent="Player UI/Text_Chat/MarginContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "MESSAGE"
 clear_button_enabled = true
 
-[node name="Pause Menu" type="Control" parent="Player UI" node_paths=PackedStringArray("settings")]
+[node name="Pause_Menu" type="Control" parent="Player UI" node_paths=PackedStringArray("settings")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -800,7 +810,25 @@ grow_vertical = 2
 script = ExtResource("15_uiy3n")
 settings = NodePath("Settings")
 
-[node name="Buttons" type="PanelContainer" parent="Player UI/Pause Menu"]
+[node name="Background" type="ColorRect" parent="Player UI/Pause_Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.362)
+
+[node name="Vignette" type="ColorRect" parent="Player UI/Pause_Menu"]
+material = SubResource("ShaderMaterial_ejk5x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Buttons" type="PanelContainer" parent="Player UI/Pause_Menu"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -809,36 +837,36 @@ grow_vertical = 2
 pivot_offset = Vector2(106, 540)
 theme = ExtResource("3_v2bsq")
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Buttons"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Buttons"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Buttons/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Buttons/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "Pause Menu"
 
-[node name="HSeparator" type="HSeparator" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_xl6xy")
 
-[node name="Main Menu" type="Button" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+[node name="Main Menu" type="Button" parent="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 text = "Main Menu"
 
-[node name="Settings" type="Button" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+[node name="Settings" type="Button" parent="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Settings"
 
-[node name="Settings" type="TabContainer" parent="Player UI/Pause Menu"]
+[node name="Settings" type="TabContainer" parent="Player UI/Pause_Menu"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -854,147 +882,147 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_v2bsq")
-current_tab = 2
+current_tab = 0
 
-[node name="InputSettings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
-visible = false
+[node name="InputSettings" type="PanelContainer" parent="Player UI/Pause_Menu/Settings"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_q5s33")
 script = ExtResource("18_1gacs")
 input_button_scene = ExtResource("22_2hbom")
 metadata/_tab_index = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/InputSettings"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Settings/InputSettings"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/InputSettings/MarginContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause_Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ActionList" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="ActionList" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/InputSettings/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ResetButton" type="Button" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
+[node name="ResetButton" type="Button" parent="Player UI/Pause_Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 text = "reset to default"
 
-[node name="Grapthic Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings" node_paths=PackedStringArray("enviorment")]
+[node name="Grapthic Settings" type="PanelContainer" parent="Player UI/Pause_Menu/Settings" node_paths=PackedStringArray("enviorment")]
 visible = false
 layout_mode = 2
 script = ExtResource("21_8u2nj")
 enviorment = NodePath("../../../../WorldEnvironment")
 metadata/_tab_index = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Settings/Grapthic Settings"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Glow" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Glow" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "Glow"
 
-[node name="Fog" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Fog" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "Fog
 "
 
-[node name="Ssao" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Ssao" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "Ssao
 "
 
-[node name="SDFGI" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="SDFGI" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "SDFGI
 "
 
-[node name="TAA" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="TAA" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "TAA"
 
-[node name="Transparency" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Transparency" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "Transparency"
 
-[node name="view_range" type="LineEdit" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="view_range" type="LineEdit" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "View Range : 800"
 
-[node name="Gameplay Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
+[node name="Gameplay Settings" type="PanelContainer" parent="Player UI/Pause_Menu/Settings"]
+visible = false
 layout_mode = 2
 script = ExtResource("66_h5gdj")
 metadata/_tab_index = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Gameplay Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Settings/Gameplay Settings"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer"]
 layout_mode = 2
 
-[node name="Headbob" type="CheckButton" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
+[node name="Headbob" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Headbob"
 
-[node name="varing fov" type="CheckButton" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
+[node name="varing fov" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Varying FOV"
 
-[node name="Account Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
+[node name="Account Settings" type="PanelContainer" parent="Player UI/Pause_Menu/Settings"]
 visible = false
 layout_mode = 2
 script = ExtResource("70_umxlk")
 metadata/_tab_index = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Account Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Settings/Account Settings"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Account Settings/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/Account Settings/MarginContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="DeleteSave" type="Button" parent="Player UI/Pause Menu/Settings/Account Settings/MarginContainer/VBoxContainer"]
+[node name="DeleteSave" type="Button" parent="Player UI/Pause_Menu/Settings/Account Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 text = " Delete Save "
 
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="Player UI/Pause Menu/Settings/Account Settings"]
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="Player UI/Pause_Menu/Settings/Account Settings"]
 canvas_item_default_texture_filter = 0
 initial_position = 1
 size = Vector2i(628, 119)
@@ -1006,18 +1034,18 @@ doing this will also reload the game"
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_helment_item_changed"]
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot2" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_chest_item_changed"]
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot3" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_pants_item_changed"]
-[connection signal="text_submitted" from="Player UI/Text Chat/MarginContainer/VBoxContainer/message_edit" to="Player UI/Text Chat" method="_on_line_edit_text_submitted"]
-[connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Main Menu" to="Player UI/Pause Menu" method="_on_main_menu_pressed"]
-[connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Settings" to="Player UI/Pause Menu" method="_on_settings_pressed"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Fog" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_fog_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Ssao" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_ssao_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/SDFGI" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_sdfgi_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TAA" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_taa_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Transparency" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_transparency_toggled"]
-[connection signal="text_submitted" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/view_range" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_view_range_text_submitted"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/Headbob" to="Player UI/Pause Menu/Settings/Gameplay Settings" method="_on_headbob_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/varing fov" to="Player UI/Pause Menu/Settings/Gameplay Settings" method="_on_varing_fov_toggled"]
-[connection signal="pressed" from="Player UI/Pause Menu/Settings/Account Settings/MarginContainer/VBoxContainer/DeleteSave" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_delete_save_pressed"]
-[connection signal="canceled" from="Player UI/Pause Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_confirmation_dialog_canceled"]
-[connection signal="confirmed" from="Player UI/Pause Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_confirmation_dialog_confirmed"]
+[connection signal="text_submitted" from="Player UI/Text_Chat/MarginContainer/VBoxContainer/message_edit" to="Player UI/Text_Chat" method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer/Main Menu" to="Player UI/Pause_Menu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer/Settings" to="Player UI/Pause_Menu" method="_on_settings_pressed"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Fog" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_fog_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Ssao" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_ssao_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/SDFGI" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_sdfgi_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TAA" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_taa_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Transparency" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_transparency_toggled"]
+[connection signal="text_submitted" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/view_range" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_view_range_text_submitted"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/Headbob" to="Player UI/Pause_Menu/Settings/Gameplay Settings" method="_on_headbob_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/varing fov" to="Player UI/Pause_Menu/Settings/Gameplay Settings" method="_on_varing_fov_toggled"]
+[connection signal="pressed" from="Player UI/Pause_Menu/Settings/Account Settings/MarginContainer/VBoxContainer/DeleteSave" to="Player UI/Pause_Menu/Settings/Account Settings" method="_on_delete_save_pressed"]
+[connection signal="canceled" from="Player UI/Pause_Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause_Menu/Settings/Account Settings" method="_on_confirmation_dialog_canceled"]
+[connection signal="confirmed" from="Player UI/Pause_Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause_Menu/Settings/Account Settings" method="_on_confirmation_dialog_confirmed"]
