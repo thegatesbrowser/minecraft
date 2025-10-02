@@ -287,6 +287,8 @@ limits/webrtc/max_channel_in_buffer_kb=200
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=1
 textures/decals/filter=0
 anti_aliasing/quality/msaa_2d=1
