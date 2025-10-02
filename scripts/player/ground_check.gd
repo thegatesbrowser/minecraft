@@ -62,5 +62,5 @@ func _process(delta: float) -> void:
 
 @rpc("any_peer","call_local")
 func sfx(voxel_name:String,pos:Vector3) -> void:
-	var sound_effect = voxel_name+"_walk"
-	sound_manager.play_sound(sound_effect,pos)
+	var sound_effect = voxel_name
+	sound_manager.play_sound(sound_effect,pos,"walk")

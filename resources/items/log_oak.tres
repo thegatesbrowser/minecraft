@@ -1,21 +1,58 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=5 format=3 uid="uid://d26i62gur1o23"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=17 format=3 uid="uid://d26i62gur1o23"]
 
 [ext_resource type="Resource" uid="uid://c8jpafhd3cmxl" path="res://resources/items/charcoal.tres" id="1_1xnot"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_dqy48"]
+[ext_resource type="AudioStream" uid="uid://cch5k6cgj7gho" path="res://assets/sounds/block/log 1.mp3" id="1_f8t54"]
+[ext_resource type="AudioStream" uid="uid://bemkbp5uo6lth" path="res://assets/sounds/block/log 2.mp3" id="2_iuoox"]
 [ext_resource type="AudioStream" uid="uid://28lrdby7dbey" path="res://assets/sounds/ambient/weather/rain1.ogg" id="3_kotew"]
 [ext_resource type="Texture2D" uid="uid://h8nndohifc41" path="res://assets/textures/items/Oak Log.png" id="3_u36qx"]
+[ext_resource type="AudioStream" uid="uid://d2lp05mnpj8s2" path="res://assets/sounds/block/log 3.mp3" id="3_wp5je"]
+[ext_resource type="AudioStream" uid="uid://cbnrhqvwib116" path="res://assets/sounds/block/log 4.mp3" id="4_vvwj7"]
+[ext_resource type="AudioStream" uid="uid://cxwmqe0gyn2or" path="res://assets/sounds/block/log 6.mp3" id="5_wcux8"]
+[ext_resource type="AudioStream" uid="uid://winjkqayvpbo" path="res://assets/sounds/block/log 7.mp3" id="6_jsp6r"]
+[ext_resource type="AudioStream" uid="uid://dr6debrnyiqol" path="res://assets/sounds/dig/wood1.ogg" id="11_dppge"]
+[ext_resource type="AudioStream" uid="uid://cyevtqgbjrfs1" path="res://assets/sounds/dig/wood2.ogg" id="12_ohu61"]
+[ext_resource type="AudioStream" uid="uid://c4nm3gwgs2nqw" path="res://assets/sounds/dig/wood3.ogg" id="13_xqwo3"]
+[ext_resource type="AudioStream" uid="uid://bc7u4yimst3ah" path="res://assets/sounds/dig/wood4.ogg" id="14_nal24"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_popfw"]
+random_volume_offset_db = 2.0
+streams_count = 6
+stream_0/stream = ExtResource("1_f8t54")
+stream_1/stream = ExtResource("2_iuoox")
+stream_2/stream = ExtResource("3_wp5je")
+stream_3/stream = ExtResource("4_vvwj7")
+stream_4/stream = ExtResource("5_wcux8")
+stream_5/stream = ExtResource("6_jsp6r")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k1v6a"]
+streams_count = 4
+stream_0/stream = ExtResource("11_dppge")
+stream_1/stream = ExtResource("12_ohu61")
+stream_2/stream = ExtResource("13_xqwo3")
+stream_3/stream = ExtResource("14_nal24")
 
 [resource]
 script = ExtResource("1_dqy48")
 break_time = 1.1
-light = true
+light = false
 light_colour = Color(1, 1, 1, 1)
 light_energy = 1.0
 light_size = 5.0
-has_sound = true
+has_sound = false
 sound = ExtResource("3_kotew")
 sound_distance = 10.0
 panning = 1.0
+block_sound = SubResource("AudioStreamRandomizer_popfw")
+volume = -21.0
+pitch = 1.0
+max_distance = 20
+panning_strength = 3
+walk_block_sound = SubResource("AudioStreamRandomizer_k1v6a")
+walk_volume = -21.0
+walk_pitch = 2.5
+walk_max_distance = 10
+walk_panning_strength = 3
 unique_name = &"log_oak"
 texture = ExtResource("3_u36qx")
 max_stack = 64

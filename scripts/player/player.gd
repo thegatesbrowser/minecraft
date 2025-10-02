@@ -106,6 +106,7 @@ var health
 @onready var minecraft_player: Node3D = $"RotationRoot/Model" # TP
 #@onready var fp: Node3D = $RotationRoot/Head/Camera3D/fp # FP
 
+var check_terrian_timer:Timer
 var spawn_point_set := {}
 
 func _ready() -> void:
@@ -138,7 +139,7 @@ func _ready() -> void:
 		
 	_update_tp_fp_visibility()
 	
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # TODO: Move to mouse mode
+	
 
 
 func _update_tp_fp_visibility() -> void:
@@ -153,6 +154,7 @@ func _update_tp_fp_visibility() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority() and Connection.is_peer_connected: return
 	if Globals.paused: return
+	if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE: return
 	
 	if event is InputEventMouseMotion:
 		rotation_root.rotate_y(-event.relative.x * SENSITIVITY)
@@ -215,16 +217,16 @@ func _physics_process(delta: float) -> void:
 
 			set_fall_height = false
 
-	if !Globals.paused:
+	if !Globals.paused and Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		mine_and_place(delta)
-	if !is_flying and !Globals.paused and !swimming:
+	if !is_flying and !Globals.paused and !swimming and Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		normal_movement(delta)
-	if is_flying and !Globals.paused and !swimming:
+	if is_flying and !Globals.paused and !swimming and Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		flying_movement(delta)
-	if !is_flying and !Globals.paused and swimming:
+	if !is_flying and !Globals.paused and swimming and Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
 		swimming_movement(delta)
 		
-	if Globals.paused:
+	if Globals.paused and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 		velocity.x = lerp(velocity.x,0.0,.1)
 		velocity.z = lerp(velocity.x,0.0,.1)
 		
@@ -413,7 +415,16 @@ func respawn(pos: Vector3) -> void:
 	print("respawn")
 	global_position = pos
 	velocity = Vector3.ZERO
-
+	found_ground = false
+	var aabb:AABB = AABB(pos,Vector3(40,60,40))
+	if TerrainHelper.get_terrain_tool().is_area_meshed(aabb):
+		found_ground = true
+	else:
+		check_terrian_timer = Timer.new()
+		check_terrian_timer.wait_time = 1.0
+		add_child(check_terrian_timer)
+		check_terrian_timer.start()
+		check_terrian_timer.timeout.connect(_check_terrian_timer)
 func drop_items():
 	var inventory = get_tree().get_first_node_in_group("Main Inventory")
 	var hotbar = get_tree().get_first_node_in_group("Hotbar")
@@ -658,4 +669,11 @@ func spawn_creature(pos,creature):
 
 # after loading lets the player move
 func free_player():
+	MouseMode.set_captured(true)
 	found_ground = true
+
+func _check_terrian_timer():
+	var aabb:AABB = AABB(global_position,Vector3(40,60,40))
+	if TerrainHelper.get_terrain_tool().is_area_meshed(aabb):
+		found_ground = true
+		check_terrian_timer.queue_free()

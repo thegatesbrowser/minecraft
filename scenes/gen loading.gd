@@ -13,15 +13,14 @@ var isLoading:=true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if multiplayer.is_server(): return
+	
 	var location = Vector3(12,50,8)
 
-	var client = get_tree().get_first_node_in_group("BackendClient")
-
-	if client:
-		if !client.playerdata.is_empty():
-			if client.playerdata.Position_x:
-				location = Vector3(client.playerdata.Position_x,client.playerdata.Position_y,client.playerdata.Position_z)
-				pass
+	if !Backend.playerdata.is_empty():
+		if Backend.playerdata.Position_x:
+			location = Vector3(Backend.playerdata.Position_x,Backend.playerdata.Position_y,Backend.playerdata.Position_z)
+			pass
 				
 	var aabb:AABB = AABB(location,Vector3(40,60,40))
 	if terrain.is_area_meshed(aabb):

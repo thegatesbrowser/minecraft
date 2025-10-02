@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cwpfgbu65smne"]
 
-[ext_resource type="Script" path="res://scripts/multiplayer/example_godot_upload.gd" id="1_71por"]
+[ext_resource type="Script" path="res://scripts/multiplayer/test_python.gd" id="1_nvt6c"]
 
 [node name="Node" type="Node"]
-script = ExtResource("1_71por")
+script = ExtResource("1_nvt6c")

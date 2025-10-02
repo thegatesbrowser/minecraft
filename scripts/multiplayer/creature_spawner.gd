@@ -7,9 +7,17 @@ var debug:bool
 var creature_base = preload("res://scenes/creatures/creature_base.tscn")
 @export var view_distance: int = 20
 
+var creature_spawners:Dictionary
+
 func _ready() -> void:
 	spawn_function = custom_spawn
+	Globals.create_spawner.connect(create_creature_spawner)
 	Globals.spawn_creature.connect(spawn_creature)
+	var spawn_tick := Timer.new()
+	spawn_tick.wait_time = 5.0
+	spawn_tick.autostart = true
+	add_child(spawn_tick)
+	spawn_tick.timeout.connect(tick)
 
 
 func spawn_creature(pos: Vector3, creature:Creature, spawn_pos = null) -> void:
@@ -69,3 +77,42 @@ func create_viewer(_id: int, creature: CreatureBase) -> void:
 		viewer.set_network_peer_id(1)
 
 		creature.add_child(viewer)
+
+func create_creature_spawner(spawner_pos:Vector3i,creature:String):
+	return
+	creature_spawners[spawner_pos] = {"creature":creature}
+	print("created_spawner")
+	#print("spawners ",creature_spawners)
+	pass
+	
+func tick():
+	return
+	if !multiplayer.is_server(): return
+	if creature_spawners.size() == 0: return
+		
+	var rng := RandomNumberGenerator.new()
+	var pos = creature_spawners.keys().pick_random()
+	
+	if pos:
+		var closest_player = get_closest_player(pos)
+		#print(closest_player.global_position.distance_to(pos),pos)
+		if closest_player:
+			if closest_player.global_position.distance_to(pos) > 120: return
+			
+			if pos:
+				spawn_creature(pos,load(creature_spawners[pos].creature))
+
+func get_closest_player(check_pos:Vector3i):
+	var last_distance: float = 0.0
+	var closest_player: CharacterBody3D
+	
+	for i in get_tree().get_nodes_in_group("Player"):
+		if last_distance == 0.0:
+			last_distance = check_pos.distance_to(i .global_position)
+			closest_player = i
+		else:
+			if last_distance > check_pos.distance_to(i .global_position):
+				last_distance = check_pos.distance_to(i .global_position)
+				closest_player = i
+
+	return closest_player

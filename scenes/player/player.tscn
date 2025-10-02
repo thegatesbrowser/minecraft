@@ -23,7 +23,7 @@
 [ext_resource type="AudioStream" uid="uid://d2u44d524q4pt" path="res://assets/sounds/block/hurt.mp3" id="19_mt6y7"]
 [ext_resource type="Shader" path="res://scripts/shaders/outline_UI.gdshader" id="21_mtu1a"]
 [ext_resource type="Texture2D" uid="uid://bs4sptua4llsr" path="res://assets/textures/icons/drag_click_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png" id="21_pwwxa"]
-[ext_resource type="Shader" path="res://scripts/shaders/Vignette .gdshader" id="22_nolos"]
+[ext_resource type="Shader" path="res://scripts/shaders/Vignette.gdshader" id="22_nolos"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lyiwi"]
 
@@ -714,6 +714,8 @@ shader_parameter/max_or_add = false
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hit_shader", "rotation_root", "ANI", "hit_sfx", "pos_label", "ping_label", "collision", "hand_ani", "terrain_interation", "camera_shake", "floor_ray", "skeleton_3d") groups=["Player"]]
 script = ExtResource("1")
 defualt_hand_model = ExtResource("2_w6sp7")
+max_flying_margin = 1.0
+min_flying_margin = -1.0
 hit_shader = NodePath("hit shader")
 rotation_root = NodePath("RotationRoot")
 ANI = NodePath("RotationRoot/Model/AnimationPlayer")
@@ -1134,10 +1136,11 @@ offset_top = 13.0
 offset_right = 142.0
 offset_bottom = 57.0
 theme = ExtResource("10_fsqbe")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.789)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 25
-text = "hfgugug"
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 10
+uppercase = true
 
 [node name="Ping" type="Label" parent="."]
 visible = false

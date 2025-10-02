@@ -15,11 +15,13 @@ func _process(delta: float) -> void:
 		visible = !visible
 		if visible:
 			message_edit.set_focus_mode(Control.FOCUS_ALL)
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			MouseMode.ui_captured(false)
+			#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			Globals.paused = true
 			open_messages()
 		else:
 			Globals.paused = false
+			MouseMode.ui_captured(true)
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 

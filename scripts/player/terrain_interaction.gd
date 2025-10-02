@@ -147,6 +147,11 @@ func break_block() -> void:
 		
 	voxel_tool.do_point(last_hit.position)
 	
+	var soundmanager = get_node("/root/Main").find_child("SoundManager")
+	
+	if last_hit != null:
+		soundmanager.play_sound(voxel_blocky_type_library.get_type_name_and_attributes_from_model_index(voxel)[0],last_hit.previous_position)
+	
 	_break_block_server.rpc_id(1, last_hit.position)
 
 
@@ -238,10 +243,11 @@ func _break_block_server(position: Vector3) -> void:
 
 @rpc("reliable", "any_peer")
 func _block_broken_local(type: StringName) -> void:
-	var soundmanager = get_node("/root/Main").find_child("SoundManager")
 	
-	if last_hit != null:
-		soundmanager.play_sound(type,last_hit.previous_position)
+	#var soundmanager = get_node("/root/Main").find_child("SoundManager")
+	
+	#if last_hit != null:
+		#soundmanager.play_sound(type,last_hit.previous_position)
 		
 	block_broken.emit(type)
 

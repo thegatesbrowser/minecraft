@@ -1,14 +1,47 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bgful1da4rkm2"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=10 format=3 uid="uid://bgful1da4rkm2"]
 
+[ext_resource type="AudioStream" uid="uid://dl4bir0rux4y6" path="res://assets/sounds/block/grass break.mp3" id="1_urrwj"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_xvy7c"]
 [ext_resource type="Texture2D" uid="uid://cylnevjm3cw6o" path="res://assets/textures/items/Grass.png" id="2_r1p67"]
+[ext_resource type="AudioStream" uid="uid://dlftyl4lsb4o5" path="res://assets/sounds/dig/grass1.ogg" id="4_1au85"]
+[ext_resource type="AudioStream" uid="uid://bshcsm6rdob6j" path="res://assets/sounds/dig/grass2.ogg" id="5_qcjru"]
+[ext_resource type="AudioStream" uid="uid://b5fxn8ibkvfxq" path="res://assets/sounds/dig/grass3.ogg" id="6_x3s5f"]
+[ext_resource type="AudioStream" uid="uid://cflkct6t40nlj" path="res://assets/sounds/dig/grass4.ogg" id="7_r65c6"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jg8kd"]
+random_pitch = 2.0
+random_volume_offset_db = 1.83
+streams_count = 1
+stream_0/stream = ExtResource("1_urrwj")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ppnug"]
+random_volume_offset_db = 0.22
+streams_count = 4
+stream_0/stream = ExtResource("4_1au85")
+stream_1/stream = ExtResource("5_qcjru")
+stream_2/stream = ExtResource("6_x3s5f")
+stream_3/stream = ExtResource("7_r65c6")
 
 [resource]
 script = ExtResource("1_xvy7c")
 break_time = 0.9
-spawn_chance = 0.1
-spawn_size = 1
-spawn_height = 0.0
+light = false
+light_colour = Color(0, 0, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
+block_sound = SubResource("AudioStreamRandomizer_jg8kd")
+volume = 0.0
+pitch = 1.0
+max_distance = 20
+panning_strength = 3
+walk_block_sound = SubResource("AudioStreamRandomizer_ppnug")
+walk_volume = -34.0
+walk_pitch = 3.1
+walk_max_distance = 10
+walk_panning_strength = 3
 unique_name = &"grass"
 texture = ExtResource("2_r1p67")
 max_stack = 64

@@ -4,16 +4,23 @@ extends Control
 @export var multiplayer_scene: PackedScene
 @export var loading_bar: ProgressBar
 
+var python_client := Python_Item_Backend_Client.new()
+
+signal checked_for_item
+var has_item = false
 
 func _ready() -> void:
+	add_child(python_client)
+	
 	if Connection.is_server():
 		start_scene()
 		return
 
-	else:
-		pass
+	#else:
+		#pass
 		#start_scene()
-	Backend.playerdata_updated.connect(check_items)
+		
+	Backend.playerdata_updated.connect(start_scene)
 
 func _process(delta):
 	if loading_bar.value < 100:
@@ -53,12 +60,25 @@ func check_items():
 				
 				if err:
 					print("has item")
+					var item_name = item_path.get_file()
+					python_client.check_file_exists(item_name, Callable(self, "_on_upload_file_check"))
+					
+					await checked_for_item
+					if has_item == false:
+						var files_to_upload = [
+						{"path": "res://assets/models/tools/Stone/axe_stone.tscn","local_path": "res://assets/models/axe_stone.tscn"}]
+						python_client.upload_files(files_to_upload)
+					
 				else:
+					var item_name = item_path.get_file()
+					print("item_name ",item_name)
+					
+					python_client.check_file_exists(item_name, Callable(self, "_on_download_file_check"))
 					print("missing item ",item_path)
 					
 		if hotbar_data:
 			for i in hotbar_data:
-				var item_path = hotbar_data[i].item_path
+				var item_path:String = hotbar_data[i].item_path
 				
 				if item_path == "": continue
 					
@@ -68,12 +88,27 @@ func check_items():
 				
 				if err:
 					print("has item")
+					var item_name = item_path.get_file()
+					python_client.check_file_exists(item_name, Callable(self, "_on_upload_file_check"))
+					
+					await checked_for_item
+					if has_item == false:
+						var files_to_upload = [
+						{"path": "res://assets/models/tools/Stone/axe_stone.tscn","local_path": "res://assets/models/axe_stone.tscn"}]
+						python_client.upload_files(files_to_upload)
+					
+					
 				else:
+					var item_name = item_path.get_file()
+					print("item_name ",item_name)
+					
+					python_client.check_file_exists(item_name, Callable(self, "_on_download_file_check"))
+					
 					print("missing item ",item_path)
 					
 		if blueprint_data:
 			for i in blueprint_data:
-				var item_path = blueprint_data[i].item_path
+				var item_path:String = blueprint_data[i].item_path
 				
 				if item_path == "": continue
 					
@@ -82,8 +117,40 @@ func check_items():
 				var err = ResourceLoader.exists(item_path)
 				
 				if err:
-					print("has item")
+					var item_name = item_path.get_file()
+					python_client.check_file_exists(item_name, Callable(self, "_on_upload_file_check"))
+					
+					await checked_for_item
+					if has_item == false:
+						var files_to_upload = [
+						{"path": "res://assets/models/tools/Stone/axe_stone.tscn","local_path": "res://assets/models/axe_stone.tscn"}]
+						python_client.upload_files(files_to_upload)
 				else:
+					var item_name = item_path.get_file()
+					print("item_name ",item_name)
+					
+					python_client.check_file_exists(item_name, Callable(self, "_on_download_file_check"))
+					
 					print("missing item ",item_path)
+					pass
 		
-	start_scene()
+	#start_scene()
+
+func _on_download_file_check(result: Dictionary):
+	if result.get("exists", false):
+		print("File exists on server in folder:", result["folder_id"])
+		print("Godot path:", result["local_path"])
+		python_client.download_folder_files(result["local_path"].get_file())
+	else:
+		print("File does not exist on server, safe to upload")
+
+func _on_upload_file_check(result: Dictionary):
+	if result.get("exists", false):
+		print("File exists on server in folder:", result["folder_id"])
+		print("Godot path:", result["local_path"])
+		checked_for_item.emit()
+		has_item = true
+	else:
+		checked_for_item.emit()
+		has_item = false
+		print("File does not exist on server, safe to upload")

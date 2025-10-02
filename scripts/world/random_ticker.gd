@@ -143,18 +143,6 @@ func _random_tick_callback(pos: Vector3i, value: int) -> void:
 	#print(value)
 	var type = VoxelLibraryResource.get_type_name_and_attributes_from_model_index(value)[0]
 
-
-	if value == VoxelLibraryResource.get_model_index_default("spawner"):
-	
-		if rng.randf() < 0.2:
-			var creature = _voxel_tool.get_voxel_metadata(pos)
-			
-			print("creature? ", _voxel_tool.get_voxel_metadata(pos))
-			if creature == null:
-				return
-			Globals.spawn_creature.emit(pos + Vector3i(0,1,0),load(creature))
-			_voxel_tool.do_point(pos)
-
 	if ItemLib.types.has(type) == false: return
 	var item = ItemLib.get_item(type)
 	

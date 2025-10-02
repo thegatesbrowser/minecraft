@@ -1,4 +1,4 @@
-[gd_resource type="VoxelBlockyTypeLibrary" load_steps=118 format=4 uid="uid://csna43pkcr65d"]
+[gd_resource type="VoxelBlockyTypeLibrary" load_steps=114 format=4 uid="uid://csna43pkcr65d"]
 
 [ext_resource type="Material" uid="uid://csq7hapgiaegg" path="res://assets/materials/terrain.material" id="1_8hqtx"]
 [ext_resource type="Material" uid="uid://6a7s1y7xwrh8" path="res://assets/materials/terrain_material_foliage.material" id="2_tyu8p"]
@@ -10,7 +10,6 @@
 [ext_resource type="Shader" path="res://scripts/shaders/wind.gdshader" id="7_ssghj"]
 [ext_resource type="Texture2D" uid="uid://d10fsk4wa54su" path="res://assets/textures/blocks/flower_rose.png" id="8_es8ej"]
 [ext_resource type="Texture2D" uid="uid://b7ihfj3ynsmyg" path="res://assets/textures/blocks/fire.png" id="8_lg5pj"]
-[ext_resource type="Texture2D" uid="uid://gamdwyj2ov1x" path="res://assets/textures/blocks/double_plant_fern_top.png" id="9_ixyq0"]
 [ext_resource type="Material" uid="uid://dhbknp6n7qomp" path="res://assets/materials/fire.tres" id="11_4llsq"]
 [ext_resource type="Shader" path="res://scripts/shaders/portal.gdshader" id="12_rl3je"]
 [ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="12_tb762"]
@@ -375,25 +374,6 @@ unique_name = &"flower"
 base_model = SubResource("VoxelBlockyModelMesh_lt0yd")
 resource_name = "flower"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qo2p1"]
-render_priority = 0
-shader = ExtResource("7_ssghj")
-shader_parameter/trans = true
-shader_parameter/distance_fade_min = null
-shader_parameter/distance_fade_max = null
-shader_parameter/grass_texture = ExtResource("9_ixyq0")
-
-[sub_resource type="VoxelBlockyModelMesh" id="VoxelBlockyModelMesh_22ywj"]
-mesh = ExtResource("4_vwypi")
-collision_aabbs = Array[AABB]([AABB(1.45519e-11, 1.45519e-11, 1.45519e-11, 0.9, 0.8, 0.9)])
-material_override_0 = SubResource("ShaderMaterial_qo2p1")
-collision_enabled_0 = false
-
-[sub_resource type="VoxelBlockyType" id="VoxelBlockyType_k01kp"]
-unique_name = &"fern"
-base_model = SubResource("VoxelBlockyModelMesh_22ywj")
-resource_name = "fern"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2m5i5"]
 render_priority = 0
 shader = ExtResource("12_rl3je")
@@ -742,5 +722,5 @@ base_model = SubResource("VoxelBlockyModelCube_sg625")
 resource_name = "blueprint_station"
 
 [resource]
-types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_k01kp"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_o5re0"), SubResource("VoxelBlockyType_xg2os"), SubResource("VoxelBlockyType_ywefl"), SubResource("VoxelBlockyType_3d0ox"), SubResource("VoxelBlockyType_5w55q"), SubResource("VoxelBlockyType_55pfu"), SubResource("VoxelBlockyType_ygmhy"), SubResource("VoxelBlockyType_uvhfn"), SubResource("VoxelBlockyType_mxeht")])
+types = Array[VoxelBlockyType]([SubResource("VoxelBlockyType_cfo7o"), SubResource("VoxelBlockyType_kgnva"), SubResource("VoxelBlockyType_4ubr4"), SubResource("VoxelBlockyType_k4bih"), SubResource("VoxelBlockyType_yomcl"), SubResource("VoxelBlockyType_7argj"), SubResource("VoxelBlockyType_fu35l"), SubResource("VoxelBlockyType_bbxuy"), SubResource("VoxelBlockyType_pwkao"), SubResource("VoxelBlockyType_pgid7"), SubResource("VoxelBlockyType_i06l5"), SubResource("VoxelBlockyType_uiln0"), SubResource("VoxelBlockyType_nug11"), SubResource("VoxelBlockyType_t5wsu"), SubResource("VoxelBlockyType_5xsqa"), SubResource("VoxelBlockyType_lyyh7"), SubResource("VoxelBlockyType_8i1qp"), SubResource("VoxelBlockyType_4tqua"), SubResource("VoxelBlockyType_l4xyh"), SubResource("VoxelBlockyType_jqf1y"), SubResource("VoxelBlockyType_3bomk"), SubResource("VoxelBlockyType_ksnuf"), SubResource("VoxelBlockyType_bef3u"), SubResource("VoxelBlockyType_v5joj"), SubResource("VoxelBlockyType_p7luq"), SubResource("VoxelBlockyType_o5re0"), SubResource("VoxelBlockyType_xg2os"), SubResource("VoxelBlockyType_ywefl"), SubResource("VoxelBlockyType_3d0ox"), SubResource("VoxelBlockyType_5w55q"), SubResource("VoxelBlockyType_55pfu"), SubResource("VoxelBlockyType_ygmhy"), SubResource("VoxelBlockyType_uvhfn"), SubResource("VoxelBlockyType_mxeht")])
 _id_map_data = PackedStringArray("air", "dirt", "grass", "stone", "log_oak", "log_birch", "wood_oak", "wood_birch", "leaf_oak", "leaf_birch", "sand", "portal", "tall_grass", "chest", "test", "glowstone", "iron", "diamond", "bed", "forge", "flower", "fern", "test_ore", "water_top", "water_full", "gravestone", "chest[direction=0]", "chest[direction=1]", "chest[direction=2]", "chest[direction=3]", "chest[direction=4]", "chest[direction=5]", "forge[direction=0]", "forge[direction=1]", "forge[direction=2]", "forge[direction=3]", "forge[direction=4]", "forge[direction=5]", "water", "fire", "hell_ore", "creature_spawner", "reeds", "cactus", "lava", "hell_stone", "creature", "creature_spawner", "portal", "fire_pit[direction=0]", "fire_pit[direction=1]", "fire_pit[direction=2]", "fire_pit[direction=3]", "fire_pit[direction=4]", "fire_pit[direction=5]", "wheat", "wheat_seed", "sandstone", "cave_air", "cooker[direction=0]", "cooker[direction=1]", "cooker[direction=2]", "cooker[direction=3]", "cooker[direction=4]", "cooker[direction=5]", "spawner", "tall_flower", "wood_parm", "leaf_parm", "bedrock", "blueprint_station")

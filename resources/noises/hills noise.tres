@@ -2,6 +2,7 @@
 
 [resource]
 noise_type = 3
+seed = 640
 frequency = 0.0059
 fractal_weighted_strength = 1.0
 domain_warp_fractal_type = 0

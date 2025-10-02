@@ -1,7 +1,25 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://1826b5fcnlfo"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=10 format=3 uid="uid://1826b5fcnlfo"]
 
+[ext_resource type="AudioStream" uid="uid://bpxj0rjcov7aj" path="res://assets/sounds/block/wood break.mp3" id="1_3bke2"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_4byef"]
 [ext_resource type="Texture2D" uid="uid://cf6c450ctftp2" path="res://assets/textures/items/Oak Plank.png" id="2_73mi1"]
+[ext_resource type="AudioStream" uid="uid://dr6debrnyiqol" path="res://assets/sounds/dig/wood1.ogg" id="4_0adxy"]
+[ext_resource type="AudioStream" uid="uid://cyevtqgbjrfs1" path="res://assets/sounds/dig/wood2.ogg" id="5_amn1r"]
+[ext_resource type="AudioStream" uid="uid://c4nm3gwgs2nqw" path="res://assets/sounds/dig/wood3.ogg" id="6_uukdu"]
+[ext_resource type="AudioStream" uid="uid://bc7u4yimst3ah" path="res://assets/sounds/dig/wood4.ogg" id="7_apl8n"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fpu6c"]
+random_pitch = 1.27
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("1_3bke2")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k1v6a"]
+streams_count = 4
+stream_0/stream = ExtResource("4_0adxy")
+stream_1/stream = ExtResource("5_amn1r")
+stream_2/stream = ExtResource("6_uukdu")
+stream_3/stream = ExtResource("7_apl8n")
 
 [resource]
 script = ExtResource("1_4byef")
@@ -13,6 +31,16 @@ light_size = 5.0
 has_sound = false
 sound_distance = 10.0
 panning = 1.0
+block_sound = SubResource("AudioStreamRandomizer_fpu6c")
+volume = -21.0
+pitch = 0.41
+max_distance = 20
+panning_strength = 3
+walk_block_sound = SubResource("AudioStreamRandomizer_k1v6a")
+walk_volume = -21.0
+walk_pitch = 2.5
+walk_max_distance = 10
+walk_panning_strength = 3
 unique_name = &"wood_oak"
 texture = ExtResource("2_73mi1")
 max_stack = 64

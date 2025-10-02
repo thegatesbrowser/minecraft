@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=4 uid="uid://ca1tf375ldayj"]
+[gd_scene load_steps=113 format=4 uid="uid://ca1tf375ldayj"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://buts6uhmr7s2d" path="res://scenes/creatures/creature_base.tscn" id="2_pgqmj"]
@@ -7,7 +7,7 @@
 [ext_resource type="Shader" path="res://scripts/shaders/sky.gdshader" id="3_y2n02"]
 [ext_resource type="VoxelGeneratorMultipassCB" uid="uid://bh1rbxjykhems" path="res://resources/multipass_gen.tres" id="4_88uyt"]
 [ext_resource type="Script" path="res://scripts/other/time.gd" id="4_847i1"]
-[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="4_njnuh"]
+[ext_resource type="VoxelStreamSQLite" uid="uid://btm3gtoqnt4nf" path="res://resources/save.tres" id="5_alxqs"]
 [ext_resource type="Script" path="res://scripts/multiplayer/spawn_points.gd" id="5_ekbqf"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="5_td8xe"]
 [ext_resource type="PackedScene" uid="uid://bvpkccf6751w7" path="res://scenes/ui/inventory.tscn" id="10_hxw3b"]
@@ -60,7 +60,6 @@
 [ext_resource type="Resource" uid="uid://cmt66qn8cepqr" path="res://resources/items/cooked_meat.tres" id="47_2is4p"]
 [ext_resource type="Resource" uid="uid://cn8nqiie237mj" path="res://resources/items/portal.tres" id="48_hwqys"]
 [ext_resource type="Resource" uid="uid://b7r7uxwty6dkv" path="res://resources/items/arrow.tres" id="49_6fhua"]
-[ext_resource type="Resource" uid="uid://dmfnsgf0lvbhh" path="res://resources/items/fern.tres" id="50_j7kip"]
 [ext_resource type="Resource" uid="uid://d0ns05o7rlxa5" path="res://resources/items/flower.tres" id="51_vrpuo"]
 [ext_resource type="Resource" uid="uid://bfu7ppixwys3b" path="res://resources/items/iron_helment.tres" id="52_wm2ll"]
 [ext_resource type="Resource" uid="uid://dsltjvratfyrg" path="res://resources/items/iron_chestplate.tres" id="53_asrdx"]
@@ -68,11 +67,13 @@
 [ext_resource type="Resource" uid="uid://dqtqm7pgedy1n" path="res://resources/items/water.tres" id="55_vdp4r"]
 [ext_resource type="Script" path="res://scripts/items/items_library.gd" id="56_rtthk"]
 [ext_resource type="Script" path="res://scripts/ui/blueprints.gd" id="63_smcjb"]
+[ext_resource type="Resource" uid="uid://cxgyc78ob8tvg" path="res://resources/items/craftables/blueprint_station.tres" id="64_naaa1"]
 [ext_resource type="Script" path="res://scripts/ui/player_direct.gd" id="65_nyrmm"]
 [ext_resource type="Script" path="res://scripts/ui/gameplay_settings.gd" id="66_h5gdj"]
 [ext_resource type="PackedScene" uid="uid://beu8kujo2qfke" path="res://scenes/ui/player_marker.tscn" id="66_uv6sr"]
 [ext_resource type="AudioStream" uid="uid://1o5rvbl2lj4f" path="res://assets/sounds/ambient/Soulsand_valley_wind2.ogg" id="69_713dd"]
 [ext_resource type="AudioStream" uid="uid://sx4737eqqk7h" path="res://assets/sounds/ambient/Soulsand_valley_wind3.ogg" id="70_eg5sl"]
+[ext_resource type="Shader" path="res://scripts/shaders/Vignette.gdshader" id="70_l6v10"]
 [ext_resource type="Script" path="res://scenes/ui/account_settings.gd" id="70_umxlk"]
 
 [sub_resource type="Gradient" id="Gradient_udu43"]
@@ -99,12 +100,12 @@ noise = SubResource("FastNoiseLite_ase44")
 shader = ExtResource("3_y2n02")
 shader_parameter/day_bottom_color = Color(0.78905, 1, 0.996848, 1)
 shader_parameter/day_top_color = Color(0.164706, 0.521569, 1, 1)
-shader_parameter/sunset_bottom_color = Color(0.760784, 0.372549, 0, 1)
+shader_parameter/sunset_bottom_color = Color(0, 0.583333, 1, 1)
 shader_parameter/sunset_top_color = Color(0, 0.583333, 1, 1)
 shader_parameter/night_bottom_color = Color(0, 0, 0, 1)
 shader_parameter/night_top_color = Color(0, 0, 0, 1)
 shader_parameter/horizon_color_day = Color(0.4, 1, 1, 1)
-shader_parameter/horizon_color_sunset = Color(0.866667, 0, 0.337255, 1)
+shader_parameter/horizon_color_sunset = Color(0, 0.583333, 1, 1)
 shader_parameter/horizon_color_night = Color(0, 0, 0, 1)
 shader_parameter/horizon_falloff = 0.7
 shader_parameter/sun_col = Color(1, 1, 1, 1)
@@ -133,7 +134,8 @@ sky_material = SubResource("ShaderMaterial_oomw1")
 background_mode = 2
 sky = SubResource("Sky_m4him")
 ambient_light_source = 2
-ambient_light_color = Color(0.485703, 0.485704, 0.485703, 1)
+ambient_light_color = Color(0.340339, 0.340339, 0.340339, 1)
+reflected_light_source = 2
 ssr_fade_in = 0.15529
 ssao_enabled = true
 ssil_intensity = 2.68
@@ -227,6 +229,14 @@ light_size = 5.0
 has_sound = false
 sound_distance = 10.0
 panning = 1.0
+volume = 0.0
+pitch = 1.0
+max_distance = 20
+panning_strength = 3
+walk_volume = 0.0
+walk_pitch = 1.0
+walk_max_distance = 10
+walk_panning_strength = 3
 unique_name = &"glass"
 max_stack = 64
 rotatable = false
@@ -265,9 +275,38 @@ forgable = false
 forge_time = 2.0
 value = 10
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7f8yd"]
+
+[sub_resource type="Resource" id="Resource_gonjt"]
+script = ExtResource("26_6dvgg")
+break_time = 0.2
+light = false
+light_colour = Color(0, 0, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
+volume = 0.0
+pitch = 1.0
+max_distance = 20
+panning_strength = 3
+walk_volume = 0.0
+walk_pitch = 1.0
+walk_max_distance = 10
+walk_panning_strength = 3
+unique_name = &"fern"
+texture = SubResource("CompressedTexture2D_7f8yd")
+max_stack = 64
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+value = 10
+
 [sub_resource type="Resource" id="Resource_c0ten"]
 script = ExtResource("56_rtthk")
-items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), SubResource("Resource_iwo8c"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), SubResource("Resource_32ko8"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), ExtResource("50_j7kip"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
+items_array = Array[ExtResource("20_j2a6v")]([ExtResource("21_ig8ss"), ExtResource("22_0lwf4"), ExtResource("23_4u70j"), ExtResource("24_0bstr"), ExtResource("25_5i73i"), ExtResource("26_foygn"), ExtResource("27_mupgd"), SubResource("Resource_iwo8c"), ExtResource("29_hm8td"), ExtResource("30_jvpgd"), ExtResource("31_obhup"), ExtResource("32_vk3kx"), ExtResource("33_rjf64"), ExtResource("34_8kp1m"), ExtResource("35_idi8l"), ExtResource("36_n2q1h"), ExtResource("37_v5ery"), SubResource("Resource_32ko8"), ExtResource("31_obhup"), ExtResource("39_w83em"), ExtResource("40_63iuy"), ExtResource("41_4caau"), ExtResource("42_cb2yh"), ExtResource("43_csd2r"), ExtResource("44_w0mv8"), ExtResource("45_y2cgb"), ExtResource("46_npkva"), ExtResource("47_2is4p"), ExtResource("48_hwqys"), ExtResource("49_6fhua"), SubResource("Resource_gonjt"), ExtResource("51_vrpuo"), ExtResource("52_wm2ll"), ExtResource("53_asrdx"), ExtResource("54_57bq4"), ExtResource("55_vdp4r")])
 
 [sub_resource type="Gradient" id="Gradient_88jip"]
 colors = PackedColorArray(0, 0, 0, 0.607843, 0, 0, 0, 0.176471)
@@ -299,6 +338,14 @@ gradient = SubResource("Gradient_g6j5x")
 width = 832
 height = 10
 fill = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ejk5x"]
+shader = ExtResource("70_l6v10")
+shader_parameter/inner_radius = 0.1
+shader_parameter/outer_radius = 1.0
+shader_parameter/vignette_strength = 1.0
+shader_parameter/dither_strength = 0.03
+shader_parameter/vignette_color = null
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_xl6xy"]
 color = Color(1, 1, 1, 1)
@@ -339,7 +386,7 @@ update_time = 0.001
 [node name="VoxelTerrain" type="VoxelTerrain" parent="." groups=["VoxelTerrain"]]
 mesh_block_size = 32
 use_gpu_generation = true
-stream = ExtResource("4_njnuh")
+stream = ExtResource("5_alxqs")
 generator = ExtResource("4_88uyt")
 mesher = SubResource("VoxelMesherBlocky_crwyq")
 
@@ -528,6 +575,7 @@ E - Inventory
 
 [node name="Inventory" type="Control" parent="Player UI"]
 process_mode = 3
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -540,7 +588,6 @@ mouse_filter = 2
 script = ExtResource("3_fe1qo")
 
 [node name="Panel" type="PanelContainer" parent="Player UI/Inventory"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -627,6 +674,7 @@ script = ExtResource("63_smcjb")
 [node name="Slot" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
 layout_mode = 2
 type = "blueprint"
+item = ExtResource("64_naaa1")
 
 [node name="Slot2" parent="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/Blueprints" instance=ExtResource("14_ihskq")]
 layout_mode = 2
@@ -752,7 +800,7 @@ offset_bottom = 20.0
 process_mode = 3
 layout_mode = 1
 
-[node name="Text Chat" type="PanelContainer" parent="Player UI"]
+[node name="Text_Chat" type="PanelContainer" parent="Player UI"]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -769,27 +817,27 @@ grow_vertical = 0
 theme = ExtResource("3_v2bsq")
 script = ExtResource("27_yvp68")
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Text Chat"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Text_Chat"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Text Chat/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Text_Chat/MarginContainer"]
 layout_mode = 2
 
-[node name="message display" type="TextEdit" parent="Player UI/Text Chat/MarginContainer/VBoxContainer"]
+[node name="message display" type="TextEdit" parent="Player UI/Text_Chat/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(1.45519e-11, 200)
 layout_mode = 2
 editable = false
 
-[node name="message_edit" type="LineEdit" parent="Player UI/Text Chat/MarginContainer/VBoxContainer"]
+[node name="message_edit" type="LineEdit" parent="Player UI/Text_Chat/MarginContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "MESSAGE"
 clear_button_enabled = true
 
-[node name="Pause Menu" type="Control" parent="Player UI" node_paths=PackedStringArray("settings")]
+[node name="Pause_Menu" type="Control" parent="Player UI" node_paths=PackedStringArray("settings")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -800,7 +848,25 @@ grow_vertical = 2
 script = ExtResource("15_uiy3n")
 settings = NodePath("Settings")
 
-[node name="Buttons" type="PanelContainer" parent="Player UI/Pause Menu"]
+[node name="Background" type="ColorRect" parent="Player UI/Pause_Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.362)
+
+[node name="Vignette" type="ColorRect" parent="Player UI/Pause_Menu"]
+material = SubResource("ShaderMaterial_ejk5x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Buttons" type="PanelContainer" parent="Player UI/Pause_Menu"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -809,36 +875,36 @@ grow_vertical = 2
 pivot_offset = Vector2(106, 540)
 theme = ExtResource("3_v2bsq")
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Buttons"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Buttons"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Buttons/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Buttons/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "Pause Menu"
 
-[node name="HSeparator" type="HSeparator" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_xl6xy")
 
-[node name="Main Menu" type="Button" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+[node name="Main Menu" type="Button" parent="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 text = "Main Menu"
 
-[node name="Settings" type="Button" parent="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer"]
+[node name="Settings" type="Button" parent="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Settings"
 
-[node name="Settings" type="TabContainer" parent="Player UI/Pause Menu"]
+[node name="Settings" type="TabContainer" parent="Player UI/Pause_Menu"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -854,147 +920,147 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_v2bsq")
-current_tab = 2
+current_tab = 0
 
-[node name="InputSettings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
-visible = false
+[node name="InputSettings" type="PanelContainer" parent="Player UI/Pause_Menu/Settings"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_q5s33")
 script = ExtResource("18_1gacs")
 input_button_scene = ExtResource("22_2hbom")
 metadata/_tab_index = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/InputSettings"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Settings/InputSettings"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/InputSettings/MarginContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause_Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ActionList" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="ActionList" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/InputSettings/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ResetButton" type="Button" parent="Player UI/Pause Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
+[node name="ResetButton" type="Button" parent="Player UI/Pause_Menu/Settings/InputSettings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 mouse_filter = 1
 text = "reset to default"
 
-[node name="Grapthic Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings" node_paths=PackedStringArray("enviorment")]
+[node name="Grapthic Settings" type="PanelContainer" parent="Player UI/Pause_Menu/Settings" node_paths=PackedStringArray("enviorment")]
 visible = false
 layout_mode = 2
 script = ExtResource("21_8u2nj")
 enviorment = NodePath("../../../../WorldEnvironment")
 metadata/_tab_index = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Settings/Grapthic Settings"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Glow" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Glow" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "Glow"
 
-[node name="Fog" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Fog" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "Fog
 "
 
-[node name="Ssao" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Ssao" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "Ssao
 "
 
-[node name="SDFGI" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="SDFGI" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "SDFGI
 "
 
-[node name="TAA" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="TAA" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "TAA"
 
-[node name="Transparency" type="CheckButton" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Transparency" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "Transparency"
 
-[node name="view_range" type="LineEdit" parent="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="view_range" type="LineEdit" parent="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "View Range : 800"
 
-[node name="Gameplay Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
+[node name="Gameplay Settings" type="PanelContainer" parent="Player UI/Pause_Menu/Settings"]
+visible = false
 layout_mode = 2
 script = ExtResource("66_h5gdj")
 metadata/_tab_index = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Gameplay Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Settings/Gameplay Settings"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer"]
 layout_mode = 2
 
-[node name="Headbob" type="CheckButton" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
+[node name="Headbob" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Headbob"
 
-[node name="varing fov" type="CheckButton" parent="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
+[node name="varing fov" type="CheckButton" parent="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Varying FOV"
 
-[node name="Account Settings" type="PanelContainer" parent="Player UI/Pause Menu/Settings"]
+[node name="Account Settings" type="PanelContainer" parent="Player UI/Pause_Menu/Settings"]
 visible = false
 layout_mode = 2
 script = ExtResource("70_umxlk")
 metadata/_tab_index = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause Menu/Settings/Account Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="Player UI/Pause_Menu/Settings/Account Settings"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause Menu/Settings/Account Settings/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Player UI/Pause_Menu/Settings/Account Settings/MarginContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="DeleteSave" type="Button" parent="Player UI/Pause Menu/Settings/Account Settings/MarginContainer/VBoxContainer"]
+[node name="DeleteSave" type="Button" parent="Player UI/Pause_Menu/Settings/Account Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 text = " Delete Save "
 
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="Player UI/Pause Menu/Settings/Account Settings"]
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="Player UI/Pause_Menu/Settings/Account Settings"]
 canvas_item_default_texture_filter = 0
 initial_position = 1
 size = Vector2i(628, 119)
@@ -1006,18 +1072,18 @@ doing this will also reload the game"
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_helment_item_changed"]
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot2" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_chest_item_changed"]
 [connection signal="item_changed" from="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour/MarginContainer/VBoxContainer/Slot3" to="Player UI/Inventory/Panel/MarginContainer/VBoxContainer/Inventory Holder/Armour" method="_on_pants_item_changed"]
-[connection signal="text_submitted" from="Player UI/Text Chat/MarginContainer/VBoxContainer/message_edit" to="Player UI/Text Chat" method="_on_line_edit_text_submitted"]
-[connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Main Menu" to="Player UI/Pause Menu" method="_on_main_menu_pressed"]
-[connection signal="pressed" from="Player UI/Pause Menu/Buttons/MarginContainer/VBoxContainer/Settings" to="Player UI/Pause Menu" method="_on_settings_pressed"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Fog" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_fog_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Ssao" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_ssao_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/SDFGI" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_sdfgi_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TAA" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_taa_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Transparency" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_transparency_toggled"]
-[connection signal="text_submitted" from="Player UI/Pause Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/view_range" to="Player UI/Pause Menu/Settings/Grapthic Settings" method="_on_view_range_text_submitted"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/Headbob" to="Player UI/Pause Menu/Settings/Gameplay Settings" method="_on_headbob_toggled"]
-[connection signal="toggled" from="Player UI/Pause Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/varing fov" to="Player UI/Pause Menu/Settings/Gameplay Settings" method="_on_varing_fov_toggled"]
-[connection signal="pressed" from="Player UI/Pause Menu/Settings/Account Settings/MarginContainer/VBoxContainer/DeleteSave" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_delete_save_pressed"]
-[connection signal="canceled" from="Player UI/Pause Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_confirmation_dialog_canceled"]
-[connection signal="confirmed" from="Player UI/Pause Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause Menu/Settings/Account Settings" method="_on_confirmation_dialog_confirmed"]
+[connection signal="text_submitted" from="Player UI/Text_Chat/MarginContainer/VBoxContainer/message_edit" to="Player UI/Text_Chat" method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer/Main Menu" to="Player UI/Pause_Menu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Player UI/Pause_Menu/Buttons/MarginContainer/VBoxContainer/Settings" to="Player UI/Pause_Menu" method="_on_settings_pressed"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Glow" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_glow_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Fog" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_fog_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Ssao" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_ssao_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/SDFGI" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_sdfgi_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TAA" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_taa_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Transparency" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_transparency_toggled"]
+[connection signal="text_submitted" from="Player UI/Pause_Menu/Settings/Grapthic Settings/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/view_range" to="Player UI/Pause_Menu/Settings/Grapthic Settings" method="_on_view_range_text_submitted"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/Headbob" to="Player UI/Pause_Menu/Settings/Gameplay Settings" method="_on_headbob_toggled"]
+[connection signal="toggled" from="Player UI/Pause_Menu/Settings/Gameplay Settings/MarginContainer/VBoxContainer/varing fov" to="Player UI/Pause_Menu/Settings/Gameplay Settings" method="_on_varing_fov_toggled"]
+[connection signal="pressed" from="Player UI/Pause_Menu/Settings/Account Settings/MarginContainer/VBoxContainer/DeleteSave" to="Player UI/Pause_Menu/Settings/Account Settings" method="_on_delete_save_pressed"]
+[connection signal="canceled" from="Player UI/Pause_Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause_Menu/Settings/Account Settings" method="_on_confirmation_dialog_canceled"]
+[connection signal="confirmed" from="Player UI/Pause_Menu/Settings/Account Settings/ConfirmationDialog" to="Player UI/Pause_Menu/Settings/Account Settings" method="_on_confirmation_dialog_confirmed"]
