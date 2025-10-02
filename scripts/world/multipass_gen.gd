@@ -84,7 +84,8 @@ func _init() -> void:
 func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 	var min_pos := voxel_tool.get_main_area_min()
 	var max_pos := voxel_tool.get_main_area_max()
-
+	
+	var block_size := int(32)
 
 	var _cpos := Vector3(
 		min_pos.x >> 4,
@@ -144,17 +145,25 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 						if y == real_height - 2:
 							voxel_tool.set_voxel(Vector3i(x, y, z), biomes[biome_name].second_layer)
 						if y < real_height - 2:
+							## Stone
 							voxel_tool.set_voxel(Vector3i(x, y, z), biomes[biome_name].third_layer)
 							var ore_size =  biomes[biome_name].ore.size() - 1
 				
 							var ore = biomes[biome_name].ore[rng.randi_range(0,ore_size)]
 							if rng.randf() < .001:
 								voxel_tool.set_voxel(Vector3i(x, y, z),ore)
+								
+							
+							
 
 						var _cave = cave(x,y,z)
 						
 						if _cave:
 							voxel_tool.set_voxel(Vector3i(x, y, z),AIR)# x, y, and z are all between 0-15
+							
+						if y <= -63:
+							voxel_tool.set_voxel(Vector3i(x,y,z),voxels.get_model_index_default("bedrock"))
+								
 					else:
 						voxel_tool.set_voxel(Vector3i(x, y, z), AIR)
 	
@@ -162,8 +171,10 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 	elif pass_index == 1:
 		#try_place_structure(voxel_tool, rng)
 		var tree_count := 7
+		var _rng := RandomNumberGenerator.new()
 		for tree_index in tree_count:
-			try_plant_tree(voxel_tool, rng)
+			rng.seed = tree_index + _get_chunk_seed_2d(voxel_tool.get_main_area_min())
+			try_plant_tree(voxel_tool,_rng)
 			
 
 	elif pass_index == 2:
@@ -172,12 +183,12 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 					
 								 
 func _get_height_at(x: int, z: int) -> int:
-	var river_noise_value =  0.5 + 0.5 * river_noise.get_noise_2d(x, z)
-	var hill_noise_value =  0.5 + 0.5 * hill_noise.get_noise_2d(x, z)
-	var base_noise_value =  0.5 + 0.5 * heightmap_noise.get_noise_2d(x, z) * 100
+	var river_noise_value:float =  0.5 + 0.5 * river_noise.get_noise_2d(x, z)
+	var hill_noise_value:float =  0.5 + 0.5 * hill_noise.get_noise_2d(x, z)
+	var base_noise_value:float =  0.5 + 0.5 * heightmap_noise.get_noise_2d(x, z) * 100
 
 	if hill_noise_value > 0.5:
-		hill_noise_value = hill_noise_value * 100
+		hill_noise_value = hill_noise_value * 50
 	else:
 		hill_noise_value = 0.0
 
@@ -190,9 +201,12 @@ func _get_height_at(x: int, z: int) -> int:
 	
 
 
-	var height = (river_noise_value + hill_noise_value + base_noise_value) / 3.0
+	var height:float = base_noise_value + (river_noise_value + hill_noise_value)
 
-	return int(height)
+	if last_biome == "desert":
+			return int(lerpf(height,0,.2))
+	else:
+		return int(lerpf(base_noise_value,height,.7))
 
 func cave(x:int,y:int,z:int) -> bool:
 	var t = cavenoise.get_noise_3d(x, y, z)
@@ -203,7 +217,6 @@ func cave(x:int,y:int,z:int) -> bool:
 
 static func _get_chunk_seed_2d(cpos: Vector3) -> int:
 	return int(cpos.x) ^ (31 * int(cpos.z))
-
 
 func try_plant_tree(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNumberGenerator):
 	var min_pos := voxel_tool.get_main_area_min()
@@ -223,25 +236,24 @@ func try_plant_tree(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNumberGe
 	while tree_pos.y >= min_pos.y:
 		var v := voxel_tool.get_voxel(tree_pos)
 		# Note, we could also find tree blocks that were placed earlier!
-
-		if v == voxels.get_model_index_default("grass") or v == voxels.get_model_index_default("sand"):
+		if v == voxels.get_model_index_default("grass"):
 			found_ground = true
 			break
-
 		tree_pos.y -= 1
 	
 	if not found_ground:
-		#print("Ground not found")
+#		print("Ground not found")
 		return
 	
 	if voxel_tool.get_voxel(tree_pos - Vector3i(0,1,0)) == AIR: return
 	
 	var paste_buffer := VoxelBuffer.new()
+	
 	var biome_name = get_biome(get_temp(tree_pos.x,tree_pos.z))
 	#print("biome ", biomes[biome_name])
 	if biomes[biome_name].trees.is_empty(): return # returns if no trees in that biome
 
-	var tree = biomes[biome_name].trees[1]
+	var tree = biomes[biome_name].trees.pick_random()
 
 	var file = FileAccess.open(tree,FileAccess.READ)
 	#print("file ",file)
@@ -305,6 +317,8 @@ func try_place_structure(voxel_tool: VoxelToolMultipassGenerator, rng: RandomNum
 	var data := file.get_buffer(size)
 	VoxelBlockSerializer.deserialize_from_byte_array(data, paste_buffer, true)
 	voxel_tool.paste_masked(tree_pos, paste_buffer, 1 << VoxelBuffer.CHANNEL_TYPE,VoxelBuffer.CHANNEL_TYPE,voxels.get_model_index_default("air"))
+	#voxel_tool.set_voxel(tree_pos,voxels.get_model_index_default("stone"))
+	
 func get_biome(temp: int) -> String:
 	for biome_name in biomes:
 		var biome = biomes[biome_name]

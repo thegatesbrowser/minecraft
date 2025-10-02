@@ -2,7 +2,7 @@
 
 [resource]
 noise_type = 3
-seed = 1
+seed = 416
 frequency = 0.0393
 fractal_type = 3
 fractal_weighted_strength = 0.64

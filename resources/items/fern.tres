@@ -1,15 +1,23 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://dmfnsgf0lvbhh"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://d2jmdnbauf21h"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_pnhg1"]
-[ext_resource type="Texture2D" uid="uid://chxp4g16nw3lm" path="res://assets/textures/blocks/fern.png" id="2_mkcbe"]
+[ext_resource type="Texture2D" uid="uid://cyn1tk8544be5" path="res://assets/textures/blocks/double_plant_fern_top.png" id="2_pdh3w"]
 
 [resource]
 script = ExtResource("1_pnhg1")
 break_time = 0.2
-spawn_chance = 0.1
-spawn_size = 1
+light = false
+light_colour = Color(0, 0, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
 unique_name = &"fern"
-texture = ExtResource("2_mkcbe")
+texture = ExtResource("2_pdh3w")
 max_stack = 64
+rotatable = false
+drop_items = Array[StringName]([])
 forgable = false
 forge_time = 2.0
+value = 10

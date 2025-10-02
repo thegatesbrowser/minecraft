@@ -1,5 +1,6 @@
 [gd_resource type="FastNoiseLite" format=3 uid="uid://q65c3obo0maa"]
 
 [resource]
+seed = 530
 frequency = 0.0071
 fractal_weighted_strength = 1.0

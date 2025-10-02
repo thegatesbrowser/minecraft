@@ -17,7 +17,7 @@ items_needed = {
 "texture": ExtResource("1_xb5od")
 }
 }
-unique_name = &""
+unique_name = &"blueprint_station_craftable"
 texture = SubResource("PlaceholderTexture2D_c3ywf")
 max_stack = 64
 rotatable = false

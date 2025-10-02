@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://bs1q4etkb3s37"]
+
+[ext_resource type="Script" path="res://scripts/items/item_base.gd" id="1_uidyx"]
+[ext_resource type="Texture2D" uid="uid://ea67abfva84w" path="res://assets/textures/items/ammo.png" id="2_heqje"]
+
+[resource]
+script = ExtResource("1_uidyx")
+unique_name = &"ammo"
+texture = ExtResource("2_heqje")
+max_stack = 64
+rotatable = false
+drop_items = Array[StringName]([])
+forgable = false
+forge_time = 2.0
+value = 10

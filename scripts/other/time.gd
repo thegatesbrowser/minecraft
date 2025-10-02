@@ -34,6 +34,7 @@ func _process(delta):
 	if check >= 0:
 		if check <= 179:
 			#print("night")
+			
 			change_world_settings("night")
 	if check >= 180:
 		if check <= 360:
@@ -55,9 +56,16 @@ func set_sun(deg:int):
 func change_world_settings(type:String):
 	if type == "night":
 		$"../sun_rotation/night".show()
-		$"../sun_rotation/day".hide()
+		
 		world_enviroment.environment.volumetric_fog_albedo = Color.DARK_SLATE_BLUE
+		if $"../sun_rotation/day".visible:
+			var create_tween = get_tree().create_tween()
+			create_tween.tween_property(world_enviroment.environment,"ambient_light_color",Color(0.223,0.223,0.223),.6)
+		$"../sun_rotation/day".hide()
 	elif type == "day":
-		$"../sun_rotation/night".hide()
 		$"../sun_rotation/day".show()
 		world_enviroment.environment.volumetric_fog_albedo = Color(0.601,0.921,0.97)
+		if $"../sun_rotation/night".visible:
+			var create_tween = get_tree().create_tween()
+			create_tween.tween_property(world_enviroment.environment,"ambient_light_color",Color(0.34,0.34,0.34),.6)
+		$"../sun_rotation/night".hide()

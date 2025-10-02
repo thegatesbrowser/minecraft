@@ -79,12 +79,14 @@ func create_viewer(_id: int, creature: CreatureBase) -> void:
 		creature.add_child(viewer)
 
 func create_creature_spawner(spawner_pos:Vector3i,creature:String):
+	return
 	creature_spawners[spawner_pos] = {"creature":creature}
 	print("created_spawner")
 	#print("spawners ",creature_spawners)
 	pass
 	
 func tick():
+	return
 	if !multiplayer.is_server(): return
 	if creature_spawners.size() == 0: return
 		
@@ -94,10 +96,11 @@ func tick():
 	if pos:
 		var closest_player = get_closest_player(pos)
 		#print(closest_player.global_position.distance_to(pos),pos)
-		if closest_player.global_position.distance_to(pos) > 120: return
-		
-		if pos:
-			spawn_creature(pos,load(creature_spawners[pos].creature))
+		if closest_player:
+			if closest_player.global_position.distance_to(pos) > 120: return
+			
+			if pos:
+				spawn_creature(pos,load(creature_spawners[pos].creature))
 
 func get_closest_player(check_pos:Vector3i):
 	var last_distance: float = 0.0

@@ -25,7 +25,7 @@ func _process(delta):
 		self_modulate = Color.RED
 
 func hovered(_blueprint: Blueprint, slot:Slot) -> void:
-	print("show")
+	#print("show")
 	for i in $MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer.get_children():
 		i.queue_free()
 		

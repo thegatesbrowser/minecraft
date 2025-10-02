@@ -37,15 +37,33 @@ func slot_clicked(slot:Slot):
 		last_clicked_slot = slot
 		last_clicked_slot.focused = true
 		return
+		
 
-	if slot == last_clicked_slot:
+	
+	if slot == last_clicked_slot: ## deselect
+		last_clicked_slot.focused = false
+		last_clicked_slot = null
 		return
+		
 	if slot.item == null:
-		_move_item_to_slot(slot)
+		if last_clicked_slot.item.unique_name != "blueprint_station_craftable":
+			#print(last_clicked_slot.item.unique_name)
+			_move_item_to_slot(slot)
+		else:
+			last_clicked_slot.focused = false
+			last_clicked_slot = null
+			
+			
 	elif slot.item == last_clicked_slot.item:
 		_stack_items(slot)
 	else:
-		_swap_items(slot)
+		if last_clicked_slot.item.unique_name != "blueprint_station_craftable":
+			if slot.item.unique_name != "blueprint_station_craftable":
+				_swap_items(slot)
+		else:
+			last_clicked_slot.focused = false
+			last_clicked_slot = null
+			
 				
 func add_item_to_hotbar_or_inventory(item:ItemBase):
 	if hotbar_full: Globals.spawn_item_inventory.emit(item)

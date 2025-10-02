@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=5 format=3 uid="uid://d26i62gur1o23"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=5 format=3 uid="uid://pkk3e48o3tpx"]
 
 [ext_resource type="Resource" uid="uid://c8jpafhd3cmxl" path="res://resources/items/charcoal.tres" id="1_1xnot"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_dqy48"]
@@ -8,11 +8,11 @@
 [resource]
 script = ExtResource("1_dqy48")
 break_time = 1.1
-light = false
+light = true
 light_colour = Color(1, 1, 1, 1)
 light_energy = 1.0
 light_size = 5.0
-has_sound = false
+has_sound = true
 sound = ExtResource("3_kotew")
 sound_distance = 10.0
 panning = 1.0

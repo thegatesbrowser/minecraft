@@ -7,13 +7,6 @@ var text_chat
 func _ready() -> void:
 	visibility_changed.connect(on_visibility_changed)
 	on_visibility_changed()
-	print("mouse mode?")
-	
-	
-	
-	#inventory = get_node("/root/Main/Game/Player UI/Inventory")
-	#pause_menu = get_node("/root/Main/Game/Player UI/Pause_Menu")
-	#text_chat = get_node("/root/Main/Game/Player UI/Text_Chat")
 
 func _input(_event: InputEvent) -> void:
 	# if Input.is_action_just_pressed("show_mouse"): set_captured(false)
@@ -52,7 +45,7 @@ func ui_captured(captured: bool, caller = null) -> void:
 		
 	if captured:
 		if inventory.visible or text_chat.visible or pause_menu.visible:
-			print(inventory.visible,text_chat.visible,pause_menu.visible)
+			#print(inventory.visible,text_chat.visible,pause_menu.visible)
 			return
 			
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

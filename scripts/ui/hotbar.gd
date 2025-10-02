@@ -25,7 +25,7 @@ func _ready() -> void:
 
 	if !Backend.playerdata.is_empty():
 		if Backend.playerdata.Hotbar != null:
-			update(JSON.parse_string(Backend.playerdata.Hotbar))
+			#update(JSON.parse_string(Backend.playerdata.Hotbar))
 			# update the hotbar with the saved data
 			pass
 			

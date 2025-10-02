@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scripts/world/multipass_gen.gd" id="1_tux7n"]
 
 [resource]
-column_height_blocks = 10
 pass_count = 3
 pass_1_extent = 1
 pass_2_extent = 1

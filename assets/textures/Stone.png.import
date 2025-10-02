@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gamdwyj2ov1x"
-path="res://.godot/imported/double_plant_fern_top.png-9c1c37f8f2c968ec1b283806958ff956.ctex"
+uid="uid://b3yxi6f1gw4qc"
+path="res://.godot/imported/Stone.png-9181c5136044a997dab6d8d7beda8dfc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/blocks/double_plant_fern_top.png"
-dest_files=["res://.godot/imported/double_plant_fern_top.png-9c1c37f8f2c968ec1b283806958ff956.ctex"]
+source_file="res://assets/textures/Stone.png"
+dest_files=["res://.godot/imported/Stone.png-9181c5136044a997dab6d8d7beda8dfc.ctex"]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
