@@ -100,7 +100,6 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 
 	rng.seed = hash("Godot")
 
-
 	if pass_index == 0:
 		# Base terrain
 		for z in range(min_pos.z, max_pos.z):

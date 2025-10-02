@@ -8,7 +8,6 @@
 [sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_4ilwg"]
 library = ExtResource("2_edc4x")
 occlusion_darkness = 1.0
-tint_mode = 1
 shadow_occluder_negative_x = true
 shadow_occluder_positive_x = true
 shadow_occluder_negative_y = true
