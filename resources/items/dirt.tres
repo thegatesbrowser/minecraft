@@ -1,14 +1,46 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://c5ahbt0pwj3hk"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=10 format=3 uid="uid://c5ahbt0pwj3hk"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_3b7hd"]
+[ext_resource type="AudioStream" uid="uid://cl036yvi57oef" path="res://assets/sounds/block/Dirt Break.mp3" id="1_daj4i"]
 [ext_resource type="Texture2D" uid="uid://fm8g1pcdvcnu" path="res://assets/textures/items/Dirt.png" id="2_afhqg"]
+[ext_resource type="AudioStream" uid="uid://buqtfcxnwjjid" path="res://assets/sounds/block/sand_dig1.ogg" id="4_6gpx7"]
+[ext_resource type="AudioStream" uid="uid://b4gbu6vp5er2x" path="res://assets/sounds/block/sand_dig2.ogg" id="5_ecx6k"]
+[ext_resource type="AudioStream" uid="uid://cwhkg100ahl3m" path="res://assets/sounds/block/sand_dig3.ogg" id="6_rfaea"]
+[ext_resource type="AudioStream" uid="uid://cxqu2884q30gp" path="res://assets/sounds/block/sand_dig4.ogg" id="7_n6ue6"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_u0cka"]
+random_pitch = 2.0
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("1_daj4i")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5roik"]
+streams_count = 4
+stream_0/stream = ExtResource("4_6gpx7")
+stream_1/stream = ExtResource("5_ecx6k")
+stream_2/stream = ExtResource("6_rfaea")
+stream_3/stream = ExtResource("7_n6ue6")
 
 [resource]
 script = ExtResource("1_3b7hd")
 break_time = 0.9
-spawn_chance = 0.1
-spawn_size = 1
-spawn_height = 0.0
+light = false
+light_colour = Color(0, 0, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
+block_sound = SubResource("AudioStreamRandomizer_u0cka")
+volume = 0.0
+pitch = 1.0
+max_distance = 20
+panning_strength = 3
+walk_block_sound = SubResource("AudioStreamRandomizer_5roik")
+walk_volume = -21.0
+walk_pitch = 3.34
+walk_max_distance = 10
+walk_panning_strength = 3
 unique_name = &"dirt"
 texture = ExtResource("2_afhqg")
 max_stack = 64

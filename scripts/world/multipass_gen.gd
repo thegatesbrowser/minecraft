@@ -21,7 +21,10 @@ var biomes : Dictionary = {
 		"first_layer": voxels.get_model_index_default("grass"),
 		"second_layer": voxels.get_model_index_default("dirt"),
 		"third_layer": voxels.get_model_index_default("stone"),
-		"ore": [voxels.get_model_index_default("iron"), voxels.get_model_index_default("diamond")],
+		"ore": {
+			voxels.get_model_index_default("iron"): {"spawn_chance":0.001},
+			voxels.get_model_index_default("diamond"): {"spawn_chance":0.0001},
+			},
 		"plants": [voxels.get_model_index_default("tall_grass"),voxels.get_model_index_default("tall_flower")],
 		"noise": preload("res://resources/forest.tres"),
 		"biome_curve": preload("res://resources/heightmap_curve forest.tres"),
@@ -35,7 +38,10 @@ var biomes : Dictionary = {
 		"first_layer": voxels.get_model_index_default("sand"),
 		"second_layer": voxels.get_model_index_default("sand"),
 		"third_layer": voxels.get_model_index_default("stone"),
-		"ore": [voxels.get_model_index_default("iron"), voxels.get_model_index_default("diamond")],
+		"ore": {
+			voxels.get_model_index_default("iron"): {"spawn_chance":0.001},
+			voxels.get_model_index_default("diamond"): {"spawn_chance":0.0001},
+			},
 		"plants": [voxels.get_model_index_default("reeds")],
 		"noise": preload("res://resources/desert.tres"),
 		"biome_curve": preload("res://resources/heightmap_curve desert.tres"),
@@ -147,11 +153,14 @@ func _generate_pass(voxel_tool: VoxelToolMultipassGenerator, pass_index: int):
 						if y < real_height - 2:
 							## Stone
 							voxel_tool.set_voxel(Vector3i(x, y, z), biomes[biome_name].third_layer)
-							var ore_size =  biomes[biome_name].ore.size() - 1
-				
-							var ore = biomes[biome_name].ore[rng.randi_range(0,ore_size)]
-							if rng.randf() < .001:
-								voxel_tool.set_voxel(Vector3i(x, y, z),ore)
+							var ores:Dictionary = biomes[biome_name].ore
+							var ore_size =  ores.keys().size() - 1
+							var key = (ores.keys()[rng.randi_range(0,ore_size)]) ## key is voxel id
+							var ore = ores[key]
+							
+							if rng.randf() < ore.spawn_chance:
+								
+								voxel_tool.set_voxel(Vector3i(x, y, z),key)
 								
 							
 							

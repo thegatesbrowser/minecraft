@@ -1,8 +1,15 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=5 format=3 uid="uid://lxq2aq82pa5e"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=7 format=3 uid="uid://lxq2aq82pa5e"]
 
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_25f0t"]
+[ext_resource type="AudioStream" uid="uid://bpxj0rjcov7aj" path="res://assets/sounds/block/wood break.mp3" id="1_g3msy"]
 [ext_resource type="Texture2D" uid="uid://lpt6ruyflrwh" path="res://assets/textures/items/Chest.png" id="2_xvkfi"]
 [ext_resource type="Script" path="res://scripts/items/utilities.gd" id="3_fpplg"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a2plo"]
+random_pitch = 1.27
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("1_g3msy")
 
 [sub_resource type="Resource" id="Resource_v7ur5"]
 script = ExtResource("3_fpplg")
@@ -22,6 +29,11 @@ light_size = 5.0
 has_sound = false
 sound_distance = 10.0
 panning = 1.0
+block_sound = SubResource("AudioStreamRandomizer_a2plo")
+volume = -21.0
+pitch = 0.41
+max_distance = 20
+panning_strength = 3
 unique_name = &"chest"
 texture = ExtResource("2_xvkfi")
 max_stack = 64

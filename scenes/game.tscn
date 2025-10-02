@@ -229,6 +229,14 @@ light_size = 5.0
 has_sound = false
 sound_distance = 10.0
 panning = 1.0
+volume = 0.0
+pitch = 1.0
+max_distance = 20
+panning_strength = 3
+walk_volume = 0.0
+walk_pitch = 1.0
+walk_max_distance = 10
+walk_panning_strength = 3
 unique_name = &"glass"
 max_stack = 64
 rotatable = false
@@ -279,6 +287,14 @@ light_size = 5.0
 has_sound = false
 sound_distance = 10.0
 panning = 1.0
+volume = 0.0
+pitch = 1.0
+max_distance = 20
+panning_strength = 3
+walk_volume = 0.0
+walk_pitch = 1.0
+walk_max_distance = 10
+walk_panning_strength = 3
 unique_name = &"fern"
 texture = SubResource("CompressedTexture2D_7f8yd")
 max_stack = 64
@@ -559,6 +575,7 @@ E - Inventory
 
 [node name="Inventory" type="Control" parent="Player UI"]
 process_mode = 3
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,47 +1,13 @@
-[gd_scene load_steps=77 format=3 uid="uid://de27e3hbp0hph"]
+[gd_scene load_steps=23 format=3 uid="uid://de27e3hbp0hph"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/resolution_changer.gd" id="1_5pkvj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection_manager.gd" id="2_o7nue"]
 [ext_resource type="Resource" uid="uid://b7i7ukiyxx6ha" path="res://resources/events/connection_events.res" id="3_c26l8"]
 [ext_resource type="Script" path="res://scripts/multiplayer/connection/connection.gd" id="4_iqpav"]
-[ext_resource type="AudioStream" uid="uid://dl4bir0rux4y6" path="res://assets/sounds/block/grass break.mp3" id="6_aytsj"]
 [ext_resource type="Script" path="res://scripts/multiplayer/player_spawner.gd" id="6_l50oc"]
 [ext_resource type="Script" path="res://scripts/other/sound_manager.gd" id="6_x8auu"]
-[ext_resource type="AudioStream" uid="uid://cl036yvi57oef" path="res://assets/sounds/block/Dirt Break.mp3" id="7_1nqma"]
-[ext_resource type="AudioStream" uid="uid://dlftyl4lsb4o5" path="res://assets/sounds/dig/grass1.ogg" id="7_hpv8s"]
 [ext_resource type="PackedScene" uid="uid://bbet1xkqsp2wo" path="res://scenes/player/player.tscn" id="7_n7355"]
 [ext_resource type="PackedScene" uid="uid://ca1tf375ldayj" path="res://scenes/game.tscn" id="8_62j4i"]
-[ext_resource type="AudioStream" uid="uid://bshcsm6rdob6j" path="res://assets/sounds/dig/grass2.ogg" id="8_231k4"]
-[ext_resource type="AudioStream" uid="uid://b5fxn8ibkvfxq" path="res://assets/sounds/dig/grass3.ogg" id="9_mrmhb"]
-[ext_resource type="AudioStream" uid="uid://cflkct6t40nlj" path="res://assets/sounds/dig/grass4.ogg" id="10_f2vy6"]
-[ext_resource type="AudioStream" uid="uid://buqtfcxnwjjid" path="res://assets/sounds/block/sand_dig1.ogg" id="10_r3tj4"]
-[ext_resource type="AudioStream" uid="uid://b6ayg85unuh46" path="res://assets/sounds/dig/stone1.ogg" id="11_dnuav"]
-[ext_resource type="AudioStream" uid="uid://b4gbu6vp5er2x" path="res://assets/sounds/block/sand_dig2.ogg" id="11_j4a6j"]
-[ext_resource type="AudioStream" uid="uid://cwhkg100ahl3m" path="res://assets/sounds/block/sand_dig3.ogg" id="12_cmfam"]
-[ext_resource type="AudioStream" uid="uid://cxavxepem3alm" path="res://assets/sounds/dig/stone2.ogg" id="12_fc5nv"]
-[ext_resource type="AudioStream" uid="uid://ducy0jbsjxu07" path="res://assets/sounds/dig/stone3.ogg" id="13_4vxcf"]
-[ext_resource type="AudioStream" uid="uid://cxqu2884q30gp" path="res://assets/sounds/block/sand_dig4.ogg" id="13_pr6gs"]
-[ext_resource type="AudioStream" uid="uid://c5q37kiorev5f" path="res://assets/sounds/block/azalea_leaves_break1.ogg" id="14_sgmg6"]
-[ext_resource type="AudioStream" uid="uid://dva44h7hcjly" path="res://assets/sounds/dig/stone4.ogg" id="14_wgv32"]
-[ext_resource type="AudioStream" uid="uid://bgx541jwjaht" path="res://assets/sounds/block/Stone Break.mp3" id="15_aa07a"]
-[ext_resource type="AudioStream" uid="uid://gs2ru240ycf" path="res://assets/sounds/block/azalea_leaves_break2.ogg" id="15_mo3cq"]
-[ext_resource type="AudioStream" uid="uid://dr6debrnyiqol" path="res://assets/sounds/dig/wood1.ogg" id="15_pu3bv"]
-[ext_resource type="AudioStream" uid="uid://cyevtqgbjrfs1" path="res://assets/sounds/dig/wood2.ogg" id="16_sdbfq"]
-[ext_resource type="AudioStream" uid="uid://bqkby1vtht45a" path="res://assets/sounds/block/azalea_leaves_break3.ogg" id="16_vld7y"]
-[ext_resource type="AudioStream" uid="uid://c4nm3gwgs2nqw" path="res://assets/sounds/dig/wood3.ogg" id="17_cgiyb"]
-[ext_resource type="AudioStream" uid="uid://2umwby0m5rhk" path="res://assets/sounds/block/azalea_leaves_break4.ogg" id="17_u22xu"]
-[ext_resource type="AudioStream" uid="uid://bc7u4yimst3ah" path="res://assets/sounds/dig/wood4.ogg" id="18_a8qjd"]
-[ext_resource type="AudioStream" uid="uid://cb34f67nrext7" path="res://assets/sounds/block/azalea_leaves_break5.ogg" id="18_hrnxb"]
-[ext_resource type="AudioStream" uid="uid://ctt7t044miel2" path="res://assets/sounds/block/azalea_leaves_break6.ogg" id="19_4xy3u"]
-[ext_resource type="AudioStream" uid="uid://bpxj0rjcov7aj" path="res://assets/sounds/block/wood break.mp3" id="20_hq426"]
-[ext_resource type="AudioStream" uid="uid://drnoamqy8nnuo" path="res://assets/sounds/block/azalea_leaves_break7.ogg" id="20_keaee"]
-[ext_resource type="AudioStream" uid="uid://cch5k6cgj7gho" path="res://assets/sounds/block/log 1.mp3" id="21_6ophe"]
-[ext_resource type="AudioStream" uid="uid://8cg57dcdfxcl" path="res://assets/sounds/block/Sand Break.mp3" id="21_lraem"]
-[ext_resource type="AudioStream" uid="uid://bemkbp5uo6lth" path="res://assets/sounds/block/log 2.mp3" id="22_wg0rg"]
-[ext_resource type="AudioStream" uid="uid://d2lp05mnpj8s2" path="res://assets/sounds/block/log 3.mp3" id="23_5r5sb"]
-[ext_resource type="AudioStream" uid="uid://cbnrhqvwib116" path="res://assets/sounds/block/log 4.mp3" id="24_hpxhg"]
-[ext_resource type="AudioStream" uid="uid://cxwmqe0gyn2or" path="res://assets/sounds/block/log 6.mp3" id="25_8wggn"]
-[ext_resource type="AudioStream" uid="uid://winjkqayvpbo" path="res://assets/sounds/block/log 7.mp3" id="26_qwltm"]
 [ext_resource type="AudioStream" uid="uid://bu0qysk0wk2h5" path="res://assets/sounds/block/item_frame_add_item1.ogg" id="29_gmxig"]
 [ext_resource type="AudioStream" uid="uid://dkmhotcmyyo1" path="res://assets/sounds/block/item_frame_add_item2.ogg" id="30_1ny5t"]
 [ext_resource type="AudioStream" uid="uid://cftecgxiqhol6" path="res://assets/sounds/block/item_frame_add_item3.ogg" id="31_ot16s"]
@@ -54,97 +20,7 @@
 [ext_resource type="Script" path="res://scripts/multiplayer/other_spawner.gd" id="37_5iseo"]
 [ext_resource type="Script" path="res://scripts/ui/ui_syncer.gd" id="38_ig7nw"]
 [ext_resource type="Script" path="res://scripts/world/random_ticker.gd" id="44_caq2v"]
-[ext_resource type="AudioStream" uid="uid://bppwbkwodacxc" path="res://assets/sounds/269010__lwdickens__water-splash-3.wav" id="44_khtt3"]
 [ext_resource type="VoxelBlockyTypeLibrary" uid="uid://csna43pkcr65d" path="res://resources/voxel_block_library.tres" id="49_v742o"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jg8kd"]
-random_pitch = 2.0
-random_volume_offset_db = 1.83
-streams_count = 1
-stream_0/stream = ExtResource("6_aytsj")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_u0cka"]
-random_pitch = 2.0
-random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("7_1nqma")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fo6hp"]
-streams_count = 7
-stream_0/stream = ExtResource("14_sgmg6")
-stream_1/stream = ExtResource("15_mo3cq")
-stream_2/stream = ExtResource("16_vld7y")
-stream_3/stream = ExtResource("17_u22xu")
-stream_4/stream = ExtResource("18_hrnxb")
-stream_5/stream = ExtResource("19_4xy3u")
-stream_6/stream = ExtResource("20_keaee")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0vjnr"]
-streams_count = 7
-stream_0/stream = ExtResource("14_sgmg6")
-stream_1/stream = ExtResource("15_mo3cq")
-stream_2/stream = ExtResource("16_vld7y")
-stream_3/stream = ExtResource("17_u22xu")
-stream_4/stream = ExtResource("18_hrnxb")
-stream_5/stream = ExtResource("19_4xy3u")
-stream_6/stream = ExtResource("20_keaee")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_44m5m"]
-random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("15_aa07a")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hbxe3"]
-streams_count = 4
-stream_0/stream = ExtResource("11_dnuav")
-stream_1/stream = ExtResource("12_fc5nv")
-stream_2/stream = ExtResource("13_4vxcf")
-stream_3/stream = ExtResource("14_wgv32")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tc354"]
-random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("15_aa07a")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_g626s"]
-random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("15_aa07a")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6rptg"]
-random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("15_aa07a")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i7lk6"]
-random_pitch = 1.27
-random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("20_hq426")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5v3t7"]
-random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("20_hq426")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tcshc"]
-random_volume_offset_db = 2.0
-streams_count = 1
-stream_0/stream = ExtResource("20_hq426")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_popfw"]
-random_volume_offset_db = 2.0
-streams_count = 6
-stream_0/stream = ExtResource("21_6ophe")
-stream_1/stream = ExtResource("22_wg0rg")
-stream_2/stream = ExtResource("23_5r5sb")
-stream_3/stream = ExtResource("24_hpxhg")
-stream_4/stream = ExtResource("25_8wggn")
-stream_5/stream = ExtResource("26_qwltm")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_efjkb"]
-streams_count = 1
-stream_0/stream = ExtResource("21_lraem")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_md85o"]
 playback_mode = 1
@@ -155,40 +31,6 @@ stream_0/stream = ExtResource("29_gmxig")
 stream_1/stream = ExtResource("30_1ny5t")
 stream_2/stream = ExtResource("31_ot16s")
 stream_3/stream = ExtResource("32_ik8i6")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pfush"]
-streams_count = 3
-stream_0/stream = ExtResource("29_gmxig")
-stream_1/stream = ExtResource("30_1ny5t")
-stream_2/stream = ExtResource("31_ot16s")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5roik"]
-streams_count = 4
-stream_0/stream = ExtResource("10_r3tj4")
-stream_1/stream = ExtResource("11_j4a6j")
-stream_2/stream = ExtResource("12_cmfam")
-stream_3/stream = ExtResource("13_pr6gs")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ppnug"]
-random_volume_offset_db = 0.22
-streams_count = 4
-stream_0/stream = ExtResource("7_hpv8s")
-stream_1/stream = ExtResource("8_231k4")
-stream_2/stream = ExtResource("9_mrmhb")
-stream_3/stream = ExtResource("10_f2vy6")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k1v6a"]
-streams_count = 4
-stream_0/stream = ExtResource("15_pu3bv")
-stream_1/stream = ExtResource("16_sdbfq")
-stream_2/stream = ExtResource("17_cgiyb")
-stream_3/stream = ExtResource("18_a8qjd")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mj8om"]
-random_pitch = 2.06
-random_volume_offset_db = 3.1
-streams_count = 1
-stream_0/stream = ExtResource("44_khtt3")
 
 [node name="Main" type="Node" groups=["PlayersUI"]]
 
@@ -210,161 +52,13 @@ use_localhost_in_editor = true
 [node name="SoundManager" type="Node" parent="." groups=["SoundManager"]]
 script = ExtResource("6_x8auu")
 
-[node name="grass" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_jg8kd")
-autoplay = true
-max_distance = 10.0
-panning_strength = 3.0
-
-[node name="dirt" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_u0cka")
-max_distance = 10.0
-panning_strength = 3.0
-
-[node name="leaf_oak" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_fo6hp")
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="leaf_birch" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_0vjnr")
-max_distance = 10.0
-panning_strength = 3.0
-
-[node name="stone" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_44m5m")
-volume_db = -11.4804
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="forge" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_hbxe3")
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="glowstone" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_tc354")
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="iron" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_g626s")
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="diamond" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_6rptg")
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="wood_oak" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_i7lk6")
-volume_db = -21.5247
-pitch_scale = 0.45
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="chest" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_5v3t7")
-volume_db = -21.5247
-pitch_scale = 0.45
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="wood_birch" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_tcshc")
-volume_db = -21.5247
-pitch_scale = 0.45
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="log_oak" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_popfw")
-volume_db = -21.5247
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="log_birch" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_popfw")
-volume_db = -21.5247
-pitch_scale = 0.45
-max_distance = 52.51
-panning_strength = 3.0
-
-[node name="sand" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_efjkb")
-volume_db = -13.6323
-max_distance = 52.51
-panning_strength = 3.0
+[node name="Blocks" type="Node" parent="SoundManager"]
 
 [node name="UI" type="AudioStreamPlayer" parent="SoundManager"]
 stream = SubResource("AudioStreamRandomizer_md85o")
 volume_db = -11.555
 pitch_scale = 4.0
 bus = &"UI"
-
-[node name="pick_up" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_pfush")
-volume_db = -48.3026
-pitch_scale = 2.0
-bus = &"UI"
-
-[node name="dirt_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_5roik")
-volume_db = -34.2246
-pitch_scale = 3.34
-panning_strength = 0.0
-
-[node name="grass_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_ppnug")
-volume_db = -34.2246
-pitch_scale = 3.1
-panning_strength = 0.0
-
-[node name="stone_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_hbxe3")
-volume_db = -39.3583
-pitch_scale = 2.17
-panning_strength = 0.0
-
-[node name="leaf_oak_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_fo6hp")
-volume_db = -34.2246
-pitch_scale = 2.75
-panning_strength = 0.0
-
-[node name="leaf_birch_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_0vjnr")
-volume_db = -34.2246
-pitch_scale = 2.75
-panning_strength = 0.0
-
-[node name="wood_oak_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_k1v6a")
-volume_db = -35.0802
-pitch_scale = 2.98
-
-[node name="wood_birch_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_k1v6a")
-volume_db = -35.0802
-pitch_scale = 2.98
-
-[node name="log_oak_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_k1v6a")
-volume_db = -35.9358
-pitch_scale = 2.68
-panning_strength = 0.0
-
-[node name="log_birch_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_k1v6a")
-volume_db = -35.9358
-pitch_scale = 2.68
-panning_strength = 0.0
-
-[node name="water_walk" type="AudioStreamPlayer3D" parent="SoundManager"]
-stream = SubResource("AudioStreamRandomizer_mj8om")
-max_distance = 52.0
-panning_strength = 10.25
 
 [node name="PortalManager" type="Node" parent="." node_paths=PackedStringArray("UI")]
 script = ExtResource("34_oj152")

@@ -2,8 +2,8 @@
 
 [resource]
 noise_type = 3
-seed = 416
-frequency = 0.0393
+seed = 65
+frequency = 0.0425
 fractal_type = 3
-fractal_weighted_strength = 0.64
+fractal_weighted_strength = 1.0
 metadata/_preview_in_3d_space_ = true

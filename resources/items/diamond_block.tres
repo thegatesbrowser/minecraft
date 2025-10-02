@@ -1,15 +1,34 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=4 format=3 uid="uid://c4g4nofmjg2jg"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=6 format=3 uid="uid://c4g4nofmjg2jg"]
 
+[ext_resource type="AudioStream" uid="uid://bgx541jwjaht" path="res://assets/sounds/block/Stone Break.mp3" id="1_45bie"]
 [ext_resource type="Resource" uid="uid://bedai8b83g1cw" path="res://resources/items/diamond.tres" id="1_br88y"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="2_dbdck"]
 [ext_resource type="Texture2D" uid="uid://drkn7hlqn3paq" path="res://assets/textures/items/Diamond Block.png" id="3_pvosk"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_g626s"]
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("1_45bie")
+
 [resource]
 script = ExtResource("2_dbdck")
 break_time = 0.4
-spawn_chance = 0.0001
-spawn_size = 1
-spawn_height = 0.0
+light = false
+light_colour = Color(0, 0, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
+block_sound = SubResource("AudioStreamRandomizer_g626s")
+volume = 0.0
+pitch = 1.0
+max_distance = 20
+panning_strength = 3
+walk_volume = 0.0
+walk_pitch = 1.0
+walk_max_distance = 10
+walk_panning_strength = 3
 unique_name = &"diamond"
 texture = ExtResource("3_pvosk")
 max_stack = 64

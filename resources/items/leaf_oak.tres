@@ -1,14 +1,40 @@
-[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bbwu7wqguky81"]
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=11 format=3 uid="uid://bbwu7wqguky81"]
 
+[ext_resource type="AudioStream" uid="uid://c5q37kiorev5f" path="res://assets/sounds/block/azalea_leaves_break1.ogg" id="1_884oo"]
 [ext_resource type="Script" path="res://scripts/items/item_block.gd" id="1_x0dqp"]
 [ext_resource type="Texture2D" uid="uid://bs3c50kbfm68w" path="res://assets/textures/items/Leaf.png" id="2_l6dsw"]
+[ext_resource type="AudioStream" uid="uid://gs2ru240ycf" path="res://assets/sounds/block/azalea_leaves_break2.ogg" id="2_lhxsn"]
+[ext_resource type="AudioStream" uid="uid://bqkby1vtht45a" path="res://assets/sounds/block/azalea_leaves_break3.ogg" id="3_sjkyx"]
+[ext_resource type="AudioStream" uid="uid://2umwby0m5rhk" path="res://assets/sounds/block/azalea_leaves_break4.ogg" id="4_mx2do"]
+[ext_resource type="AudioStream" uid="uid://cb34f67nrext7" path="res://assets/sounds/block/azalea_leaves_break5.ogg" id="5_bmrld"]
+[ext_resource type="AudioStream" uid="uid://ctt7t044miel2" path="res://assets/sounds/block/azalea_leaves_break6.ogg" id="6_07rfg"]
+[ext_resource type="AudioStream" uid="uid://drnoamqy8nnuo" path="res://assets/sounds/block/azalea_leaves_break7.ogg" id="7_70xbo"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fo6hp"]
+streams_count = 7
+stream_0/stream = ExtResource("1_884oo")
+stream_1/stream = ExtResource("2_lhxsn")
+stream_2/stream = ExtResource("3_sjkyx")
+stream_3/stream = ExtResource("4_mx2do")
+stream_4/stream = ExtResource("5_bmrld")
+stream_5/stream = ExtResource("6_07rfg")
+stream_6/stream = ExtResource("7_70xbo")
 
 [resource]
 script = ExtResource("1_x0dqp")
 break_time = 0.4
-spawn_chance = 0.1
-spawn_size = 1
-spawn_height = 0.0
+light = false
+light_colour = Color(0, 0, 0, 1)
+light_energy = 1.0
+light_size = 5.0
+has_sound = false
+sound_distance = 10.0
+panning = 1.0
+block_sound = SubResource("AudioStreamRandomizer_fo6hp")
+volume = 0.0
+pitch = 1
+max_distance = 20
+panning_strength = 3
 unique_name = &"leaf_oak"
 texture = ExtResource("2_l6dsw")
 max_stack = 64
